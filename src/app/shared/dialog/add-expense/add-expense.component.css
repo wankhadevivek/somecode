@@ -1,0 +1,154 @@
+mat-slider {
+    width: 300px;
+  }
+  .counter-sale-ccl{
+    margin-top: 25px;
+    background: #eae6e6;
+    border-bottom: 1px solid;
+  }
+  .hed-btn-colse{
+    padding: 5px 0px;
+    margin-top: -12px;
+    margin-right: 41px;
+    background: none;
+    border: none;
+    float:right;
+    position: relative;
+  }
+  .custom-modalbox .mat-dialog-container {
+    overflow-x: hidden;
+    padding: 21px 0px 0px 0px !important;
+}
+.cancel-btn-foot{
+  color: #fff; 
+  background-color: #c70c0c;
+   font-size: 12px;
+   padding: 10px 10px 10px 10px;  
+   border-radius: 5px;
+   width: 15%;
+}
+.footer-text{
+  background-color: #52524f;
+  padding: 18px;
+    margin-bottom: -4px;
+    margin-left: -24px;
+    margin-right: -24px;
+}
+.add-new-btn{
+  font-size: 13px;
+  cursor: pointer;
+  z-index: 999;
+  color: #fff;
+  background-color: #ce0e17;
+  padding: 10px 10px 10px 10px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+ /* Extra small devices (phones, 600px and down) */
+ @media only screen and (max-width: 600px) {
+   .autocomplete-container .input-container input{
+     width: 250px;
+   }
+  .counter-sale-ccl{
+    margin-top: 12px;
+    background: #eae6e6;
+    border-bottom: 1px solid;
+  }
+.hed-btn-colse{
+  padding: 5px 0px;
+  margin-top: -12px;
+  margin-right: -13px;
+  background: none;
+  border: none;
+  float:right;
+  position: relative;
+  z-index: 1;
+  }
+  .cancel-btn-foot{
+    color: #fff; 
+    background-color: #c70c0c;
+     font-size: 12px;
+     padding: 10px 10px 10px 10px;  
+     border-radius: 5px;
+     width: 28%;
+  }
+  .modal-dialog {
+    width: 100%;
+    margin: 0;
+    float: right;
+  }
+  .counter-btn-cent{
+    margin-top: -36px;
+  }
+  .table-responsive-custom{
+    min-height: 0.1rem;
+    overflow: auto;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .autocomplete-container .input-container input{
+    width: 250px;
+  }
+  .modal-dialog {
+    width: 100%;
+    margin: 0;
+    float: right;
+  }
+  .counter-btn-cent{
+    margin-top: -36px;
+  }
+  .table-responsive-custom{
+    min-height: 0.1rem;
+    overflow: auto;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .modal-dialog {
+    width: 100%;
+    margin: 0;
+    float: right;
+  }
+  .counter-btn-cent{
+    margin-top: 0px;
+  }
+  .table-responsive-custom{
+    min-height: 0.1rem;
+    overflow: auto;
+  }
+} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .modal-dialog {
+    width: 60%;
+    margin: 0;
+    float: right;
+  }
+  .counter-btn-cent{
+    margin-top: 0px;
+  }
+  .table-responsive-custom{
+    min-height: 0.1rem;
+    overflow: unset;
+  }
+} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .modal-dialog {
+    width: 50%;
+    margin: 0;
+    float: right;
+  }
+  .counter-btn-cent{
+    margin-top: 0px;
+  }
+  .table-responsive-custom{
+    min-height: 0.1rem;
+    overflow: unset;
+  }
+}

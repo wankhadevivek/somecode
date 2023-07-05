@@ -1,0 +1,307 @@
+.vertical-center-row {
+  display: table-cell;
+  vertical-align: middle;
+}
+.form-group.hidden {
+  width: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+.custom-day.range,
+.custom-day:hover {
+  background-color: rgb(2, 117, 216);
+  color: white;
+}
+.custom-day.faded {
+  background-color: rgba(2, 117, 216, 0.5);
+}
+.tableFixHead {
+  overflow-y: auto;
+  height: 200px;
+}
+.tableFixHead thead th {
+  position: sticky;
+  top: 0;
+}
+
+/* Just common table stuff. Really. */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th,
+td {
+  padding: 8px 16px;
+}
+th {
+  background: #eee;
+}
+
+.mat-cell {
+  font-size: 14px;
+  min-height: 48px;
+  /* text-align: center; */
+  /* border-right: 1px solid black; */
+  padding: 4px;
+  text-align: left;
+}
+.mat-header-cell {
+  font-weight: bold;
+  font-size: 14px;
+  min-height: 48px;
+}
+.mat-elevation-z8 {
+  overflow: scroll;
+  max-height: 500px;
+}
+.create-btns {
+  left: 0;
+  right: 0;
+  margin-left: 15px;
+  margin-right: 0;
+}
+.card-tab-size {
+  margin-bottom: 2%;
+  width: 96%;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .mat-cell {
+    font-size: 14px;
+    min-height: 48px;
+    padding: 22px;
+  }
+  .create-btns {
+    left: 19px;
+    right: 0px;
+    margin-left: -33px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+  }
+  .modal-dialog {
+    width: 100%;
+    margin: 0;
+    float: right;
+  }
+  .ibox-content {
+    background-color: #f1f1f1;
+    padding: 5px 5%;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .create-btns {
+    left: 31px;
+    right: 0px;
+    margin-left: -33px;
+    margin-right: 0px;
+  }
+  .modal-dialog {
+    width: 100%;
+    margin: 0;
+    float: right;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .create-btns {
+    left: 56px;
+    right: 0px;
+    margin-left: 15px;
+    margin-right: 0px;
+  }
+  .modal-dialog {
+    width: 100%;
+    margin: 0;
+    float: right;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .create-btns {
+    left: 56px;
+    right: 0px;
+    margin-left: 15px;
+    margin-right: 0px;
+  }
+  .modal-dialog {
+    width: 60%;
+    margin: 0;
+    float: right;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  
+/* .report-select {
+    width: 123px;
+} */
+  .create-btns {
+    left: 56px;
+    right: 0px;
+    margin-left: 15px;
+    margin-right: 0px;
+  }
+  .modal-dialog {
+    width: 50%;
+    margin: 0;
+    float: right;
+  }
+}
+
+/*  */
+.mat-elevation-z8 {
+  overflow: scroll;
+  max-height: 500px;
+  display: flex;
+
+  flex-direction: column;
+}
+.mat-table {
+  max-height: 500px;
+}
+
+.mobile-label {
+  display: none;
+}
+.mat-header-cell {
+  background: #eee;
+}
+.trim {
+  display: none;
+}
+.insert-web-paddding {
+  padding: 1px;
+}
+
+@media (max-width: 600px) {
+  .mobile-label {
+    /* width: 10rem; */
+    display: inline;
+    font-weight: bold;
+  }
+  .insert-web-paddding {
+    padding: 0;
+  }
+  /* tr */
+  tr.mat-header-row {
+    display: none;
+  }
+  .not-trim {
+    display: none;
+  }
+
+  .trim {
+    display: block;
+  }
+  /* tr */
+  tr.mat-row {
+    flex-direction: column;
+    align-items: start;
+    padding: 2em 0;
+  }
+  /* .mat-cell {
+    font-size: 14px;
+    min-height: 25px;
+    padding: 2px 22px;
+    text-transform: inherit;
+  } */
+
+  /* td */
+  td.mat-cell {
+    font-size: 15px;
+    min-height: 25px;
+    padding: 2px 22px;
+    text-transform: inherit;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+  }
+  /* mat-row tr */
+  tr.mat-row:nth-child(even) {
+    background-color: #eee;
+    padding-top: 20px;
+  }
+  .mat-footer-row,
+  .mat-row {
+    min-height: 0;
+  }
+  td.mat-cell,
+  td.mat-footer-cell,
+  th.mat-header-cell {
+    border-bottom-style: none;
+  }
+  .web-show.mat-cell {
+    display: none;
+  }
+}
+
+.create-btns {
+  margin: 0;
+  left: 0;
+}
+
+.toggletabs {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  /* background: #e6e0e0; */
+  box-shadow: 0 2px 6px;
+
+  /* height: 49px; */
+  padding: 0.5em;
+  width: 25%;
+  height: 5.7rem;
+}
+
+.flex-tabs {
+  display: flex;
+  justify-content: space-between;
+}
+.text-right {
+  margin-top: -48px;
+  padding-top: 0.5em;
+}
+.tab-title {
+  font-family: Open sans;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+.modal-dialog,
+.modal-content {
+  /* 80% of window height */
+  height: 100%;
+}
+
+/* .modal-body {
+ 
+  max-height: calc(100% - 120px);
+  overflow-y: scroll;
+} */
+
+
+.report-select {
+  width: 155px;
+  height: 38px;
+  border-radius: 5px;
+}
+

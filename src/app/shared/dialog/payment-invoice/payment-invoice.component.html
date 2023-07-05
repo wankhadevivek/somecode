@@ -1,0 +1,39 @@
+<div class="closepoup" style="float: right; margin-bottom: 8px; margin-top: 7px; margin-right: 10px;">
+    <label (click)="closePopup(false)" class="btn btn-white cir" style="padding: 1px 4px;
+    
+    background: none;
+    border: none;"><i class="fa fa-times fa-2x" aria-hidden="true"></i></label>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <label class="control-label txt_lbl">{{'Please Enter Some Details' | translate}}</label>
+        <form novalidate class="form-horizontal" [formGroup]="OTPForm">
+            <div class="row" style="padding: 13px;">
+                <div class="col-sm-6">
+                    <label class="custom-control-label" for="male">{{'GST Number' | translate}}</label>
+                    <input type="text" class="form-control cir" formControlName="gst_number">
+                    <div *ngIf="OTPForm.controls['gst_number'].invalid && (OTPForm.controls['gst_number'].dirty || OTPForm.controls['gst_number'].touched)" class="text-danger">
+                        <div *ngIf="OTPForm.controls['gst_number'].errors.pattern">
+                            {{'Enter a Valid GST Number' | translate}}
+                      </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="custom-control-label" for="male">{{'Please Select State' | translate}} <span style="color: #c30707; font-weight: bold;">*</span></label>
+                    <select class="form-control cir" formControlName="statename">
+                        <option *ngFor="let data of allStates" value="{{data}}" >{{data}}</option>
+                    </select>
+                    
+                    <div *ngIf="OTPForm.controls['statename'].invalid && (OTPForm.controls['statename'].dirty || OTPForm.controls['statename'].touched)" class="text-danger">
+                        <div *ngIf="OTPForm.controls['statename'].errors.required">
+                            {{'Please Select State' | translate}}.
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<button class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 2% 0px 2% 9px; float: left;" (click)="closePopup(true)">{{'Download Invoice' | translate}}</button>
+<button class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 2% 0px 2% 9px; float: left;" (click)="closePopup(false)">{{'Cancel' | translate}}</button>
+

@@ -1,0 +1,166 @@
+mat-slider {
+    width: 300px;
+  }
+  .ibox-background{
+    background-color: #f1f1f1;
+    padding: 15px 23px 16px;
+    border: none;
+  }
+  .ibox-content-background{
+    background-color: #f1f1f1;
+    border-top: 2px solid #b0b1b5;
+    padding: 5px 3%;
+    margin-bottom: 70px;
+  }
+ 
+  .hed-btn-colse{
+    padding: 1px 4px;
+    background: none;
+    border: none;
+    float:right;
+    position: relative;
+  }
+  .lbl-visit{
+    padding-left: 5%;
+    font-size: 20px;
+  }
+  .lbl-span{
+    font-size: 11px;
+    margin-left: 5px;
+  }
+  .lbl-pick{
+    padding-left: 5%;
+    font-size: 20px;
+  }
+  .pick-lbl-div{
+    margin-top: 23px;
+    margin-left: -40px;
+  }
+
+  /* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+
+    .hed-btn-colse{
+      position: relative;
+      margin-top: -8px;
+      margin-bottom: -3%;
+      margin-right: -23px;
+      z-index: 1;
+    }
+    .modal-dialog {
+      width: 100%;
+      margin: 0;
+      float: right;
+    }
+    .lbl-visit{
+      padding-left: 5%;
+      font-size: 20px;
+    }
+    .lbl-span{
+      font-size: 11px;
+      margin-left: 5px;
+    }
+    .lbl-pick{
+      padding-left: 5%;
+      font-size: 20px;
+    }
+    .ibox-title-h1{
+      font-size: x-large;
+    }
+    .lbl-grp-vp{
+      display: flex;
+      margin-left: 10%;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .hed-btn-colse{
+    position: relative;
+    margin-top: -8px;
+    margin-bottom: -3%;
+    z-index: 1;
+  }
+  .modal-dialog {
+    width: 100%;
+    margin: 0;
+    float: right;
+  }
+  .lbl-grp-vp{
+    display: flex;
+    margin-left: 10%;
+  } 
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .hed-btn-colse{
+    position: relative;
+    margin-top: 7px;
+    margin-bottom: 0%;
+    z-index: 1;
+  }
+  .modal-dialog {
+    width: 100%;
+    margin: 0;
+    float: right;
+  }
+  .lbl-grp-vp{
+    display: flex;
+    margin-left: -26%;
+  }
+} 
+@media only screen and (max-width: 768px) {
+  .hed-btn-colse{
+    position: relative;
+    margin-top: 7px;
+    margin-bottom: 0%;
+    z-index: 1;
+  }
+  .modal-dialog {
+    width: 100%;
+    margin: 0;
+    float: right;
+  }
+  .lbl-grp-vp{
+    display: flex;
+    margin-left: 10%;
+  }
+} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .hed-btn-colse{
+    position: relative;
+    margin-top: 35px;
+    margin-bottom: 0%;
+  }
+  .modal-dialog {
+    width: 60%;
+    margin: 0;
+    float: right;
+  }
+  .lbl-grp-vp{
+    display: flex;
+    margin-left: 10%;
+  }
+} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .hed-btn-colse{
+    position: relative;
+    margin-top: 35px;
+    margin-bottom: 0%;
+  }
+  .modal-dialog {
+    width: 50%;
+    margin: 0;
+    float: right;
+  }
+  .lbl-grp-vp{
+    display: flex;
+    margin-left: 10%;
+  }
+}

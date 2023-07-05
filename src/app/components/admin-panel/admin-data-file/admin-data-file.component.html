@@ -1,0 +1,181 @@
+
+<div style="width: 65%; margin: auto;">
+    <div class="card-container">
+        <div class="card user-card" >
+            <mat-card class="details">
+                <div class="">
+               <div class="" style="margin:0 1rem">
+                   <p>Enter the Wokshop IDS to get their Jobcard Data</p>
+               </div>
+                <div class=""
+                style="display: flex; 
+                        align-items: center;
+                        justify-content: space-between;"   >
+
+                <div class="" >
+                    <label for="from_wk_id">From </label>
+                    <input type="text" 
+                        name="from_wk_id" 
+                        id="from_wk_id" 
+                       
+                        [(ngModel)] = "from_wk"
+                       >
+                   
+                </div>
+                <div class="form-group" >
+                    <label for="to_wk_id">To</label>
+                    <input type="text" 
+                        name="to_wk_id" 
+                        id="to_wk_id" 
+                     
+                        [(ngModel)] = "to_wk"
+                        >
+              
+                </div>
+
+                <button class="btn btn-primary"
+                [disabled] = "from_wk === undefined || to_wk== undefined"
+                 type="button"
+                 (click) = "getFile()"
+                >Download</button>
+            </div>
+            </div>
+            </mat-card>
+        </div>
+    </div>
+    <div class="card-container" style="margin-top: 10%;">
+        <div class="card user-card" >
+            <mat-card class="details">
+                <div class="">
+               <div class="" style="margin:0 1rem">
+                   <p>Send FCM Notifications</p>
+               </div>
+               <form (ngSubmit)="onSendNotification()" #f="ngForm" >
+               <div class="">
+                <div class=""
+                style="display: flex; 
+                        align-items: center;
+                        justify-content: space-between;"   >
+
+                <div class="" >
+                    <label 
+                    class="msg-form"
+                    for="from_wk_id">Sender ID</label>
+                    <input 
+                        class="msg-form"
+                        type="text" 
+                        name="from_wk_id" 
+                        id="msg_sender_id" 
+                        ngModel
+                        required
+                       >
+                   
+                </div>
+                <div class="form-group" >
+                    <label 
+                    class="msg-form"
+                    for="to_wk_id">Title</label>
+                    <input 
+                    class="msg-form"
+                    type="text" 
+                    name="msg_title" 
+                    ngModel
+                    required
+                       
+                        >
+              
+                </div>
+            </div>
+                 </div>
+        <div class="">
+            <div class=""
+            style="display: flex; 
+                    align-items: center;
+                    justify-content: space-between;"   >
+
+            <div class="" >
+                <label 
+                class="msg-form"
+                for="from_wk_id">Icon Path</label>
+                <input 
+                    class="msg-form"
+                    type="text"
+                    id="icon_path" 
+                    name="icon_path" 
+                    ngModel
+                 >
+               
+            </div>
+            <div class="form-group" >
+                <label 
+                class="msg-form"
+                for="to_wk_id">Image Path</label>
+                <input 
+                    class="msg-form"
+                    type="text" 
+                    id="img_path"
+                    name="img_path"
+                    ngModel
+                    >
+            </div>        
+        </div>
+        </div>
+        <div class=""
+        style="width: 100%;">
+            <div class=""
+             >
+             <div class="" >
+                <label 
+                class="msg-form"
+                for="from_wk_id">Workshop IDS </label>
+                <textarea 
+                    class="msg-form"
+                    id="wk_ids"
+                    name="wk_ids"
+                    ngModel
+                    required  
+                   >
+                   </textarea>
+               
+            </div>
+            
+        </div>
+        </div>
+        <div class=""
+        style="width: 100%;">
+            <div class=""
+            >
+
+            <div class="" >
+                <label 
+                    class="msg-form"
+                    for="from_wk_id">
+                    Message Body
+                </label>
+                <textarea 
+                    class="msg-form"
+                    id="msg_body" 
+                    name="msg_body" 
+                    ngModel
+                    required
+                     >
+                   </textarea>
+
+                   <button class="btn btn-primary"
+                   [disabled]="!f.valid"
+                   data-toggle="tooltip"
+                      title="Require Details - Sender Id, Title, Body, Workshop IDs"
+                    type="submit"
+                    
+                   >Send Notification</button>
+               
+            </div>
+            </div>
+        </div>
+    </form>
+        
+            </div>
+            </mat-card>
+        </div>
+    </div>
+</div> 

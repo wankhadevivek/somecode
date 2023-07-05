@@ -1,0 +1,1251 @@
+<app-spinend></app-spinend>
+<div class="bg-light mb-5 mx-0" style="background-color: #f3f3f4">
+  <div class="container" style="margin-top: 65px; margin-bottom: 10px">
+    <div class="row topgargedetails">
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <div
+          class="col-lg-1 col-sm-1 col-md-2 col-xs-1"
+          style="
+            background-color: #fff;
+            padding: 7px 31px;
+            font-size: 30px;
+            border-radius: 31px;
+            width: 1px;
+          "
+        >
+          <img
+            [src]="vehiclepic"
+            alt=""
+            style="margin-left: -23px; height: 47px; width: 47px"
+          />
+        </div>
+        <div
+          class="col-lg-9 col-sm-9 col-md-9 col-xs-9"
+          style="margin-top: 8px; padding-right: 0px !important"
+        >
+          <span style="color: #000000; font-size: 14px; font-weight: bold">{{
+            workshopname
+          }}</span
+          ><br />
+          <span
+            *ngIf="workshoptiltle != 'none'"
+            style="font-size: 12px; color: #7487ff"
+            >{{ workshoptiltle }}</span
+          >
+          <br />
+          <span
+            style="color: #008000; font-size: 10px"
+            *ngIf="workshopverified == true"
+          >
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+            <span style="margin-left: 5px">{{ "Verified" | translate }}</span>
+          </span>
+        </div>
+        <div
+          style="margin-bottom: 9px; margin-top: 14px"
+          *ngIf="openDetailJobcard == true"
+          class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+        >
+          <span (click)="openList()">
+            <i
+              style="cursor: pointer"
+              class="fa fa-arrow-left"
+              aria-hidden="true"
+            ></i>
+            <span
+              style="
+                margin-left: 9px;
+                cursor: pointer;
+                text-decoration: underline;
+              "
+              >{{ "Back" | translate }}</span
+            >
+          </span>
+        </div>
+
+        <div
+          *ngIf="openDetailJobcard == true"
+          class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+        >
+          {{ "Jobcard Details" | translate }}
+        </div>
+        <span *ngIf="openDetailJobcard == false">
+          <div
+            *ngIf="showloginsection == true"
+            class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+            style="margin-bottom: 25px; margin-top: 18px"
+          >
+            <!-- <span style="color: #000000; font-size: 14px;">
+                            {{userdata.customer_name}} ({{userdata.customer_mobile}})
+                        </span> -->
+            <!-- <br> -->
+            <span
+              *ngIf="havepending == true && showJobs == true"
+              style="color: #c01616; font-size: 12px"
+            >
+              {{ "You have previous balance pending" | translate }}
+            </span>
+          </div>
+          <div
+            *ngIf="showloginsection == true"
+            class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+          >
+            <div
+              [class]="jobcardclass"
+              (click)="jobclass()"
+              style="margin-left: -16px"
+            >
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              <span>
+                {{ "Jobcard History" | translate }}
+              </span>
+            </div>
+
+            <div
+              [class]="bookingclass"
+              (click)="bookclass()"
+              style="margin-left: 16px"
+            >
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <span>
+                {{ "My Bookings" | translate }}
+              </span>
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="openDetailJobcard == false"
+  class="bg-light mb-5 mx-0"
+  style="background-color: #fff"
+>
+  <div class="container">
+    <div class="row" style="margin-top: 9px">
+      <div
+        class="col-lg-6 col-sm-6 col-md-6 col-xs-6"
+        style="
+          position: fixed;
+          bottom: 120px;
+          right: -14px;
+          text-align: center;
+          z-index: 99;
+        "
+      >
+        <button
+          (click)="goToBook()"
+          [routerLink]="parmforbook"
+          style="
+            padding: 13px 17px 13px 17px;
+            color: #ffff;
+            background: linear-gradient(to right, #ff0000 0%, #563b3b 100%);
+            border-radius: 25px;
+          "
+        >
+          {{ "Book a Service" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row" style="margin-top: 20px">
+      <div
+        *ngIf="showJobs == true"
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center"
+        style="margin-bottom: 68px"
+      >
+        <span *ngIf="jobcardListed == true">
+          <div
+            *ngFor="let data of jobcardData; let i = index"
+            style="
+              margin-top: 3px;
+              padding: 22px;
+              background-color: #fff;
+              box-shadow: 0px 3px 7px;
+              margin-bottom: 20px;
+            "
+          >
+            <div
+              class="col-lg-1 col-sm-1 col-md-12 col-xs-1 text-center"
+              style="margin-left: -24px"
+            >
+              <div
+                style="
+                  background-color: #ff5454;
+                  padding: 6px 0px 6px 0px;
+                  margin-right: -71px;
+                  margin-top: -8px;
+                "
+              >
+                <span style="color: #fff; font-size: 23px">{{
+                  data.created_at | date: "d"
+                }}</span>
+                <br />
+                <span style="color: #fff; font-size: 12px">
+                  {{ data.created_at | date: "MMMM" }}</span
+                >
+              </div>
+            </div>
+            <div
+              class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-left"
+              style="margin-left: 55px"
+            >
+              <span
+                (click)="openJobcard(data)"
+                style="
+                  font-size: 14px;
+                  color: #000000;
+                  text-decoration: underline;
+                  cursor: pointer;
+                "
+              >
+                {{ data.vehicle_number }}
+              </span>
+              <br />
+              <span
+                style="font-size: 12px"
+                *ngIf="data.vehicle_details.make != undefined"
+                (click)="openJobcard(data)"
+                style="cursor: pointer; text-decoration: underline"
+              >
+                {{ data.vehicle_details.make }}&nbsp;{{
+                  data.vehicle_details.model
+                }}&nbsp;{{ data.vehicle_details.variant }}
+              </span>
+              <span
+                style="font-size: 12px"
+                *ngIf="data.vehicle_details.make == undefined"
+              >
+                {{ data.vehicle_details.vehicle_make }}&nbsp;{{
+                  data.vehicle_details.vehicle_model
+                }}&nbsp;{{ data.vehicle_details.vehicle_variant }}
+              </span>
+              <span *ngIf="data.vehicle_details == undefined"></span>
+            </div>
+            <div
+              class="col-lg-5 col-sm-5 col-md-5 col-xs-5 text-right"
+              style="margin-left: -50px"
+            >
+              <span
+                style="font-size: 10px"
+                *ngIf="data.jobcard_status == '0'"
+                >{{ "Estimate" | translate }}</span
+              >
+              <span
+                style="font-size: 10px"
+                *ngIf="data.jobcard_status != '0'"
+                >{{ "Total" | translate }}</span
+              >
+              <br />
+              <span
+                *ngIf="data.jobcard_status == '0'"
+                style="font-size: 16px; color: #000000; margin-left: 66px"
+                >₹{{ data.cost_estimate | number: "1.0-0" }}</span
+              >
+
+              <span
+                *ngIf="data.jobcard_status != '0'"
+                style="font-size: 16px; color: #000000; margin-left: 66px"
+                >₹{{ data.total_amount | number: "1.0-0" }}</span
+              >
+            </div>
+            <div
+              *ngIf="data.jobcard_status == '0'"
+              class="text-center"
+              style="
+                color: #7487ff;
+                margin-top: 62px;
+                margin-bottom: 30px;
+                font-size: 10px;
+              "
+            >
+              <span *ngIf="data.jobcard_status == '0'"
+                >{{ "Expected Ready By" | translate }}
+                {{
+                  ConvertTodate(data.estimated_delivery_datetime)
+                    | date: "h:mm a, d MMM y"
+                }}</span
+              >
+            </div>
+            <div
+              *ngIf="data.jobcard_status != '0'"
+              class="text-left"
+              style="
+                color: #000000;
+                margin-top: 62px;
+                margin-bottom: 30px;
+                font-size: 10px;
+              "
+            >
+              <span *ngIf="data.jobcard_status == '1'">
+                {{ "Vehicle Delivery" | translate }}
+                {{
+                  ConvertTodate(data.complete_date) | date: "h:mm a, d MMM y"
+                }}
+                <span class="paidone" *ngIf="data.balance_amount == '0.0'">
+                  {{ "Paid" | translate }}
+                </span>
+                <span class="balone" *ngIf="data.balance_amount != '0.0'">
+                  {{ "Pay Balance" | translate }}
+                </span>
+              </span>
+              <span *ngIf="data.jobcard_status == '2'"
+                >{{ "Vehicle Delivery" | translate }}
+                {{ ConvertTodate(data.closed_date) | date: "h:mm a, d MMM y" }}
+                <span class="paidone" s *ngIf="data.balance_amount == '0.0'">
+                  {{ "Paid" | translate }}
+                </span>
+                <span class="balone" *ngIf="data.balance_amount != '0.0'">
+                  {{ "Pay Balance" | translate }}
+                </span>
+              </span>
+            </div>
+            <div class="linegarage"></div>
+            <span *ngIf="data.balance_amount != '0.0'">
+              <div
+                *ngIf="jobcardData.jobcard_status == 0"
+                class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center"
+                (click)="openPaymentNot('review')"
+              >
+                <div style="margin-top: -10px">
+                  <img
+                    src="../../../assets/images/comment.png"
+                    alt=""
+                    style="margin-top: -10px"
+                  />
+                  <span
+                    style="color: #161616; margin-left: 10px; font-weight: bold"
+                    >{{ "Review" | translate }}</span
+                  >
+                </div>
+              </div>
+
+              <!--  -->
+
+              <div
+                *ngIf="jobcardData.jobcard_status !== 0"
+                class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center"
+                (click)="
+                  xpandStatus = xpandStatus ? false : true;
+                  openJobcard(jobcardData, true)
+                "
+              >
+                <div style="margin-top: -10px">
+                  <img
+                    src="../../../assets/images/comment.png"
+                    alt=""
+                    style="margin-top: -10px"
+                  />
+                  <span
+                    style="color: #161616; margin-left: 10px; font-weight: bold"
+                    >{{ "Review" | translate }}</span
+                  >
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center">
+                <div
+                  class="line-in-middle"
+                  style="
+                    border-left: 1px solid #dcdada;
+                    height: 45px;
+                    margin-top: -24px;
+                    margin-left: -15px;
+                  "
+                ></div>
+                <div style="margin-top: -30px">
+                  <span
+                    *ngIf="data.status != null"
+                    style="color: #ff0000; cursor: pointer"
+                    (click)="openPayment(data)"
+                  >
+                    <i
+                      class="fa fa-credit-card"
+                      aria-hidden="true"
+                      style="font-size: 16px"
+                    ></i>
+                    <span style="margin-left: 10px">{{
+                      "Pay Now" | translate
+                    }}</span>
+                  </span>
+                  <span
+                    *ngIf="data.status == null"
+                    style="color: #8b8b8b"
+                    (click)="openPaymentNot('pay')"
+                  >
+                    <i
+                      class="fa fa-credit-card"
+                      aria-hidden="true"
+                      style="font-size: 16px"
+                    ></i>
+                    <span style="margin-left: 10px">{{
+                      "Pay Now" | translate
+                    }}</span>
+                  </span>
+                </div>
+              </div>
+            </span>
+
+            <span
+              *ngIf="data.jobcard_status != '0' && data.balance_amount == '0.0'"
+              (click)="openPaymentNot('review')"
+            >
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center">
+                <div style="margin-top: -10px">
+                  <img
+                    src="../../../assets/images/comment.png"
+                    alt=""
+                    style="color: #6f6ff5; margin-top: -4px"
+                  />
+                  <span style="color: #6f6ff5; margin-left: 10px">{{
+                    "Review" | translate
+                  }}</span>
+                </div>
+              </div>
+            </span>
+          </div>
+        </span>
+        <span *ngIf="jobcardListed == false">
+          <p style="font-size: 20px; font-weight: bold">
+            {{ "No Jobcard Found" | translate }}
+          </p>
+          <img
+            src="../../../assets/images/6908.png"
+            alt=""
+            style="margin-top: 6px; height: 180px"
+          />
+
+          <div
+            *ngIf="showloginsection == false"
+            class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center"
+          >
+            <p style="color: #ada8a8; font-size: 12px">
+              {{
+                "Verify your registered mobile number to link your account or"
+                  | translate
+              }}
+            </p>
+
+            <p style="color: #ada8a8; font-size: 12px">
+              {{ "View Service details already in progress" | translate }}
+            </p>
+
+            <p
+              style="
+                color: #6f6ff5;
+                text-decoration: underline;
+                font-size: 12px;
+              "
+              (click)="openVerifyData()"
+            >
+              {{ "Verify your mobile number" | translate }}
+            </p>
+          </div>
+        </span>
+      </div>
+    </div>
+    <div *ngIf="showbookings == true" style="margin-bottom: 68px">
+      <div *ngIf="bookListed == true">
+        <div
+          *ngFor="let data of bookData; let i = index"
+          class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+          style="
+            margin-top: 3px;
+            padding: 22px;
+            background-color: #fff;
+            box-shadow: 0px 3px 7px;
+            margin-bottom: 20px;
+          "
+        >
+          <div
+            *ngIf="
+              data.status != 'approved' &&
+              data.status != 'delete' &&
+              data.status != 'completed' &&
+              data.status != 'rejected'
+            "
+            class="text-left"
+            style="margin-top: -17px; margin-left: -38px"
+          >
+            <i
+              class="fa fa-ellipsis-v dropdown-toggle"
+              style="margin-left: 20px; font-size: 18px"
+              data-toggle="dropdown"
+            ></i>
+
+            <ul
+              class="dropdown-menu"
+              style="
+                margin-left: 0px;
+                overflow: auto;
+                height: 50px;
+                padding: 6px 6px 6px 6px;
+                font-size: 12px;
+                font-weight: 500;
+                top: 19px;
+              "
+            >
+              <li>
+                <span
+                  style="padding: 4px 4px 4px 4px; cursor: pointer"
+                  (click)="openToReschedule(data.bookingid, i)"
+                  >{{ "Reschedule Booking" | translate }}</span
+                >
+              </li>
+              <li>
+                <span
+                  style="padding: 4px 4px 4px 4px; cursor: pointer"
+                  (click)="openDeclinedBox(data.bookingid, i)"
+                  >{{ "Decline Booking" | translate }}</span
+                >
+              </li>
+            </ul>
+          </div>
+          <div
+            *ngIf="data.status == 'approved'"
+            class="text-left"
+            style="margin-top: -17px; margin-left: -38px"
+          >
+            <i
+              class="fa fa-ellipsis-v dropdown-toggle"
+              style="margin-left: 20px; font-size: 18px"
+              data-toggle="dropdown"
+            ></i>
+            <ul
+              class="dropdown-menu"
+              style="
+                margin-left: 16px;
+                overflow: auto;
+                height: 50px;
+                padding: 6px 6px 6px 6px;
+                font-size: 12px;
+                font-weight: 500;
+                top: 25px;
+              "
+            >
+              <li>
+                <span
+                  style="padding: 4px 4px 4px 4px; cursor: pointer"
+                  (click)="openToReschedule(data.bookingid, i)"
+                  >{{ "Reschedule Booking" | translate }}</span
+                >
+              </li>
+            </ul>
+          </div>
+          <div
+            class="col-lg-1 col-sm-1 col-md-12 col-xs-1 text-center"
+            style="margin-left: -24px"
+          >
+            <div
+              style="
+                background-color: #ff5454;
+                padding: 2px;
+                margin-right: -71px;
+                margin-top: -8px;
+              "
+            >
+              <!--<span style="color: #fff; font-size: 23px;">{{data.created_at | date:'d'}}</span> -->
+              <span style="color: #fff; font-size: 23px">{{
+                data.date | date: "d"
+              }}</span>
+              <br />
+              <!--<span style="color: #fff; font-size: 12px;"> {{data.created_at | date:'MMMM'}}</span> -->
+              <span style="color: #fff; font-size: 12px">
+                {{ data.date | date: "MMMM" }}</span
+              >
+            </div>
+          </div>
+          <div
+            class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-left"
+            style="margin-left: 55px"
+          >
+            <span style="font-size: 14px; color: #000000">
+              {{ data.vehicle_number }}
+            </span>
+            <br />
+            <span
+              style="font-size: 12px"
+              *ngIf="data.vehicle_details.make != undefined"
+            >
+              {{ data.vehicle_details.make }}&nbsp;{{
+                data.vehicle_details.model
+              }}&nbsp;{{ data.vehicle_details.variant }}
+            </span>
+            <span
+              style="font-size: 12px"
+              *ngIf="data.vehicle_details.make == undefined"
+            >
+              {{ data.vehicle_details.vehicle_make }}&nbsp;{{
+                data.vehicle_details.vehicle_model
+              }}&nbsp;{{ data.vehicle_details.vehicle_variant }}
+            </span>
+            <span *ngIf="data.vehicle_details == undefined"></span>
+          </div>
+          <div
+            class="col-lg-5 col-sm-5 col-md-5 col-xs-5 text-right"
+            style="margin-left: -40px"
+          >
+            <span
+              *ngIf="
+                data.customer_address_drop == '' &&
+                data.customer_address_pick == ''
+              "
+              >{{ "Self Visit" | translate }}</span
+            >
+            <span
+              *ngIf="
+                data.customer_address_drop != '' &&
+                data.customer_address_pick != ''
+              "
+              >{{ "Pick and Drop" | translate }}</span
+            >
+            <span
+              *ngIf="
+                data.customer_address_drop == '' &&
+                data.customer_address_pick != ''
+              "
+              >{{ "Pick" | translate }}</span
+            >
+            <span
+              *ngIf="
+                data.customer_address_drop != '' &&
+                data.customer_address_pick == ''
+              "
+              >{{ "Drop" | translate }}</span
+            >
+            <br />
+          </div>
+          <div class="text-center" style="margin-top: 61px; margin-left: 20px">
+            <span
+              *ngIf="data.status == 'in process'"
+              style="color: rgb(165, 165, 7)"
+              >{{ "Waiting for approval" | translate }}</span
+            >
+            <span *ngIf="data.status == 'rejected'">
+              <span style="color: #c01616">{{
+                "Your Booking is Rejected" | translate
+              }}</span>
+              <br />
+              <span style="color: #9090d6">{{ data.reason }}</span>
+            </span>
+            <span *ngIf="data.status == 'approved'">
+              <span style="color: #9090d6">{{
+                "Your Booking is Accepted" | translate
+              }}</span>
+              <br />
+              <span style="color: #9090d6">{{
+                "Executive will arrive soon" | translate
+              }}</span>
+            </span>
+            <span *ngIf="data.status == 'completed'">
+              <span style="color: #60f067">{{
+                "Jobcard Is Created" | translate
+              }}</span>
+            </span>
+            <span *ngIf="data.status == 'delete'">
+              <span style="color: #c01616">{{
+                "Booking is Deleted" | translate
+              }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="bookListed == false">
+        <p style="font-size: 20px; font-weight: bold">No Booking Found</p>
+        <img
+          src="../../../assets/images/6908.png"
+          alt=""
+          style="margin-top: 6px; height: 180px"
+        />
+
+        <div
+          *ngIf="showloginsection == false"
+          class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center"
+        >
+          <p style="color: #ada8a8; font-size: 12px">
+            {{
+              "Verify your registered mobile number to link your account or"
+                | translate
+            }}
+          </p>
+
+          <p style="color: #ada8a8; font-size: 12px">
+            {{ "View Service details already in progress" | translate }}
+          </p>
+
+          <p
+            style="color: #6f6ff5; text-decoration: underline; font-size: 12px"
+            (click)="openVerifyData()"
+          >
+            {{ "Verify your mobile number" | translate }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="openDetailJobcard == true"
+  class="container"
+  style="margin-bottom: 60px"
+>
+  <div class="row">
+    <div
+      class="col-lg-2 col-sm-2 col-md-2 col-xs-2"
+      style="
+        background: red;
+        border-radius: 34px;
+        width: 47px;
+        margin-left: 21px;
+      "
+    >
+      <img
+        src="../../../assets/images/Customers White.png"
+        alt=""
+        style="margin-left: -12px"
+      />
+    </div>
+    <div class="col-lg-4 col-sm-4 col-md-4 col-xs-9 detailsjobcard">
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left">
+        <span style="font-weight: bold; font-size: 12px; color: #000">
+          {{ "Jobcard Created" | translate }}
+        </span>
+      </div>
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <span style="font-weight: bold; font-size: 12px; color: #b5b3b3">
+          {{ "Jobcard No" | translate }}. {{ jobcardnumber }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #b5b3b3">
+          {{ "In Time" | translate }}: {{ intime | date: "MMM d, h:mm a" }}
+        </span>
+      </div>
+      <div
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+        style="margin-top: 24px"
+      >
+        <span style="font-weight: bold; font-size: 12px; color: #656565">
+          {{ "Estimate" | translate }}: ₹ {{ estimate }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #656565">
+          {{ "Estimate Delivery By" | translate }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #c01616">
+          {{ deliveryby | date: "MMM d, h:mm a" }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #656565">
+          Last KM Reading: {{ km }}
+        </span>
+        <span
+          style="
+            font-weight: bold;
+            font-size: 12px;
+            color: #5959f3;
+            margin-left: 54px;
+            cursor: pointer;
+          "
+        >
+          <!-- <a href="#seehere">View More</a> -->
+        </span>
+      </div>
+    </div>
+    <div
+      style="
+        border-left: 3px solid #b5b3b3;
+        height: 150px;
+        margin-left: 43px;
+        margin-bottom: 3px;
+        margin-top: 52px;
+      "
+    ></div>
+  </div>
+  <div class="row">
+    <div
+      class="col-lg-2 col-sm-2 col-md-2 col-xs-2"
+      style="
+        background: red;
+        border-radius: 34px;
+        width: 47px;
+        margin-left: 21px;
+      "
+    >
+      <img
+        src="../../../assets/images/Analytics White.png"
+        alt=""
+        style="margin-left: -14px"
+      />
+    </div>
+
+    <div [class]="secondclass">
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left">
+        <span style="font-weight: bold; font-size: 12px; color: #000">
+          {{ "Work Completed" | translate }}
+        </span>
+      </div>
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <span style="font-weight: bold; font-size: 12px; color: #b5b3b3">
+          {{ "Estimated Amount" | translate }}: ₹ {{ estimate }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #b5b3b3">
+          {{ "Advance" | translate }}: ₹ {{ advance }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #b5b3b3">
+          {{ "Discount" | translate }}: {{ discount }}
+        </span>
+      </div>
+      <div
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+        style="margin-top: 24px"
+      >
+        <span style="font-weight: bold; font-size: 12px; color: #656565">
+          {{ "Payable" | translate }}: ₹ {{ payable }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #656565">
+          {{ "Estimate Delivery By" | translate }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #c01616">
+          {{ deliveryby | date: "MMM d, h:mm a" }}
+        </span>
+      </div>
+    </div>
+    <div
+      style="
+        border-left: 3px solid #b5b3b3;
+        height: 170px;
+        margin-left: 43px;
+        margin-bottom: 3px;
+        margin-top: 52px;
+      "
+    ></div>
+  </div>
+  <div class="row">
+    <div
+      class="col-lg-2 col-sm-2 col-md-2 col-xs-2"
+      style="
+        background: red;
+        border-radius: 34px;
+        width: 47px;
+        margin-left: 21px;
+      "
+    >
+      <img
+        src="../../../assets/images/Bulk SMS White.png"
+        alt=""
+        style="margin-left: -16px; margin-top: 2px"
+      />
+    </div>
+    <div [class]="thirdclass">
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left">
+        <span style="font-weight: bold; font-size: 12px; color: #000">
+          {{ "Payment" | translate }}
+        </span>
+      </div>
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <span style="font-weight: bold; font-size: 12px; color: #b5b3b3">
+          {{ "Paid Amount" | translate }}: ₹ {{ paid }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #c01616">
+          {{ "Balance Amount" | translate }}: ₹ {{ balance }}
+        </span>
+      </div>
+      <div
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+        style="margin-top: 24px"
+      >
+        <span style="font-weight: bold; font-size: 12px; color: #656565">
+          {{ "Payment Mode" | translate }}: {{ paymentmode }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #656565">
+          {{ "Payment Date" | translate }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #c01616">
+          {{ cpmpletetime | date: "MMM d, h:mm a" }}
+        </span>
+      </div>
+    </div>
+    <div
+      style="
+        border-left: 3px solid #b5b3b3;
+        height: 113px;
+        margin-left: 43px;
+        margin-bottom: 3px;
+        margin-top: 52px;
+      "
+    ></div>
+  </div>
+
+  <div class="row" id="seehere" style="margin-top: 27px; margin-bottom: 40px">
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 cusre">
+      <mat-accordion>
+        <mat-expansion-panel *ngIf="showinvoive == true">
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-weight: bold">
+              {{ "Invoice Details" | translate }}({{ "Total" | translate }} ₹
+              {{ totalAmount }})
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div id="Invoice" class="panel-collapse collapse in">
+            <div class="cus panel-body">
+              <div class="col-sm-2">
+                <ul
+                  id="nav-tabs-wrapper"
+                  class="nav data nav-tabs nav-pills nav-stacked"
+                  style="border-bottom: 0px"
+                >
+                  <li
+                    *ngIf="spares.length != 0"
+                    id="sparesli"
+                    [class]="sparetabclass"
+                  >
+                    <a id="spareslia" href="#vtab1" data-toggle="tab">{{
+                      "Spare" | translate
+                    }}</a>
+                  </li>
+                  <li
+                    *ngIf="lubes.length != 0"
+                    id="lubesli"
+                    [class]="lubetabclass"
+                  >
+                    <a id="lubeslia" href="#vtab2" data-toggle="tab">{{
+                      "Lubes" | translate
+                    }}</a>
+                  </li>
+                  <li
+                    *ngIf="jobs.length != 0"
+                    id="jobsli"
+                    [class]="jobtabclass"
+                  >
+                    <a id="jobslia" href="#vtab3" data-toggle="tab">{{
+                      "Jobs" | translate
+                    }}</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-sm-10">
+                <div class="tab-content">
+                  <div
+                    *ngIf="spares.length != 0"
+                    role="tabpanel"
+                    [class]="sparetabdataclass"
+                    id="vtab1"
+                  >
+                    <!-- <h3>Spare</h3> -->
+                    <table class="table table-bordered" id="sparetable">
+                      <thead>
+                        <tr>
+                          <th>{{ "Particulars" | translate }}</th>
+                          <th>{{ "Qty" | translate }}</th>
+                          <th>{{ "Amount" | translate }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of spares; let i = index">
+                          <td>{{ data.name }}</td>
+                          <td>{{ data.qty }}</td>
+                          <td>{{ data.price }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div
+                    *ngIf="lubes.length != 0"
+                    role="tabpanel"
+                    [class]="lubetabdataclass"
+                    id="vtab2"
+                  >
+                    <table class="table table-bordered" id="lubetable">
+                      <thead>
+                        <tr>
+                          <th>{{ "Particulars" | translate }}</th>
+                          <th>{{ "Qty" | translate }}</th>
+                          <th>{{ "Amount" | translate }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of lubes; let i = index">
+                          <td>{{ data.name }}</td>
+                          <td>{{ data.qty }}</td>
+                          <td>{{ data.price }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div
+                    *ngIf="jobs.length != 0"
+                    role="tabpanel"
+                    [class]="jobtabdataclass"
+                    id="vtab3"
+                  >
+                    <!-- <h3>Jobs</h3> -->
+                    <table class="table table-bordered" id="jobstable">
+                      <thead>
+                        <tr>
+                          <th>{{ "Particulars" | translate }}</th>
+                          <th>{{ "Qty" | translate }}</th>
+                          <th>{{ "Amount" | translate }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of jobs; let i = index">
+                          <td>{{ data.name }}</td>
+                          <td>{{ data.qty }}</td>
+                          <td>{{ data.price }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+
+        <!--  =========================== Changes by Aaliya ===============================-->
+
+        <mat-expansion-panel
+          style="margin-top: 10px"
+          *ngIf="showfeedback == true"
+          [(expanded)]="xpandStatus"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-weight: bold">
+              <!--  =========================== Changes #2 by Aaliya ===============================-->
+              <div>
+                <span>Feedback</span>
+                <span *ngIf="feedbackPresent" style="margin-left: 10px">
+                  ( {{ overallRating }}
+                  <span style="font-size: 16px; color: lightslategray"
+                    >&#9733;</span
+                  >
+                  )
+                </span>
+              </div>
+              <!--  =========================== Changes #2 by Aaliya ===============================-->
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <form style="margin: 0% 3% 3% 3%" [formGroup]="feedbackForm">
+            <div>
+              1. How satisfied were you with quality of service?
+              <br />
+              <div class="feedback-rating">
+                <ngb-rating
+                  [max]="5"
+                  formControlName="service_quality"
+                >
+                </ngb-rating>
+                <!-- [(rate)]="this.feedbackForm.get('service_quality').value" -->
+              </div>
+            </div>
+            <div>
+              2. How satisfied were you with Customer Support?
+              <br />
+              <div class="feedback-rating">
+                <ngb-rating
+                  [max]="5"
+                  formControlName="customer_support"
+                >
+                </ngb-rating>
+                <!-- [(rate)]="this.feedbackForm.get('customer_support').value" -->
+              </div>
+            </div>
+            <div>
+              3. How satisfied were you with timeliness of the service?
+              <br />
+              <div class="feedback-rating">
+                <ngb-rating
+                  [max]="5"
+                  formControlName="timeliness"
+                >
+                </ngb-rating>
+                <!-- [(rate)]="this.feedbackForm.get('timeliness').value" -->
+              </div>
+            </div>
+            <div>
+              4. How satisfied were you with product and service pricing?
+              <br />
+              <div class="feedback-rating">
+                <ngb-rating
+                  [max]="5"
+                  formControlName="pricing"
+                >
+                </ngb-rating>
+                <!-- [(rate)]="this.feedbackForm.get('pricing').value" -->
+              </div>
+            </div>
+            <div>
+              5. Overall Experience
+              <br />
+              <div class="feedback-rating">
+                <ngb-rating
+                  [max]="5"
+                  formControlName="overall_rating"
+                >
+                </ngb-rating>
+                <!-- [(rate)]="this.feedbackForm.get('overall_rating').value" -->
+              </div>
+            </div>
+            <br />
+            <div class="form-group feedback-textarea">
+              <textarea
+                class="form-control bg-light"
+                rows="7"
+                placeholder="Write your own"
+                formControlName="comment"
+              ></textarea>
+            </div>
+            <br />
+            <div
+              *ngIf="
+                !feedbackForm.controls['service_quality'].errors &&
+                  !feedbackForm.controls['customer_support'].errors &&
+                  !feedbackForm.controls['timeliness'].errors &&
+                  !feedbackForm.controls['pricing'].errors &&
+                  !feedbackForm.controls['overall_rating'].errors;
+                else feedWarn
+              "
+            >
+              <button
+                (click)="submitFeedback()"
+                type="button"
+                class="btn btn-danger feedback-button"
+                style="
+                  color: rgb(22, 22, 22);
+                  margin-left: 10px;
+                  font-weight: bold;
+                  float: right;
+                  margin-bottom: 2rem;
+                "
+              >
+                <div *ngIf="feedbackPresent === true; else submit">Update</div>
+                <ng-template #submit>Submit</ng-template>
+              </button>
+            </div>
+            <ng-template #feedWarn
+              ><span style="color: red"
+                >Please Provide Feedback to Submit!</span
+              ></ng-template
+            >
+          </form>
+        </mat-expansion-panel>
+
+        <!--  =========================== Changes by Aaliya ===============================-->
+
+        <mat-expansion-panel style="margin-top: 10px" *ngIf="showmarks == true">
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-weight: bold">
+              {{ "Dent Marks" | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <div class="col-lg-9 col-sm-9 col-md-9">
+              <canvas
+                #myCanvass
+                width="470"
+                height="850"
+                style="cursor: pointer"
+              ></canvas>
+            </div>
+            <div class="col-lg-2 col-sm-2 col-md-2">
+              <label
+                class="btn btn-primary cir cir_btn"
+                style="
+                  width: 70px;
+                  background: #edf105 !important;
+                  border-color: #edf105 !important;
+                  padding: 7px;
+                  margin: 10% 0 10% 0;
+                  color: black;
+                "
+                >{{ "Dent" | translate }}</label
+              >
+              <br />
+              <label
+                class="btn btn-primary cir cir_btn"
+                style="
+                  width: 70px;
+                  background: #ffac44 !important;
+                  border-color: #ffac44 !important;
+                  padding: 7px;
+                  margin: 10% 0 10% 0;
+                  color: black;
+                "
+                >{{ "Scratch" | translate }}</label
+              >
+              <br />
+              <label
+                class="btn btn-primary cir cir_btn"
+                style="
+                  width: 70px;
+                  background: linear-gradient(
+                    to bottom,
+                    #ff0000 0%,
+                    #563b3b 100%
+                  );
+                  border-color: #c30707;
+                  font-weight: bold;
+                  padding: 7px;
+                  margin: 10% 0 10% 0;
+                  color: #fff;
+                "
+                >{{ "Broken" | translate }}</label
+              >
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel style="margin-top: 10px" *ngIf="showdent == true">
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-weight: bold">
+              {{ "Dent Photos" | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <span *ngFor="let data of dentphotos; let i = index">
+            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+              <img [src]="data" alt="" />
+            </div>
+          </span>
+        </mat-expansion-panel>
+        <mat-expansion-panel
+          style="margin-top: 10px"
+          *ngIf="showcustomer == true"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-weight: bold">
+              {{ "Customer Voice" | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ul>
+            <li *ngFor="let data of customervoice; let i = index">
+              {{ i + 1 }}. {{ data }}
+            </li>
+          </ul>
+        </mat-expansion-panel>
+        <mat-expansion-panel style="margin-top: 10px" *ngIf="showinven == true">
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-weight: bold">
+              {{ "Vehicle Inventory" | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ul>
+            <ul>
+              <li *ngFor="let data of vehicleinventory; let i = index">
+                {{ i + 1 }}. {{ data }}
+              </li>
+            </ul>
+          </ul>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>

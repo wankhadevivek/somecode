@@ -1,0 +1,2259 @@
+<app-spin></app-spin>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+  <mat-card>
+    <span style="float: right;">V 11.20.03</span>
+    <mat-card-title>{{tabClickOption}} Settings</mat-card-title>
+    <mat-card-actions>
+      <button mat-button (click)="tabClick('Profile')" 
+      [ngClass]="{'tab-btn-br': tabClickOption == 'Profile'}">
+      <i class="fa fa-user tab-icon-mrb" aria-hidden="true"></i>
+      Profile</button>
+      <button mat-button (click)="tabClick('Jobcard')"
+      [ngClass]="{'tab-btn-br': tabClickOption == 'Jobcard'}" >
+      <i class="fa fa-list-alt tab-icon-mrb" aria-hidden="true"></i> 
+      Jobcard</button>
+      <button mat-button (click)="tabClick('Billing')"
+      [ngClass]="{'tab-btn-br': tabClickOption == 'Billing'}">
+      <i class="fa fa-bank tab-icon-mrb" aria-hidden="true"></i> 
+      Billing</button>
+      <button mat-button (click)="tabClick('Inventory')" 
+      [ngClass]="{'tab-btn-br': tabClickOption == 'Inventory'}">
+      <i class="fa fa-wrench tab-icon-mrb" aria-hidden="true"></i> 
+      Inventory</button>
+      <button mat-button (click)="tabClick('User')" 
+      [ngClass]="{'tab-btn-br': tabClickOption == 'User'}">
+      <i class="fa fa-user tab-icon-mrb" aria-hidden="true"></i> 
+      User</button>
+      <!-- <button mat-button (click)="tabClick('Invoice')" 
+      [ngClass]="{'tab-btn-br': tabClickOption == 'Invoice'}">
+      <i class="fa fa-print tab-icon-mrb" aria-hidden="true"></i> 
+      Invoice</button> -->
+      
+      <button mat-button>
+        <a routerLink="/membership/" href="#">
+          {{ "Membership & Payments" | translate }}</a>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- Profile card start -->
+    <mat-card style="margin-top:2%;" [ngClass]="{ hidden: tabClickOption != 'Profile'}">
+      <div class="container">    
+        <form novalidate class="form-horizontal" [formGroup]="ProfileForm">
+          <div class="row" style="padding: 13px">
+            <div class="col-lg-4 col-sm-4 col-md-4" style="margin-left: -33px">
+              <div
+                class="col-lg-2 col-sm-2 col-md-2"
+                style="width: 61.666667%"
+                data-toggle="tooltip"
+                title="Update Workshop Logo"
+              >
+                <label
+                  style="margin-bottom: 11px"
+                  class="control-label txt_lbl"
+                >
+                  {{ "Upload Workshop Logo" | translate }}</label
+                >
+  
+                <span>
+                  <img
+                    alt="image"
+                    class="img-circle"
+                    alt="Profile Image"
+                    [src]="
+                      domSanitizer.bypassSecurityTrustResourceUrl(
+                        logoPhototoshow
+                      )
+                    "
+                    height="163"
+                    width="180"
+                  />
+                  <br />
+                </span>
+                <div
+                  class="image-upload"
+                  *ngIf="showDeleteLogo == true"
+                  data-toggle="tooltip"
+                  title="Delete Workshop Logo"
+                >
+                  <label
+                    style="
+                      margin-left: 12px;
+                      margin-top: -36px;
+                      position: absolute;
+                      color: #c30707;
+                      font-weight: bold;
+                    "
+                  >
+                    <i
+                      (click)="deleteWorkhopLogo()"
+                      class="fa fa-times"
+                      aria-hidden="true"
+                      style="
+                        transform: rotate(271deg);
+                        font-size: 30px;
+                        cursor: pointer;
+                      "
+                    ></i>
+                  </label>
+                </div>
+                <div class="image-upload">
+                  <label
+                    for="file-input-logo"
+                    style="
+                      margin-left: 139px;
+                      margin-top: -36px;
+                      position: absolute;
+                    "
+                  >
+                    <i
+                      class="fa fa-pencil"
+                      aria-hidden="true"
+                      style="
+                        transform: rotate(271deg);
+                        font-size: 30px;
+                        cursor: pointer;
+                      "
+                    ></i>
+                  </label>
+                  <input
+                    id="file-input-logo"
+                    type="file"
+                    (change)="onSelectFileForLogo($event)"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-sm-4 col-md-4" style="margin-left: -33px">
+              <div
+                class="col-lg-2 col-sm-2 col-md-2"
+                style="width: 61.666667%"
+                data-toggle="tooltip"
+                title="Update Workshop Signature"
+              >
+                <label
+                  style="margin-bottom: 11px"
+                  class="control-label txt_lbl"
+                >
+                  {{ "Upload Workshop Signature" | translate }}</label
+                >
+  
+                <span>
+                   <img
+                    alt="image"
+                    class="img-circle"
+                    alt="Signature Image"
+                    [src]="
+                      domSanitizer.bypassSecurityTrustResourceUrl(
+                        signaturePhototoshow
+                      )
+                    "
+                    height="163"
+                    width="180"
+                  />
+                  <br />
+                </span>
+                <div
+                  class="image-upload"
+                  *ngIf="showDeletesignature == true"
+                  data-toggle="tooltip"
+                  title="Delete Workshop Signature"
+                >
+                  <label
+                    style="
+                      margin-left: 12px;
+                      margin-top: -36px;
+                      position: absolute;
+                      color: #c30707;
+                      font-weight: bold;
+                    "
+                  >
+                    <i
+                      (click)="deleteWorkhopSignature()"
+                      class="fa fa-times"
+                      aria-hidden="true"
+                      style="
+                        transform: rotate(271deg);
+                        font-size: 30px;
+                        cursor: pointer;
+                      "
+                    ></i>
+                  </label>
+                </div>
+                <div class="image-upload">
+                  <label
+                    for="file-input-signature"
+                    style="
+                      margin-left: 139px;
+                      margin-top: -36px;
+                      position: absolute;
+                    "
+                  >
+                    <i
+                      class="fa fa-pencil"
+                      aria-hidden="true"
+                      style="
+                        transform: rotate(271deg);
+                        font-size: 30px;
+                        cursor: pointer;
+                      "
+                    ></i>
+                  </label>
+                  <input
+                    id="file-input-signature"
+                    type="file"
+                    (change)="onSelectFileForSignature($event)"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-sm-4 col-md-4">
+              <div
+                class="col-lg-2 col-sm-2 col-md-2"
+                style="width: 61.666667%"
+                data-toggle="tooltip"
+                title="Update Profile Picture"
+              >
+                <label
+                  style="margin-bottom: 11px"
+                  class="control-label txt_lbl"
+                >
+                  {{ "Upload Profile Picture" | translate }}</label
+                >
+                <span>
+                  
+                  <img
+                    style="width: 180px; height: 163px"
+                    alt="image"
+                    class="img-circle"
+                    alt="Profile Image"
+                    [src]="profilePhototoshow"
+                  />
+                  <br />
+                </span>
+                <div class="image-upload">
+                  <label
+                    for="file-input"
+                    style="
+                      margin-left: 139px;
+                      margin-top: -36px;
+                      position: absolute;
+                    "
+                  >
+                    <i
+                      class="fa fa-pencil"
+                      aria-hidden="true"
+                      style="
+                        transform: rotate(271deg);
+                        font-size: 30px;
+                        cursor: pointer;
+                      "
+                    ></i>
+                  </label>
+                  <input
+                    id="file-input"
+                    type="file"
+                    (change)="onSelectFile($event)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="remove-padding" class="row">
+            <div class="col-lg-3 col-sm-3 col-md-3">
+              <label class="control-label txt_lbl">
+                {{ "Workshop Name" | translate }}*</label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="workshopname"
+              />
+              <div
+                *ngIf="submitted && ProfileForm.controls['workshopname'].errors"
+                class="text-danger"
+              >
+                <div
+                  *ngIf="ProfileForm.controls['workshopname'].errors.required"
+                >
+                  {{ "Workshop name is required." | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3">
+              <label class="control-label txt_lbl">
+                {{ "First Name" | translate }}*</label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="firstname"
+              />
+              <div
+                *ngIf="submitted && ProfileForm.controls['firstname'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="ProfileForm.controls['firstname'].errors.required">
+                  {{ "First Name is required." | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3">
+              <label class="control-label txt_lbl">
+                {{ "Last Name" | translate }}</label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="lastname"
+              />
+            </div>
+          </div>
+          <div id="remove-padding" class="row">
+            <div class="col-lg-3 col-sm-3 col-md-3">
+              <label class="control-label txt_lbl">
+                {{ "Email" | translate }}</label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="email"
+              />
+              <div
+                *ngIf="submitted && ProfileForm.controls['email'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="ProfileForm.controls['email'].errors.required">
+                  {{ " Email is required." | translate }}
+                </div>
+                <div *ngIf="ProfileForm.controls['email'].errors.email">
+                  {{ "Enter a Valid Email" | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3">
+              <label class="control-label txt_lbl">
+                {{ "Phone Number 1" | translate }}*</label
+              >
+              <i
+                *ngIf="editnumber == true"
+                (click)="editPhonenumber()"
+                class="fa fa-pencil"
+                aria-hidden="true"
+                style="cursor: pointer; padding: 4px"
+              ></i>
+              <i
+                *ngIf="editnumber == false"
+                (click)="verifynumber()"
+                class="fa fa-save"
+                aria-hidden="true"
+                style="cursor: pointer; padding: 4px"
+              ></i>
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="phonenumber"
+                maxlength="10"
+              />
+              <div
+                *ngIf="submitted && ProfileForm.controls['phonenumber'].errors"
+                class="text-danger"
+              >
+                <div
+                  *ngIf="ProfileForm.controls['phonenumber'].errors.required"
+                >
+                  {{ "Phone Number is required." | translate }}
+                </div>
+                <div *ngIf="ProfileForm.controls['phonenumber'].errors.pattern">
+                  {{ "Enter a Valid Number" | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3">
+              <label class="control-label txt_lbl">
+                {{ "Phone Number 2" | translate }}</label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="phonenumbertwo"
+                maxlength="10"
+              />
+              <div
+                *ngIf="
+                  ProfileForm.controls['phonenumbertwo'].invalid &&
+                  (ProfileForm.controls['phonenumbertwo'].dirty ||
+                    ProfileForm.controls['phonenumbertwo'].touched)
+                "
+                class="text-danger"
+              >
+                <div
+                  *ngIf="ProfileForm.controls['phonenumbertwo'].errors.pattern"
+                >
+                  {{ "Enter a Valid Number" | translate }}
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  ProfileForm.value.phonenumber != '' &&
+                  ProfileForm.value.phonenumber ==
+                    ProfileForm.value.phonenumbertwo
+                "
+                class="text-danger"
+              >
+                {{
+                  "Phone Number 2 Can't be same as PhoneNumber 1" | translate
+                }}
+              </div>
+            </div>
+          </div>
+          <div id="remove-padding" class="row">
+            <div class="col-lg-3 col-sm-3 col-md-3">
+              <label class="control-label txt_lbl">City</label>
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="city"
+              />
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3">
+              <label class="control-label txt_lbl">
+                {{ "State" | translate }}</label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="state"
+              />
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3">
+              <label class="control-label txt_lbl">
+                {{ "Zip code" | translate }}</label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="zipcode"
+                maxlength="6"
+              />
+              <div
+                *ngIf="
+                  ProfileForm.controls['zipcode'].invalid &&
+                  (ProfileForm.controls['zipcode'].dirty ||
+                    ProfileForm.controls['zipcode'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="ProfileForm.controls['zipcode'].errors.pattern">
+                  {{ "Enter a Valid Zip code" | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="remove-padding" class="row">
+            <div class="col-lg-3 col-sm-3 col-md-3">
+              <label class="control-label txt_lbl">{{
+                "Address" | translate
+              }}</label>
+              <textarea
+                class="form-control cir"
+                formControlName="address"
+              ></textarea>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3">
+              <label class="control-label txt_lbl"
+                >{{ "RTO Code" | translate }}*</label
+              >
+              <input
+                type="text"
+                cols="50"
+                class="form-control cir"
+                formControlName="rtono"
+                maxlength="4"
+                oninput="this.value = this.value.toUpperCase()"
+              />
+              <div
+                *ngIf="submitted && ProfileForm.controls['rtono'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="ProfileForm.controls['rtono'].errors.required">
+                  {{ "RTO No is required." | translate }}
+                </div>
+                <div *ngIf="ProfileForm.controls['rtono'].errors.pattern">
+                  {{ "Enter a Valid RTO Number" | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6" style="margin-top: 20px">
+              <div
+                *ngFor="let data of vechileType; let i = index"
+                class="col-sm-1"
+              >
+                <label>
+                  <input
+                    type="checkbox"
+                    [checked]="data.checked"
+                    formControlName="vechiletypesnotselected"
+                    [value]="data.value"
+                    (change)="onCheckboxChange($event)"
+                  />
+                  {{ data.name }}
+                </label>
+              </div>
+              <div
+                style="display: inline-block"
+                *ngIf="submitted && ProfileForm.controls['vechiletypes'].errors"
+                class="text-danger"
+              >
+                <div
+                  *ngIf="ProfileForm.controls['vechiletypes'].errors?.required"
+                >
+                  {{
+                    "Checkbox is required, select at least one value."
+                      | translate
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-12">
+            <div class="col-sm-6">
+              
+            </div>
+            <div class="col-sm-6">
+              <button
+              type="submit"
+              class="btn btn-primary cir cir_btn btn-submit col-sm-12"
+              (click)="updateProfile()"
+            >
+              {{ "Save" | translate }}
+            </button>
+            </div>
+          </div>
+        </form>
+        <div class="col-sm-10" style="margin-top:2%;">
+          <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{'Reset password' | translate}}
+                </mat-panel-title>
+                <mat-panel-description>
+                  click here to {{panelOpenState ? 'close' : 'open'}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <form  class="form-horizontal"  [formGroup]="setPassForm" 
+              (ngSubmit)="setPassword('reset')" novalidate>
+                <div class="row">
+                    <div *ngIf="passwordSet==false">
+                          <div class="validate-input m-b-20 col-lg-3 col-md-3 col-sm-6" data-validate="password">
+                            <input id="old_password" class="form-control" type="password" 
+                            name="old_password" placeholder="{{'Enter old Password' | translate}}"
+                            formControlName="old_password">
+                                <div *ngIf="setPassForm.controls['old_password'].invalid && (setPassForm.controls['old_password'].dirty || setPassForm.controls['old_password'].touched)" class="text-danger">
+                                    <div *ngIf="setPassForm.controls['old_password'].errors.required">
+                                        {{'This filed is required' | translate}}
+                                    </div>
+                                    <div *ngIf="setPassForm.controls['old_password'].errors.pattern">
+                                    {{'Enter a valid Password' | translate}}
+                                    </div>
+                                </div>
+                          </div>
+                          <div class="validate-input m-b-20 col-lg-3 col-md-3 col-sm-6" data-validate="Enter OTP">
+                              <input id="new_password" class="form-control" type="password" 
+                              name="new_password" placeholder="{{'Enter New Password' | translate}}"
+                              formControlName="new_password">
+                            
+                                <div *ngIf="setPassForm.controls['new_password'].invalid && (setPassForm.controls['new_password'].dirty || setPassForm.controls['new_password'].touched)" class="text-danger">
+                                    <div *ngIf="setPassForm.controls['new_password'].errors.required">
+                                    {{'This filed is required' | translate}}
+                                    </div>
+                                    <div *ngIf="setPassForm.controls['new_password'].errors.pattern">
+                                    {{'Enter a valid Password' | translate}}
+                                    </div>
+                                </div>
+                          </div>
+                          <div class="validate-input m-b-20 col-lg-3 col-md-3 col-sm-6" data-validate="Enter OTP">
+                              <input id="confirm_password" class="form-control" type="password" 
+                              name="confirm_password" placeholder="{{'Confirm New Password' | translate}}"
+                              formControlName="confirm_password">
+                              
+                              <div *ngIf="setPassForm.controls['confirm_password'].invalid && (setPassForm.controls['confirm_password'].dirty || setPassForm.controls['confirm_password'].touched)" class="text-danger">
+                                  <div *ngIf="setPassForm.controls['confirm_password'].errors.required">
+                                  {{'This filed is required' | translate}}
+                                  </div>
+                                  <div *ngIf="setPassForm.controls['confirm_password'].errors.pattern">
+                                  {{'Enter a valid Password' | translate}}
+                                  </div>
+                              </div>
+                              <div class="text-danger" *ngIf="setPassForm.errors?.mismatch && (setPassForm.controls['confirm_password'].dirty || setPassForm.controls['confirm_password'].touched)">password does not match</div>
+                          </div>
+            
+                          <div class="col-lg-12 col-md-12 col-sm-12">
+                              <button type="submit" [disabled]="setPassForm.pristine || setPassForm.invalid" 
+                              class="btn btn-primary cir cir_btn btn-submit" style="float: right;width: 100px;">
+                                {{'Submit' | translate}}
+                              </button>
+                          </div>
+                    </div>
+                    <div *ngIf="passwordSet==true">
+                        <span class="login100-form-title p-b-34">
+                          <span style="color: #6666f9;">{{'Password changed successfully' | translate}}</span>
+                        </span>
+                    </div>
+                </div>
+                
+              </form>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+    </mat-card>
+  <!-- Profile card end -->
+
+  <!-- Jobcard card start -->
+  <!-- <mat-card style="margin-top:2%;" *ngIf="tabClickOption == 'Jobcard'"> -->
+  <mat-card style="margin-top:2%;" [ngClass]="{ hidden: tabClickOption != 'Jobcard'}">
+      <div class="container">
+        <form novalidate class="form-horizontal" [formGroup]="JobcardForm">
+          <div class="row">
+            <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+              <label class="control-label txt_lbl">
+                {{ "Engine Chassis Number" | translate }} </label>
+              <label class="switch" style="margin-right: auto; padding: 7px">
+                <input
+                  type="checkbox"
+                  formControlName="engine_chassis_number"
+                  [checked]="JobcardForm.value.chassis"/>
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+              <label class="control-label txt_lbl">
+                {{ "Vehicle Colour" | translate }} </label>
+              <label class="switch" style="margin-left: 42px; padding: 7px">
+                <input
+                  type="checkbox"
+                  formControlName="vehicle_color"
+                  [checked]="JobcardForm.value.color"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+              <label class="control-label txt_lbl">
+                {{ "Customer Mobile No." | translate }}</label>
+              <label class="switch" style="padding: 7px; margin-left: 12px">
+                <input
+                  type="checkbox"
+                  formControlName="customer_mobile_number"
+                  [checked]="JobcardForm.value.mobileno"/>
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+              <label class="control-label txt_lbl">
+                {{ "Customer Email" | translate }}</label>
+              <label class="switch" style="margin-left: 64px; padding: 7px">
+                <input
+                  type="checkbox"
+                  formControlName="customer_email"
+                  [checked]="JobcardForm.value.email"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+              <label class="control-label txt_lbl">{{
+                "Customer Birthday" | translate
+              }}</label>
+              <label class="switch" style="margin-left: 12px; padding: 7px">
+                <input
+                  type="checkbox"
+                  formControlName="customer_birthday"
+                  [checked]="JobcardForm.value.birthday"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+              <label class="control-label txt_lbl">{{
+                "Customer Pickup Addr." | translate
+              }}</label>
+              <label class="switch" style="padding: 7px; margin-left: 4px">
+                <input
+                  type="checkbox"
+                  formControlName="customer_pickup_address"
+                  [checked]="JobcardForm.value.pickup"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+              <label class="control-label txt_lbl">{{
+                "Customer Delivery Addr." | translate
+              }}</label>
+              <label class="switch" style="padding: 7px; margin-left: 13px">
+                <input
+                  type="checkbox"
+                  formControlName="customer_delivery_address"
+                  [checked]="JobcardForm.value.delivery"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+              <label class="control-label txt_lbl">{{
+                "Driver Details " | translate
+              }}</label>
+              <label class="switch" style="margin-left: 43px; padding: 7px">
+                <input
+                  type="checkbox"
+                  formControlName="driver_details"
+                  [checked]="JobcardForm.value.details"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+              <label class="control-label txt_lbl">
+                {{ "Jobwise Mechanic" | translate }}</label
+              >
+              <label class="switch" style="padding: 7px; margin-left: 28px">
+                <input
+                  type="checkbox"
+                  formControlName="jobwise_mechanic"
+                  [checked]="JobcardForm.value.jobwisemec"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+              <label class="control-label txt_lbl">{{
+                "Customer Signature" | translate
+              }}</label>
+              <label class="switch" style="margin-left: 41px; padding: 7px">
+                <input
+                  type="checkbox"
+                  formControlName="customer_signature"
+                  [checked]="JobcardForm.value.signature"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+              <label class="control-label txt_lbl">{{
+                "Custom Jobcard No." | translate
+              }}</label>
+              <label class="switch" style="margin-left: 3px; padding: 7px">
+                <input
+                  type="checkbox"
+                  (change)="checkCustomerJobcardNumber($event.target.checked)"
+                  formControlName="custom_jobcard_number"
+                  [checked]="JobcardForm.value.jobcardno"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+              <label class="control-label txt_lbl">
+                {{ "Item Wise Discount" | translate }}</label
+              >
+              <label class="switch" style="padding: 7px; margin-left: 25px">
+                <input
+                  type="checkbox"
+                  formControlName="item_wise_discount"
+                  [checked]="JobcardForm.value.discount"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+              <label class="control-label txt_lbl">
+                {{ "Jobcard Series" | translate }}</label
+              >
+              <label class="switch" style="padding: 7px; margin-left: 66px">
+                <input
+                  type="checkbox"
+                  formControlName="jobcard_no_series"
+                  [checked]="JobcardForm.value.jobcardseries"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div
+              class="col-lg-3 col-sm-3 col-md-3"
+              *ngIf="JobcardForm.value.custom_jobcard_number == 1"
+            >
+              <label class="control-label txt_lbl">
+                {{ "Jobcard Series Count" | translate }}</label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="jobcard_no_series_count"
+              />
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3">
+              <label class="control-label txt_lbl">
+                {{ "Default Mechanic" | translate }}</label
+              >
+              <!-- <input type="text" class="form-control cir" formControlName="defaultmec"> -->
+              <ng-multiselect-dropdown
+                name="Mechanic"
+                formControlName="default_mechanic"
+                [placeholder]="'Select Mechanic'"
+                [data]="staffListtabel"
+                [settings]="dropdownSettings"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+            <div class="col-sm-12 col-md-12">
+              <div class="col-sm-6">
+                
+              </div>
+              <div class="col-sm-6">
+                <button
+                type="submit"
+                class="btn btn-primary cir cir_btn btn-submit col-sm-12"
+                (click)="updateJobcard(false)"
+              >
+                {{ "Save" | translate }}
+              </button>
+              </div>
+            </div>
+        </form>
+      </div>
+  </mat-card>
+<!-- Jobcard card end -->
+
+<!-- Billing card start -->
+<mat-card style="margin-top:2%;" [ngClass]="{ hidden: tabClickOption != 'Billing'}">
+  <div class="container">     
+    <form novalidate class="form-horizontal" [formGroup]="BillingForm">
+      <div class="row" style="padding: 13px">
+        <div class="col-lg-3 col-sm-3 col-md-3">
+          <label class="control-label txt_lbl">
+            {{ "Reminder" | translate }}KM</label>
+          <select
+            class="form-control cir"
+            formControlName="default_running_km"
+            [value]="BillingForm.value.default_running_km"
+          >
+            <option value="No KM Reminder">
+              {{ "No KM Reminder" | translate }}
+            </option>
+            <option value="500 KM">500 KM</option>
+            <option value="750 KM">750 KM</option>
+            <option value="1000 KM">1000 KM</option>
+            <option value="2000 KM">2000 KM</option>
+            <option value="2500 KM">2500 KM</option>
+            <option value="3000 KM">3000 KM</option>
+            <option value="4000 KM">4000 KM</option>
+            <option value="5000 KM">5000 KM</option>
+            <option value="10000 KM">10000 KM</option>
+            <option value="20000 KM">20000 KM</option>
+            <option value="40000 KM">40000 KM</option>
+            <option value="50000 KM">50000 KM</option>
+            <option value="60000 KM">60000 KM</option>
+            <option value="80000 KM">80000 KM</option>
+            <option value="10000 KM">100000 KM</option>
+          </select>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-md-3">
+          <label class="control-label txt_lbl">
+            {{ "Reminder Period" | translate }}</label
+          >
+          <select
+            class="form-control cir"
+            formControlName="default_reminder_period"
+            [value]="BillingForm.value.default_reminder_period"
+          >
+            <option value="1 Months">1 Month</option>
+            <option value="2 Months">2 Month</option>
+            <option value="3 Months">3 Month</option>
+            <option value="4 Months">4 Month</option>
+            <option value="5 Months">5 Month</option>
+            <option value="6 Months">6 Month</option>
+            <option value="7 Months">7 Month</option>
+            <option value="8 Months">8 Month</option>
+            <option value="9 Months">9 Month</option>
+            <option value="10 Months">10 Month</option>
+            <option value="11 Months">11 Month</option>
+            <option value="12 Months">12 Month</option>
+          </select>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-md-3">
+          <label class="control-label txt_lbl">
+            {{ "Bill Format" | translate }}</label
+          >
+          <select
+            class="form-control cir"
+            formControlName="bill_format"
+            [value]="BillingForm.value.bill_format"
+          >
+            <option value="Complete">{{ "Complete" | translate }}</option>
+            <option value="Parts">{{ "Parts" | translate }}</option>
+            <option value="PartsandPartnumber">
+              {{ "Parts & Partnumber" | translate }}
+            </option>
+            <!-- <option value="3">sdfsfdsdf</option> -->
+          </select>
+        </div>
+      </div>
+      <div class="row" style="padding: 13px">
+        <div class="col-lg-3 col-sm-3 col-md-3" style="padding: 10px">
+          <label class="control-label txt_lbl">
+            {{ "Partial GST" | translate }}</label
+          >
+          <label class="switch" style="margin-left: 42px; padding: 7px">
+            <input
+              type="checkbox"
+              (change)="partialGst($event.target.checked)"
+              formControlName="partial_gst"
+              [checked]="BillingForm.value.color"
+            />
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-md-3" style="padding: 10px">
+          <label class="control-label txt_lbl">
+            {{ "Complete GST" | translate }}</label
+          >
+          <label class="switch" style="margin-left: 42px; padding: 7px">
+            <input
+              type="checkbox"
+              (change)="completeGst($event.target.checked)"
+              formControlName="complete_gst"
+              [checked]="BillingForm.value.color"
+            />
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div
+          class="col-lg-3 col-sm-3 col-md-3"
+          *ngIf="
+            BillingForm.value.complete_gst == 1 ||
+            BillingForm.value.partial_gst == 1
+          "
+        >
+          <label class="control-label txt_lbl"
+            >{{ "GST Number" | translate }}*</label
+          >
+          <input
+            type="text"
+            (input)="gstNoChange($event.target.value)"
+            class="form-control cir"
+            formControlName="gst_number"
+          />
+          <div *ngIf="gstNumberRequired == true" class="text-danger">
+            {{ "GST Number is required." | translate }}
+          </div>
+          <div
+            *ngIf="
+              BillingForm.controls['gst_number'].invalid &&
+              (BillingForm.controls['gst_number'].dirty ||
+                BillingForm.controls['gst_number'].touched)
+            "
+            class="text-danger"
+          >
+            <div *ngIf="BillingForm.controls['gst_number'].errors.pattern">
+              {{ "Enter a Valid GST Number" | translate }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="padding: 13px">
+        <div class="col-sm-4">
+          <label class="control-label txt_lbl">
+            {{ "Bill Header" | translate }}</label
+          >
+          <textarea
+            class="form-control cir"
+            formControlName="bill_header"
+          ></textarea>
+        </div>
+        <div class="col-sm-4">
+          <label class="control-label txt_lbl">
+            {{ "Tag Line" | translate }}</label
+          >
+          <textarea
+            class="form-control cir"
+            formControlName="tag_line"
+          ></textarea>
+        </div>
+      </div>
+      <div class="row" style="padding: 13px">
+        <div class="col-sm-4">
+          <label class="control-label txt_lbl">
+            {{ "Bill Footer" | translate }}</label
+          >
+          <textarea
+            class="form-control cir"
+            formControlName="bill_footer"
+          ></textarea>
+        </div>
+        <div class="col-sm-4">
+          <label class="control-label txt_lbl">
+            {{ "Terms And Conditions" | translate
+            }}<span class="text-danger">
+              {{ "(Please Add ; End Of Point)" | translate }}</span
+            >
+          </label>
+          <textarea
+            class="form-control cir"
+            formControlName="terms_and_conditions"
+          ></textarea>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12">
+        <div class="col-sm-6">
+          
+        </div>
+        <div class="col-sm-6">
+          <button
+          type="submit"
+          [disabled]="gstNumberRequired == true || BillingForm.invalid"
+          class="btn btn-primary cir cir_btn btn-submit col-sm-12"
+          (click)="updateBilling()"
+        >
+          {{ "Save" | translate }}
+        </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-card>
+<!-- Billing card end -->
+
+<!-- Inventory card start -->
+<mat-card style="margin-top:2%;" [ngClass]="{ hidden: tabClickOption != 'Inventory'}">
+  <div class="container">   
+    <form novalidate class="form-horizontal" [formGroup]="InventoryForm">
+      <div class="row" style="padding: 13px">
+        <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+          <label class="control-label txt_lbl">
+            {{ "Bill Details" | translate }}</label
+          >
+          <label class="switch" style="margin-left: 22px; padding: 7px">
+            <input
+              type="checkbox"
+              formControlName="bill_details"
+              [checked]="InventoryForm.value.details"
+            />
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+          <label class="control-label txt_lbl">
+            {{ "Purchase Order Details" | translate }}</label
+          >
+          <label class="switch" style="margin-left: 10px; padding: 7px">
+            <input
+              type="checkbox"
+              formControlName="purchase_order_details"
+              [checked]="InventoryForm.value.order"
+            />
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+          <label class="control-label txt_lbl">{{
+            "Lower Limit" | translate
+          }}</label>
+          <label class="switch" style="padding: 7px; margin-left: 12px">
+            <input
+              type="checkbox"
+              formControlName="lower_limit"
+              [checked]="InventoryForm.value.limit"
+            />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="row" style="padding: 13px">
+        <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+          <label class="control-label txt_lbl">
+            {{ "Account" | translate }}</label
+          >
+          <label class="switch" style="margin-left: 31px; padding: 7px">
+            <input
+              type="checkbox"
+              formControlName="account"
+              [checked]="InventoryForm.value.account"
+            />
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-md-3 togopclo">
+          <label class="control-label txt_lbl">
+            {{ "Negative Inventory" | translate }}</label
+          >
+          <label class="switch" style="margin-left: 33px; padding: 7px">
+            <input
+              type="checkbox"
+              formControlName="negative_inventory"
+              [checked]="InventoryForm.value.negative"
+            />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12">
+        <div class="col-sm-6">
+          
+        </div>
+        <div class="col-sm-6">
+          <button
+          type="submit"
+          class="btn btn-primary cir cir_btn btn-submit col-sm-12"
+          (click)="updateInventory()"
+        >
+          {{ "Save" | translate }}
+        </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-card>
+<!-- Inventory card end -->
+
+<!-- User card start -->
+<mat-card style="margin-top:2%;" [ngClass]="{ hidden: tabClickOption != 'User'}" >
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-sm-12 col-lg-10 col-xs-12">
+          <button mat-stroked-button
+          data-toggle="modal"
+          data-target="#add_user"
+          (click)="openPopup()"
+          class="btn btn-primary btn-submit"
+          style="color: white;float: right;margin-bottom: 2%;">Add Users
+        </button>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col-md-12 col-sm-12 col-lg-12">
+        <div class="mat-elevation-z8"
+            style="border-radius: 8px;" >
+            <table
+              mat-table
+              [dataSource]="dataSource"
+              matSort
+              class="mat-elevation-z12"
+              style="font-family: Open sans; width: 100%">
+              <!-- Name Column -->
+              <ng-container matColumnDef="user_type">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <span class="mat-title-ctm">
+                    {{ "User Type" | translate }}</span>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.user_role }}
+                </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="user_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <span class="mat-title-ctm">
+                    {{ "User Name" | translate }}</span
+                  >
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.user_name }}
+                </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="user_mobile">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <span class="mat-title-ctm">
+                    {{ "User Mobile Number" | translate }}</span
+                  >
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.user_mobile_number }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <span class="mat-title-ctm">
+                    {{ "Status" | translate }}</span
+                  >
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.is_active">
+                    {{ "Enabled" | translate }}</span
+                  >
+                  <span *ngIf="!element.is_active">
+                    {{ "Disabled" | translate }}</span
+                  >
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>
+                  <span class="mat-title-ctm">
+                    {{ "Action" | translate }}</span
+                  >
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  <span
+                    style="color: #c30707; font-weight: bold; cursor: pointer"
+                    data-toggle="modal"
+                    data-target="#add_user"
+                    (click)="updateUserDetails(element, '1')"
+                  >
+                    {{ "Edit" | translate }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <tr
+                mat-header-row
+                *matHeaderRowDef="displayedColumns; sticky: true"
+              ></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: displayedColumns"
+              ></tr>
+            </table>
+        </div>
+      </div>
+    </div>
+      
+    </div>
+</mat-card>
+<!-- User card end -->
+
+<!-- Invoice card start -->
+<mat-card style="margin-top:2%;" [ngClass]="{ hidden: tabClickOption != 'Invoice'}">
+  <div class="container-r">
+    <mat-tab-group>
+      <mat-tab label="Regular Invoice">
+        <!-- Regular Invoice -->
+        <form novalidate class="form-horizontal" (ngSubmit)="updateBilling()" [formGroup]="invoiceTypeRegularForm">
+          <div class="col-sm-6">
+          
+          <div class="row">
+            
+            <div class="col-sm-3">
+                <label class="control-label txt_lbl">
+                  {{ "Invoice Pagesize" | translate }}</label
+                >
+                <select
+                  class="form-control cir"
+                  formControlName="invoice_pagesize"
+                  [value]="invoiceTypeRegularForm.value.invoice_pagesize">
+                  <option value="A4">{{ "A4" | translate }}</option>
+                  <option value="A5">{{ "A5" | translate }}</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl">
+                {{ "Invoice Text Color" | translate }}</label>
+              <input type="color"  class="form-control cir" formControlName="invoice_textcolor" 
+              [value]="invoiceTypeRegularForm.value.invoice_textcolor">
+            </div>
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl">
+                {{ "Invoice Text Size" | translate }}</label
+              >
+              <select
+                class="form-control cir"
+                formControlName="invoice_textsize"
+                [value]="invoiceTypeRegularForm.value.invoice_textsize">
+                
+                <option [ngStyle]="{'font-size':'default'}" value="default">{{ "default" | translate }}</option>
+                <option [ngStyle]="{'font-size':'small'}" value="small">{{ "Small" | translate }}</option>
+                <option [ngStyle]="{'font-size':'medium'}" value="medium">{{ "Medium" | translate }}</option>
+                <option [ngStyle]="{'font-size':'large'}" value="large">{{ "Large" | translate }}</option>
+                <option [ngStyle]="{'font-size':'x-large'}"  value="verylarge">{{ "Very Large" | translate }}</option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl">
+                {{ "Invoice Text Style" | translate }}</label
+              >
+              <select
+                class="form-control cir"
+                formControlName="invoice_textstyle"
+                [value]="invoiceTypeRegularForm.value.invoice_textstyle">
+                  <option *ngFor="let orders of reportFontload; let i = index"
+                  [value]="orders" [ngStyle]="{'font-family':orders}">
+                    {{orders}}
+                  </option>
+                </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-sm-6 col-md-4">
+              <!-- style="border: 1px solid #bdccdf;padding: 10px;" -->
+              <span style="padding: 10px;">
+                <label class="control-label txt_lbl">
+                  {{ "Show Company Logo" | translate }}</label >
+                <label class="switch" style="margin-left: 22px; padding: 7px">
+                  <input
+                    type="checkbox"
+                    formControlName="is_company_logo"
+                    [checked]="invoiceTypeRegularForm.value.is_company_logo"
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </span>
+            </div>
+            </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl">
+                {{ "Company Text Color" | translate }}</label>
+              <input type="color"  class="form-control cir" formControlName="company_name_textColor" 
+              [value]="invoiceTypeRegularForm.value.company_name_textColor">
+            </div>
+            <div class="col-sm-4">
+              <label class="control-label txt_lbl">
+                {{ "Company Text Size" | translate }}</label>
+              <select
+                class="form-control cir"
+                formControlName="company_name_textSize"
+                [value]="invoiceTypeRegularForm.value.company_name_textSize">
+                <option [ngStyle]="{'font-size':'default'}" value="default">{{ profiledata.workshop_name }}</option>
+                <option [ngStyle]="{'font-size':'small'}" value="small">{{ profiledata.workshop_name }}</option>
+                <option [ngStyle]="{'font-size':'medium'}" value="medium">{{ profiledata.workshop_name }}</option>
+                <option [ngStyle]="{'font-size':'large'}" value="large">{{ profiledata.workshop_name }}</option>
+                <option [ngStyle]="{'font-size':'x-large'}"  value="verylarge">{{ profiledata.workshop_name }}</option>
+              </select>
+            </div>
+            <div class="col-sm-4">
+              <label class="control-label txt_lbl">
+                {{ "Company Text Style" | translate }}</label
+              >
+              <select
+                class="form-control cir"
+                formControlName="company_name_textStyle"
+                [value]="invoiceTypeRegularForm.value.company_name_textStyle">
+                  <option *ngFor="let orders of reportFontload; let i = index"
+                  [value]="orders" [ngStyle]="{'font-family':orders}">
+                  {{ profiledata.workshop_name }}
+                  </option>
+                </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-sm-6 col-md-4">
+              <span style="padding: 10px;">
+                <label class="control-label txt_lbl">
+                  {{ "Show Customer Voice" | translate }}</label >
+                <label class="switch" style="margin-left: 22px; padding: 7px">
+                  <input
+                    type="checkbox"
+                    formControlName="is_customer_voice"
+                    [checked]="invoiceTypeRegularForm.value.is_customer_voice"
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </span>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-md-3">
+              <span style="padding: 10px;">
+                <label class="control-label txt_lbl">
+                  {{ "Show Amount QR Code" | translate }}</label >
+                <label class="switch" style="margin-left: 22px; padding: 7px">
+                  <input
+                    type="checkbox"
+                    formControlName="is_qrcode"
+                    [checked]="invoiceTypeRegularForm.value.is_qrcode"
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </span>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-md-3">
+              <span style="padding: 10px;">
+                <label class="control-label txt_lbl">
+                  {{ "Show Tax Details" | translate }}</label ><br>
+                <label class="switch" style="margin-left: 22px; padding: 7px">
+                  <input
+                    type="checkbox"
+                    formControlName="is_tax_details"
+                    [checked]="invoiceTypeRegularForm.value.is_tax_details"
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </span>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-md-3">
+              <span style=" padding: 10px;">
+                <label class="control-label txt_lbl">
+                  {{ "Show Terms & Conditions" | translate }}</label >
+                <label class="switch" style="margin-left: 22px; padding: 7px">
+                  <input
+                    type="checkbox"
+                    formControlName="is_terms_conditions"
+                    [checked]="invoiceTypeRegularForm.value.is_terms_conditions"/>
+                  <span class="slider round"></span>
+                </label>
+              </span>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-sm-6 col-md-3">
+              <span style="padding: 10px;">
+                <label class="control-label txt_lbl">
+                  {{ "Show Tagline" | translate }}</label ><br>
+                <label class="switch" style="margin-left: 22px; padding: 7px">
+                  <input
+                    type="checkbox"
+                    formControlName="is_tagline"
+                    [checked]="invoiceTypeRegularForm.value.is_tagline"/>
+                  <span class="slider round"></span>
+                </label>
+              </span>
+            </div>
+            <div class="col-lg-4 col-sm-6 col-md-4">
+                <label class="control-label txt_lbl">
+                  {{ "Tag Line" | translate }}*</label
+                >
+                <input
+                  type="text"
+                  class="form-control cir"
+                  formControlName="tag_line"/>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <button type="submit" [disabled]="invoiceTypeRegularForm.pristine || invoiceTypeRegularForm.invalid" 
+            class="btn btn-primary cir cir_btn btn-submit" style="float: right;width: 100px;">
+              {{'Submit' | translate}}
+            </button>
+        </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-12">
+                <label class="control-label txt_lbl">
+                  {{ "Invoice Pagesize" | translate }}</label
+                >
+                <select
+                  class="form-control cir"
+                  formControlName="invoice_theme">
+                  <option value="0" selected>{{ "Invoice Theme 1" | translate }}</option>
+                  <option value="1">{{ "Invoice Theme 2" | translate }}</option>
+                  <option value="2">{{ "Invoice Theme 3" | translate }}</option>
+                </select>
+              </div>
+              <div class="col-sm-12">
+                <div class="center-block">
+                  <label>Invoice Theme</label>
+                  <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 400px;">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                      <li data-target="#myCarousel" data-slide-to="0" class="active"> </li>
+                      <li data-target="#myCarousel" data-slide-to="1">  </li>
+                      <li data-target="#myCarousel" data-slide-to="2"> </li>
+                    </ol>
+                
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                      <div class="item active">
+                        <img src="Imageone" alt="Invoice Theme 1" style="width:100%;height:10px">
+                        
+                      </div>
+                
+                      <div class="item">
+                        <img src="chicago.jpg" alt="Invoice Theme 2" style="width:100%;height:10px">
+                      </div>
+                    
+                      <div class="item">
+                        <img src="ny.jpg" alt="Invoice Theme 3" style="width:100%;height:10px">
+                      </div>
+                    </div>
+                
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                      <span class="glyphicon glyphicon-chevron-left"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                      <span class="glyphicon glyphicon-chevron-right"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </mat-tab>
+      <mat-tab label="Thermal Invoice">
+        <!-- Thermal Invoice  -->
+        <form novalidate class="form-horizontal" (ngSubmit)="updateBilling()" [formGroup]="invoiceTypeThermalForm">
+          <div class="col-sm-10">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="center-block">
+                <label>Invoice Theme</label>
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 100px;">
+                  <!-- Indicators -->
+                  <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"> </li>
+                    <li data-target="#myCarousel" data-slide-to="1">  </li>
+                    <li data-target="#myCarousel" data-slide-to="2"> </li>
+                  </ol>
+              
+                  <!-- Wrapper for slides -->
+                  <div class="carousel-inner">
+                    <div class="item active">
+                      <img src="Imageone" alt="Invoice Theme 1" style="width:100%;height:10px">
+                    </div>
+              
+                    <div class="item">
+                      <img src="chicago.jpg" alt="Invoice Theme 2" style="width:100%;height:10px">
+                    </div>
+                  
+                    <div class="item">
+                      <img src="ny.jpg" alt="Invoice Theme 3" style="width:100%;height:10px">
+                    </div>
+                  </div>
+              
+                  <!-- Left and right controls -->
+                  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              
+              <mat-radio-group 
+              aria-label="Select an option" formControlName="invoice_theme">
+                <mat-radio-button value="0" style="margin-right: 2%;">Invoice Theme 1 </mat-radio-button>
+                <mat-radio-button value="1" style="margin-right: 2%;">Invoice Theme 2 </mat-radio-button>
+                <mat-radio-button value="2" style="margin-right: 2%;">Invoice Theme 3 </mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="col-sm-4">
+                <label class="control-label txt_lbl">
+                  {{ "Invoice Pagesize" | translate }}</label
+                >
+                <select
+                  class="form-control cir"
+                  formControlName="invoice_pagesize"
+                  [value]="invoiceTypeThermalForm.value.invoice_pagesize">
+                  <option value="80mm">{{ "80mm" | translate }}</option>
+                  <option value="100mm">{{ "100mm" | translate }}</option>
+                </select>
+            </div>
+            <div class="col-sm-4">
+              <label class="control-label txt_lbl">
+                {{ "Invoice Text Size" | translate }}</label
+              >
+              <select
+                class="form-control cir"
+                formControlName="invoice_textsize"
+                [value]="invoiceTypeThermalForm.value.invoice_textsize">
+                
+                <option [ngStyle]="{'font-size':'default'}" value="default">{{ "default" | translate }}</option>
+                <option [ngStyle]="{'font-size':'small'}" value="small">{{ "Small" | translate }}</option>
+                <option [ngStyle]="{'font-size':'medium'}" value="medium">{{ "Medium" | translate }}</option>
+                <option [ngStyle]="{'font-size':'large'}" value="large">{{ "Large" | translate }}</option>
+                <option [ngStyle]="{'font-size':'x-large'}"  value="verylarge">{{ "Very Large" | translate }}</option>
+              </select>
+            </div>
+            <div class="col-sm-4">
+              <label class="control-label txt_lbl">
+                {{ "Invoice Text Style" | translate }}</label
+              >
+              <select
+                class="form-control cir"
+                formControlName="invoice_textstyle"
+                [value]="invoiceTypeThermalForm.value.invoice_textstyle">
+                  <option *ngFor="let orders of reportFontload; let i = index"
+                  [value]="orders" [ngStyle]="{'font-family':orders}">
+                    {{orders}}
+                  </option>
+                </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <label class="control-label txt_lbl">
+                {{ "Company Text Size" | translate }}</label
+              >
+              <select
+                class="form-control cir"
+                formControlName="company_name_textSize"
+                [value]="invoiceTypeThermalForm.value.company_name_textSize">
+                <option [ngStyle]="{'font-size':'default'}" value="default">{{ profiledata.workshop_name }}</option>
+                <option [ngStyle]="{'font-size':'small'}" value="small">{{ profiledata.workshop_name }}</option>
+                <option [ngStyle]="{'font-size':'medium'}" value="medium">{{ profiledata.workshop_name }}</option>
+                <option [ngStyle]="{'font-size':'large'}" value="large">{{ profiledata.workshop_name }}</option>
+                <option [ngStyle]="{'font-size':'x-large'}"  value="verylarge">{{ profiledata.workshop_name }}</option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <label class="control-label txt_lbl">
+                {{ "Company Text Style" | translate }}</label
+              >
+              <select
+                class="form-control cir"
+                formControlName="company_name_textStyle"
+                [value]="invoiceTypeThermalForm.value.company_name_textStyle">
+                  <option *ngFor="let orders of reportFontload; let i = index"
+                  [value]="orders" [ngStyle]="{'font-family':orders}">
+                  {{ profiledata.workshop_name }}
+                  </option>
+                </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-sm-6 col-md-3">
+              <span style="padding: 10px;">
+                <label class="control-label txt_lbl">
+                  {{ "Show Customer Voice" | translate }}</label >
+                <label class="switch" style="margin-left: 22px; padding: 7px">
+                  <input
+                    type="checkbox"
+                    formControlName="is_customer_voice"
+                    [checked]="invoiceTypeThermalForm.value.is_customer_voice"
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </span>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-md-3">
+              <span style="padding: 10px;">
+                <label class="control-label txt_lbl">
+                  {{ "Show Amount QR Code" | translate }}</label >
+                <label class="switch" style="margin-left: 22px; padding: 7px">
+                  <input
+                    type="checkbox"
+                    formControlName="is_qrcode"
+                    [checked]="invoiceTypeThermalForm.value.is_qrcode"
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </span>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-md-3">
+              <span style="padding: 10px;">
+                <label class="control-label txt_lbl">
+                  {{ "Show Tax Details" | translate }}</label ><br>
+                <label class="switch" style="margin-left: 22px; padding: 7px">
+                  <input
+                    type="checkbox"
+                    formControlName="is_tax_details"
+                    [checked]="invoiceTypeThermalForm.value.is_tax_details"
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </span>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-md-3">
+              <span style=" padding: 10px;">
+                <label class="control-label txt_lbl">
+                  {{ "Show Terms & Conditions" | translate }}</label >
+                <label class="switch" style="margin-left: 22px; padding: 7px">
+                  <input
+                    type="checkbox"
+                    formControlName="is_terms_conditions"
+                    [checked]="invoiceTypeRegularForm.value.is_terms_conditions"/>
+                  <span class="slider round"></span>
+                </label>
+              </span>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-sm-6 col-md-3">
+              <span style="padding: 10px;">
+                <label class="control-label txt_lbl">
+                  {{ "Show Tagline" | translate }}</label ><br>
+                <label class="switch" style="margin-left: 22px; padding: 7px">
+                  <input
+                    type="checkbox"
+                    formControlName="is_tagline"
+                    [checked]="invoiceTypeThermalForm.value.is_tagline"/>
+                  <span class="slider round"></span>
+                </label>
+              </span>
+            </div>
+            <div class="col-lg-4 col-sm-6 col-md-4">
+                <label class="control-label txt_lbl">
+                  {{ "Tag Line" | translate }}*</label
+                >
+                <input
+                  type="text"
+                  class="form-control cir"
+                  formControlName="tag_line"/>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <button type="submit" [disabled]="invoiceTypeThermalForm.pristine || invoiceTypeThermalForm.invalid" 
+            class="btn btn-primary cir cir_btn btn-submit" style="float: right;width: 100px;">
+              {{'Submit' | translate}}
+            </button>
+        </div>
+        </div>
+        </form>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</mat-card>
+<!-- Invoice card end -->
+
+
+<div
+style="display: none"
+class="modal inmodal"
+id="add_user"
+tabindex="-1"
+role="dialog"
+aria-hidden="true"
+style="background: rgba(0, 0, 0, 0.5)"
+>
+<div class="modal-dialog" style="margin-right: 0px">
+  <div class="modal-content animated">
+    <div class="modal-header" style="padding: 0px">
+      <div
+        class="ibox-title"
+        style="
+          background-color: #f1f1f1;
+          padding: 8px 23px 8px;
+          border: none;
+          border-bottom: 1px solid #4d4f5c;"
+      >
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 style="font-size: 22px; float: left">
+              {{ "Add User" | translate }}
+            </h1>
+            <label
+              data-dismiss="modal"
+              class="btn btn-white cir modal-btn"
+              style="padding: 1px 4px; background: none; border: none"
+              ><i class="fa fa-times fa-2x" aria-hidden="true"></i
+            ></label>
+          </div>
+
+          <div class="col-lg-2">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body" style="padding-top: 0">
+      <div
+        class="ibox-content"
+        style="background-color: #f1f1f1; padding: 5px 3%"
+      >
+        <form novalidate class="form-horizontal" [formGroup]="UserForm">
+          <div class="row">
+            <div class="col-lg-12">
+              <label
+                class="control-label"
+                style="
+                  font-size: 16px;
+                  border-bottom: 1px solid #ce0e17;
+                  margin-bottom: 1%;
+                "
+                ><b> {{ "User Details" | translate }}</b></label
+              >
+              <div class="form-group">
+                <div class="col-sm-6">
+                  <label class="control-label txt_lbl">
+                    {{ "User Type" | translate }}*</label
+                  >
+                  <select
+                    class="form-control cir"
+                    formControlName="user_type"
+                    [value]="UserForm.value.user_type"
+                  >
+                    <option value="Mechanic">
+                       {{ "Mechanic" | translate }}
+                    </option>
+                    <option value="Supervisor">
+                       {{ "Supervisor" | translate }}
+                    </option>
+                    <!-- <option value="Admin">
+                       {{ "Admin" | translate }}
+                    </option> -->
+                    <option value="Inventory-Supervisor">
+                       {{ "Inventory Supervisor" | translate }}
+                    </option>
+                    <option value="Denter-Painter">
+                       {{ "Denter-Painter" | translate }}
+                    </option>
+                    <!-- <option value="Painter">
+                       {{ "Painter" | translate }}
+                    </option> -->
+                    <option value="Electrician">
+                       {{ "Electrician" | translate }}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label txt_lbl"
+                    >{{ "User Name" | translate
+                    }}<span style="color: #c30707; font-weight: bold"
+                      >*</span
+                    ></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control cir"
+                    formControlName="user_name"
+                  />
+                  <div
+                    *ngIf="
+                      UserForm.controls['user_name'].invalid &&
+                      (UserForm.controls['user_name'].dirty ||
+                        UserForm.controls['user_name'].touched)
+                    "
+                    class="text-danger"
+                  >
+                    <div
+                      *ngIf="
+                        UserForm.controls['user_name'].errors.required">
+                      {{ "User Name is required." | translate }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 20px">
+                <div class="col-sm-6">
+                  <label class="control-label txt_lbl">
+                    {{ "Password" | translate }}
+                    <span style="color: #c30707; font-weight: bold"
+                      >{{ "(4 Digit PIN)" | translate }}*</span
+                    ></label
+                  >
+                  <input
+                    *ngIf="eye == false"
+                    type="password"
+                    maxlength="4"
+                    class="form-control cir"
+                    formControlName="password"
+                  />
+                  <input
+                    *ngIf="eye == true"
+                    type="text"
+                    maxlength="4"
+                    class="form-control cir"
+                    formControlName="password"
+                  />
+                  <i
+                    (click)="changePasswordField()"
+                    class="fa fa-eye-slash"
+                    aria-hidden="true"
+                    style="
+                      float: right;
+                      margin-top: -25px;
+                      margin-right: 16px;
+                      font-size: 19px;
+                      color: #c30707;
+                      font-weight: bold;
+                    "
+                  ></i>
+                  <div
+                    *ngIf="
+                      UserForm.controls['password'].invalid &&
+                      (UserForm.controls['password'].dirty ||
+                        UserForm.controls['password'].touched)
+                    "
+                    class="text-danger"
+                  >
+                    <div
+                      *ngIf="
+                        UserForm.controls['password'].errors.required
+                      "
+                    >
+                      {{ "Password is required." | translate }}
+                    </div>
+                    <div
+                      *ngIf="UserForm.controls['password'].errors.pattern"
+                    >
+                      {{ "Enter a Valid Number" | translate }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label txt_lbl">
+                    {{ "Mobile Number" | translate
+                    }}<span style="color: #c30707; font-weight: bold"
+                      >*</span
+                    ></label
+                  >
+                  <input
+                    type="text"
+                    maxlength="10"
+                    class="form-control cir"
+                    formControlName="user_mobile_number"
+                  />
+                  <div
+                    *ngIf="
+                      UserForm.controls['user_mobile_number'].invalid &&
+                      (UserForm.controls['user_mobile_number'].dirty ||
+                        UserForm.controls['user_mobile_number'].touched)
+                    "
+                    class="text-danger"
+                  >
+                    <div
+                      *ngIf="
+                        UserForm.controls['user_mobile_number'].errors
+                          .required
+                      "
+                    >
+                      {{ "Mobile Number is required." | translate }}
+                    </div>
+                    <div
+                      *ngIf="
+                        UserForm.controls['user_mobile_number'].errors
+                          .pattern
+                      "
+                    >
+                      {{ "Enter a Valid Number" | translate }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <mat-card class="col-sm-4">
+                  <label class="control-label txt_lbl">{{
+                    "Inventory" | translate
+                  }}</label>
+                  <label
+                    class="switch"
+                    style="margin-left: 42px; padding: 7px"
+                  >
+                    <input
+                      type="checkbox"
+                      formControlName="inventory"
+                      [checked]="UserForm.value.inventory"
+                      id="inventory_id"
+                      (click)="CheckView($event,'inventoryOptions')"
+                    />
+                    <span class="slider round"></span>
+                    
+                  </label>
+                  <span>(stocks)</span>
+                  <mat-card-content *ngIf="UserForm.value.inventory">
+                    <div *ngFor="let choice of CheckBoxOptions; let i=index">
+                      <label class="checkbox-inline" >
+                        <input type="checkbox" [value]="choice.value" id="inventory_{{i}}"
+                        [checked]="checkedItem(choice.value,'inventoryOptions')"
+                        (click)="onCheckChange($event, 'inventoryOptions', 'inventory')">
+                        {{choice.name}}
+                      </label>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+                <mat-card class="col-sm-4">
+                  <label class="control-label txt_lbl">{{
+                    "Jobcard" | translate
+                  }}</label>
+                  <label
+                    class="switch"
+                    style="margin-left: 42px; padding: 7px"
+                  >
+                    <input
+                      type="checkbox"
+                      formControlName="jobcard"
+                      [checked]="UserForm.value.jobcard"
+                      id="jobcard_id"
+                      (click)="CheckView($event,'jobcardOptions')"
+                    />
+                    <span class="slider round"></span>
+                  </label>
+                  <mat-card-content *ngIf="UserForm.value.jobcard">
+                    <div *ngFor="let choice of CheckBoxOptions; let i=index">
+                      <label class="checkbox-inline" >
+                        <input type="checkbox" [value]="choice.value"
+                        id="jobcard_{{i}}" 
+                        [checked]="checkedItem(choice.value, 'jobcardOptions')"  
+                        (click)="onCheckChange($event, 'jobcardOptions','jobcard')">
+                        {{choice.name}}
+                      </label>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+                <mat-card class="col-sm-4">
+                  <label class="control-label txt_lbl">{{
+                    "Counter Sale" | translate
+                  }}</label>
+                  <label
+                    class="switch"
+                    style="margin-left: 42px; padding: 7px"
+                  >
+                    <input
+                      type="checkbox"
+                      formControlName="counter_sale"
+                      [checked]="UserForm.value.counter_sale"
+                      id="counter_sale_id"
+                      (click)="CheckView($event,'counter_saleOptions')"
+                    />
+                    <span class="slider round"></span>
+                  </label>
+                  <mat-card-content *ngIf="UserForm.value.counter_sale">
+                    <div *ngFor="let choice of CheckBoxOptions; let i=index">
+                      <label class="checkbox-inline" >
+                        <input type="checkbox" [value]="choice.value" id="counter_sale_{{i}}"
+                        [checked]="checkedItem(choice.value, 'counter_saleOptions')"  
+                        (click)="onCheckChange($event, 'counter_saleOptions','counter_sale')">
+                        {{choice.name}}
+                      </label>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+              <div class="form-group">
+               
+                <mat-card class="col-sm-4">
+                  <label class="control-label txt_lbl">{{
+                    "Purchase Order" | translate
+                  }}</label>
+                  <label
+                    class="switch"
+                    style="margin-left: 4px; padding: 7px"
+                  >
+                    <input
+                      type="checkbox"
+                      formControlName="purchase_order"
+                      [checked]="UserForm.value.purchase_order"
+                      id="purchase_order_id"
+                      (click)="CheckView($event,'purchase_orderOptions')"
+                    />
+                    <span class="slider round"></span>
+                    
+                  </label>
+                  <span>(includes supplier & purchase order)</span>
+                  <mat-card-content *ngIf="UserForm.value.purchase_order">
+                    <div *ngFor="let choice of CheckBoxOptions; let i=index">
+                      <label class="checkbox-inline" >
+                        <input type="checkbox" [value]="choice.value"
+                        [checked]="checkedItem(choice.value, 'purchase_orderOptions')" 
+                        (click)="onCheckChange($event, 'purchase_orderOptions','purchase_order')">
+                        {{choice.name}}
+                      </label>
+                     
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+                <mat-card class="col-sm-4">
+                  <label class="control-label txt_lbl">
+                    {{ "Dashboard" | translate }}</label>
+                  <label
+                    class="switch"
+                    style="margin-left: 42px; padding: 7px"
+                    for="dashboard_id"
+                  >
+                    <input
+                      type="checkbox"
+                      formControlName="dashboard"
+                      [checked]="UserForm.value.dashboard"
+                      id="dashboard_id"
+                    />
+                    <span class="slider round"></span>
+                  </label>
+                </mat-card>
+                <mat-card class="col-sm-4">
+                  <label class="control-label txt_lbl">{{
+                    "Setting" | translate
+                  }}</label>
+                  <label
+                    class="switch"
+                    style="margin-left: 40px; padding: 7px"
+                    for="setting_id"
+                  >
+                    <input
+                      type="checkbox"
+                      formControlName="setting"
+                      [checked]="UserForm.value.setting"
+                      id="setting_id"
+                    />
+                    <span class="slider round"></span>
+                  </label>
+                </mat-card>
+              </div>
+              <div class="form-group">          
+                <mat-card class="col-sm-4">
+                  <label class="control-label txt_lbl">
+                    {{ "Report" | translate }}</label>
+                  <label
+                    class="switch"
+                    style="margin-left: 42px; padding: 7px"
+                    for="reports_id"
+                  >
+                    <input
+                      type="checkbox"
+                      formControlName="reports"
+                      [checked]="UserForm.value.reports"
+                      id="reports_id"
+                    />
+                    <span class="slider round"></span>
+                  </label>
+                </mat-card>
+                <mat-card class="col-sm-4">
+                  <label class="control-label txt_lbl">{{
+                    "Collect payment" | translate
+                  }}</label>
+                  <label
+                    class="switch"
+                    style="margin-left: 4px; padding: 7px"
+                    for="collect_payment_id"
+                  >
+                    <input
+                      type="checkbox"
+                      formControlName="collect_payment"
+                      [checked]="UserForm.value.collect_payment"
+                      id="collect_payment_id"
+                    />
+                    <span class="slider round"></span>
+                  </label>
+                </mat-card>
+                <mat-card class="col-sm-4">
+                  <label class="control-label txt_lbl">
+                    {{ "Online Garage" | translate }}</label
+                  >
+                  <label
+                    class="switch"
+                    style="margin-left: 27px; padding: 7px"
+                    for="online_garage_id"
+                  >
+                    <input
+                      type="checkbox"
+                      formControlName="online_garage"
+                      [checked]="UserForm.value.online_garage"
+                      id="online_garage_id"
+                    />
+                    <span class="slider round"></span>
+                  </label>
+                </mat-card>
+              </div>
+              
+              <div class="form-group"> 
+                <mat-card class="col-sm-4">
+                  <label class="control-label txt_lbl">{{
+                    "Staff" | translate
+                  }}</label>
+                  <label
+                    class="switch"
+                    style="margin-left: 40px; padding: 7px"
+                    for="staff_id"
+                  >
+                    <input
+                      type="checkbox"
+                      formControlName="staff"
+                      [checked]="UserForm.value.staff"
+                      id="staff_id"
+                    />
+                    <span class="slider round"></span>
+                  </label>
+                </mat-card>
+                <mat-card class="col-sm-4">
+                  <label class="control-label txt_lbl">{{
+                    "Feedback" | translate
+                  }}</label>
+                  <label
+                    class="switch"
+                    style="margin-left: 27px; padding: 7px"
+                    for="feedback_id"
+                  >
+                    <input
+                      type="checkbox"
+                      formControlName="feedback"
+                      [checked]="UserForm.value.feedback"
+                      id="feedback_id"
+                    />
+                    <span class="slider round"></span>
+                  </label>
+                </mat-card>
+              </div>
+             </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-lg-offset-4 col-lg-4">
+              <button
+                type="submit"
+                data-dismiss="modal"
+                *ngIf="showupdateuser == false"
+                [disabled]="
+                  UserForm.getRawValue().user_name == '' ||
+                  UserForm.getRawValue().user_mobile_number == ''"
+                class="btn btn-primary cir cir_btn"
+                style="
+                  font-size: 12px;
+                  margin: 7% 0 0 0;
+                  background: linear-gradient(
+                    to bottom,
+                    #ff0000 0%,
+                    #563b3b 100%
+                  );
+                  border-color: #c30707;
+                  font-weight: bold;
+                  width: 90%;
+                "
+                (click)="CreateUser('create')"
+              >
+                {{ "Create User" | translate }}
+              </button>
+              <button
+                type="submit"
+                data-dismiss="modal"
+                *ngIf="showupdateuser == true"
+                [disabled]="
+                  UserForm.getRawValue().user_name == '' ||
+                  UserForm.getRawValue().user_mobile_number == ''
+                "
+                class="btn btn-primary cir cir_btn"
+                style="
+                  font-size: 12px;
+                  margin: 7% 0 0 0;
+                  background: linear-gradient(
+                    to bottom,
+                    #ff0000 0%,
+                    #563b3b 100%
+                  );
+                  border-color: #c30707;
+                  font-weight: bold;
+                  width: 90%;
+                "
+                (click)="CreateUser('update')"
+              >
+                {{ "Update User" | translate }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+

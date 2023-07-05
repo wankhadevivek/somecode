@@ -1,0 +1,25 @@
+.nav-header {
+    padding: 19px 25px;
+    background-color: #383733;
+    color: #fff;
+    font-size: 15px;
+    border-bottom: 1px solid #4e4a4a;
+}
+.navbar-default {
+    background-color: #42413d;
+    border-color: #42413d;
+}
+.nav > li.active {
+    border-left: 4px solid #c30707;
+    background: #383733;
+}
+.nav > li > a {
+    color: #d0cfce;
+}
+.navbar-static-top{
+    background: #fff;
+}
+.nav.nav-second-level > li.active {
+    background: #2b2b29;
+}
+

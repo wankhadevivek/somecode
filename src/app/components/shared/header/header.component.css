@@ -1,0 +1,184 @@
+
+.navbar{
+    width: 118%;
+}
+
+.dropdown-menu-sm{
+    /* width: 215px; */
+    width: 235px;
+    left: 0px;
+    height: auto; 
+    overflow: hidden;
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .example {background: red;}
+    .navbar-responsive{
+        margin-bottom: 0;
+        margin-left: 0px;
+        margin-right: 0%;        
+    }
+    .navbar-tplink-responsive{
+        margin-right: auto !important;
+        margin-top: -46px;
+    }
+    .navbar-top-links li:last-child{
+        margin-right: 0 !important;
+    }
+    .navbar-tplink-list{
+        display: inline-flex; 
+        padding: 2px;
+        float: right;
+    }
+    .username-sm{
+        margin-left: 61px;
+    }
+    .dropdown-menu-sm{
+        left: -88px;
+        height: auto; 
+        overflow: hidden;
+        top: 36px;
+    }
+  }
+  
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    .example {background: green;}
+    .navbar-tplink-responsive{
+        margin-right: auto !important;
+        margin-top: -46px;
+    }
+    .navbar-top-links li:last-child{
+        margin-right: 0 !important;
+    }
+    .navbar-tplink-list{
+        display: inline-flex; 
+        padding: 2px;
+        float: right;
+    }
+    .dropdown-menu-sm{
+        left: -88px;
+        height: auto; 
+        overflow: hidden;
+        top: 36px;
+    }
+  }
+  
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+    .example {background: blue;}
+    .navbar-tplink-responsive{
+        margin-right: 247px !important;
+        margin-top: -46px;
+    }
+    .navbar-top-links li:last-child{
+        margin-right: 0 !important;
+    }
+    .navbar-tplink-list{
+        display: inline-flex; 
+        padding: 2px;
+        float: right;
+    }
+    .navbar-responsive{
+        margin-bottom: 0;
+    }
+    .dropdown-menu-sm{
+        left: -88px;
+        height: auto; 
+        overflow: hidden;
+        top: 36px;
+    }
+  } 
+  
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+    .example {background: orange;}
+    .navbar-tplink-responsive{
+        margin-right: 49px!important;
+        margin-top: -46px;
+    }
+    .navbar-top-links li:last-child{
+        margin-right: 0 !important;
+    }
+    .navbar-tplink-list{
+        display: inline-flex; 
+        padding: 2px;
+        float: right;
+    }
+    .navbar{
+        width: 94%;
+    }
+    .navbar-responsive{
+        margin-bottom: 0;
+    }
+    .dropdown-menu-sm{
+        left: -88px;
+        height: auto; 
+        overflow: hidden;
+        top: 36px;
+    }
+  } 
+  
+  /* Extra large devices (large laptops and desktops, 1200px and up) */
+  @media only screen and (min-width: 1200px) {
+    .example {background: pink;}
+    .navbar-tplink-responsive{
+        margin-right: 49px!important;
+        margin-top: -46px;
+    }
+    .navbar{
+        width: 100%;
+    }
+    .pw-responsive{
+        margin-left: 16px;margin-top: 2px;
+    }
+    .showRechargeStyle{
+        margin-left: 20px;
+        padding: 6px;
+        color: #ffff;
+        background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);
+        border-radius: 2px;
+    }
+    .navbar-tplink-list{
+        display: inline-flex; 
+        padding: 8px;
+    }
+    .navbar-responsive{
+        margin-bottom: 0;
+    }
+    .dropdown-menu-sm{
+        left: -88px;
+        height: auto; 
+        overflow: hidden;
+        top: 36px;
+    }
+  }
+
+  .dropdown-item > i{
+    margin-right: 0.5rem;
+  }
+
+  .img-circle.acc-img{
+      /* height: 1.5rem;
+      width: 1.5rem;
+      border-radius: 50%; */
+      padding: 0.7rem;
+  }
+
+  .acc-img{
+    /* height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 50%; */
+    /* padding: 1.7rem; */
+}
+  .admin > div > span > img{
+    /* height: 3.5rem;
+    width: 3.5rem;
+    border-radius: 50%; */
+    padding: 0.3rem;
+  }
+
+  .admin{
+   background-color: #ccc;
+   
+}

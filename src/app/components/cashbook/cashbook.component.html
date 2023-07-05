@@ -1,0 +1,979 @@
+<app-spin></app-spin>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row" style="margin-bottom: 10px">
+    <div class="col-lg-3 col-sm-3 col-md-3">
+      <h3 style="font-size: 20px">{{'Cash Book' | translate}}</h3>
+    </div>
+  </div>
+  <!-- <div class=""
+  style="display: flex;
+  flex-direction: column;
+  justify-content: space-between;">
+    <div class=""
+    style="height: 80%;">
+        <div class="dashboard-header"
+        style="height: 17rem;
+        width: 100%;
+        border: 1px solid #563b3b;
+        display: flex;
+        justify-content: space-between;">
+    <div class="dashboard-summary"
+        style="    width: 60%;
+        border: 1px solid blue;
+        display: flex;
+        justify-content: space-between;">
+        <div class=""
+            style=" display: flex;
+            justify-content: space-between;">
+            <div class="">
+
+                <img class="img-responsive" 
+            
+                src="../../../../assets/images/CashIn.svg">
+            </div>
+            <span>
+                <p>10,000 Rs</p>
+                <p>Cash Received</p>
+            </span>
+        </div>
+        <div class=""
+            style=" display: flex;
+            justify-content: space-between;">
+             <img class="img-responsive" src="../../../../assets/images/spendmoney.svg">
+            <span>
+                <p>10,000 Rs</p>
+                <p>Cash Received</p>
+            </span>
+        </div>
+    </div>
+    <div class="dashboard-options" 
+    style="    width: 25%;
+       
+        border: 1px solid blue;"></div>
+  </div>
+    </div>
+    <div class=""
+    style="height: 80%;
+    border: 2px solid red;"
+    ></div>
+  </div> -->
+  <div class="dashboard-header"
+        style="height: 17rem;
+        width: 100%;
+        /* border: 1px solid #563b3b; */
+        display: flex;
+        justify-content: space-between;
+        padding: 1.5rem 0;">
+
+       <div class=""
+                style="display: flex;
+                
+                flex-direction: column;
+                justify-content: space-between;
+                width: 60%;">
+            <div class="dashboard-summary"
+                style="   
+                height: 70% ;
+                /* border: 1px solid blue; */
+                display: flex;
+                justify-content: space-between;
+                background-color: #c0deeb;
+                border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+                ">
+                <div class=""
+                    style=" 
+                display: flex;
+                width: 50%;
+                /* justify-content: space-around; */
+                padding: 1rem 2rem;
+                ">
+                <div class="circle"
+                style=" margin-right:  4.5rem">
+
+                    <img class="img-responsive" 
+                    style="padding: 0.9rem;"
+                    src="../../../../assets/images/CashIn.svg">
+                </div>
+            <span>
+                <p class="cash-amount"
+                style="color: blue;">10,000 Rs</p>
+                <p>Cash Received</p>
+            </span>
+        </div>
+        <div class=""
+            style=" display: flex;
+            /* justify-content: space-between; */
+            width: 50%;
+            padding: 1rem 2rem;">
+            <div class="circle"
+            style=" margin-right: 4.5rem">
+              <img class="img-responsive" 
+              style="padding: 0.9rem;
+              margin-top: 1rem;
+              "
+              src="../../../../assets/images/spendmoney.svg">
+           
+          </div>
+            <span>
+                <p class="cash-amount"
+                style="color: green;">10,000 Rs</p>
+                <p>Cash Received</p>
+            </span>
+        </div>
+        </div>
+        <div class=""
+            style="   
+            height: 30% ;
+            padding: 1rem;
+            text-align: center;
+            background-color: #66b0d7;
+            border-bottom-left-radius: 9px;
+        border-bottom-right-radius: 9px;
+            "
+            >
+          <span
+          style="color: white;
+          font-weight: 800;
+          font-size: 14px;"
+          >Today's Summary</span>
+      </div>
+    </div>
+  
+    <div class="dashboard-options" 
+    style="    width: 25%;
+           display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    justify-content: space-between;
+       ">
+       <div class="">
+        <a
+          href="javascript:"
+          
+        >
+          <button class="btn btn-primary createjobcard"
+          style="    width: 100%;
+          height: 4rem;
+          color: white;
+          background-color: #c30707;
+          font-weight: 600;">
+            
+            <span
+            style="margin-right:5px;"> -</span>
+            {{ "OUT" | translate }}
+          </button>
+        </a>
+      </div>
+      <div class="">
+        <a
+          href="javascript:"
+          
+        >
+          <button class="btn btn-primary createjobcard"
+          style="    width: 100%;
+          height: 4rem;
+          color: white;
+          background-color: #509b45;
+          font-weight: 600;
+          border: none;">
+            
+            <span
+            style="margin-right:5px;"> +</span>
+            {{ "IN" | translate }}
+          </button>
+        </a>
+      </div>  
+      </div>
+  </div>
+  <div class="row" style="padding-top: 1rem;">
+    <div class="col-lg-3 col-sm-12 col-md-12">
+    <!-- <div class=""> -->
+        <input matInput [matDatepicker]="picker" id="date-filter"
+        [(ngModel)]="date">
+    
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+
+    </div>
+    <div class="col-lg-3 col-sm-12 col-md-12" style="text-align: inherit;
+    padding-top: 1rem;">
+        <i style="
+        font-size: 20px;
+        margin-right: 4rem;" class="fa fa-caret-left" aria-hidden="true"></i> 
+        <i style="
+        font-size: 20px;"
+        class="fa fa-caret-right" aria-hidden="true"></i> 
+
+<span style="margin-left: 7rem; font-weight: 700;
+font-size: 15px;">{{'Today' | translate}}</span>
+    </div>
+    <div class="col-lg-4 col-sm-12 col-md-12">
+      <div class="input-group m-b">
+        <span
+          class="input-group-addon"
+          style="
+            padding: 0 15px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+          "
+        >
+          <i class="fa fa-search fa-1x" aria-hidden="true"></i>
+        </span>
+        <span class="jobcard-dash-sm data" >
+          <ng-autocomplete
+            [(ngModel)]="selectedvaluefoprsearch"
+            placeHolder="{{'Search Supplier by Firm Name, mobile Number' | translate}}"
+            [data]="states"
+            (selected)="selectedResult($event)"
+            (input)="searchBar($event.target.value)"
+            [itemTemplate]="itemTemplate"
+            [notFoundTemplate]="notFoundTemplate"
+          >
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+          <span
+            style="font-size: 30px; margin-left: -55px; cursor: pointer"
+            *ngIf="showsearchcnacel == true"
+          >
+            <i
+              class="fa fa-times"
+              aria-hidden="true"
+              (click)="clearSearch()"
+            ></i>
+          </span>
+        </span>
+        <!-- <span>
+
+            <i class="fa fa-filter" aria-hidden="true"></i>
+        </span> -->
+      </div>
+      
+    </div>
+    <div class="input-group m-b col-lg-2 col-sm-3 col-md-3"
+    style="    font-size: 25px;
+  
+    margin-left: 2rem;">
+        <span>
+
+          <i class="fa fa-filter" aria-hidden="true"></i>
+      </span>
+    </div>
+    <!-- data-target="#add_spares" -->
+    <!-- [attr.data-target]="event_handler_create() ? '#add_spares':'#add_spares'" -->
+    <!-- <div *ngIf="isPermitData.create || isPermitData.create_new || isPermitData == 0"
+      class="col-lg-3 col-sm-3 col-md-3"
+      style="margin-right: 20px"
+      (click)="opensupplier('new', 'no')">
+      <a href="#" data-toggle="modal"
+      data-target="#add_spares">  
+        <button class="btn btn-primary createjobcard">{{'Add Supplier' | translate}}</button>
+      </a>
+    </div> -->
+  </div>
+  <!-- <div class="row">
+    <div class="col-lg-6 col-sm-12 col-md-12">
+    <div class="">
+        <input matInput [matDatepicker]="picker" id="date-filter"
+        [(ngModel)]="date">
+    </div>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+
+
+        <i style="
+        font-size: 20px;" class="fa fa-caret-left" aria-hidden="true"></i> 
+        <i style="
+        font-size: 20px;"
+        class="fa fa-caret-right" aria-hidden="true"></i> 
+
+<span style="margin-left: 7rem;
+font-size: 15px;">{{'Today' | translate}}</span>
+    </div>
+    <div class="col-lg-6 col-sm-12 col-md-12">
+      <div class="input-group m-b col-lg-7 col-sm-7 col-md-7">
+        <span
+          class="input-group-addon"
+          style="
+            padding: 0 15px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+          "
+        >
+          <i class="fa fa-search fa-1x" aria-hidden="true"></i>
+        </span>
+        <span class="jobcard-dash-sm data" >
+          <ng-autocomplete
+            [(ngModel)]="selectedvaluefoprsearch"
+            placeHolder="{{'Search Supplier by Firm Name, mobile Number' | translate}}"
+            [data]="states"
+            (selected)="selectedResult($event)"
+            (input)="searchBar($event.target.value)"
+            [itemTemplate]="itemTemplate"
+            [notFoundTemplate]="notFoundTemplate"
+          >
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+          <span
+            style="font-size: 30px; margin-left: -55px; cursor: pointer"
+            *ngIf="showsearchcnacel == true"
+          >
+            <i
+              class="fa fa-times"
+              aria-hidden="true"
+              (click)="clearSearch()"
+            ></i>
+          </span>
+        </span>
+     
+      </div>
+      <div class="input-group m-b col-lg-3 col-sm-3 col-md-3">
+          <span>
+
+            <i class="fa fa-filter" aria-hidden="true"></i>
+        </span>
+        </div>
+    </div>
+  
+  </div> -->
+  <div class="row">
+    <div class="col-lg-12 col-sm-12 col-md-12">
+      <div
+        class="mat-elevation-z8"
+        (scroll)="onScroll($event)"
+        *ngIf="tabelData != undefined"
+        style="
+          margin-top: 10px;
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          border-radius: 8px;
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          <ng-container matColumnDef="srno">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="web-show"
+            >
+              <span class="mat-title-ctm"> {{'Sr. No' | translate}} </span>
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              class="web-show"
+            >
+              <span class="mobile-label">{{'Sr. No' | translate}}:</span>
+
+              {{ i + 1 }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="mat-title-ctm"> {{'Time' | translate}} </span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"> {{'Time' | translate}} :</span>
+              {{ element.date }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="mat-title-ctm"> {{'Category' | translate}} </span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{'Category' | translate}}:</span>{{ element.category }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="mat-title-ctm"> {{'Amount' | translate}}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{'Amount' | translate}}:</span>
+              {{ element.amount }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="transaction_id">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="web-show"
+            >
+              <span class="mat-title-ctm"> {{'Transaction Id' | translate}}</span>
+            </th>
+            <td mat-cell *matCellDef="let element" class="web-show">
+              <span class="mobile-label">{{'Transaction Id' | translate}}:</span>
+              {{ element.transaction_id }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="ref">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="web-show"
+            >
+              <span class="mat-title-ctm"> {{'References' | translate}}</span>
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              style="text-align: center"
+              class="web-show"
+            >
+              <span class="mobile-label">{{'References' | translate}}:</span>
+              <div class="" *ngFor = "let ref_id of element.ref">
+                <div class="">
+                  {{ ref_id }}
+                </div>
+              </div>
+             
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="gst">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="web-show"
+            >
+              <span class="mat-title-ctm"> {{'GSTIN' | translate}}</span>
+            </th>
+            <td mat-cell *matCellDef="let element" class="web-show">
+              <span class="mobile-label">{{'GSTIN' | translate}}:</span>
+              {{ element.gst }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="mat-title-ctm"> {{'Action' | translate}} </span>
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              style="color: #c30707; font-weight: bold"
+            >
+              <span class="mobile-label">{{'Action' | translate}}:</span>
+              <i *ngIf="isPermitData.edit || isPermitData == 0"
+                matTooltip="{{'Edit Supplier' | translate}}"
+                (click)="opensupplier('edit', element)"
+                data-toggle="modal"
+                data-target="#add_spares"
+                class="fa fa-pencil"
+                aria-hidden="true"
+                style="cursor: pointer; padding: 9px"
+              ></i>
+              
+              <i
+                matTooltip="{{'Delete Supplier' | translate}}"
+                (click)="event_handler_delete() && opensupplier('delete', element)"
+                class="fa fa-times"
+                aria-hidden="true"
+                style="cursor: pointer"
+              ></i>
+            </td>
+          </ng-container>
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+      <div
+        class="mat-elevation-z8"
+        *ngIf="tabelData == undefined"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          overflow-x: hidden;
+          border-radius: 8px;
+        "
+      >
+        <div
+          class="col-lg-12 col-sm-12 col-md-12 text-center"
+          *ngIf="tabelData == undefined"
+          style="
+            font-weight: bold;
+            padding: 10px 0px 10px 0px;
+            font-size: 29px;
+            color: black;
+          "
+        >
+          <span> {{'No Records Found' | translate}} </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal inmodal"
+    id="add_spares"
+    tabindex="-1"
+    role="dialog"
+    aria-hidden="true"
+    style="background: rgba(0, 0, 0, 0.5)"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content animated">
+        <div class="modal-header">
+          <div class="ibox-title">
+            <div class="row">
+              <div class="col-lg-6 col-sm-6 col-md-6">
+                <h1 class="title-ibx-main">{{'Add Supplier' | translate}}</h1>
+              </div>
+
+              <div
+                class="col-lg-2 col-sm-2 col-md-2"
+                style="margin-top: 4%; float: right"
+              >
+                <label
+                  data-dismiss="modal"
+                  class="btn btn-white cir mdl-close-btn"
+                  ><i class="fa fa-times fa-2x" aria-hidden="true"></i
+                ></label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body" style="padding-top: 0">
+          <div
+            class="ibox-content"
+            style="background-color: #f1f1f1; padding: 5px 3%"
+          >
+            <form
+              [formGroup]="CreateSupplierForm"
+              novalidate
+              class="form-horizontal"
+            >
+              <div class="row">
+                
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                  <div class="form-group" >
+                    <div class="col-lg-6 col-sm-6 col-md-6" *ngIf="!isSupplierNotFound">
+                      <label class="control-label txt_lbl"
+                        > {{'Enter Mobile No' | translate}}<span
+                          style="color: #c30707; font-weight: bold"
+                          >*</span
+                        ></label>
+                      <div style="display: flex;">
+                        <input
+                          id="part_name_spare"
+                          type="text"
+                          class="form-control cir"
+                          formControlName="contact1"
+                          maxlength="10"
+                          (change)="getSupplierDetailsByPhone($event.target.value)"
+                        />
+                        <div *ngIf="isRunSpinner" class="spinner-border spinner-ml" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      </div>
+                      <div *ngIf="isExistingSupplier"  class="text-danger">
+                        {{'Supplier found with this contact number.' | translate}}
+                      </div>
+                      <div *ngIf="CreateSupplierForm.controls['contact1'].invalid"
+                        class="text-danger" >
+                        <div
+                          *ngIf="
+                            CreateSupplierForm.controls['contact1'].errors
+                              .required
+                          "
+                        >
+                        {{'Contact 1 is required' | translate}}.
+                        </div>
+                        <div
+                          *ngIf="
+                            CreateSupplierForm.controls['contact1'].errors
+                              .pattern
+                          "
+                        >
+                          {{'Enter Valid Contact' | translate}} 1
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-md-6" *ngIf="isSupplierNotFound" class="text-danger">
+                      {{'No existing supplier found, you can fill details and continue' | translate}}
+                    </div>
+                  </div>
+                  <label
+                    class="control-label"
+                    style="
+                      font-size: 16px;
+                      border-bottom: 1px solid #ce0e17;
+                      margin-bottom: 1%;" ><b>{{'Bussiness Info' | translate}}</b></label
+                  >
+                  <div class="form-group">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                      <label class="control-label txt_lbl"
+                        >{{'Firm Name' | translate}}<span
+                          style="color: #c30707; font-weight: bold"
+                          >*</span
+                        ></label
+                      >
+                      <input
+                        id="part_name_spare"
+                        type="text"
+                        class="form-control cir"
+                        formControlName="firm"
+                      />
+                      <div
+                        *ngIf="CreateSupplierForm.controls['firm'].invalid"
+                        class="text-danger"
+                      >
+                        <div
+                          *ngIf="
+                            CreateSupplierForm.controls['firm'].errors.required
+                          "
+                        >
+                          {{'Firm Name is required' | translate}}.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                      <label class="control-label txt_lbl"
+                        >{{'Address' | translate}}<span style="color: #c30707; font-weight: bold"
+                          >*</span
+                        ></label>
+                      <input
+                        id="part_name_spare"
+                        type="text"
+                        class="form-control cir"
+                        formControlName="address"
+                      />
+                      <div
+                        *ngIf="CreateSupplierForm.controls['address'].invalid"
+                        class="text-danger"
+                      >
+                        <div
+                          *ngIf="
+                            CreateSupplierForm.controls['address'].errors
+                              .required
+                          "
+                        >
+                          {{'Address is required' | translate}}.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="form-group">
+                                        <div class="col-lg-6 col-sm-6 col-md-6">
+                                            <label class="control-label txt_lbl">City</label>
+                                            <input id="part_name_spare" type="text" class="form-control cir" formControlName="city">
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-md-6">
+                                            <label class="control-label txt_lbl">State</label>
+                                            <input id="part_name_spare" type="text" class="form-control cir" formControlName="state">
+                                        </div>
+                                    </div> -->
+                  <div class="form-group">
+                    <!-- <div class="col-lg-6 col-sm-6 col-md-6">
+                                            <label class="control-label txt_lbl">Pincode<span style="color: #c30707; font-weight: bold;">*</span></label>
+                                            <input id="part_name_spare" type="text" class="form-control cir" formControlName="pincode" maxlength="6">
+                                            <div *ngIf="CreateSupplierForm.controls['pincode'].invalid" class="text-danger">
+                                                <div *ngIf="CreateSupplierForm.controls['pincode'].errors.required">
+                                                Pin code is required.
+                                            </div>
+                                            <div *ngIf="CreateSupplierForm.controls['pincode'].errors.pattern">
+                                                Enter a Valid Pincode
+                                              </div>
+                                            </div>
+                                        </div> -->
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                      <label class="control-label txt_lbl">{{'GSTIN' | translate}}</label>
+                      <input
+                        id="part_name_spare"
+                        type="text"
+                        class="form-control cir"
+                        formControlName="gst"
+                      />
+                      <div
+                        *ngIf="CreateSupplierForm.controls['gst'].invalid"
+                        class="text-danger"
+                      >
+                        <div
+                          *ngIf="
+                            CreateSupplierForm.controls['gst'].errors.pattern
+                          "
+                        >
+                          {{'Enter Valid GST number' | translate}}.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <label
+                    class="control-label"
+                    style="
+                      font-size: 16px;
+                      border-bottom: 1px solid #ce0e17;
+                      margin-bottom: 1%;
+                    "
+                    ><b>{{'Owner Info' | translate}}</b></label
+                  >
+                  <div class="form-group">
+                    <input
+                      type="hidden"
+                      class="form-control cir"
+                      formControlName="id"
+                    />
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                      <label class="control-label txt_lbl"
+                        >{{'First Name' | translate}}<span
+                          style="color: #c30707; font-weight: bold"
+                          >*</span
+                        ></label
+                      >
+                      <input
+                        id="part_name_spare"
+                        type="text"
+                        class="form-control cir"
+                        formControlName="firstname"
+                      />
+                      <div
+                        *ngIf="CreateSupplierForm.controls['firstname'].invalid"
+                        class="text-danger"
+                      >
+                        <div
+                          *ngIf="
+                            CreateSupplierForm.controls['firstname'].errors
+                              .required
+                          "
+                        >
+                          {{'First Name is required' | translate}}.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-6 col-sm-6 col-md-6">
+                      <label class="control-label txt_lbl"
+                        > {{'Contact' | translate}} 1<span
+                          style="color: #c30707; font-weight: bold"
+                          >*</span
+                        ></label
+                      >
+                      <input
+                        id="part_name_spare"
+                        type="text"
+                        class="form-control cir"
+                        formControlName="contact1"
+                        maxlength="10"
+                      />
+                      <div
+                        *ngIf="CreateSupplierForm.controls['contact1'].invalid"
+                        class="text-danger"
+                      >
+                        <div
+                          *ngIf="
+                            CreateSupplierForm.controls['contact1'].errors
+                              .required
+                          "
+                        >
+                        {{'Contact 1 is required' | translate}}.
+                        </div>
+                        <div
+                          *ngIf="
+                            CreateSupplierForm.controls['contact1'].errors
+                              .pattern
+                          "
+                        >
+                          {{'Enter Valid Contact' | translate}} 1
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-md-6">
+                      <label class="control-label txt_lbl">{{'Contact' | translate}} 2</label>
+                      <input
+                        id="part_name_spare"
+                        type="text"
+                        class="form-control cir"
+                        formControlName="contact2"
+                        maxlength="10"
+                      />
+                      <div
+                        *ngIf="CreateSupplierForm.controls['contact2'].invalid"
+                        class="text-danger"
+                      >
+                        <div
+                          *ngIf="
+                            CreateSupplierForm.controls['contact2'].errors
+                              .pattern
+                          "
+                        >
+                          {{'Enter Valid Contact' | translate}} 2
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                      <label class="control-label txt_lbl">{{'Email' | translate}}</label>
+                      <input
+                        id="part_name_spare"
+                        type="text"
+                        class="form-control cir"
+                        formControlName="email"
+                      />
+                      <div
+                        *ngIf="CreateSupplierForm.controls['email'].invalid"
+                        class="text-danger"
+                      >
+                        <div
+                          *ngIf="
+                            CreateSupplierForm.controls['email'].errors.required
+                          "
+                        >
+                          {{'Email is required' | translate}}.
+                        </div>
+                        <div
+                          *ngIf="
+                            CreateSupplierForm.controls['email'].errors.pattern" >
+                          {{'Enter a Valid Email' | translate}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group" *ngIf="showCreateButton == true">
+                    <div *ngIf="isExistingSupplier">
+                      <div class="col-lg-6 col-sm-6 col-md-6">
+                        <button
+                        type="submit"
+                         data-dismiss="modal"
+                         [disabled]="
+                            CreateSupplierForm.pristine ||
+                            CreateSupplierForm.invalid"
+                          (click)="event_handler_create() && submitFormForRegister('register','create')"
+                          class="btn btn-primary cir cir_btn"
+                          style="
+                            font-size: 12px;
+                            margin: 7% 0 0 0;
+                            background: linear-gradient(
+                              to bottom,
+                              #ff0000 0%,
+                              #563b3b 100%);
+                            border-color: #c30707;
+                            font-weight: bold;
+                            width: 90%;">
+                          {{'Add Supplier' | translate}}
+                        </button>
+                      </div>
+                    </div>
+                    <div *ngIf="!isExistingSupplier">
+                      <div class="col-lg-6 col-sm-6 col-md-6">
+                        <button
+                          type="submit"
+                          [disabled]="
+                            CreateSupplierForm.pristine ||
+                            CreateSupplierForm.invalid
+                          "
+                          (click)="event_handler_create() && createSpareByAPI('createnew')"
+                          class="btn btn-primary cir cir_btn"
+                          style="
+                            font-size: 12px;
+                            margin: 7% 0 0 0;
+                            background: linear-gradient(
+                              to bottom,
+                              #ff0000 0%,
+                              #563b3b 100%
+                            );
+                            border-color: #c30707;
+                            font-weight: bold;
+                            width: 90%;
+                          "
+                        >
+                          {{'Save & New' | translate}}
+                        </button>
+                      </div>
+                      <div class="col-lg-6 col-sm-6 col-md-6">
+                        <button
+                          type="submit"
+                          data-dismiss="modal"
+                          [disabled]="
+                            CreateSupplierForm.pristine ||
+                            CreateSupplierForm.invalid
+                          "
+                          (click)="event_handler_create() && createSpareByAPI('create')"
+                          class="btn btn-primary cir cir_btn"
+                          style="
+                            font-size: 12px;
+                            margin: 7% 0 0 0;
+                            background: linear-gradient(
+                              to bottom,
+                              #ff0000 0%,
+                              #563b3b 100%
+                            );
+                            border-color: #c30707;
+                            font-weight: bold;
+                            width: 90%;
+                          "
+                        >
+                          {{'Save' | translate}}
+                        </button>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="form-group text-center"
+                    *ngIf="showCreateButton == false" >
+                    <div class="col-lg-6 col-sm-6 col-md-6">
+                      <button
+                        type="submit"
+                        data-dismiss="modal"
+                        [disabled]="
+                          CreateSupplierForm.pristine ||
+                          CreateSupplierForm.invalid
+                        "
+                        (click)="event_handler_edit() && createSpareByAPI('update')"
+                        class="btn btn-primary cir cir_btn"
+                        style="
+                          font-size: 12px;
+                          margin: 7% 0 0 0;
+                          background: linear-gradient(
+                            to bottom,
+                            #ff0000 0%,
+                            #563b3b 100%
+                          );
+                          border-color: #c30707;
+                          font-weight: bold;
+                          width: 90%;
+                        "
+                      >
+                        {{'Update' | translate}}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

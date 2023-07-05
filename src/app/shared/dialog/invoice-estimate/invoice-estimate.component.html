@@ -1,0 +1,1547 @@
+<!-- <app-spinlogin></app-spinlogin> -->
+<span class="ui-options">
+<div
+  class="closepoup"
+  style="float: right; margin-bottom: 8px; margin-top: 7px; margin-right: 10px"
+>
+  <label
+    (click)="closePopup()"
+    class="btn btn-white cir"
+    style="
+      padding: 1px 4px;
+
+      background: none;
+      border: none;
+    "
+    ><i class="fa fa-times fa-2x" aria-hidden="true"></i
+  ></label>
+</div>
+<div
+  class="closepoup"
+  style="float: right; margin-bottom: 8px; margin-top: 7px; margin-right: 10px"
+>
+  <button
+    class="btn btn-white cir"
+    style="padding: 5px 9px"
+    data-toggle="tooltip"
+    title="Print"
+    (click)="print()"
+  >
+    <i class="fa fa-print" aria-hidden="true"></i>
+  </button>
+</div>
+<div
+  class="closepoup"
+  data-toggle="tooltip"
+  title="PDF"
+  style="float: right; margin-bottom: 8px; margin-top: 7px; margin-right: 10px"
+>
+  <label (click)="pdf()" class="btn btn-white cir" style="padding: 5px 9px"
+    ><i class="fa fa-file-pdf-o" aria-hidden="true"></i
+  ></label>
+</div>
+<div
+  class="closepoup"
+  data-toggle="tooltip"
+  title="Share PDF"
+  style="float: right; margin-bottom: 8px; margin-top: 7px; margin-right: 10px"
+>
+  <label (click)="share()" class="btn btn-white cir" style="padding: 5px 9px"
+    ><i class="fa fa-envelope" aria-hidden="true"></i
+  ></label>
+</div>
+<div
+  *ngIf="allCustomerDetails != undefined"
+  class="closepoup"
+  data-toggle="tooltip"
+  title="Share WhatsApp"
+  style="float: right; margin-bottom: 8px; margin-top: 7px; margin-right: 10px"
+>
+  <a [href]="contactlink" target="_blank">
+    <label
+      (click)="sharewhatsApp()"
+      class="btn btn-white cir"
+      style="padding: 5px 9px"
+      ><i class="fa fa-whatsapp" aria-hidden="true" style="color: green"></i
+    ></label>
+  </a>
+</div>
+</span>
+<div *ngIf="showgst == false" class="invoice">
+  <div class="wrapper wrapper-content" style="padding: 0" id="contentToConvert">
+    <div
+      class="ibox-content p-xl"
+      style="padding: 0px; color: #333; border: none"
+    >
+      <h2
+        *ngIf="billheader != ''"
+        [ngStyle]="{ 'text-align': 'center' }"
+        style="
+          font-size: 17px;
+          font-weight: 600;
+          color: #808080;
+          margin: 0 0 5px 0;
+        "
+      >
+        {{ billheader }}
+      </h2>
+      <h2
+        [ngStyle]="{ 'text-align': 'center' }"
+        style="
+          font-size: 17px;
+          font-weight: 600;
+          color: #808080;
+          margin: 0 0 5px 0;
+        "
+      >
+        {{ mainTitle }}
+      </h2>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td colspan="3" style="border-right: none !important">
+                <img
+                  [src]="domSanitizer.bypassSecurityTrustResourceUrl(logoimage)"
+                  class="img-responsive"
+                  alt="TTN"
+                  width="200"
+                />
+              </td>
+              <td
+                colspan="4"
+                style="text-align: right; border-left: none !important"
+              >
+                <h3
+                  style="color: #663399; font-weight: 800; margin-bottom: 5px"
+                >
+                  {{ workshopName }}
+                </h3>
+                <h5
+                  class="text-navy"
+                  style="margin-bottom: 5px"
+                  *ngIf="
+                    billingSettings != undefined &&
+                    billingSettings.tag_line != ''
+                  "
+                >
+                  {{ billingSettings.tag_line }}
+                </h5>
+                <address style="margin-bottom: 0px" *ngIf="address != 'none'">
+                  {{ address }}
+                  <br />
+                  {{ addresspin }}
+                </address>
+                <p>
+                  <span
+                    ><i class="fa fa-phone" aria-hidden="true"></i>:
+                    {{ phoneNumber }}</span
+                  ><br />
+                  <span *ngIf="email != 'none'"
+                    ><i class="fa fa-envelope" aria-hidden="true"></i>:
+                    <u> {{ email }}</u></span
+                  >
+                </p>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg_c">
+              <td colspan="2" class="tx_l"><b> {{'Bill To' | translate}}:</b></td>
+              <td colspan="2" class="tx_l"><b> {{'Vehicle Details' | translate}}</b></td>
+              <td colspan="3" style="text-align: right">
+                <b> {{'Invoice Details' | translate}}</b>
+              </td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                class="tx_l"
+                *ngIf="allCustomerDetails != undefined"
+              >
+                <span *ngIf="allCustomerDetails != undefined"
+                  >{{ allCustomerDetails.customer_name }} <br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.gst_number != '' &&
+                    allCustomerDetails.gst_number != null
+                  "
+                  >{{'GSTN' | translate}}: {{ allCustomerDetails.gst_number }} <br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.pick_up_address != '' &&
+                    allCustomerDetails.pick_up_address != null
+                  "
+                  >{{'Address' | translate}}: {{ allCustomerDetails.pick_up_address }} <br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.customer_mobile_2 == 0
+                  "
+                  >{{'Mobile' | translate}}: {{ allCustomerDetails.customer_mobile }} <br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.customer_mobile_2 != 0
+                  "
+                  >{{'Mobile' | translate}}: {{ allCustomerDetails.customer_mobile }}/{{
+                    allCustomerDetails.customer_mobile_2
+                  }}
+                  <br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.customer_email != '' &&
+                    allCustomerDetails.customer_email != null
+                  "
+                  >{{'Email' | translate}}: {{ allCustomerDetails.customer_email }}</span
+                >
+              </td>
+
+              <td colspan="2" class="tx_l">
+                <span *ngIf="allCustomerDetails != undefined"
+                  >{{'Vehicle Number' | translate}}: {{ allData.vehicle_number }} <br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.chassis_number != ''
+                  "
+                  >{{'Chassis Number' | translate}}: {{ allCustomerDetails.chassis_number }} <br
+                /></span>
+                <span *ngIf="allData != undefined"
+                  >{{'Model' | translate}}: {{ allData.vehicle_details.make }}
+                  {{ allData.vehicle_details.model }}
+                  {{ allData.vehicle_details.variant }} <br
+                /></span>
+                <span
+                  *ngIf="
+                    allData != undefined &&
+                    allData.km != '' &&
+                    allData.km != null
+                  "
+                  >{{'In KM Reading' | translate}}: {{ allData.km }} <br
+                /></span>
+                <!-- <span>Out KM Reading: 999999 <br></span> -->
+                <span *ngIf="allData != undefined"
+                  >{{'In Time' | translate}}: {{ allData.created_at | date: "MMM d, y, h:mm a" }}
+                  <br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.insurance_number != '' &&
+                    allCustomerDetails.insurance_number != null
+                  "
+                  >{{'Insurer' | translate}}: {{ allCustomerDetails.insurance_name }}<br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.insurance_number != '' &&
+                    allCustomerDetails.insurance_number != null
+                  "
+                  >{{'Insurance No' | translate}}: {{allCustomerDetails.insurance_number}</span
+                >
+              </td>
+              <td colspan="3" style="padding: 0">
+                <table class="table sm_tb">
+                  <tbody>
+                    <tr>
+                      <td
+                        class="bn tx_r"
+                        *ngIf="mainTitle != 'Estimate' && allData != undefined"
+                      >
+                        {{'Invoice Number' | translate}}:
+                      </td>
+                      <td
+                        class="bn tx_r"
+                        *ngIf="mainTitle == 'Estimate' && allData != undefined"
+                      >
+                        {{'Estimate Number' | translate}}:
+                      </td>
+                      <td class="bn tx_r" *ngIf="allData != undefined">
+                        {{ allData.invoice_number }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bn tx_r" *ngIf="allData != undefined">
+                        {{'Date' | translate}}:
+                      </td>
+                      <td class="bn tx_r" *ngIf="allData != undefined">
+                        {{ allData.complete_date | date: "MMM d, y, h:mm a" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bn tx_r" *ngIf="allData != undefined">
+                        {{'Est Delivery Time' | translate}}:
+                      </td>
+                      <td class="bn tx_r" *ngIf="allData != undefined">
+                        {{
+                          allData.estimated_delivery_datetime
+                            | date: "MMM d, y, h:mm a"
+                        }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="bn tx_r"
+                        *ngIf="
+                          allData != undefined && allData.closed_date != ''
+                        "
+                      >
+                        {{'Act Delivery Time' | translate}}:
+                      </td>
+                      <td
+                        class="bn tx_r"
+                        *ngIf="
+                          allData != undefined && allData.closed_date != ''
+                        "
+                      >
+                        {{ allData.closed_date | date: "MMM d, y, h:mm a" }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <ng-container
+              *ngIf="
+                billformat == 'Parts' || billformat == 'PartsandPartnumber'
+              "
+            >
+              <tr class="bg_c" *ngIf="partsArraySpareLube.length != 0">
+                <td>#</td>
+                <td class="tx_l" *ngIf="billformat != 'PartsandPartnumber'">
+                  <b> {{'Parts' | translate}} </b>
+                </td>
+                <td class="tx_l" *ngIf="billformat == 'PartsandPartnumber'">
+                  <b> {{'Parts & Part Number' | translate}} </b>
+                </td>
+                <td class="tx_r"><b> {{'Quantity' | translate}}</b></td>
+                <td class="tx_r"><b> {{'Unit Price' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'Total Amount' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'Discount' | translate}} </b></td>
+                <td colspan="2" class="tx_r"><b> {{'Amount' | translate}}({{currency_symbol}}) </b></td>
+              </tr>
+              <tr
+                *ngFor="let data of partsArraySpareLube; let i = index"
+                class="in_ent"
+              >
+                <td class="brn">{{ i + 1 }}</td>
+                <td class="brn tx_l">{{ data.name }}</td>
+                <td class="brn tx_r">{{ data.quantity }}</td>
+                <td class="brn tx_r">{{ data.price }}</td>
+                <td class="brn tx_r">{{ data.totalamount }}</td>
+                <td class="brn tx_r">{{ data.discountvalue }}</td>
+                <td colspan="2" class="brn tx_r">{{ data.tottal }}</td>
+              </tr>
+              <tr *ngIf="partsArrayJobs.length != 0" class="bg_c">
+                <td>#</td>
+                <td class="tx_l"><b>{{'Labour' | translate}} </b></td>
+                <td class="tx_r"><b>{{'Quantity' | translate}} </b></td>
+                <td class="tx_r"><b>{{'Unit Cost' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b>{{'Discount' | translate}} </b></td>
+                <td colspan="2" class="tx_r"><b>{{'Amount' | translate}}({{currency_symbol}}) </b></td>
+              </tr>
+              <tr
+                *ngFor="let data of partsArrayJobs; let i = index"
+                class="in_ent"
+              >
+                <td class="brn">{{ i + 1 }}</td>
+                <td class="brn tx_l">{{ data.name }}</td>
+                <td class="brn tx_r">{{ data.quantity }}</td>
+                <td class="brn tx_r">{{ data.price }}</td>
+                <td class="brn tx_r">{{ data.totalamount }}</td>
+                <td class="brn tx_r">{{ data.discountvalue }}</td>
+                <td colspan="2" class="brn tx_r">{{ data.tottal }}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="tx_l"><b>{{'Total' | translate}}({{currency_symbol}})</b></td>
+                <td class="tx_r"></td>
+                <td class="tx_r">
+                  <b>{{ UnitPriceSum }}</b>
+                </td>
+                <td class="tx_r"></td>
+                <td colspan="2" class="tx_r">
+                  <b>{{ allData.final_amount }}</b>
+                </td>
+              </tr>
+            </ng-container>
+
+            <ng-container
+              *ngIf="
+                billformat != 'Parts' || billformat != 'PartsandPartnumber'
+              "
+            >
+              <tr class="bg_c" *ngIf="completeArray.length != 0">
+                <td>#</td>
+                <td class="tx_l"><b> {{'Particulars' | translate}} </b></td>
+                <td class="tx_r"><b> {{'Quantity' | translate}} </b></td>
+                <td class="tx_r"><b> {{'Unit Price' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'Total Amount' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'Discount' | translate}} </b></td>
+                <td colspan="2" class="tx_r"><b> {{'Amount' | translate}}({{currency_symbol}}) </b></td>
+              </tr>
+              <tr
+                *ngFor="let data of completeArray; let i = index"
+                class="in_ent"
+              >
+                <td class="brn">{{ i + 1 }}</td>
+                <td class="brn tx_l">{{ data.name }}</td>
+                <td class="brn tx_r">{{ data.quantity }}</td>
+                <td class="brn tx_r">{{ data.price }}</td>
+                <td class="brn tx_r">{{ data.totalamount }}</td>
+                <td class="brn tx_r">{{ data.discountvalue }}</td>
+                <td colspan="2" class="brn tx_r">{{ data.tottal }}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="tx_l"><b>{{'Total' | translate}}({{currency_symbol}})</b></td>
+                <td class="tx_r"><b></b></td>
+                <td class="tx_r">
+                  <b>{{ UnitPriceSum }}</b>
+                </td>
+                <td class="tx_r"></td>
+                <td colspan="2" class="tx_r">
+                  <b>{{ allData.final_amount }}</b>
+                </td>
+              </tr>
+            </ng-container>
+            <tr class="bg_c">
+              <td colspan="5" row="7"></td>
+              <td colspan="2" class="tx_l"><b> {{'Amount Details' | translate}}:</b></td>
+            </tr>
+            <tr>
+              <td colspan="5" rowspan="7"></td>
+              <td class="tx_l" *ngIf="allData != undefined">{{'Total' | translate}}({{currency_symbol}}{{currency_symbol}})</td>
+              <td *ngIf="allData != undefined">{{ allData.total_amount }}</td>
+            </tr>
+            <tr>
+              <td
+                class="tx_l"
+                *ngIf="
+                  allData != undefined &&
+                  allData.discount != '0 %' &&
+                  allData.discount != '0 ₹'
+                "
+              >
+                {{ Discountname }}
+              </td>
+              <td
+                *ngIf="
+                  allData != undefined &&
+                  allData.discount != '0 %' &&
+                  allData.discount != '0 ₹'
+                "
+              >
+                {{ allData.discount | slice: 0:-1 }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="tx_l"
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.discount != '0 %' &&
+                  allData.discount != '0 ₹'
+                "
+              >
+                {{'Bill Amount' | translate}}({{currency_symbol}})
+              </td>
+              <td
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.discount != '0 %' &&
+                  allData.discount != '0 ₹'
+                "
+              >
+                {{ totalPayable }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="tx_l"
+                *ngIf="
+                  mainTitle == 'Estimate' &&
+                  allData != undefined &&
+                  allData.discount != '0 %' &&
+                  allData.discount != '0 ₹'
+                "
+              >
+                {{'Estimate' | translate}}({{currency_symbol}})
+              </td>
+              <td
+                *ngIf="
+                  mainTitle == 'Estimate' &&
+                  allData != undefined &&
+                  allData.discount != '0 %' &&
+                  allData.discount != '0 ₹'
+                "
+              >
+                {{ totalPayable }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="tx_l"
+                *ngIf="allData != undefined && allData.advance != 0.0"
+              >
+                {{'Advance' | translate}}({{currency_symbol}})
+              </td>
+              <td *ngIf="allData != undefined && allData.advance != 0.0">
+                {{ allData.advance }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="tx_l"
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.final_amount != 0.0
+                "
+              >
+                {{'Payable' | translate}}({{currency_symbol}})
+              </td>
+              <td
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.final_amount != 0.0
+                "
+              >
+                {{ totalPayable - allData.advance }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="tx_l"
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.paid_amount != 0.0
+                "
+              >
+                {{'Received' | translate}}({{currency_symbol}})
+              </td>
+              <td
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.paid_amount != 0.0
+                "
+              >
+                {{ allData.paid_amount }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="tx_l"
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.balance_amount != 0.0
+                "
+              >
+                {{'Balance' | translate}}({{currency_symbol}})
+              </td>
+              <td
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.balance_amount != 0.0
+                "
+              >
+                {{ allData.balance_amount }}
+              </td>
+            </tr>
+            <tr class="bg_c">
+              <td colspan="5" class="tx_l" *ngIf="mainTitle != 'Estimate'">
+                <b>  {{'Invoice Amount In Words' | translate}} </b>
+              </td>
+              <td colspan="5" class="tx_l" *ngIf="mainTitle == 'Estimate'">
+                <b> {{'Estimate Amount In Words' | translate}} </b>
+              </td>
+              <td colspan="2" class="tx_l">
+                <b> {{'Authorized Signature and Payment Status' | translate}} </b>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="5" class="tx_l" style="padding: 13px">
+                {{ amountinwords }}
+              </td>
+              <td colspan="2">
+                <img
+                  *ngIf="showSigImage == true"
+                  style="margin-right: 306px; width: 87px; margin-bottom: 0px"
+                  [src]="
+                    domSanitizer.bypassSecurityTrustResourceUrl(signaturephoto)
+                  "
+                  class="img-responsive"
+                  alt="TTN"
+                  width="200"
+                />
+
+                <h3
+                  *ngIf="showSigImage == false"
+                  style="font-weight: 800; margin-right: 79%; margin-top: 50px"
+                >
+                  {{ workshopName }}
+                </h3>
+                <span *ngIf="image != ''" style="border-right: none !important">
+                  <img
+                    style="margin-left: 318px; width: 87px; margin-top: -69px"
+                    [src]="image"
+                    class="img-responsive"
+                    alt="TTN"
+                    width="200"
+                  />
+                </span>
+              </td>
+            </tr>
+            <tr *ngIf="mainTitle != 'Estimate'">
+              <td colspan="7">
+                {{'Your next servicing due on' | translate}}
+                <b>
+                  {{ reminderdate | date: "MMM d, y" }} {{'or' | translate}} {{ reminderKM }} {{'KM' | translate}}
+                  {{'whichever is earlier' | translate}}.</b
+                >
+                <br />
+                {{'Thank You! Service Regularly and ride safely. And Visit Again' | translate}}
+              </td>
+            </tr>
+            <tr *ngIf="mainTitle != 'Estimate'" class="bg_c">
+              <td *ngIf="allData.exit_note != ''" colspan="5" class="tx_l">
+                <b> {{'Exit Note' | translate}} </b>
+              </td>
+              <td *ngIf="allData.exit_note == ''" colspan="5" class="tx_l">
+                <b> {{'Exit Note' | translate}} </b>
+              </td>
+              <td
+                *ngIf="allData.jobcard_customer_voice != '[]'"
+                colspan="2"
+                class="tx_l"
+              >
+                <b>  {{'Customers Voice' | translate}}</b>
+              </td>
+              <td
+                *ngIf="allData.jobcard_customer_voice == '[]'"
+                colspan="2"
+                class="tx_l"
+              >
+                <b> {{'Customers Voice' | translate}} </b>
+              </td>
+            </tr>
+            <tr *ngIf="mainTitle != 'Estimate'">
+              <td colspan="5" class="tx_l">{{ allData.exit_note }}</td>
+              <td
+                *ngIf="allData.jobcard_customer_voice != '[]'"
+                colspan="2"
+                class="tx_l"
+              >
+                <p *ngFor="let data of cutsomerVoice; let i = index">
+                  {{ data }}
+                </p>
+              </td>
+              <td
+                *ngIf="allData.jobcard_customer_voice == '[]'"
+                colspan="2"
+                class="tx_l"
+              ></td>
+            </tr>
+            <tr
+              *ngIf="
+                mainTitle != 'Estimate' &&
+                allData.work_note != '[]' &&
+                allData.work_note != ''
+              "
+              class="bg_c"
+            >
+              <td colspan="10" class="tx_l"><b> {{'Work Notes' | translate}} </b></td>
+            </tr>
+            <tr
+              *ngIf="
+                mainTitle != 'Estimate' &&
+                allData.work_note != '[]' &&
+                allData.work_note != ''
+              "
+            >
+              <td colspan="10" class="tx_l">
+                <p *ngFor="let data of worknotes; let i = index">
+                  {{ data.notes }}
+                </p>
+              </td>
+            </tr>
+            <tr
+              *ngIf="mainTitle == 'Estimate' && cutsomerVoice.length != 0"
+              class="bg_c"
+            >
+              <td colspan="10" class="tx_l"><b> {{'Customers Voice' | translate}}</b></td>
+            </tr>
+            <tr *ngIf="mainTitle == 'Estimate' && cutsomerVoice.length != 0">
+              <td colspan="10" class="tx_l">
+                <p *ngFor="let data of cutsomerVoice; let i = index">
+                  {{ data }}
+                </p>
+              </td>
+            </tr>
+            <tr *ngIf="allTermsAndConditions.length != 0" class="bg_c">
+              <td colspan="10" class="tx_l"><b> {{'Terms and Condition' | translate}}: </b></td>
+              <!-- <td colspan="2" class="tx_l"> <b> Bank Details </b></td>
+                        <td colspan="2" >UPI QR Code</td> -->
+            </tr>
+            <tr *ngIf="allTermsAndConditions.length != 0">
+              <td colspan="10" class="tx_l">
+                <p *ngFor="let data of allTermsAndConditions; let i = index">
+                  {{ data }}
+                </p>
+              </td>
+              <!-- <td colspan="2" class="tx_l" rowspan="5">ICICI Bank, Shivaji Nagar <br>
+                                                        Acc. No.: 100000000000 <br>
+                                                        IFSC Code: ICICI00500
+                        </td>
+                        <td rowspan="5" colspan="2"><img src="qr.png" class="img-responsive" alt="TTN QR"></td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /table-responsive -->
+      <h2
+        *ngIf="billfooter != ''"
+        [ngStyle]="{ 'text-align': 'center' }"
+        style="
+          font-size: 17px;
+          font-weight: 600;
+          color: #808080;
+          margin: 0 0 5px 0;
+        "
+      >
+        **{{ billfooter }}**
+      </h2>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showgst == true">
+  <div class="wrapper wrapper-content" style="padding: 0" id="contentToConvert">
+    <div
+      class="ibox-content p-xl"
+      style="padding: 0px; color: #333; border: none"
+    >
+      <h2
+        *ngIf="billheader != ''"
+        [ngStyle]="{ 'text-align': 'center' }"
+        style="
+          font-size: 17px;
+          font-weight: 600;
+          color: #808080;
+          margin: 0 0 5px 0;
+        "
+      >
+        {{ billheader }}
+      </h2>
+      <h2
+        *ngIf="mainTitle != 'Estimate'"
+        [ngStyle]="{ 'text-align': 'center' }"
+        style="
+          font-size: 17px;
+          font-weight: 600;
+          color: #808080;
+          margin: 0 0 5px 0;
+        "
+      >
+        {{'Tax' | translate}} {{ mainTitle }}
+      </h2>
+      <h2
+        *ngIf="mainTitle == 'Estimate'"
+        [ngStyle]="{ 'text-align': 'center' }"
+        style="
+          font-size: 17px;
+          font-weight: 600;
+          color: #808080;
+          margin: 0 0 5px 0;
+        "
+      >
+        {{ mainTitle }}
+      </h2>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td colspan="6" style="border-right: none !important">
+                <img
+                  [src]="domSanitizer.bypassSecurityTrustResourceUrl(logoimage)"
+                  class="img-responsive"
+                  alt="TTN"
+                  width="200"
+                />
+              </td>
+              <td
+                colspan="5"
+                style="text-align: right; border-left: none !important"
+              >
+                <h3
+                  style="color: #663399; font-weight: 800; margin-bottom: 5px"
+                >
+                  {{ workshopName }}
+                </h3>
+                <h5
+                  class="text-navy"
+                  style="margin-bottom: 5px"
+                  *ngIf="
+                    billingSettings != undefined &&
+                    billingSettings.tag_line != ''
+                  "
+                >
+                  {{ billingSettings.tag_line }}
+                </h5>
+                <p *ngIf="gstno != ''">{{'GSTN' | translate}}: {{ gstno }}</p>
+                <address style="margin-bottom: 0px" *ngIf="address != 'none'">
+                  {{ address }}
+                  <br />
+                  {{ addresspin }}
+                </address>
+                <p>
+                  <span
+                    ><i class="fa fa-phone" aria-hidden="true"></i>:
+                    {{ phoneNumber }}</span
+                  ><br />
+                  <span *ngIf="email != 'none'"
+                    ><i class="fa fa-envelope" aria-hidden="true"></i>:
+                    <u> {{ email }}</u></span
+                  >
+                </p>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg_c">
+              <td colspan="4" class="tx_l"><b> {{'Bill To' | translate}}:</b></td>
+              <td colspan="3" class="tx_l"><b> {{'Vehicle Details' | translate}}</b></td>
+              <td colspan="4" style="text-align: right">
+                <b> {{'Invoice Details' | translate}}</b>
+              </td>
+            </tr>
+            <tr>
+              <td
+                colspan="4"
+                class="tx_l"
+                style="padding: 4px 0 4px 6px; width: 44%"
+                *ngIf="allCustomerDetails != undefined"
+              >
+                <span *ngIf="allCustomerDetails != undefined"
+                  >{{ allCustomerDetails.customer_name }} <br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.gst_number != '' &&
+                    allCustomerDetails.gst_number != null
+                  "
+                  >{{'GSTN' | translate}}: {{ allCustomerDetails.gst_number }} <br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.pick_up_address != '' &&
+                    allCustomerDetails.pick_up_address != null
+                  "
+                  >{{'Address' | translate}}: {{ allCustomerDetails.pick_up_address }} <br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.customer_mobile_2 == 0
+                  "
+                  >{{'Mobile' | translate}}: {{ allCustomerDetails.customer_mobile }} <br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.customer_mobile_2 != 0
+                  "
+                  >{{'Mobile' | translate}}: {{ allCustomerDetails.customer_mobile }}/{{
+                    allCustomerDetails.customer_mobile_2
+                  }}
+                  <br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.customer_email != '' &&
+                    allCustomerDetails.customer_email != null
+                  "
+                  >{{'Email' | translate}}: {{ allCustomerDetails.customer_email }}</span
+                >
+              </td>
+
+              <td
+                colspan="3"
+                class="tx_l"
+                style="padding: 4px 0 4px 6px; width: 29%"
+              >
+                <span *ngIf="allCustomerDetails != undefined"
+                  >{{'Vehicle Number' | translate}}: {{ allData.vehicle_number }} <br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.chassis_number != ''
+                  "
+                  >{{'Chassis Number' | translate}}: {{ allCustomerDetails.chassis_number }} <br
+                /></span>
+                <span *ngIf="allData != undefined"
+                  >{{'Model' | translate}}: {{ allData.vehicle_details.make }}
+                  {{ allData.vehicle_details.model }}
+                  {{ allData.vehicle_details.variant }} <br
+                /></span>
+                <span
+                  *ngIf="
+                    allData != undefined &&
+                    allData.km != '' &&
+                    allData.km != null
+                  "
+                  >{{'In KM Reading' | translate}}: {{ allData.km }} <br
+                /></span>
+                <!-- <span>Out KM Reading: 999999 <br></span> -->
+                <span *ngIf="allData != undefined"
+                  >{{'In Time' | translate}}: {{ allData.created_at | date: "MMM d, y, h:mm a" }}
+                  <br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.insurance_number != '' &&
+                    allCustomerDetails.insurance_number != null
+                  "
+                  >{{'Insurer' | translate}}: {{ allCustomerDetails.insurance_name }}<br
+                /></span>
+                <span
+                  *ngIf="
+                    allCustomerDetails != undefined &&
+                    allCustomerDetails.insurance_number != '' &&
+                    allCustomerDetails.insurance_number != null
+                  "
+                  >{{'Insurance No' | translate}}: {{allCustomerDetails.insurance_number}</span
+                >
+              </td>
+              <td colspan="4" style="padding: 0; width: 29%">
+                <table class="table sm_tb">
+                  <tbody>
+                    <tr>
+                      <td
+                        class="bn tx_r"
+                        *ngIf="mainTitle != 'Estimate' && allData != undefined"
+                      >
+                        {{'Invoice Number' | translate}}:
+                      </td>
+                      <td
+                        class="bn tx_r"
+                        *ngIf="mainTitle == 'Estimate' && allData != undefined"
+                      >
+                        {{'Estimate Number' | translate}}:
+                      </td>
+                      <td class="bn tx_r" *ngIf="allData != undefined">
+                        {{ allData.invoice_number }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bn tx_r" *ngIf="allData != undefined">
+                        {{'Date' | translate}}:
+                      </td>
+                      <td class="bn tx_r" *ngIf="allData != undefined">
+                        {{ allData.complete_date | date: "MMM d, y, h:mm a" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bn tx_r" *ngIf="allData != undefined">
+                        {{'Est Delivery Time' | translate}}:
+                      </td>
+                      <td class="bn tx_r" *ngIf="allData != undefined">
+                        {{
+                          allData.estimated_delivery_datetime
+                            | date: "MMM d, y, h:mm a"
+                        }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="bn tx_r"
+                        *ngIf="
+                          allData != undefined && allData.closed_date != ''
+                        "
+                      >
+                        {{'Act Delivery Time' | translate}}:
+                      </td>
+                      <td
+                        class="bn tx_r"
+                        *ngIf="
+                          allData != undefined && allData.closed_date != ''
+                        "
+                      >
+                        {{ allData.closed_date | date: "MMM d, y, h:mm a" }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <ng-container
+              *ngIf="
+                billformat == 'Parts' || billformat == 'PartsandPartnumber'
+              "
+            >
+              <tr class="bg_c" *ngIf="partsArraySpareLube.length != 0">
+                <td>#</td>
+                <td class="tx_l" *ngIf="billformat != 'PartsandPartnumber'">
+                  <b> {{'Parts' | translate}} </b>
+                </td>
+                <td class="tx_l" *ngIf="billformat == 'PartsandPartnumber'">
+                  <b> {{'Parts & Part Number' | translate}} </b>
+                </td>
+                <td class="tx_r"><b> {{'HSN/SAC' | translate}}</b></td>
+                <td class="tx_r"><b> {{'Quantity' | translate}} </b></td>
+                <td class="tx_r"><b> {{'Unit Price' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'Total Amount' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'Discount' | translate}} </b></td>
+                <td class="tx_r"><b> {{'Taxable Amount' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'CGST' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'SGST' | translate}}({{currency_symbol}}) </b></td>
+                <td colspan="2" class="tx_r"><b> {{'Amount' | translate}}({{currency_symbol}}) </b></td>
+              </tr>
+              <tr
+                *ngFor="let data of partsArraySpareLube; let i = index"
+                class="in_ent"
+              >
+                <td class="brn">{{ i + 1 }}</td>
+                <td class="brn tx_l">{{ data.name }}</td>
+                <td class="brn tx_r">{{ data.hsn }}</td>
+                <td class="brn tx_r">{{ data.quantity }}</td>
+                <td class="brn tx_r">{{ data.price }}</td>
+                <td class="brn tx_r">{{ data.totalamount }}</td>
+                <td class="brn tx_r">{{ data.discountvalue }}</td>
+                <td class="brn tx_r">{{ data.ratefortax }}</td>
+                <td class="brn tx_r" *ngIf="data.cgst != 'undefined (0% )'">
+                  {{ data.cgst }}
+                </td>
+                <td class="brn tx_r" *ngIf="data.cgst == 'undefined (0% )'">
+                  0 (0%)
+                </td>
+                <td class="brn tx_r" *ngIf="data.sgst != 'undefined (0% )'">
+                  {{ data.cgst }}
+                </td>
+                <td class="brn tx_r" *ngIf="data.sgst == 'undefined (0% )'">
+                  0 (0%)
+                </td>
+                <td colspan="2" class="brn tx_r">{{ data.tottal }}</td>
+              </tr>
+              <tr *ngIf="partsArrayJobs.length != 0" class="bg_c">
+                <td>#</td>
+                <td class="tx_l"><b> {{'Labour' | translate}}</b></td>
+                <td class="tx_r"><b> {{'HSN/SAC' | translate}} </b></td>
+                <td class="tx_r"><b> {{'Quantity' | translate}} </b></td>
+                <td class="tx_r"><b> {{'Unit Price' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'Total Amount' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'Discount' | translate}} </b></td>
+                <td class="tx_r"><b> {{'Taxable Amount' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'CGST' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'SGST' | translate}}({{currency_symbol}}) </b></td>
+                <td colspan="2" class="tx_r"><b> {{'Amount' | translate}}({{currency_symbol}}) </b></td>
+              </tr>
+              <tr
+                *ngFor="let data of partsArrayJobs; let i = index"
+                class="in_ent"
+              >
+                <td class="brn">{{ i + 1 }}</td>
+                <td class="brn tx_l">{{ data.name }}</td>
+                <td class="brn tx_r">{{ data.hsn }}</td>
+                <td class="brn tx_r">{{ data.quantity }}</td>
+                <td class="brn tx_r">{{ data.price }}</td>
+                <td class="brn tx_r">{{ data.totalamount }}</td>
+                <td class="brn tx_r">{{ data.discountvalue }}</td>
+                <td class="brn tx_r">{{ data.ratefortax }}</td>
+                <td class="brn tx_r" *ngIf="data.cgst != 'undefined (0% )'">
+                  {{ data.cgst }}
+                </td>
+                <td class="brn tx_r" *ngIf="data.cgst == 'undefined (0% )'">
+                  0 (0%)
+                </td>
+                <td class="brn tx_r" *ngIf="data.sgst != 'undefined (0% )'">
+                  {{ data.cgst }}
+                </td>
+                <td class="brn tx_r" *ngIf="data.sgst == 'undefined (0% )'">
+                  0 (0%)
+                </td>
+                <td colspan="2" class="brn tx_r">{{ data.tottal }}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="tx_l"><b>{{'Total' | translate}}({{currency_symbol}})</b></td>
+                <td class="tx_r"></td>
+                <td class="tx_r"></td>
+                <td class="tx_r">
+                  <b>{{ UnitPriceSum }}</b>
+                </td>
+                <td class="tx_r"></td>
+                <td class="tx_r">
+                  <b>{{ taxrate }}</b>
+                </td>
+                <td class="tx_r">
+                  <b>{{ allData.cgst }}</b>
+                </td>
+                <td class="tx_r">
+                  <b>{{ allData.sgst }}</b>
+                </td>
+                <td class="tx_r">
+                  <b>{{ allData.total_amount }}</b>
+                </td>
+                <td class="tx_r"><b>SUM</b></td>
+              </tr>
+            </ng-container>
+            <ng-container
+              *ngIf="
+                billformat != 'Parts' || billformat != 'PartsandPartnumber'
+              "
+            >
+              <tr class="bg_c" *ngIf="completeArray.length != 0">
+                <td>#</td>
+                <td class="tx_l"><b> {{'Particulars' | translate}} </b></td>
+                <td class="tx_r"><b> {{'HSN/SAC' | translate}} </b></td>
+                <td class="tx_r"><b> {{'Quantity' | translate}} </b></td>
+                <td class="tx_r"><b> {{'Unit Price' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'Total Amount' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'Discount' | translate}} </b></td>
+                <td class="tx_r"><b> {{'Taxable Amount' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'CGST' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r"><b> {{'SGST' | translate}}({{currency_symbol}}) </b></td>
+                <td class="tx_r" colspan="2"><b> {{'Amount' | translate}}({{currency_symbol}}) </b></td>
+              </tr>
+              <tr
+                *ngFor="let data of completeArray; let i = index"
+                class="in_ent"
+              >
+                <td class="brn">{{ i + 1 }}</td>
+                <td class="brn tx_l">{{ data.name }}</td>
+                <td class="brn tx_r">{{ data.hsn }}</td>
+                <td class="brn tx_r">{{ data.quantity }}</td>
+                <td class="brn tx_r">{{ data.price }}</td>
+                <td class="brn tx_r">{{ data.totalamount }}</td>
+                <td class="brn tx_r">{{ data.discountvalue }}</td>
+                <td class="brn tx_r">{{ data.ratefortax }}</td>
+                <td class="brn tx_r" *ngIf="data.cgst != 'undefined (0% )'">
+                  {{ data.cgst }}
+                </td>
+                <td class="brn tx_r" *ngIf="data.cgst == 'undefined (0% )'">
+                  0 (0%)
+                </td>
+                <td class="brn tx_r" *ngIf="data.sgst != 'undefined (0% )'">
+                  {{ data.cgst }}
+                </td>
+                <td class="brn tx_r" *ngIf="data.sgst == 'undefined (0% )'">
+                  0 (0%)
+                </td>
+                <td colspan="2" class="brn tx_r">{{ data.tottal }}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="tx_l"><b>{{'Total' | translate}}({{currency_symbol}})</b></td>
+                <td class="tx_r"></td>
+                <td class="tx_r"></td>
+                <td class="tx_r">
+                  <b>{{ UnitPriceSum }}</b>
+                </td>
+                <td class="tx_r"></td>
+                <td class="tx_r">
+                  <b>{{ taxrate }}</b>
+                </td>
+                <td class="tx_r">
+                  <b>{{ allData.cgst }}</b>
+                </td>
+                <td class="tx_r">
+                  <b>{{ allData.sgst }}</b>
+                </td>
+                <td class="tx_r">
+                  <b>{{ allData.total_amount }}</b>
+                </td>
+                <td class="tx_r"><b>{{'SUM' | translate}}</b></td>
+              </tr>
+            </ng-container>
+
+            <tr>
+              <td class="tx_l" colspan="7"><b> {{'Tax Details' | translate}}:</b></td>
+              <td class="tx_l" colspan="4"><b> {{'Bill Amount Details' | translate}}:</b></td>
+            </tr>
+            <tr>
+              <td colspan="7" rowspan="7">
+                <table class="table sm_tb1">
+                  <tbody *ngIf="MaingstTypes.length != 0">
+                    <tr *ngFor="let data of MaingstTypes; let i = index">
+                      <td class="bn tx_l">
+                        {{'SGST' | translate}}@{{ data.rate / 2 }}%: {{currency_symbol}} {{ data.sgst }}
+                      </td>
+                      <td class="bn tx_l">
+                        {{'CGST' | translate}}@{{ data.rate / 2 }}%: {{currency_symbol}} {{ data.cgst }}
+                      </td>
+                      <td class="bn tx_l">
+                        {{'GST' | translate}}@{{ data.rate }}%: {{currency_symbol}} {{ data.gst }}
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="MaingstTypes.length == 0">
+                    <tr>
+                      <td class="bn tx_l"></td>
+                      <td class="bn tx_l"></td>
+                      <td class="bn tx_l"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+              <td
+                style="text-align: right !important"
+                class="tx_l"
+                colspan="3"
+                *ngIf="allData != undefined"
+              >
+                {{'Total' | translate}}({{currency_symbol}})
+              </td>
+              <td
+                style="text-align: right !important"
+                *ngIf="allData != undefined"
+              >
+                {{ allData.total_amount }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                style="text-align: right !important"
+                class="tx_l"
+                colspan="3"
+                *ngIf="
+                  allData != undefined &&
+                  allData.discount != '0 %' &&
+                  allData.discount != '0 ₹'
+                "
+              >
+                {{ Discountname }}
+              </td>
+              <td
+                style="text-align: right !important"
+                *ngIf="
+                  allData != undefined &&
+                  allData.discount != '0 %' &&
+                  allData.discount != '0 ₹'
+                "
+              >
+                {{ allData.discount | slice: 0:-1 }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                style="text-align: right !important"
+                class="tx_l"
+                colspan="3"
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.discount != '0 %' &&
+                  allData.discount != '0 ₹'
+                "
+              >
+                {{'Bill Amount' | translate}}({{currency_symbol}})
+              </td>
+              <td
+                style="text-align: right !important"
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.discount != '0 %' &&
+                  allData.discount != '0 ₹'
+                "
+              >
+                {{ totalPayable }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                style="text-align: right !important"
+                class="tx_l"
+                colspan="3"
+                *ngIf="
+                  mainTitle == 'Estimate' &&
+                  allData != undefined &&
+                  allData.discount != '0 %' &&
+                  allData.discount != '0 ₹'
+                "
+              >
+                {{'Estimate' | translate}}({{currency_symbol}})
+              </td>
+              <td
+                style="text-align: right !important"
+                *ngIf="
+                  mainTitle == 'Estimate' &&
+                  allData != undefined &&
+                  allData.discount != '0 %' &&
+                  allData.discount != '0 ₹'
+                "
+              >
+                {{ totalPayable }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                style="text-align: right !important"
+                class="tx_l"
+                colspan="3"
+                *ngIf="allData != undefined && allData.advance != 0.0"
+              >
+                {{'Advance' | translate}}({{currency_symbol}})
+              </td>
+              <td
+                style="text-align: right !important"
+                *ngIf="allData != undefined && allData.advance != 0.0"
+              >
+                {{ allData.advance }}
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                style="text-align: right !important"
+                class="tx_l"
+                colspan="3"
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.final_amount != 0.0
+                "
+              >
+                {{'Payable' | translate}}({{currency_symbol}})
+              </td>
+              <td
+                style="text-align: right !important"
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.final_amount != 0.0
+                "
+              >
+                {{ totalPayable - allData.advance }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                style="text-align: right !important"
+                class="tx_l"
+                colspan="3"
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.paid_amount != 0.0
+                "
+              >
+                {{'Received' | translate}}({{currency_symbol}})
+              </td>
+              <td
+                style="text-align: right !important"
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.paid_amount != 0.0
+                "
+              >
+                {{ allData.paid_amount }}
+              </td>
+            </tr>
+            <tr>
+              <td
+                style="text-align: right !important"
+                class="tx_l"
+                colspan="3"
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.balance_amount != 0.0
+                "
+              >
+                {{'Balance' | translate}}({{currency_symbol}})
+              </td>
+              <td
+                style="text-align: right !important"
+                *ngIf="
+                  mainTitle != 'Estimate' &&
+                  allData != undefined &&
+                  allData.balance_amount != 0.0
+                "
+              >
+                {{ allData.balance_amount }}
+              </td>
+            </tr>
+            <tr class="bg_c">
+              <td colspan="6" class="tx_l" *ngIf="mainTitle != 'Estimate'">
+                <b> {{'Invoice Amount In Words' | translate}}</b>
+              </td>
+              <td colspan="6" class="tx_l" *ngIf="mainTitle == 'Estimate'">
+                <b> {{'Estimate Amount In Words' | translate}} </b>
+              </td>
+              <td colspan="5" class="tx_l">
+                <b> {{'Authorized Signature and Payment Status' | translate}} </b>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="6" class="tx_l" style="padding: 13px">
+                {{ amountinwords }}
+              </td>
+              <td colspan="5">
+                <img
+                  style="margin-right: 306px; width: 87px; margin-bottom: 0px"
+                  [src]="
+                    domSanitizer.bypassSecurityTrustResourceUrl(signaturephoto)
+                  "
+                  class="img-responsive"
+                  alt="TTN"
+                  width="200"
+                />
+                <span *ngIf="image != ''" style="border-right: none !important">
+                  <img
+                    style="margin-left: 318px; width: 87px; margin-top: -69px"
+                    [src]="image"
+                    class="img-responsive"
+                    alt="TTN"
+                    width="200"
+                  />
+                </span>
+              </td>
+            </tr>
+            <tr *ngIf="mainTitle != 'Estimate'">
+              <td colspan="11">
+                {{'Your next servicing due on' | translate}}
+                <b>
+                  {{ reminderdate | date: "MMM d, y" }} {{'or' | translate}} {{ reminderKM }} {{'KM' | translate}}
+                  {{'whichever is earlier' | translate}}.</b
+                >
+                <br />
+                {{'Thank You! Service Regularly and ride safely. And Visit Again' | translate}}
+              </td>
+            </tr>
+            <tr *ngIf="mainTitle != 'Estimate'" class="bg_c">
+              <td *ngIf="allData.exit_note != ''" colspan="8" class="tx_l">
+                <b> {{'Exit Note' | translate}} </b>
+              </td>
+              <td *ngIf="allData.exit_note == ''" colspan="8" class="tx_l">
+                <b> {{'Exit Note' | translate}} </b>
+              </td>
+              <td
+                *ngIf="allData.jobcard_customer_voice != '[]'"
+                colspan="3"
+                class="tx_l"
+              >
+                <b> {{'Customers Voice' | translate}} </b>
+              </td>
+              <td
+                *ngIf="allData.jobcard_customer_voice == '[]'"
+                colspan="3"
+                class="tx_l"
+              >
+                <b> {{'Customers Voice' | translate}} </b>
+              </td>
+            </tr>
+            <tr *ngIf="mainTitle != 'Estimate'">
+              <td colspan="8" class="tx_l">{{ allData.exit_note }}</td>
+              <td
+                *ngIf="allData.jobcard_customer_voice != '[]'"
+                colspan="2"
+                class="tx_l"
+              >
+                <p *ngFor="let data of cutsomerVoice; let i = index">
+                  {{ data }}
+                </p>
+              </td>
+              <td
+                *ngIf="allData.jobcard_customer_voice == '[]'"
+                colspan="3"
+                class="tx_l"
+              ></td>
+            </tr>
+            <tr
+              *ngIf="
+                mainTitle != 'Estimate' &&
+                allData.work_note != '[]' &&
+                allData.work_note != ''
+              "
+              class="bg_c"
+            >
+              <td colspan="11" class="tx_l"><b> {{'Work Notes' | translate}} </b></td>
+            </tr>
+            <tr
+              *ngIf="
+                mainTitle != 'Estimate' &&
+                allData.work_note != '[]' &&
+                allData.work_note != ''
+              "
+            >
+              <td colspan="11" class="tx_l">
+                <p *ngFor="let data of worknotes; let i = index">
+                  {{ data.notes }}
+                </p>
+              </td>
+            </tr>
+            <tr
+              *ngIf="mainTitle == 'Estimate' && cutsomerVoice.length != 0"
+              class="bg_c"
+            >
+              <td colspan="10" class="tx_l"><b> {{'Customers Voice' | translate}} </b></td>
+            </tr>
+            <tr *ngIf="mainTitle == 'Estimate' && cutsomerVoice.length != 0">
+              <td colspan="10" class="tx_l">
+                <p *ngFor="let data of cutsomerVoice; let i = index">
+                  {{ data }}
+                </p>
+              </td>
+            </tr>
+            <tr *ngIf="allTermsAndConditions.length != 0" class="bg_c">
+              <td colspan="11" class="tx_l"><b> {{'Terms and Condition' | translate}}: </b></td>
+              <!-- <td colspan="2" class="tx_l"> <b> Bank Details </b></td>
+                        <td colspan="2" >UPI QR Code</td> -->
+            </tr>
+            <tr *ngIf="allTermsAndConditions.length != 0">
+              <td colspan="11" class="tx_l">
+                <p *ngFor="let data of allTermsAndConditions; let i = index">
+                  {{ data }}
+                </p>
+              </td>
+              <!-- <td colspan="2" class="tx_l" rowspan="5">ICICI Bank, Shivaji Nagar <br>
+                                                        Acc. No.: 100000000000 <br>
+                                                        IFSC Code: ICICI00500
+                        </td>
+                        <td rowspan="5" colspan="2"><img src="qr.png" class="img-responsive" alt="TTN QR"></td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /table-responsive -->
+      <h2
+        *ngIf="billfooter != ''"
+        [ngStyle]="{ 'text-align': 'center' }"
+        style="
+          font-size: 17px;
+          font-weight: 600;
+          color: #808080;
+          margin: 0 0 5px 0;
+        "
+      >
+        **{{ billfooter }}**
+      </h2>
+    </div>
+  </div>
+</div>

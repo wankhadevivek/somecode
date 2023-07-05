@@ -1,0 +1,29 @@
+<div class="closepoup" style="float: right; margin-bottom: 8px; margin-top: 7px; margin-right: 10px;">
+    <label (click)="closePopup('falsee')" class="btn btn-white cir" style="padding: 1px 4px;
+    
+    background: none;
+    border: none;"><i class="fa fa-times fa-2x" aria-hidden="true"></i></label>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <label class="control-label txt_lbl">{{'Please Secect the Type' | translate}}*</label>
+        <form novalidate class="form-horizontal" [formGroup]="OTPForm">
+            <div class="row" style="padding: 13px;">
+                <div class="col-sm-6">
+                    <input id="Invoice" type="radio" class="custom-control-input" value="mec" formControlName="otp" required>
+                    <label class="custom-control-label" for="male">{{'Mechanic Worksheet' | translate}}</label>
+                </div>
+                <div class="col-sm-6">
+                    <input id="Estimate" type="radio" class="custom-control-input" value="Estimate" formControlName="otp" required>
+                    <label class="custom-control-label" for="female">{{'Estimate' | translate}}</label>
+                </div>
+                <div *ngIf="submitted && OTPForm.invalid">
+                    <p class="text-danger">{{'Please select either value' | translate}}</p>
+                 </div>
+            </div>
+        </form>
+    </div>
+</div>
+<button class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 2% 0px 2% 9px; float: left;" (click)="closePopup(true)">{{'Select Type' | translate}}</button>
+<button class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 2% 0px 2% 9px; float: left;" (click)="closePopup('falsee')">{{'Cancel' | translate}}</button>
+

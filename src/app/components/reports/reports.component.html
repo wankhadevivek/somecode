@@ -1,0 +1,2898 @@
+<app-spin></app-spin>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-4 col-sm-4 col-md-4 mb-title">
+      <h3 style="font-size: 20px">{{ "Reports" | translate }}</h3>
+      <br />
+      <span
+        style="color: #c3c3c3; font-size: 13px; position: relative; top: -15px"
+        >{{ "Note: Only for closed jobcard" | translate }}</span
+      >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-sm-6 col-md-6">
+      <div class="card-report">
+        <div class="row mt-card-row">
+          <div class="col-lg-12 col-sm-12 col-md-12">
+            <div class="row">
+              <div class="col-lg-6 col-sm-12 col-md-6">
+                <label class="reports-label">
+                  {{ "Select Report" | translate }}</label
+                ><br />
+                <select
+                  class="report-select"
+                  (change)="selectReport($event.target.value)"
+                  [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="reportType"
+                >
+                  <option value="revenue">
+                    {{ "Jobcard Revenue" | translate }}
+                  </option>
+                  <option value="counter">
+                    {{ "Revenue" | translate }}
+                  </option>
+                  <option value="customer">
+                    {{ "Customer Details" | translate }}
+                  </option>
+                  <option value="pending">
+                    {{ "Pending Balance" | translate }}
+                  </option>
+                  <option value="spare">
+                    {{ "Spare Usages" | translate }}
+                  </option>
+                  <option value="job">{{ "Job Usages" | translate }}</option>
+                  <option value="lube">{{ "Lube Usages" | translate }}</option>
+                  <option value="vehicle">{{ "Vehicle" | translate }}</option>
+                  <option value="mechanic">{{ "Mechanic" | translate }}</option>
+                  <option value="service">
+                    {{ "Services Due" | translate }}
+                  </option>
+                  <option value="recustomer">
+                    {{ "Recurring Customers" | translate }}
+                  </option>
+                  <option value="gst">{{ "GST Jobcard" | translate }}</option>
+                  <option value="pogst">{{ "GST Purchase Order" | translate }}</option>
+                  <option value="csgst">{{ "GST Counter Sale" | translate }}</option>
+                  <option value="insexp">{{ "Insurance Expiry" | translate }}</option>
+                  <!-- <option value="cusbday">{{ "Customer Birthdays" | translate }}</option> -->
+                </select>
+              </div>
+              <div
+                class="col-lg-3 col-sm-12 col-md-6"
+                style="margin-bottom: 1%"
+                *ngIf="showLubeinvenData == true && showrecusfilter == false"
+              >
+                <label class="reports-label">
+                  {{ "Select Make" | translate }}</label
+                >
+                <select
+                  class="report-select"
+                  (change)="selectMake($event.target.value)"
+                  [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="makeSelected"
+                >
+                  <option
+                    *ngFor="let data of getAllVehicleMake; let i = index"
+                    value="{{ data }}"
+                  >
+                    {{ data }}
+                  </option>
+                </select>
+              </div>
+              <div
+                class="col-lg-3 col-sm-12 col-md-6"
+                *ngIf="showLubeinvenData == true && showrecusfilter == false"
+              >
+                <label class="reports-label"
+                  >{{ "Select Model" | translate }}
+                </label>
+                <select
+                  class="report-select"
+                  (change)="selectModel($event.target.value)"
+                  [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="modelSelected"
+                >
+                  <option
+                    *ngFor="let data of getAllVehicleModel; let i = index"
+                    value="{{ data }}"
+                  >
+                    {{ data }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 col-sm-12 col-md-12">
+            <div *ngIf="showrecusfilter == false" class="row">
+              <div class="col-lg-4 col-sm-6 col-md-4 col-xs-6">
+                <label
+                  for="reports-label-list"
+                  class="reports-label"
+                  style="display: block"
+                  >{{ "Date" | translate }}
+                </label>
+                <select
+                  id="reports-label-list"
+                  *ngIf="showServiceData == false"
+                  class="report-select"
+                  (change)="selectDate($event.target.value)"
+                  [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="dateType"
+                >
+                  <option value="today">Today</option>
+                  <option value="seven">
+                    {{ "Last" | translate }} 7 {{ "Days" | translate }}
+                  </option>
+                  <option value="fifth">
+                    {{ "Last" | translate }} 15 {{ "Days" | translate }}
+                  </option>
+                  <option value="one">1 {{ "Month" | translate }}</option>
+                  <option value="current">
+                    {{ "Current Month" | translate }}
+                  </option>
+                  <option value="last">{{ "Last Month" | translate }}</option>
+                  <option value="three">3 {{ "Months" | translate }}</option>
+                  <option value="six">6 {{ "Months" | translate }}</option>
+                  <option value="year">1 {{ "Year" | translate }}</option>
+                </select>
+                <select
+                  *ngIf="showServiceData == true"
+                  class="report-select"
+                  (change)="selectDate($event.target.value)"
+                  [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="dateType"
+                >
+                  <option value="current">
+                    {{ "Current Month" | translate }}
+                  </option>
+                  <option value="nextseven">
+                    {{ "Next" | translate }} 7 {{ "Days" | translate }}
+                  </option>
+                  <option value="nextfifth">15 {{ "Days" | translate }}</option>
+                  <option value="seven">
+                    {{ "Last" | translate }} 7 {{ "Days" | translate }}
+                  </option>
+                  <option value="fifth">
+                    {{ "Last" | translate }} 15 {{ "Days" | translate }}
+                  </option>
+                  <option value="last">{{ "Last Month" | translate }}</option>
+                </select>
+              </div>
+              <div class="col-lg-4 col-sm-6 col-md-4 col-xs-6">
+                <label class="reports-label">{{
+                  "From Date" | translate
+                }}</label>
+                <!-- <input class="form-control" (click)="d.toggle()" [minDate]="minDate" [maxDate]="maxDate" [startDate]="startDate" ngbDatepicker #d="ngbDatepicker" [ngModelOptions]="{standalone: true}" (ngModelChange)="FromDate($event)"  [ngModel]="FronDateField" style="background-color: #fff;cursor: pointer;border-radius: 5px;" readonly>
+                                <i class="fa fa-calendar form-control-feedback" style="margin-top: 33px; margin-right: 15px;cursor: pointer;"></i> -->
+                <div style="display: flex">
+                  <input
+                    id="reports-label"
+                    style="
+                      width: 84px;
+                      border: 1px solid;
+                      padding: 6px;
+                      height: 33px;
+                      border-radius: 5px;
+                    "
+                    matInput
+                    placeholder="Choose a date"
+                    [satDatepicker]="picker3"
+                    (ngModelChange)="FromDate($event)"
+                    [ngModel]="FronDateField"
+                  />
+                  <sat-datepicker #picker3> </sat-datepicker>
+                  <sat-datepicker-toggle
+                    matSuffix
+                    [for]="picker3"
+                  ></sat-datepicker-toggle>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6 col-md-4 col-xs-6">
+                <label class="reports-label">{{ "To Date" | translate }}</label>
+                <!-- <input class="form-control" (click)="dd.toggle()" [minDate]="TominDate" [maxDate]="TomaxDate" [startDate]="TostartDate" ngbDatepicker #dd="ngbDatepicker" [ngModelOptions]="{standalone: true}" (ngModelChange)="ToDate($event)"  [ngModel]="ToDateField" style="background-color: #fff;cursor: pointer;border-radius: 5px;" readonly>
+                                <i class="fa fa-calendar form-control-feedback" style="margin-top: 33px; margin-right: 15px;cursor: pointer;"></i> -->
+                <div style="display: flex">
+                  <input
+                    style="
+                      width: 83px;
+                      border: 1px solid;
+                      padding: 6px;
+                      height: 33px;
+                      border-radius: 5px;
+                    "
+                    matInput
+                    placeholder="Choose a date"
+                    [satDatepicker]="picker2"
+                    (ngModelChange)="ToDate($event)"
+                    [ngModel]="ToDateField"
+                  />
+                  <sat-datepicker #picker2> </sat-datepicker>
+                  <sat-datepicker-toggle
+                    matSuffix
+                    [for]="picker2"
+                  ></sat-datepicker-toggle>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 col-sm-12 col-md-12">
+            <div class="row" style="padding: 7px; margin-top: 6px">
+              <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+                <a href="javascript:" (click)="resetReports()">
+                  <button class="btn btn-primary createjobcard">
+                    {{ "Reset" | translate }}
+                  </button>
+                </a>
+              </div>
+
+              <div
+                class="col-lg-6 col-sm-6 col-md-6 col-xs-6"
+                style="text-align: -webkit-right"
+              >
+                <a href="javascript:" (click)="applyFilters()">
+                  <button class="btn btn-primary createjobcard">
+                    {{ "Apply" | translate }}
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-lg-6 col-sm-6 col-md-6"
+      *ngIf="
+        
+        showCounterData == true ||
+        showRevenueData == true ||
+        showMechanicData == true ||
+        recustomerData == true
+      "
+    >
+      <div class="card-report card-report-sm-height">
+        <div class="row">
+          <div
+            class="col-lg-12 col-sm-12 col-md-12"
+            style="
+              font-size: 16px;
+              text-align: center;
+              padding: 2px;
+              margin-top: 2px;
+            "
+          >
+            <label>{{ "Report Details" | translate }}</label>
+          </div>
+        </div>
+        <div
+          class="row"
+          *ngIf="showRevenueData == true || showCounterData == true"
+        >
+          <div
+            class="col-lg-6 col-sm-6 col-md-6"
+            style="text-align: center; padding: 2px; margin-top: 2px"
+          >
+            <table class="table">
+              <tbody class="history" *ngIf="showRevenueData == true">
+                <tr *ngFor="let data of totalRevenueData; let i = index">
+                  <th
+                    *ngIf="
+                      data.name != 'Total Discount' &&
+                      data.name != 'Pending Bal'
+                    "
+                    style="line-height: 0 !important"
+                  >
+                    <span [ngStyle]="data.css">{{ data.name }}</span>
+                  </th>
+                  <th
+                    *ngIf="
+                      data.name == 'Total Discount' &&
+                      data.name == 'Pending Bal'
+                    "
+                    style="line-height: 1 !important"
+                  >
+                    <span [ngStyle]="data.css">{{ data.name }}</span>
+                  </th>
+                  <td
+                    *ngIf="
+                      data.name != 'Total Discount' &&
+                      data.name != 'Pending Bal'
+                    "
+                    style="line-height: 0 !important"
+                  >
+                    <span [ngStyle]="data.css"
+                      >{{ currency_symbol }}{{ data.amount }}</span
+                    >
+                  </td>
+                  <td
+                    *ngIf="
+                      data.name == 'Total Discount' &&
+                      data.name == 'Pending Bal'
+                    "
+                    style="line-height: 1 !important"
+                  >
+                    <span [ngStyle]="data.css"
+                      >{{ currency_symbol }}{{ data.amount }}</span
+                    >
+                  </td>
+                </tr>
+              </tbody>
+              <tbody class="history" *ngIf="showCounterData == true">
+                <tr *ngFor="let data of totalCounterData; let i = index">
+                  <th style="line-height: 0 !important">
+                    <span [ngStyle]="data.css">{{ data.name }}</span>
+                  </th>
+                  <td style="line-height: 0 !important">
+                    <span [ngStyle]="data.css"
+                      >{{ currency_symbol }}{{ data.amount }}</span
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-md-6">
+            <highcharts-chart
+              [Highcharts]="Highcharts"
+              [options]="donutscharts"
+              style="display: block"
+            >
+            </highcharts-chart>
+          </div>
+        </div>
+        <div
+          class="row"
+          *ngIf="showMechanicData == true && recustomerData == false"
+        >
+          <div class="col-lg-6 col-sm-6 col-md-6">
+            <div
+              class="col-lg-12 col-sm-12 col-md-12"
+              style="
+                text-align: center;
+                padding: 2px;
+                margin-top: 28px;
+                display: grid;
+              "
+            >
+              <label>{{ "Top Performer" | translate }}:</label>
+              <label style="color: #f7d635; font-size: 16px">{{
+                performerMec
+              }}</label>
+            </div>
+            <div
+              class="col-lg-12 col-sm-12 col-md-12"
+              style="text-align: left; padding: 2px; margin-top: 2px"
+            >
+              <label
+                >{{ "Vehicle Served" | translate }}:
+                {{ performerMecserved }}</label
+              >
+            </div>
+            <div
+              class="col-lg-12 col-sm-12 col-md-12"
+              style="text-align: left; padding: 2px; margin-top: 2px"
+            >
+              <label
+                >{{ "Total Labour" | translate }}:
+                {{ performerMeclabour }}</label
+              >
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-md-6">
+            <highcharts-chart
+              [Highcharts]="Highcharts"
+              [options]="donutscharts"
+              style="display: block"
+            >
+            </highcharts-chart>
+
+            <!-- <canvas style="margin-top: 15px;" baseChart
+                      [data]="doughnutChartData"
+                      [labels]="doughnutChartLabels"
+                      [colors]="doughnutChartColors"
+                      [options]="options"
+                      [chartType]="doughnutChartType">
+                    </canvas> -->
+          </div>
+        </div>
+        <div
+          class="row"
+          *ngIf="recustomerData == true && showMechanicData == false"
+        >
+          <div class="col-lg-12 col-sm-12 col-md-12">
+            <div
+              class="col-lg-12 col-sm-12 col-md-12"
+              style="
+                text-align: center;
+                padding: 2px;
+                margin-top: 28px;
+                display: grid;
+              "
+            >
+              <label>{{ "Name" | translate }}:</label>
+              <label style="color: #f7d635; font-size: 16px">{{
+                performerMec
+              }}</label>
+            </div>
+            <div
+              class="col-lg-12 col-sm-12 col-md-12"
+              style="text-align: center; padding: 2px; margin-top: 2px"
+            >
+              <label
+                >{{ "Total Visit" | translate }}:
+                {{ performerMecserved }}</label
+              >
+            </div>
+            <div
+              class="col-lg-12 col-sm-12 col-md-12"
+              style="text-align: center; padding: 2px; margin-top: 2px"
+            >
+              <label
+                >{{ "Phone Number" | translate }}:
+                {{ performerMeclabour }}</label
+              >
+            </div>
+          </div>
+          <!-- <div class="col-lg-6 col-sm-6 col-md-6" style="text-align: center;
+                padding: 0px;
+                margin-top: 5px;
+                margin-left: -9px;">
+                    <div style="border: 1px solid #e4dcdc;
+                    background-color: #fff;
+                    box-shadow: 0px 0px 1px;
+                    padding: 4px;
+                    height: 168px;"> 
+                    <canvas style="margin-top: 15px;" baseChart
+                      [data]="doughnutChartData"
+                      [labels]="doughnutChartLabels"
+                      [options]="options"
+                      [chartType]="doughnutChartType">
+                    </canvas>
+                </div>
+                </div> -->
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-lg-6 col-sm-6 col-md-6"
+      *ngIf="showGSTData == true && showInsExpData == false"
+      class="col-lg-6 col-sm-6 col-md-6 report-details-mdl"
+    >
+      <div class="row">
+        <div
+          class="col-lg-6 col-sm-6 col-md-6"
+          style="
+            text-align: left;
+            padding: 2px;
+            margin-top: 2px;
+            border-bottom: 1px solid black;
+          "
+        >
+          <label>Report Details</label>
+        </div>
+        <div
+          class="col-lg-6 col-sm-6 col-md-6"
+          style="
+            text-align: left;
+            padding: 2px;
+            margin-top: 2px;
+            border-bottom: 1px solid black;
+          "
+        >
+          <label>{{ ReportHeader }}</label>
+        </div>
+        <div class="col-lg-12 col-sm-12 col-md-12" style="padding: 6px">
+          <table class="table-sm">
+            <thead>
+              <tr>
+                <th
+                  *ngFor="let data of GSTReportRows; let i = index"
+                  scope="col"
+                >
+                  {{ data }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ gst_invoice_value }}</td>
+                <td>{{ gst_cgst | number: "1.2-2" }}</td>
+                <td>{{ gst_cgst | number: "1.2-2" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-lg-6 col-sm-6 col-md-6"
+      *ngIf="
+        showGSTData == false && 
+        showInsExpData == false &&
+        showCounterData == false &&
+        showRevenueData == false &&
+        showMechanicData == false &&
+        recustomerData == false
+      "
+      class="col-lg-6 col-sm-6 col-md-6 report-details-mdl"
+    >
+      <div class="row">
+        <div
+          class="col-lg-6 col-sm-6 col-md-6"
+          style="
+            text-align: left;
+            padding: 2px;
+            margin-top: 2px;
+            border-bottom: 1px solid black;
+          "
+        >
+          <label>{{ "Report Details" | translate }}</label>
+        </div>
+        <div
+          class="col-lg-6 col-sm-6 col-md-6"
+          style="
+            text-align: left;
+            padding: 2px;
+            margin-top: 2px;
+            border-bottom: 1px solid black;
+          "
+        >
+          <label>{{ ReportHeader }}</label>
+        </div>
+        <div class="col-lg-12 col-sm-12 col-md-12" style="padding: 6px">
+          <table class="table-sm">
+            <thead>
+              <tr>
+                <th *ngFor="let data of ReportRows; let i = index" scope="col">
+                  {{ data }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of ReportRowsData; let i = index">
+                <td>{{ data.name }}</td>
+                <td>{{ data.vehicle }}</td>
+                <td>{{ data.date }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row"
+  >
+    <div
+      class="col-lg-12 col-sm-12 col-md-12"
+      style="display: inline-flex; margin-bottom: 4px"
+    >
+      <div class="input-group m-b col-lg-6 col-sm-6 col-md-6">
+        <span
+          *ngIf="showCustomerData == true"
+          class="input-group-addon"
+          style="
+            padding: 0 15px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+          "
+        >
+          <i class="fa fa-search fa-1x" aria-hidden="true"></i>
+        </span>
+        <input
+          *ngIf="showCustomerData == true"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="searchData"
+          type="text"
+          class="form-control"
+          style="border-left: none; border-right: none"
+          placeholder="{{ 'Filter Customer By Name,Mobile' | translate }}"
+        />
+        <span
+          *ngIf="showCustomerData == true"
+          (click)="searchCustomerData()"
+          class="input-group-addon"
+          style="
+            border-left: none;
+            background: linear-gradient(to bottom, #ff0000 0%, #563b3b 100%);
+            padding: 0 15px;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+          "
+        >
+          <button style="color: #fff; padding: 5px 12px">Search</button>
+        </span>
+      </div>
+      <div class="col-lg-6 col-sm-6 col-md-6">
+        <div class="col-lg-6 col-sm-6 col-md-6"></div>
+        <div
+          class="col-lg-3 col-sm-3 col-md-3"
+          data-toggle="tooltip"
+          title="Download PDF"
+        >
+          <span
+            *ngIf="showCustomerData == true"
+            href="javascript:"
+            (click)="dowloadpdf()"
+            style="
+              font-size: 14px;
+              color: #c30707;
+              font-family: Open sans;
+              text-decoration: underline;
+              cursor: pointer;
+            "
+            >{{ "Download Reports" | translate }}</span
+          >
+        </div>
+        <div
+       
+          class="col-lg-3 col-sm-3 col-md-3"
+          data-toggle="tooltip"
+          title="Download Excel"
+          *ngIf = "!showInsExpData"
+        >
+          <span
+            href="javascript:"
+            (click)="downlaodCSV()"
+            style="
+              font-size: 14px;
+              color: #037903;
+              font-family: Open sans;
+              text-decoration: underline;
+              cursor: pointer;
+            "
+            >{{ "Download Excel" | translate }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-sm-12 col-md-12">
+      <div
+        class="mat-elevation-z8"
+        *ngIf="showRevenueData == true"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          border-radius: 8px;
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          <!-- Name Column -->
+          <ng-container matColumnDef="date">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Date" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Date" | translate }}:</span>
+              <span
+                matTooltip="Open Reports Day Wise"
+                style="cursor: pointer"
+                (click)="openReports(element.date)"
+                class="link-edit"
+              >
+                {{ element.date | date: "MMM d,yy" }}
+              </span>
+              <!-- <span
+                matTooltip="Open Reports Day Wise"
+                style="cursor: pointer"
+                (click)="openReports(element.date)"
+                class="link-edit not-trim"
+              >
+                {{ element.date | date: "MMM d,yy" }}
+              </span>
+              <span class="trim">
+                {{ element.date | date: "MMM d,yy" }}
+              </span> -->
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ "Total" | translate }}
+            </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="spare_total">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Spare Total" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Spare Total" | translate }}:</span>
+              {{ currency_symbol }} {{ element.spareTotal }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              <span *ngIf="showFooter">
+                {{ currency_symbol }}
+                {{ showFooter ? footerRevenueData["spareTotal"] : "-" }}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="lube_total">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Lube Total" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Lube Total" | translate }}:</span>
+              {{ currency_symbol }} {{ element.lubeTotal }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerRevenueData["lubeTotal"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="in_house_labour">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "In house Labour" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "In house Labour" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.jobTotal }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerRevenueData["jobTotal"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="outsourced_labour">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Outsourced Labour" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Outsourced Labour" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.joboutTotal }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerRevenueData["joboutTotal"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="total">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Total" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Total" | translate }}:</span>
+              {{ currency_symbol }} {{ element.total }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerRevenueData["total"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="discount">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Discount" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Discount" | translate }}:</span>
+              {{ currency_symbol }} {{ element.discount }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerRevenueData["discount"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="final_amount">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Final Amount" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">
+                {{ "Final Amount" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.final }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerRevenueData["final"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="received_amount">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Received Amount" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element" style="color: #48c748">
+              <span class="mobile-label"
+                >{{ "Received Amount" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.received }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerRevenueData["received"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="balance">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Pending Balance" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element" style="color: #c30707">
+              <span class="mobile-label"
+                >{{ "Pending Balance" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.balance }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerRevenueData["balance"] : "-" }}
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr
+            mat-footer-row
+            *matFooterRowDef="displayedColumns; sticky: true"
+            class="web-show"
+          ></tr>
+        </table>
+        <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+      </div>
+      <div
+        class="mat-elevation-z8"
+        *ngIf="showCounterData == true"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          border-radius: 8px;
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          <!-- Name Column -->
+          <ng-container matColumnDef="date">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Date" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Date" | translate }}:</span>
+              <span
+                matTooltip="Open Reports Day Wise"
+                style="cursor: pointer"
+                (click)="opencounterReports(element.date)"
+                class="link-edit not-trim"
+              >
+                {{ element.date | date: "MMM d,yy" }}
+              </span>
+              <span class="trim">
+                {{ element.date | date: "MMM d,yy" }}
+              </span>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>{{ "Total" | translate }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="total">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Total" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Total" | translate }}:</span>
+              {{ currency_symbol }} {{ element.total }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerCounterData["total"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="received_amount">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Received Amount" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element" style="color: #48c748">
+              <span class="mobile-label"
+                >{{ "Received Amount" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.received }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerCounterData["received"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="balance">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Pending Balance" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element" style="color: #c30707">
+              <span class="mobile-label"
+                >{{ "Pending Balance" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.balance }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerCounterData["balance"] : "-" }}
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr
+            mat-footer-row
+            *matFooterRowDef="displayedColumns; sticky: true"
+            class="web-show"
+          ></tr>
+        </table>
+        <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+      </div>
+      <div
+        class="mat-elevation-z8"
+        *ngIf="showMechanicData == true"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          border-radius: 8px;
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          <!-- Name Column -->
+          <ng-container matColumnDef="mechanic_details">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Mechanic Details" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Mechanic Details" | translate }}:</span
+              >
+              {{ element.name }} {{ element.phone }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>{{ "Total" | translate }}</td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="total_vehicle">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Total Vehicle Worked" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Total Vehicle Worked" | translate }}:</span
+              >
+              {{ element.count }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ showFooter ? footerMechanicData["count"] : "-" }}
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="spare_total">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Spare Total" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Spare Total" | translate }}:</span>
+              {{ currency_symbol }} {{ element.spare }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerMechanicData["spare"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="lube_total">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Lube Total" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Lube Total" | translate }}:</span>
+              {{ currency_symbol }} {{ element.lube }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerMechanicData["lube"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="in_house_labour">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "In house Labour" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "In house Labour" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.job }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerMechanicData["job"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="discount">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              {{ "Labour Discount" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Labour Discount" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.discount }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <ng-container matColumnDef="outsourced_labour">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Outsourced Labour" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Outsourced Labour" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.outjob }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerMechanicData["outjob"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="total">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Total" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Total" | translate }}:</span>
+              {{ currency_symbol }} {{ element.total }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerMechanicData["total"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="incentives">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Incentives" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Incentives" | translate }}:</span>
+              {{ currency_symbol }} {{ element.incen }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerMechanicData["incen"] : "-" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="salary">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Salary" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Salary" | translate }}:</span>
+              {{ currency_symbol }} {{ element.salary }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }}
+              {{ showFooter ? footerMechanicData["salary"] : "-" }}
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr
+            mat-footer-row
+            *matFooterRowDef="displayedColumns; sticky: true"
+            class="web-show"
+          ></tr>
+        </table>
+        <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+      </div>
+      <div
+        class="mat-elevation-z8"
+        *ngIf="showVehicleData == true"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          border-radius: 8px;
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          <!-- Name Column -->
+          <ng-container matColumnDef="make_and_model">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Make and Model" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{
+                "Make and Model" | translate
+              }}</span>
+              {{ element.vehicledetails }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>{{ "Total" | translate }}</td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="counts">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Counts" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Counts" | translate }}:</span>
+              {{ element.count }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ footerVehicleData["count"] }}
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="invoice_amount">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Invoice Amount" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Invoice Amount" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.total }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              <!-- ₹ {{ totalVehicleData[0]["total"] }} -->
+              {{ currency_symbol }} {{ footerVehicleData["total"] }}
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr
+            mat-footer-row
+            *matFooterRowDef="displayedColumns; sticky: true"
+            class="web-show"
+          ></tr>
+        </table>
+        <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+      </div>
+      <div
+        class="mat-elevation-z8"
+        *ngIf="showServiceData == true"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          border-radius: 8px;
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          <!-- Name Column -->
+          <ng-container matColumnDef="customer_details">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Customer Details" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Customer Details" | translate }}:</span
+              >
+              {{ element.customer }}
+              <!-- <span class="trim"> {{ element.customer | slice: 0:15 }}...</span>
+              <span class="not-trim">{{ element.customer }}</span> -->
+            </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="vehicle_details">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Vehicle Details" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Vehicle Details" | translate }}:</span
+              >
+              <span class="trim"> {{ element.vehicle | slice: 0:15 }}...</span>
+              <span class="not-trim">{{ element.vehicle }}</span>
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="due_date">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Due Date" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Due Date" | translate }}:</span>
+              {{ element.duedate | date: "MMM d, y, h:mm a" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Status" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Status" | translate }}:</span>
+              {{ element.status }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="whatsapp_link">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Contact" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Contact" | translate }}:</span>
+              <div
+              class="closepoup"
+              data-toggle="tooltip"
+              title="Share WhatsApp"
+              (click) ="contactWhatsapp(element)"
+              style="    margin-left: 10%;"
+            >
+              <!-- <a [href]="'https://web.whatsapp.com/send?phone=91' + element.mob" target="_blank"> -->
+              <a [href]="contactlink" target="_blank">
+            
+                <label
+  
+                  class="btn btn-white cir"
+                  style="padding: 5px 9px"
+                >
+                  <i
+                    class="fa fa-whatsapp"
+                    aria-hidden="true"
+                    style="color: green"
+                  ></i
+                ></label>
+              </a>
+              <!-- sania -->
+            </div>
+            </td>
+          </ng-container>
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+      </div>
+      <div
+        class="mat-elevation-z8"
+        *ngIf="showJobData == true"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          border-radius: 8px;
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          <!-- Name Column -->
+          <ng-container matColumnDef="job_code">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Job Code" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Job Code" | translate }}:</span>
+              {{ element.partnumber }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>{{ "Total" | translate }}</td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="name">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Name" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Name" | translate }}:</span>
+              {{ element.partname }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="total_sold">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Total Sold" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Total Sold" | translate }}.:</span>
+              {{ element.count }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ showFooter ? footerInventoryData["totalSoldQty"] : "-" }}
+              <!-- {{ totalInventoryData[0]["totalSoldQty"] }} -->
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="current_quant">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Current Qty" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Current Qty" | translate }}:</span>
+              {{ element.avaliableqty }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <ng-container matColumnDef="average_selling_price">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="web-show"
+            >
+              <span class="mat-title-ctm">
+                {{ "Average Selling Price" | translate }}</span
+              >
+            </th>
+            <td
+              *matCellDef="let element"
+              style="text-align: center"
+              class="web-show"
+            >
+              <span class="mobile-label"
+                >{{ "Average Selling Price" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.sellingprice }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              <!-- <span *ngIf="showFooter">
+                ₹ {{ showFooter ? footerInventoryData["sellingprice"] : "-" }}
+              </span> -->
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="total_sold_in">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="web-show"
+            >
+              <span class="mat-title-ctm">
+                {{ "Total Sold (In Rupees)" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element" class="web-show">
+              <span class="mobile-label">{{ "Total Sold" | translate }}:</span>
+              {{ currency_symbol }} {{ element.totalsoldprice }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              <span *ngIf="showFooter">
+                {{ currency_symbol }}
+                {{ showFooter ? footerInventoryData["totalSold"] : "-" }}
+              </span>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr
+            mat-footer-row
+            *matFooterRowDef="displayedColumns; sticky: true"
+            class="web-show"
+          ></tr>
+        </table>
+        <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+      </div>
+      <div
+        class="mat-elevation-z8"
+        *ngIf="showLubeSpareData == true"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          border-radius: 8px;
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          <!-- Name Column -->
+          <ng-container matColumnDef="part_number">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Part Number" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Part No" | translate }}:</span>
+              {{ element.partnumber }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>{{ "Total" | translate }}</td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="name">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Name" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Name" | translate }}:</span>
+              {{ element.partname }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="company">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Company" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Company" | translate }}:</span>
+              {{ element.partcompany }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <ng-container matColumnDef="total_sold">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Total Sold" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Total Sold" | translate }}:</span>
+              {{ element.count }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <ng-container matColumnDef="current_quant">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Current Qty" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Current Qty" | translate }}:</span>
+              {{ element.avaliableqty }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <ng-container matColumnDef="average_selling_price">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Avg. Sell Price" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Avg. Sell Price" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.sellingprice }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <ng-container matColumnDef="total_sold_in">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Avg. Sell Price" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">
+                {{ "Avg. Sell Price" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.totalsoldprice }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              <!-- {{ showFooter ? totalInventoryData[0]["totalSold"] : 0 }} -->
+              {{ currency_symbol
+              }}{{ showFooter ? footerInventoryData["totalSold"] : "-" }}
+              <!-- {{ totalInventoryData[0]["totalSold"] }} -->
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="profit">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Profit" | translate }}</span>
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              style="padding-right: 14px !important"
+            >
+              <span class="mobile-label">{{ "Profit" | translate }}:</span>
+              {{ currency_symbol }} {{ element.profit }} (<span
+                style="color: #48c748"
+              >
+                {{ element.profitpercent | number: "1.2-2" }}% </span
+              >)
+            </td>
+
+            <td
+              mat-footer-cell
+              *matFooterCellDef
+              style="padding-right: 14px !important"
+            >
+              <!-- {{ showFooter ? totalInventoryData[0]["profit"] : 0 }} -->
+              {{ currency_symbol }}
+              {{ showFooter ? footerInventoryData["profit"] : "-" }}
+              <!-- (<span
+                style="color: #48c748"
+              > -->
+              <!-- {{ showFooter ? footerProfit : "-" }} -->
+              <!-- {{footerProfit}}
+                % </span
+              >) -->
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+          <tr
+            mat-footer-row
+            *matFooterRowDef="displayedColumns; sticky: true"
+            class="web-show"
+          >
+            >
+          </tr>
+        </table>
+        <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+      </div>
+      <div
+        class="mat-elevation-z8"
+        *ngIf="showCustomerData == true"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          border-radius: 8px;
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          <ng-container *ngIf="customerfalg == true" matColumnDef="select">
+            <th
+              matTooltip="{{
+                'Select any below checkbox To Download PDF' | translate
+              }}"
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              <i
+                style="color: #c30707"
+                class="fa fa-download"
+                aria-hidden="true"
+              ></i>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">
+                <i
+                  style="color: #c30707"
+                  class="fa fa-download"
+                  aria-hidden="true"
+                ></i>
+              </span>
+              <span
+                matTooltip="{{ 'Select checkbox To Download PDF' | translate }}"
+                *ngIf="element.falg == true"
+              >
+                <input
+                  style="cursor: pointer"
+                  type="checkbox"
+                  data-toggle="toggle"
+                  (change)="downlaodPDFCheck($event, element, '1')"
+                />
+              </span>
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <!-- Name Column -->
+          <ng-container matColumnDef="customer_details">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Customer Details" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Customer" | translate }}:</span>
+              <span class="trim"> {{ element.customer | slice: 0:15 }}...</span>
+              <span class="not-trim">{{ element.customer }}</span>
+            </td>
+
+            <td mat-footer-cell *matFooterCellDef>{{ "Total" | translate }}</td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="vehicle_details">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">{{
+                "Vehicle Details" | translate
+              }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Vehicle Details" | translate }}:</span
+              >
+
+              <span class="trim">
+                {{ element.vehicledetails | slice: 0:10 }}...</span
+              >
+              <span class="not-trim">{{ element.vehicledetails }}</span>
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="total">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Total" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Total" | translate }}:</span>
+              {{ currency_symbol }} {{ element.total }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }} {{ totalCustomerData[0]["total"] }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="discount">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Discount" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Discount" | translate }}:</span>
+              {{ currency_symbol }} {{ element.discount }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }} {{ totalCustomerData[0]["discount"] }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="final_amount">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Final Amount" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Final Amount" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.final }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }} {{ totalCustomerData[0]["finalAmount"] }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="received_amount">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Received Amount" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element" style="color: #08f308">
+              <span class="mobile-label"
+                >{{ "Received Amount" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.received }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }} {{ totalCustomerData[0]["receivedAmount"] }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="balance">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Pending Balance" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element" style="color: #c30707">
+              <span class="mobile-label"
+                >{{ "Pending Balance" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.balance }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }} {{ totalCustomerData[0]["pendingBalance"] }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="days">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Days" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Days" | translate }}:</span>
+              {{ element.Difference_In_Days }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th style="background: #eee" mat-header-cell *matHeaderCellDef>
+              <span class="mat-title-ctm"> {{ "Action" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Action" | translate }}:</span>
+              <span
+                *ngIf="element.balance != 0"
+                style="cursor: pointer; color: #e27175"
+                matTooltip="{{
+                  'Need To enable Bulk SMS (Coming Soon)' | translate
+                }}"
+              >
+                <!-- <i (click)='sendReminderMessage(element)' class="fa fa-paper-plane" aria-hidden="true"></i> -->
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              </span>
+              <span
+                *ngIf="element.balance == 0"
+                style="cursor: pointer; color: #e27175"
+                matTooltip="{{
+                  'Need To enable Bulk SMS (Coming Soon)' | translate
+                }}"
+              >
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              </span>
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr
+            mat-footer-row
+            *matFooterRowDef="displayedColumns; sticky: true"
+            class="web-show"
+          ></tr>
+        </table>
+        <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+      </div>
+      <div
+        class="mat-elevation-z8"
+        *ngIf="showPendingData == true"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          border-radius: 8px;
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          
+          <!-- Name Column -->
+          <ng-container matColumnDef="cus_name">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Customer Name" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Customer" | translate }}:</span>
+              <span class="trim"> {{ element.cutsomer_name | slice: 0:15 }}...</span>
+              <span class="not-trim">{{ element.cutsomer_name }}</span>
+            </td>
+
+           
+          </ng-container>
+          <ng-container matColumnDef="cus_mob">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Customer Mobile" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Mobile" | translate }}:</span>
+              <span class="trim"> {{ element.customer_mobile | slice: 0:15 }}...</span>
+              <span class="not-trim">{{ element.customer_mobile }}</span>
+            </td>
+</ng-container>
+          <ng-container matColumnDef="jcno">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Jobcard Number" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Jobcard" | translate }}:</span>
+              <span class="trim"> {{ element.jobcard_number | slice: 0:15 }}...</span>
+              <span class="not-trim">{{ element.jobcard_number }}</span>
+            </td>
+
+             </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="vehicle_details">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">{{
+                "Vehicle Details" | translate
+              }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Vehicle Details" | translate }}:</span
+              >
+
+              <span class="trim">
+                {{ element.vehicle_number | slice: 0:10 }}...</span
+              >
+              <span class="not-trim">{{ element.vehicle_number }}</span>
+            </td>
+            </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="total">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Total" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Total" | translate }}:</span>
+              {{ currency_symbol }} {{ element.total_amount }}
+            </td>
+            <!-- <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }} {{ totalCustomerData[0]["total"] }}
+            </td> -->
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="discount">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Discount" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Discount" | translate }}:</span>
+              {{ element.discount }}
+            </td>
+          
+          </ng-container>
+
+          <ng-container matColumnDef="final_amount">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Final Amount" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Final Amount" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.final_amount }}
+            </td>
+           
+          </ng-container> -->
+
+          <!-- <ng-container matColumnDef="received_amount">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Received Amount" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element" style="color: #08f308">
+              <span class="mobile-label"
+                >{{ "Received Amount" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.paid_amount }}
+            </td>
+            
+          </ng-container> -->
+
+          <ng-container matColumnDef="balance">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Pending Balance" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element" style="color: #c30707">
+              <span class="mobile-label"
+                >{{ "Pending Balance" | translate }}:</span
+              >
+              {{ currency_symbol }} {{ element.balance_amount }}
+            </td>
+            <!-- <td mat-footer-cell *matFooterCellDef>
+              {{ currency_symbol }} {{ totalCustomerData[0]["pendingBalance"] }}
+            </td> -->
+          </ng-container>
+
+         
+
+          <ng-container matColumnDef="whatsapp_link">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Contact" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Contact" | translate }}:</span>
+              <div
+              class="closepoup"
+              data-toggle="tooltip"
+              title="Share WhatsApp"
+              (click) ="contactWhatsapp(element)"
+              style="    margin-left: 10%;"
+            >
+              <!-- <a [href]="'https://web.whatsapp.com/send?phone=91' + element.mob" target="_blank"> -->
+              <a [href]="contactlink" target="_blank">
+            
+                <label
+  
+                  class="btn btn-white cir"
+                  style="padding: 5px 9px"
+                >
+                  <i
+                    class="fa fa-whatsapp"
+                    aria-hidden="true"
+                    style="color: green"
+                  ></i
+                ></label>
+              </a>
+              <!-- sania -->
+            </div>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <!-- <tr
+            mat-footer-row
+            *matFooterRowDef="displayedColumns; sticky: true"
+            class="web-show"
+          ></tr> -->
+        </table>
+        <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+      </div>
+      <div
+        class="mat-elevation-z8"
+        *ngIf="recustomerData == true"
+        (scroll)="onScroll($event)"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          border-radius: 8px;
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Name" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Name" | translate }}:</span>
+              {{ element.name }}
+            </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="mobile_number">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Mobile Number" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Mob. No" | translate }}.:</span>
+              {{ element.mobile }}
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="vehicle_details">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Vehicle Details" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Vehicle" | translate }}:</span>
+              {{ element.details }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="vehicle_number">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Vehicle Number" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Vehicle No" | translate }}:</span>
+              {{ element.vehicle }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="last_visit">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Last Visit" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Last Visit" | translate }}:</span>
+              {{ element.date | date: "MMM d, y, h:mm a" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="total_visit">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Total Visit" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Total Visit" | translate }}:</span>
+              {{ element.count }}
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+      </div>
+      <div
+        class="example-container mat-elevation-z8"
+        *ngIf="
+          showGSTData == true &&
+          showInsExpData == false &&
+          showCounterData == false &&
+          showRevenueData == false &&
+          showMechanicData == false &&
+          recustomerData == false
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          <ng-container matColumnDef="date">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "Date" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Date" | translate }}:</span>
+              {{ element.date | date: "MMM d, y" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="invoice_no">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> Invoice Number</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">Invoice No.:</span>
+              {{ element.invoice_no }}
+            </td>
+            >
+          </ng-container>
+          <ng-container 
+          *ngIf = "reportType =='gst'"
+          matColumnDef="jc_no">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> Jobcard Number</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">Jobcard No.:</span>
+              {{ element.jc_no }}
+            </td>
+            >
+          </ng-container>
+
+          <ng-container matColumnDef="invoice_value">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> Invoice Value</span>
+            </th>
+
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">Invoice Value:</span>
+              <span style="color: #c30707">
+                {{ currency_symbol }} {{ element.invoice_value }}</span
+              >
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="gst_rate">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">{{ "GST Rate" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "GST Rate" | translate }}:</span>
+              <span style="color: #2aa72a">{{ element.gst_rate }}</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="amount">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> Amount</span>
+            </th>
+
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">Amount:</span>
+              <span style="color: #c30707">
+                ₹ {{ element.amount | number: "1.2-2" }}</span
+              >
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="taxable_value">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm">
+                {{ "Taxable Value" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Taxable Value" | translate }}:</span
+              >
+              <span style="color: #2f2fe2"
+                >{{ currency_symbol }} {{ element.taxable_amt }}</span
+              >
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="cgst">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "CGST" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "CGST" | translate }}:</span>
+              <span style="color: #2aa72a"
+                >{{ currency_symbol }}
+                {{ element.cgst | number: "1.2-2" }}</span
+              >
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="sgst">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "SGST" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "SGST" | translate }}:</span>
+              <span style="color: #2aa72a"
+                >{{ currency_symbol }}
+                {{ element.sgst | number: "1.2-2" }}</span
+              >
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="gst_no">
+            <th
+              style="background: #eee"
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >
+              <span class="mat-title-ctm"> {{ "GST No" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "GST No" | translate }}:</span>
+              {{ element.gst_no }}
+            </td>
+          </ng-container>
+          
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+      <div
+      class="mat-elevation-z8"
+      *ngIf="showInsExpData == true"
+      style="
+        box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+          0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+          0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+        border-radius: 8px;
+      "
+    >
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="mat-elevation-z12"
+        style="font-family: Open sans; width: 100%"
+      >
+        
+        <!-- Name Column -->
+        <ng-container matColumnDef="cus_name">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            <span class="mat-title-ctm">
+              {{ "Customer Name" | translate }}</span
+            >
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">{{ "Customer" | translate }}:</span>
+            <span class="trim"> {{ element.customer_name | slice: 0:15 }}...</span>
+            <span class="not-trim">{{ element.customer_name }}</span>
+          </td>
+
+         
+        </ng-container>
+        <ng-container matColumnDef="cus_mob">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            <span class="mat-title-ctm">
+              {{ "Customer Mobile" | translate }}</span
+            >
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">{{ "Mobile" | translate }}:</span>
+            <span class="trim"> {{ element.customer_mobile }}...</span>
+            <span class="not-trim">{{ element.customer_mobile }}</span>
+          </td>
+</ng-container>
+        <ng-container matColumnDef="vehicle_no">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            <span class="mat-title-ctm">
+              {{ "Vehicle Number" | translate }}</span
+            >
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">{{ "Vehicle Number" | translate }}:</span>
+            <span class="trim"> {{ element.vehicle_number | slice: 0:15 }}...</span>
+            <span class="not-trim">{{ element.vehicle_number }}</span>
+          </td>
+
+           </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="vehicle_details">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            <span class="mat-title-ctm">{{
+              "Vehicle Details" | translate
+            }}</span>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label"
+              >{{ "Vehicle Details" | translate }}:</span
+            >
+
+            <span class="trim">
+              {{ element.vehicle_make +element.vehicle_model +element.vehicle_variant | slice: 0:20 }}...</span
+            >
+            <span class="not-trim">{{ element.vehicle_make +element.vehicle_model +element.vehicle_variant }}</span>
+          </td>
+          </ng-container>
+
+        
+        <ng-container matColumnDef="exp_date">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            <span class="mat-title-ctm"> 
+              {{ reportType=="insexp" ? "Expiry Date" :"Birthdate"}}
+              <!-- {{ "Expiry Date" | translate }} -->
+            </span>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">{{ "Expiry Date" | translate }}:</span>
+            
+
+
+            
+            <span>
+              {{ reportType==="insexp" ? element.insurance_exp_date : element.customer_dob| date:'mediumDate' }}
+            </span>
+
+          
+          
+          </td>
+        
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container
+        
+        matColumnDef="ins_name">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            <span class="mat-title-ctm"> 
+              {{ reportType=="insexp" ? "Insurance Name" :"Day"}}
+             </span>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">
+              {{ reportType=="insexp" ? "Insurance Name" :"Day"}}:</span>
+           
+            <!-- <span class="trim">
+              {{ element.insurance_details.ins_name }}</span
+            >
+            <span class="not-trim">{{ element.insurance_details.ins_name }}</span> -->
+            <span>
+              {{ reportType==="insexp" ? element.insurance_details.insurance_name : element.customer_dob |date:'EEEE' }}
+            </span>
+          </td>
+        
+        </ng-container>
+        <ng-container matColumnDef="whatsapp_link">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            <span class="mat-title-ctm"> {{ "Contact" | translate }}</span>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">{{ "Contact" | translate }}:</span>
+            <div
+            class="closepoup"
+            data-toggle="tooltip"
+            title="Share WhatsApp"
+            (click) ="contactWhatsapp(element)"
+            style="    margin-left: 10%;"
+          >
+            <!-- <a [href]="'https://web.whatsapp.com/send?phone=91' + element.mob" target="_blank"> -->
+            <a [href]="contactlink" target="_blank">
+          
+              <label
+
+                class="btn btn-white cir"
+                style="padding: 5px 9px"
+              >
+                <i
+                  class="fa fa-whatsapp"
+                  aria-hidden="true"
+                  style="color: green"
+                ></i
+              ></label>
+            </a>
+           
+          </div>
+          </td>
+        </ng-container>
+
+        
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      
+      </table>
+      <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+    </div>
+    
+    </div>
+  </div>
+</div>

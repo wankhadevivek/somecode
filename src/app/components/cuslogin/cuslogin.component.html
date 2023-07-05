@@ -1,0 +1,1270 @@
+<app-spinend></app-spinend>
+<div class="container" *ngIf="openDetailJobcard == false">
+  <div class="header-row" id="header-row" style="padding: 0px; height: 100px">
+    <div class="container-fluid" style="padding: 0px">
+      <div class="row">
+        <div class="col-xs-12" style="margin-top: 85px">
+          <img
+            src="../../../assets/images/ttngarage.png"
+            alt="banner"
+            style="width: 100%"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div [class]="rowclass">
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+      <div
+        class="col-lg-1 col-sm-1 col-md-1 col-xs-1"
+        style="
+          background-color: #fff;
+          padding: 7px 31px;
+          font-size: 30px;
+          border-radius: 31px;
+          width: 1px;
+        "
+      >
+        <!-- <i class="fa fa-car" aria-hidden="true" style="margin-left: -15px;"></i> -->
+        <img
+          [src]="vehiclepic"
+          alt=""
+          style="margin-left: -23px; height: 47px; width: 47px"
+        />
+      </div>
+      <div
+        class="col-lg-9 col-sm-9 col-md-9 col-xs-9"
+        style="padding-right: 0px !important"
+      >
+        <span style="font-size: 16px; color: #000000; font-weight: bold">{{
+          workshopname
+        }}</span
+        ><br />
+        <span
+          *ngIf="workshoptiltle != 'none'"
+          style="font-size: 12px; color: #7487ff"
+          >{{ workshoptiltle }}</span
+        >
+      </div>
+      <div class="col-lg-1 col-sm-1 col-md-1 col-xs-1 text-right">
+        <span
+          style="color: #008000; display: flex"
+          *ngIf="workshopverified == true"
+        >
+          <i class="fa fa-check-circle" aria-hidden="true"></i>
+          <span style="margin-left: 5px; font-size: 10px">{{
+            "Verified" | translate
+          }}</span>
+        </span>
+      </div>
+      <div
+        style="margin-bottom: 9px; margin-top: 14px"
+        *ngIf="openDetailJobcard == true"
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+      >
+        <span (click)="openList()">
+          <i
+            style="cursor: pointer"
+            class="fa fa-arrow-left"
+            aria-hidden="true"
+          ></i>
+          <span
+            style="
+              margin-left: 9px;
+              cursor: pointer;
+              text-decoration: underline;
+            "
+            >{{ "Back" | translate }}</span
+          >
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="openDetailJobcard == false">
+  <div class="row" style="margin-top: 9px">
+    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6"></div>
+    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-right">
+      <button
+        (click)="goToBook()"
+        [routerLink]="parmforbook"
+        style="
+          padding: 13px 17px 13px 17px;
+          color: #ffff;
+          background: linear-gradient(to right, #ff0000 0%, #563b3b 100%);
+          border-radius: 25px;
+          font-size: 14px;
+        "
+      >
+        {{ "Book a Service" | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="openDetailJobcard == false">
+  <div class="row" style="margin-top: 20px">
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+      <span style="font-size: 12px; color: #7a7a7a">{{
+        "Recent Service Jobcard" | translate
+      }}</span>
+      <div
+        *ngIf="showloginsection == false"
+        style="
+          margin-top: 3px;
+          padding: 22px;
+          background-color: #fff;
+          box-shadow: 0px 3px 7px;
+        "
+      >
+        <div class="text-center">
+          <span style="color: #000000; font-weight: bold"
+            >{{ "Searching for ongoing Service Details" | translate }}!</span
+          >
+        </div>
+        <div
+          class="text-center"
+          style="color: #8b8b8b; margin-top: 6px; margin-bottom: 19px"
+        >
+          <span>
+            {{
+              "Verify your registered mobile number to link your account or"
+                | translate
+            }}
+          </span>
+          <br />
+          <span>{{
+            "view service details already in progress" | translate
+          }}</span>
+        </div>
+        <div class="linegarageda"></div>
+        <div
+          class="text-center"
+          (click)="openVerifyData()"
+          style="cursor: pointer"
+        >
+          <img
+            src="../../../assets/images/hand-graving-smartphone.png"
+            alt=""
+          />
+          <span style="color: #ff0000; margin-left: 10px">{{
+            "Verify Mobile Number" | translate
+          }}</span>
+        </div>
+      </div>
+
+      <div
+        *ngIf="showloginsection == true"
+        style="
+          margin-top: 3px;
+          padding: 22px;
+          background-color: #fff;
+          box-shadow: 0px 3px 7px;
+        "
+      >
+        <span *ngIf="jobcardListed == true">
+          <div
+            class="col-lg-1 col-sm-1 col-md-12 col-xs-1 text-center"
+            style="margin-left: -24px"
+          >
+            <div
+              style="
+                background-color: #ff5454;
+                padding: 6px 0px 6px 0px;
+                margin-right: -71px;
+                margin-top: -8px;
+              "
+            >
+              <span style="color: #fff; font-size: 23px">{{
+                jobcardData.created_at | date: "d"
+              }}</span>
+              <br />
+              <span style="color: #fff; font-size: 12px">
+                {{ jobcardData.created_at | date: "MMMM" }}</span
+              >
+            </div>
+          </div>
+          <div
+            class="col-lg-9 col-sm-9 col-md-9 col-xs-9"
+            style="margin-left: 55px"
+          >
+            <span
+              (click)="openJobcard(jobcardData)"
+              style="
+                font-size: 14px;
+                color: #000000;
+                text-decoration: underline;
+                cursor: pointer;
+              "
+            >
+              {{ jobcardData.vehicle_number }}
+            </span>
+            <br />
+            <span
+              style="font-size: 12px"
+              *ngIf="jobcardData.vehicle_details.make != undefined"
+              (click)="openJobcard(jobcardData)"
+              style="cursor: pointer; text-decoration: underline"
+            >
+              {{ jobcardData.vehicle_details.make }}&nbsp;{{
+                jobcardData.vehicle_details.model
+              }}&nbsp;{{ jobcardData.vehicle_details.variant }}
+            </span>
+            <span
+              style="font-size: 12px"
+              *ngIf="jobcardData.vehicle_details.make == undefined"
+            >
+              {{ jobcardData.vehicle_details.vehicle_make }}&nbsp;{{
+                jobcardData.vehicle_details.vehicle_model
+              }}&nbsp;{{ jobcardData.vehicle_details.vehicle_variant }}
+            </span>
+            <span *ngIf="jobcardData.vehicle_details == undefined"></span>
+          </div>
+          <div
+            class="col-lg-2 col-sm-2 col-md-2 col-xs-2"
+            style="margin-left: -50px"
+          >
+            <span
+              style="font-size: 10px"
+              *ngIf="jobcardData.jobcard_status == '0'"
+              >{{ "Estimate" | translate }}</span
+            >
+            <span
+              style="font-size: 10px"
+              *ngIf="jobcardData.jobcard_status != '0'"
+              >{{ "Total" | translate }}</span
+            >
+            <br />
+            <span
+              *ngIf="jobcardData.jobcard_status == '0'"
+              style="font-size: 16px; color: #000000; margin-left: 4px"
+              >{{ currency_symbol
+              }}{{ jobcardData.cost_estimate | number: "1.0-0" }}</span
+            >
+
+            <span
+              *ngIf="jobcardData.jobcard_status != '0'"
+              style="font-size: 16px; color: #000000; margin-left: 4px"
+              >{{ currency_symbol
+              }}{{ jobcardData.total_amount | number: "1.0-0" }}</span
+            >
+          </div>
+          <div
+            *ngIf="jobcardData.jobcard_status == '0'"
+            class="text-center"
+            style="
+              color: #7487ff;
+              margin-top: 62px;
+              margin-bottom: 30px;
+              font-size: 10px;
+            "
+          >
+            <span *ngIf="jobcardData.jobcard_status == '0'"
+              >{{ "Expected Ready By" | translate }}
+              {{
+                ConvertTodate(jobcardData.estimated_delivery_datetime)
+                  | date: "h:mm a, d MMM y"
+              }}</span
+            >
+          </div>
+          <div
+            *ngIf="jobcardData.jobcard_status != '0'"
+            class="text-left"
+            style="
+              color: #000000;
+              margin-top: 62px;
+              margin-bottom: 30px;
+              font-size: 10px;
+            "
+          >
+            <span *ngIf="jobcardData.jobcard_status == '1'">
+              {{ "Vehicle Delivery" | translate }}
+              {{
+                ConvertTodate(jobcardData.complete_date)
+                  | date: "h:mm a, d MMM y"
+              }}
+              <span class="paidone" *ngIf="jobcardData.balance_amount == '0.0'">
+                {{ "Paid" | translate }}
+              </span>
+              <span class="balone" *ngIf="jobcardData.balance_amount != '0.0'">
+                {{ "Pay Balance" | translate }}
+              </span>
+            </span>
+            <span *ngIf="jobcardData.jobcard_status == '2'"
+              >{{ "Vehicle Delivery" | translate }}
+              {{
+                ConvertTodate(jobcardData.closed_date) | date: "h:mm a, d MMM y"
+              }}
+              <span
+                class="paidone"
+                s
+                *ngIf="jobcardData.balance_amount == '0.0'"
+              >
+                {{ "Paid" | translate }}
+              </span>
+              <span class="balone" *ngIf="jobcardData.balance_amount != '0.0'">
+                {{ "Pay Balance" | translate }}
+              </span>
+            </span>
+          </div>
+          <div class="linegarage"></div>
+          <span *ngIf="jobcardData.balance_amount != '0.0'">
+            <div
+              *ngIf="jobcardData.jobcard_status == 0"
+              class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center"
+              (click)="openPaymentNot('review')"
+            >
+              <div style="margin-top: -10px">
+                <img
+                  src="../../../assets/images/comment.png"
+                  alt=""
+                  style="margin-top: -10px"
+                />
+                <span
+                  style="color: #161616; margin-left: 10px; font-weight: bold"
+                  >{{ "Review" | translate }}</span
+                >
+              </div>
+            </div>
+
+            <!--  -->
+
+            <div
+              *ngIf="jobcardData.jobcard_status !== 0"
+              class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center"
+              (click)="
+                xpandStatus = xpandStatus ? false : true;
+                openJobcard(jobcardData, true)
+              "
+            >
+              <div style="margin-top: -10px">
+                <img
+                  src="../../../assets/images/comment.png"
+                  alt=""
+                  style="margin-top: -10px"
+                />
+                <span
+                  style="color: #161616; margin-left: 10px; font-weight: bold"
+                  >{{ "Review" | translate }}</span
+                >
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center">
+              <div
+                class="line-in-middle"
+                style="
+                  border-left: 1px solid #dcdada;
+                  height: 45px;
+                  margin-top: -24px;
+                  margin-left: -15px;
+                "
+              ></div>
+              <div style="margin-top: -30px">
+                <span
+                  *ngIf="jobcardData.status != null"
+                  style="color: #ff0000; cursor: pointer"
+                  (click)="openPayment(jobcardData)"
+                >
+                  <i
+                    class="fa fa-credit-card"
+                    aria-hidden="true"
+                    style="font-size: 16px"
+                  ></i>
+                  <span style="margin-left: 10px">{{
+                    "Pay Now" | translate
+                  }}</span>
+                </span>
+                <span
+                  *ngIf="jobcardData.status == null"
+                  style="color: #8b8b8b"
+                  (click)="openPaymentNot('pay')"
+                >
+                  <i
+                    class="fa fa-credit-card"
+                    aria-hidden="true"
+                    style="font-size: 16px"
+                  ></i>
+                  <span style="margin-left: 10px">{{
+                    "Pay Now" | translate
+                  }}</span>
+                </span>
+              </div>
+            </div>
+          </span>
+
+          <!-- ----------------------------------------- -->
+
+          <!-- --------------------------------------------- -->
+
+          <span
+            *ngIf="
+              jobcardData.jobcard_status != '0' &&
+              jobcardData.balance_amount == '0.0'
+            "
+            (click)="openPaymentNot('review')"
+          >
+            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center">
+              <div style="margin-top: -10px">
+                <img
+                  src="../../../assets/images/comment.png"
+                  alt=""
+                  style="color: #6f6ff5; margin-top: -4px"
+                />
+                <span style="color: #6f6ff5; margin-left: 10px">{{
+                  "Review" | translate
+                }}</span>
+              </div>
+            </div>
+          </span>
+        </span>
+
+        <span *ngIf="jobcardListed == false">
+          <div class="text-center">
+            <span style="color: #000000; font-weight: bold">{{
+              "No Jobcard Created" | translate
+            }}</span>
+          </div>
+          <div
+            class="text-center"
+            style="color: #8b8b8b; margin-top: 6px; margin-bottom: 19px"
+          >
+            <span>
+              {{
+                "Please Book a service and ask Garage owner to accept the Bookings"
+                  | translate
+              }}
+            </span>
+            <br />
+            <span>{{ "Thank You for Using Services" | translate }}</span>
+          </div>
+          <!-- <div class="linegarage" ></div>
+                    <div class="text-center" style="cursor: pointer;">
+                        <img src="../../../assets/images/comment.png" alt="">
+                        <span style="color: #8B8B8B;    margin-left: 10px;">Review</span>
+                    </div> -->
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="openDetailJobcard == false">
+  <div class="row" style="margin-top: 20px">
+    <div
+      class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+      *ngIf="showonlineservices == true"
+    >
+      <span style="font-size: 12px; color: #7a7a7a">{{
+        "Services Offered" | translate
+      }}</span>
+      <p
+        (click)="goToService()"
+        [routerLink]="paramforservice"
+        class="text-right"
+        style="
+          outline: none !important;
+          color: #f90000;
+          margin-top: -21px;
+          cursor: pointer;
+        "
+      >
+        {{ "View More" | translate }}
+      </p>
+      <div
+        style="padding: 4px; background-color: #fff; box-shadow: 0px 3px 7px"
+      >
+        <div>
+          <div
+            class="col-lg-1 col-sm-1 col-md-12 col-xs-1"
+            style="margin-left: -24px"
+          >
+            <img
+              src="../../../assets/images/Group 178.png"
+              alt=""
+              style="height: 30px; margin-left: 9px"
+            />
+          </div>
+          <div
+            class="col-lg-9 col-sm-9 col-md-9 col-xs-9"
+            style="margin-left: 20px"
+          >
+            <span style="font-size: 14px; color: #000000">
+              <b>{{ onlineserviceonename }}</b>
+            </span>
+          </div>
+          <div
+            class="col-lg-2 col-sm-2 col-md-2 col-xs-2"
+            style="margin-left: px"
+          >
+            <span style="font-size: 10px">{{ "Charges" | translate }}</span>
+            <br />
+            <span style="font-size: 14px; color: #000000"
+              >{{ currency_symbol }}{{ onlineserviceoneamount }}</span
+            >
+          </div>
+        </div>
+        <br />
+        <div>
+          <span style="font-size: 10px; color: #8b8b8b">
+            <b>{{ "Description" | translate }}: </b>{{ onlineserviceonedes }}
+          </span>
+        </div>
+      </div>
+
+      <div
+        *ngIf="showonlineservicestwo == true"
+        style="
+          margin-top: 12px;
+          padding: 4px;
+          background-color: #fff;
+          box-shadow: 0px 3px 7px;
+        "
+      >
+        <div>
+          <div
+            class="col-lg-1 col-sm-1 col-md-12 col-xs-1"
+            style="margin-left: -24px"
+          >
+            <img
+              src="../../../assets/images/Group 178.png"
+              alt=""
+              style="height: 30px; margin-left: 9px"
+            />
+          </div>
+          <div
+            class="col-lg-9 col-sm-9 col-md-9 col-xs-9"
+            style="margin-left: 20px"
+          >
+            <span style="font-size: 14px; color: #000000">
+              <b>{{ onlineservicetwoname }}</b>
+            </span>
+          </div>
+          <div
+            class="col-lg-2 col-sm-2 col-md-2 col-xs-2"
+            style="margin-left: 0px"
+          >
+            <span style="font-size: 10px">{{ "Charges" | translate }}</span>
+            <br />
+            <span style="font-size: 12px; color: #000000"
+              >{{ currency_symbol }}{{ onlineservicetwoamount }}</span
+            >
+          </div>
+        </div>
+        <br />
+        <div>
+          <span style="font-size: 10px; color: #8b8b8b">
+            <b>{{ "Description" | translate }}: </b>{{ onlineservicetwodes }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="openDetailJobcard == true"
+  class="container"
+  style="margin-bottom: 60px"
+>
+  <div class="row">
+    <div
+      class="col-lg-2 col-sm-2 col-md-2 col-xs-2"
+      style="
+        background: red;
+        border-radius: 34px;
+        width: 47px;
+        margin-left: 21px;
+      "
+    >
+      <img
+        src="../../../assets/images/Customers White.png"
+        alt=""
+        style="margin-left: -12px"
+      />
+    </div>
+    <div class="col-lg-4 col-sm-4 col-md-4 col-xs-9 detailsjobcard">
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left">
+        <span style="font-weight: bold; font-size: 12px; color: #000">
+          {{ "Jobcard Created" | translate }}
+        </span>
+      </div>
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <span style="font-weight: bold; font-size: 12px; color: #b5b3b3">
+          {{ "Jobcard No" | translate }}. {{ jobcardnumber }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #b5b3b3">
+          {{ "In Time" | translate }}: {{ intime | date: "MMM d, h:mm a" }}
+        </span>
+      </div>
+      <div
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+        style="margin-top: 24px"
+      >
+        <span style="font-weight: bold; font-size: 12px; color: #656565">
+          {{ "Estimate" | translate }}: {{ currency_symbol }} {{ estimate }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #656565">
+          {{ "Estimate Delivery By" | translate }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #c01616">
+          {{ deliveryby | date: "MMM d, h:mm a" }}
+        </span>
+        <span
+          style="
+            font-weight: bold;
+            font-size: 12px;
+            color: #5959f3;
+            margin-left: 54px;
+            cursor: pointer;
+          "
+        >
+          <!-- <a href="#seehere">View More</a> -->
+        </span>
+      </div>
+    </div>
+    <div
+      style="
+        border-left: 3px solid #b5b3b3;
+        height: 150px;
+        margin-left: 43px;
+        margin-bottom: 3px;
+        margin-top: 52px;
+      "
+    ></div>
+  </div>
+  <div class="row">
+    <div
+      class="col-lg-2 col-sm-2 col-md-2 col-xs-2"
+      style="
+        background: red;
+        border-radius: 34px;
+        width: 47px;
+        margin-left: 21px;
+      "
+    >
+      <img
+        src="../../../assets/images/Analytics White.png"
+        alt=""
+        style="margin-left: -14px"
+      />
+    </div>
+
+    <div [class]="secondclass">
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left">
+        <span style="font-weight: bold; font-size: 12px; color: #000">
+          {{ "Work Completed" | translate }}
+        </span>
+      </div>
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <span style="font-weight: bold; font-size: 12px; color: #b5b3b3">
+          {{ "Estimated Amount" | translate }}: {{ currency_symbol }}
+          {{ estimate }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #b5b3b3">
+          {{ "Advance" | translate }}: {{ currency_symbol }} {{ advance }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #b5b3b3">
+          {{ "Discount" | translate }}: {{ discount }}
+        </span>
+      </div>
+      <div
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+        style="margin-top: 24px"
+      >
+        <span style="font-weight: bold; font-size: 12px; color: #656565">
+          {{ "Payable" | translate }}: {{ currency_symbol }} {{ payable }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #656565">
+          {{ "Estimate Delivery By" | translate }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #c01616">
+          {{ deliveryby | date: "MMM d, h:mm a" }}
+        </span>
+      </div>
+    </div>
+    <div
+      style="
+        border-left: 3px solid #b5b3b3;
+        height: 170px;
+        margin-left: 43px;
+        margin-bottom: 3px;
+        margin-top: 52px;
+      "
+    ></div>
+  </div>
+  <div class="row">
+    <div
+      class="col-lg-2 col-sm-2 col-md-2 col-xs-2"
+      style="
+        background: red;
+        border-radius: 34px;
+        width: 47px;
+        margin-left: 21px;
+      "
+    >
+      <img
+        src="../../../assets/images/Bulk SMS White.png"
+        alt=""
+        style="margin-left: -16px; margin-top: 2px"
+      />
+    </div>
+    <div [class]="thirdclass">
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left">
+        <span style="font-weight: bold; font-size: 12px; color: #000">
+          {{ "Payment" | translate }}
+        </span>
+      </div>
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <span style="font-weight: bold; font-size: 12px; color: #b5b3b3">
+          {{ "Paid Amount" | translate }}: {{ currency_symbol }} {{ paid }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #c01616">
+          {{ "Balance Amount" | translate }}: {{ currency_symbol }}
+          {{ balance }}
+        </span>
+      </div>
+      <div
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+        style="margin-top: 24px"
+      >
+        <span style="font-weight: bold; font-size: 12px; color: #656565">
+          {{ "Payment Mode" | translate }}: {{ paymentmode }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #656565">
+          {{ "Payment Date" | translate }}
+        </span>
+        <br />
+        <span style="font-weight: bold; font-size: 12px; color: #c01616">
+          {{ cpmpletetime | date: "MMM d, h:mm a" }}
+        </span>
+      </div>
+    </div>
+    <div
+      style="
+        border-left: 3px solid #b5b3b3;
+        height: 113px;
+        margin-left: 43px;
+        margin-bottom: 3px;
+        margin-top: 52px;
+      "
+    ></div>
+  </div>
+  <div class="row" id="seehere" style="margin-top: 27px; margin-bottom: 40px">
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 cusre">
+      <mat-accordion>
+        <mat-expansion-panel *ngIf="showinvoive == true">
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-weight: bold">
+              {{ "Invoice Details" | translate }} ({{ "Total" | translate }}
+              {{ currency_symbol }} {{ totalAmount }})
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div id="Invoice" class="panel-collapse collapse in">
+            <div class="cus panel-body">
+              <div class="col-sm-2">
+                <ul
+                  id="nav-tabs-wrapper"
+                  class="nav data nav-tabs nav-pills nav-stacked"
+                  style="border-bottom: 0px"
+                >
+                  <li
+                    *ngIf="spares.length != 0"
+                    id="sparesli"
+                    [class]="sparetabclass"
+                  >
+                    <a id="spareslia" href="#vtab1" data-toggle="tab"
+                      >{{ "Spare" | translate }}
+                    </a>
+                  </li>
+                  <li
+                    *ngIf="lubes.length != 0"
+                    id="lubesli"
+                    [class]="lubetabclass"
+                  >
+                    <a id="lubeslia" href="#vtab2" data-toggle="tab">{{
+                      "Lubes" | translate
+                    }}</a>
+                  </li>
+                  <li
+                    *ngIf="jobs.length != 0"
+                    id="jobsli"
+                    [class]="jobtabclass"
+                  >
+                    <a id="jobslia" href="#vtab3" data-toggle="tab">{{
+                      "Jobs" | translate
+                    }}</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-sm-10">
+                <div class="tab-content">
+                  <div
+                    *ngIf="spares.length != 0"
+                    role="tabpanel"
+                    [class]="sparetabdataclass"
+                    id="vtab1"
+                  >
+                    <!-- <h3>Spare</h3> -->
+                    <table class="table table-bordered" id="sparetable">
+                      <thead>
+                        <tr>
+                          <th>{{ "Particulars" | translate }}</th>
+                          <th>{{ "Qty" | translate }}</th>
+                          <th>{{ "Amount" | translate }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of spares; let i = index">
+                          <td>{{ data.name }}</td>
+                          <td>{{ data.qty }}</td>
+                          <td>{{ data.price }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div
+                    *ngIf="lubes.length != 0"
+                    role="tabpanel"
+                    [class]="lubetabdataclass"
+                    id="vtab2"
+                  >
+                    <table class="table table-bordered" id="lubetable">
+                      <thead>
+                        <tr>
+                          <th>{{ "Particulars" | translate }}</th>
+                          <th>{{ "Qty" | translate }}</th>
+                          <th>{{ "Amount" | translate }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of lubes; let i = index">
+                          <td>{{ data.name }}</td>
+                          <td>{{ data.qty }}</td>
+                          <td>{{ data.price }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div
+                    *ngIf="jobs.length != 0"
+                    role="tabpanel"
+                    [class]="jobtabdataclass"
+                    id="vtab3"
+                  >
+                    <!-- <h3>Jobs</h3> -->
+                    <table class="table table-bordered" id="jobstable">
+                      <thead>
+                        <tr>
+                          <th>{{ "Particulars" | translate }}</th>
+                          <th>{{ "Qty" | translate }}</th>
+                          <th>{{ "Amount" | translate }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of jobs; let i = index">
+                          <td>{{ data.name }}</td>
+                          <td>{{ data.qty }}</td>
+                          <td>{{ data.price }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+
+        <!--  =========================== Changes by Aaliya ===============================-->
+
+        <mat-expansion-panel
+          style="margin-top: 10px"
+          *ngIf="showfeedback == true"
+          [(expanded)]="xpandStatus"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-weight: bold">
+              <!--  =========================== Changes #2 by Aaliya ===============================-->
+              <div>
+                <span>Feedback</span>
+                <span *ngIf="feedbackPresent" style="margin-left: 10px">
+                  ( {{ overallRating }}
+                  <span style="font-size: 16px; color: lightslategray"
+                    >&#9733;</span
+                  >
+                  )
+                </span>
+              </div>
+              <!--  =========================== Changes #2 by Aaliya ===============================-->
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <form style="margin: 0% 3% 3% 3%" [formGroup]="feedbackForm">
+            <div>
+              1. How satisfied were you with quality of service?
+              <br />
+              <!-- <div class="feedback-rating">
+                <ngb-rating [max]="5" formControlName="service_quality">
+                  <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.filled]="fill === 100"
+                      >&#9733;</span
+                    >
+                  </ng-template>
+                </ngb-rating>
+              </div> -->
+              <div class="feedback-rating">
+                <ngb-rating
+                  [max]="5"
+                  formControlName="service_quality"
+                >
+                </ngb-rating>
+                <!-- [(rate)]="this.feedbackForm.get('service_quality').value" -->
+              </div>
+            </div>
+            <div>
+              2. How satisfied were you with Customer Support?
+              <br />
+              <!-- <div class="feedback-rating">
+                <ngb-rating [max]="5" formControlName="customer_support">
+                  <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.filled]="fill === 100"
+                      >&#9733;</span
+                    >
+                  </ng-template>
+                </ngb-rating>
+              </div> -->
+              <div class="feedback-rating">
+                <ngb-rating
+                  [max]="5"
+                  formControlName="customer_support"
+                >
+                </ngb-rating>
+                <!-- [(rate)]="this.feedbackForm.get('customer_support').value" -->
+              </div>
+            </div>
+            <div>
+              3. How satisfied were you with timeliness of the service?
+              <br />
+              <!-- <div class="feedback-rating">
+                <ngb-rating [max]="5" formControlName="timeliness">
+                  <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.filled]="fill === 100"
+                      >&#9733;</span
+                    >
+                  </ng-template>
+                </ngb-rating>
+              </div> -->
+              <div class="feedback-rating">
+                <ngb-rating
+                  [max]="5"
+                  
+                  formControlName="timeliness"
+                >
+                </ngb-rating>
+                <!-- [(rate)]="this.feedbackForm.get('timeliness').value" -->
+              </div>
+            </div>
+            <div>
+              4. How satisfied were you with product and service pricing?
+              <br />
+              <!-- <div class="feedback-rating">
+                <ngb-rating [max]="5" formControlName="pricing">
+                  <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.filled]="fill === 100"
+                      >&#9733;</span
+                    >
+                  </ng-template>
+                </ngb-rating>
+              </div> -->
+              <div class="feedback-rating">
+                <ngb-rating
+                  [max]="5"
+                  formControlName="pricing"
+                >
+                </ngb-rating>
+                <!-- [(rate)]="this.feedbackForm.get('pricing').value" -->
+              </div>
+            </div>
+            <div>
+              5. Overall Experience
+              <br />
+              <!-- <div class="feedback-rating">
+                <ngb-rating [max]="5" formControlName="overall_rating">
+                  <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.filled]="fill === 100"
+                      >&#9733;</span
+                    >
+                  </ng-template>
+                </ngb-rating>
+              </div> -->
+              <div class="feedback-rating">
+                <ngb-rating
+                  [max]="5"
+                  formControlName="overall_rating"
+                >
+                </ngb-rating>
+                <!-- [(rate)]="this.feedbackForm.get('overall_rating').value" -->
+              </div>
+            </div>
+            <br />
+            <div class="form-group feedback-textarea">
+              <textarea
+                class="form-control bg-light"
+                rows="7"
+                placeholder="Write your own"
+                formControlName="comment"
+              ></textarea>
+            </div>
+            <br />
+            <div
+              *ngIf="
+                !feedbackForm.controls['service_quality'].errors &&
+                  !feedbackForm.controls['customer_support'].errors &&
+                  !feedbackForm.controls['timeliness'].errors &&
+                  !feedbackForm.controls['pricing'].errors &&
+                  !feedbackForm.controls['overall_rating'].errors;
+                else feedWarn
+              "
+              style="color: #161616; margin-left: 10px; font-weight: bold"
+            >
+              <button
+                (click)="submitFeedback()"
+                type="button"
+                class="btn btn-danger feedback-button"
+              >
+                <div *ngIf="feedbackPresent === true; else submit">Update</div>
+                <ng-template #submit>Submit</ng-template>
+              </button>
+            </div>
+            <ng-template #feedWarn
+              ><span style="color: red"
+                >Minimum one star needed!</span
+              ></ng-template
+            >
+          </form>
+        </mat-expansion-panel>
+        <!--  =========================== Changes by Aaliya ===============================-->
+
+        <mat-expansion-panel style="margin-top: 10px" *ngIf="showmarks == true">
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-weight: bold">
+              {{ "Dent Marks" | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <div class="col-lg-9 col-sm-9 col-md-9">
+              <canvas
+                #myCanvass
+                width="470"
+                height="850"
+                style="cursor: pointer"
+              ></canvas>
+            </div>
+            <div class="col-lg-2 col-sm-2 col-md-2">
+              <label
+                class="btn btn-primary cir cir_btn"
+                style="
+                  width: 70px;
+                  background: #edf105 !important;
+                  border-color: #edf105 !important;
+                  padding: 7px;
+                  margin: 10% 0 10% 0;
+                  color: black;
+                "
+                >{{ "Dent" | translate }}</label
+              >
+              <br />
+              <label
+                class="btn btn-primary cir cir_btn"
+                style="
+                  width: 70px;
+                  background: #ffac44 !important;
+                  border-color: #ffac44 !important;
+                  padding: 7px;
+                  margin: 10% 0 10% 0;
+                  color: black;
+                "
+                >{{ "Scratch" | translate }}</label
+              >
+              <br />
+              <label
+                class="btn btn-primary cir cir_btn"
+                style="
+                  width: 70px;
+                  background: linear-gradient(
+                    to bottom,
+                    #ff0000 0%,
+                    #563b3b 100%
+                  );
+                  border-color: #c30707;
+                  font-weight: bold;
+                  padding: 7px;
+                  margin: 10% 0 10% 0;
+                  color: #fff;
+                "
+                >{{ "Broken" | translate }}</label
+              >
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel style="margin-top: 10px" *ngIf="showdent == true">
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-weight: bold">
+              {{ "Dent Photos" | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <span *ngFor="let data of dentphotos; let i = index">
+            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+              <img [src]="data"  height="50" alt="" />
+            </div>
+          </span>
+        </mat-expansion-panel>
+        <mat-expansion-panel
+          style="margin-top: 10px"
+          *ngIf="showcustomer == true"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-weight: bold">
+              {{ "Customer Voice" | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ul>
+            <li *ngFor="let data of customervoice; let i = index">
+              {{ i + 1 }}. {{ data }}
+            </li>
+          </ul>
+        </mat-expansion-panel>
+        <mat-expansion-panel style="margin-top: 10px" *ngIf="showinven == true">
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-weight: bold">
+              {{ "Vehicle Inventory" | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ul>
+            <ul>
+              <li *ngFor="let data of vehicleinventory; let i = index">
+                {{ i + 1 }}. {{ data }}
+              </li>
+            </ul>
+          </ul>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="openDetailJobcard == false"
+  class="row bg-light mb-5 mx-0"
+  style="margin-bottom: 50px; margin-top: 20px; background-color: #e2e2e2"
+>
+  <div class="container">
+    <div class="row">
+      <div
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+        style="padding: 15px"
+      >
+        <div class="titlefotter gargedetails">
+          <span style="color: #9c9b9b">{{ "Garage Details" | translate }}</span>
+        </div>
+        <div class="garagename gargedetails">
+          <span style="color: #000000; font-weight: bold">
+            {{ workshopname }}
+          </span>
+        </div>
+        <div
+          class="garagetitle gargedetails"
+          *ngIf="termsandconditions != 'none'"
+          data-toggle="modal"
+          data-target="#myModal"
+        >
+          <span style="color: #7487ff; cursor: pointer">{{
+            "Terms and Conditions" | translate
+          }}</span>
+        </div>
+        <div
+          class="addressgarge gargedetails"
+          *ngIf="workshopaddress != 'none'"
+        >
+          <span style="color: #9c9b9b">
+            {{ workshopaddress }}
+          </span>
+        </div>
+        <div class="gargeemail gargedetails" *ngIf="workshopemail != 'none'">
+          <span style="color: #9c9b9b">
+            <a [href]="workshopemailhref"
+              >{{ "Email" | translate }}: {{ workshopemail }}</a
+            >
+          </span>
+        </div>
+        <div class="text-center" style="margin-top: 5px">
+          <span
+            (click)="sharewhatsApp()"
+            style="
+              background-color: #55cd6c;
+              color: #ffff;
+              padding: 7px 10px 10px 10px;
+              border-radius: 5px;
+            "
+          >
+            <a [href]="contactlink" target="_blank">
+              <img
+                src="../../../assets/images/whatsapppng.png"
+                alt=""
+                style="
+                  height: 25px;
+                  width: 25px;
+                  cursor: pointer;
+                  margin-right: 12px;
+                "
+              />
+              <span style="color: #ffff; font-size: 14px">
+                {{ "Contact Now" | translate }}
+              </span>
+            </a>
+          </span>
+          <div style="margin-top: 1%;">� {{currentYear}} All Rights Reserved | Powered by <a class="btn btn-link" href="https://www.tightthenut.com/" target="_blank" style="padding: 0;">Tight The Nut.</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog" style="margin: 30px auto; float: none">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          style="font-size: 32px; color: #676a6c; opacity: 2"
+        >
+          &times;
+        </button>
+        <div
+          class="modal-title text-center"
+          style="font-size: 22px; font-weight: bold"
+        >
+          {{ "Terms & Conditions" | translate }}
+        </div>
+      </div>
+      <div class="modal-body" *ngIf="termsandconditions != 'none'">
+        <ng-container *ngFor="let data of termsandconditions; let i = index">
+          <p
+            *ngIf="data != ''"
+            style="margin-left: 13px; font-size: 14px; color: #000"
+          >
+            {{ i + 1 }}) {{ data }}
+          </p>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

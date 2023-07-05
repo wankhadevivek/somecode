@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <div class="row" style="padding: 13px;">
+            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <div *ngIf="bookingmode=='res'" class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center" style="margin-bottom: 17px;">
+                    <span style="font-size: 16px; font-weight: 700; color: #000;">
+                        {{'Select the Date and Time to reschedule the booking' | translate}}
+                    </span>
+                </div>
+                <div *ngIf="bookingmode=='res'" class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center">
+                    <label class="control-label txt_lbl" style="display: contents;">{{'Select Date' | translate}}<span style="color: #c30707; font-weight: bold;"><span style="color: #c30707; font-weight: bold;">*</span></span></label> 
+                    <div  style="display: flex;
+                    margin-top: 7px;">
+                        <input style="width: 114px;" class="form-control cir"  matInput placeholder="{{'Choose a date' | translate}}" [satDatepicker]="picker7" [max]="maxDate" [ngModelOptions]="{standalone: true}" (ngModelChange)="deliveryDate($event)"  [ngModel]="deliveryDateField" readonly>
+                        <sat-datepicker #picker7>
+                        </sat-datepicker>
+                        <sat-datepicker-toggle matSuffix [for]="picker7"></sat-datepicker-toggle>
+                    </div>
+                </div>
+                <div *ngIf="bookingmode=='res'" class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center">
+                    <label class="control-label txt_lbl" style="    display: contents;">{{'Select Time' | translate}}<span style="color: #c30707; font-weight: bold;"><span style="color: #c30707; font-weight: bold;">*</span></span></label>
+                    <input class="form-control cir" aria-label="24hr format" [ngxTimepicker]="defaultTime" [value]="deliveryTimeField" readonly [ngModelOptions]="{standalone: true}" (ngModelChange)="deliveryTime($event)" [ngModel]="deliveryTimeField" style="background-color: #fff;width: 70%;margin-left: 20px;
+                    margin-top: 6px;">
+                    <ngx-material-timepicker #defaultTime></ngx-material-timepicker>
+                </div>
+                
+                <label *ngIf="bookingmode=='decline'" class="control-label txt_lbl" style="color: #FF0000; font-size: 12px;">{{'Enter Reason' | translate}}</label>
+                <div *ngIf="bookingmode=='decline'" class="newtest" style="margin-top: 2px;">
+                    <textarea (input)="getData($event.target.value)"  cols="40" rows="4"></textarea>
+                    <div *ngIf="resonadded==true" style="color: #FF0000;">
+                        {{'Please Enter the Reason' | translate}}.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+            <button *ngIf="bookingmode=='decline'" [disabled]='resonadded' class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; width: 100%;" (click)="closePopup(true)">{{'Decline Booking' | translate}}</button>
+            <button *ngIf="bookingmode=='res'" class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 8px 4px 10px 4px;width: 110%;" (click)="closePopup(true)">{{'Reschedule Booking' | translate}}</button>
+        </div>
+        <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+            <button class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 9px; width: 100%;" (click)="closePopup(false)">{{'Cancel' | translate}}</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+{
+    "/geocode": {
+      "target": "http://api.geonames.org/findNearbyPostalCodesJSON",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/geocode": ""
+      }
+    }
+  }

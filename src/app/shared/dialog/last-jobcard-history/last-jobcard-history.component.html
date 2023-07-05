@@ -1,0 +1,178 @@
+<div class="row" style="margin-bottom: 17px">
+  <div class="col-sm-12" *ngIf="type !== 2">
+    <div
+      class="col-sm-12"
+      style="
+        margin-bottom: 7px;
+        margin-top: 2px;
+        display: flex;
+        justify-content: space-around;
+      "
+    >
+      <span *ngIf="type == 0" style="font-size: 16px; font-weight: bold"
+        >{{'Jobcard is already in Open State' | translate}}
+      </span>
+      <span *ngIf="type == 1" style="font-size: 16px; font-weight: bold"
+        >{{'Jobcard is already in Complete State' | translate}}
+      </span>
+    </div>
+    <div
+      class="checkforpayment"
+      style="
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+        padding: 4rem 4rem;
+        width: 100%;
+        color: #aaaaaa !important;
+        font-family: Open sans;
+        font-size: 13px;
+      "
+    >
+      <div class="col-sm-12">
+        <label style="float: left">{{'Jobcard Number' | translate}}:</label>
+        <label style="float: right; margin-right: 10px">
+          {{ detail.jobcard_number }}
+        </label>
+      </div>
+      <div class="col-sm-12">
+        <label style="float: left">{{'Date Of Creation' | translate}}:</label>
+        <label style="float: right; margin-right: 10px">
+          {{ detail.created_at | date: "MMM d, y, h:mm a" }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!--   
+  <div class="col-sm-12" *ngIf="type == 1">
+    <div
+      class="col-sm-12"
+      style="
+        margin-bottom: 7px;
+        margin-top: 2px;
+        display: flex;
+        justify-content: space-around;
+      "
+    >
+      <span style="font-size: 16px; font-weight: bold">Jobcard is already in Complete State </span>
+      
+      </div>
+    <div
+      class="checkforpayment"
+ 
+      style="
+      margin-top: 50px;display:flex;
+       flex-direction:column;
+       padding: 4rem 4rem; 
+       width: 100%;
+       color: #AAAAAA !important;
+          font-family: Open sans;
+          font-size: 13px
+          
+      "
+    >
+    <div class="col-sm-12">
+        <label style="float:left">Jobcard Number:</label>
+        <label style="float: right; margin-right:10px">
+          {{ detail.jobcard_number }}
+        </label>
+      </div>
+      <div class="col-sm-12">
+        <label style="float:left">Date Of Creation:</label>
+        <label style="float: right; margin-right:10px">
+          {{
+            detail.created_at | date: "MMM d, y, h:mm a"
+          }}
+        </label>
+      </div>
+     
+    </div>
+  </div> -->
+
+  <div class="col-sm-12" *ngIf="type == 2">
+    <div
+      class="col-sm-12"
+      style="
+        margin-bottom: 7px;
+        margin-top: 2px;
+        display: flex;
+        justify-content: space-around;
+      "
+    >
+      <span style="font-size: 16px; font-weight: bold">{{'History' | translate}}! </span>
+      <span style="font-size: 16px; font-weight: bold">{{
+        detail.jobcard_date | date: "MMM d, y, h:mm a"
+      }}</span>
+
+      <!-- <span *ngIf="messageoldbal==true" style="font-size: 12px;">Previous Requested Amount ({{messageamount}}) has been cancel by system</span> -->
+    </div>
+    <div
+      class="checkforpayment"
+      *ngIf="type == 2"
+      style="
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+        padding: 0 4rem;
+        width: 100%;
+        color: #aaaaaa !important;
+        font-family: Open sans;
+        font-size: 13px;
+      "
+    >
+      <!-- <div
+      class="checkforpayment"
+      *ngIf="type == 2"
+      style="display: flex; flex-direction: column"
+    > -->
+      <div class="col-sm-12" *ngIf="this.detail['last_service_km'] !== '0'">
+        <label style="float: left">{{'Last Service KM' | translate}}:</label>
+        <label style="float: right; margin-right: 10px">
+          {{ detail.last_service_km }}
+        </label>
+      </div>
+      <div class="col-sm-12" *ngIf="this.detail['next_service_date'] !== ' '">
+        <label style="float: left">{{'Next Service Date' | translate}}:</label>
+        <label style="float: right; margin-right: 10px">
+          {{ detail.next_service_date | date: "MMM d, y" }}
+        </label>
+      </div>
+      <div class="col-sm-12">
+        <label style="float: left">{{'Invoice Amount' | translate}}:</label>
+        <label
+          style="float: right; margin-right: 10px; color: #4d4f5c !important"
+        >
+        {{currency_symbol}} {{ detail.invoive_amount }}
+        </label>
+      </div>
+      <div class="col-sm-12">
+        <label style="float: left">{{'Paid' | translate}}:</label>
+        <label style="float: right; margin-right: 10px">
+          {{currency_symbol}} {{ detail.paid }}
+        </label>
+      </div>
+      <div class="col-sm-12">
+        <label style="float: left">{{'Balance Amount' | translate}}:</label>
+        <label style="float: right; margin-right: 10px; color: red !important">
+          {{currency_symbol}} {{ detail.balance }}
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-sm-12" style="align-items: center; text-align: center">
+  <button
+    class="btn btn-primary cir cir_btn"
+    style="
+      background: linear-gradient(to bottom, #ff0000 0%, #563b3b 100%);
+      border-color: #c30707;
+      font-weight: bold;
+      padding: 10px;
+      font-size: 1.5rem;
+    "
+    (click)="closejob(false)"
+  >
+    {{'Close' | translate}}
+  </button>
+</div>

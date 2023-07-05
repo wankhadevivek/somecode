@@ -1,0 +1,855 @@
+<app-spin></app-spin>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="container">
+    <div class="col-lg-12 col-sm-12 col-md-12">
+      <div class="ibox float-e-margins row">
+        <div class="col-lg-6 col-sm-6 col-md-6">
+          <h5
+            id="h5"
+            style="
+              font-size: 17px;
+              font-weight: bold;
+              margin-top: 6px;
+              margin-left: -17px;
+            "
+          >
+            {{ "My Online Garage" | translate }}
+          </h5>
+        </div>
+        <div class="col-lg-6 col-sm-6 col-md-6 togopclo">
+          <div style="float: right;">
+            <label> {{ "Disable" | translate }} </label>
+            <label
+              class="switch"
+              style="margin-left: 7px; margin-right: 7px; padding: 7px"
+              *ngIf="garageonline == 'false'"
+            >
+              <input type="checkbox" (change)="checkOnline($event)" />
+              <span class="slider round"></span>
+            </label>
+
+            <label
+              class="switch"
+              style="margin-left: 7px; margin-right: 7px; padding: 7px"
+              *ngIf="garageonline == 'true'"
+            >
+              <input type="checkbox" checked (change)="checkOnline($event)" id="myCheckbox" />
+              <span class="slider round"></span>
+            </label>
+            <label> {{ "Enable" | translate }} </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="garageonline == 'true'">
+    <div
+      class="col-lg-12 col-sm-12 col-md-12"
+      style="
+        margin-top: 11px;
+        padding: 19px 20px;
+        background-color: #fff;
+        box-shadow: 0px 3px 11px;
+        border-radius: 5px;
+      "
+    >
+      <div class="col-lg-6 col-sm-6 col-md-6">
+        <span style="font-weight: bold; color: #000">{{
+          "Share Link on WhatsApp" | translate
+        }}</span>
+      </div>
+      <div class="col-lg-6 col-sm-6 col-md-6">
+        <span
+          style="
+            font-weight: bold;
+            color: #000;
+            float: right;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 16px;
+            font-size: 18px;
+          "
+          (click)="copyInputMessage(url_param)"
+          ><i class="fa fa-files-o" aria-hidden="true"></i
+        ></span>
+        <span style="overflow: scroll; display: flex">
+          <a
+            style="font-weight: bold; color: blue; float: right"
+            [href]="url_param"
+            target="_blank"
+            >garage.tightthenut.com/cus/{{ mainurlparam }}</a
+          >
+        </span>
+      </div>
+      <div class="col-lg-6 col-sm-6 col-md-6" style="margin-top: 12px">
+        <span style="color: #c3c3c3">{{
+          "Your Customer Can visit your online garage and can track current
+          jobcard and can book an appointment from this link"
+            | translate
+        }}</span>
+      </div>
+      <div
+        class="col-lg-6 col-sm-6 col-md-6"
+        style="margin-top: 12px; cursor: pointer"
+      >
+        <a [href]="contactlink" target="_blank">
+          <img
+            (click)="sharewhatsApp()"
+            class="btn-share"
+            src="../../../assets/images/whats.png"
+            alt="whatsApp"
+            style="float: right; border-radius: 5px"
+          />
+        </a>
+      </div>
+    </div>
+    <div
+      class="col-lg-12 col-sm-12 col-md-12"
+      style="margin-top: 32px; margin-left: -28px"
+    >
+      <div class="col-lg-12 col-sm-12 col-md-12">
+        <span style="font-weight: bold; color: #000">Offered Services</span>
+      </div>
+      <div class="col-lg-12 col-sm-12 col-md-12">
+        <span style="color: #c3c3c3">{{
+          "Note: This service list will be visible in your online Garage
+          link"
+            | translate
+        }}</span>
+      </div>
+      <div class="col-lg-12 col-sm-12 col-md-12" style="margin-top: 12px">
+        <div class="input-group m-b">
+          <span
+            class="input-group-addon"
+            style="
+              padding: 0 15px;
+              border-top-left-radius: 5px;
+              border-bottom-left-radius: 5px;
+            "
+          >
+            <i class="fa fa-search fa-1x" aria-hidden="true"></i>
+          </span>
+          <span class="online data" style="min-width: 200%">
+            <ng-autocomplete
+              (scrolledToEnd)="loadMoreDatajobs()"
+              [(ngModel)]="jobmodel"
+              placeHolder="Search Online Service"
+              [data]="searchJobData"
+              (selected)="selectedJobResult($event)"
+              (input)="searchJobInput($event.target.value)"
+              [itemTemplate]="itemTemplate"
+              [notFoundTemplate]="notFoundTemplate"
+            >
+            </ng-autocomplete>
+
+            <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+
+            <span
+              style="
+                font-size: 13px;
+                cursor: pointer;
+                margin-left: -30%;
+                z-index: 999;
+                color: #fff;
+                background-color: #ce0e17;
+                padding: 10px;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+              "
+              (click)="openJobpopup()"
+            >
+              <span data-toggle="modal" data-target="#add_jobs">
+                <span>{{ "Add New" | translate }}</span>
+              </span>
+            </span>
+
+            <span
+              style="font-size: 30px; margin-left: -112px; cursor: pointer"
+              *ngIf="showsearchcnacel == true"
+            >
+              <i
+                class="fa fa-times"
+                aria-hidden="true"
+                (click)="clearSearch()"
+              ></i>
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="col-lg-12 col-sm-12 col-md-12"
+        *ngIf="showlimiterror == true"
+        style="margin-top: -7px; margin-bottom: 8px"
+      >
+        <span style="color: #ce0f18; font-size: 14px; font-weight: bold">
+          {{ "You can Only Add 15 Services" | translate }}
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-sm-12 col-md-12">
+        <div
+          class="mat-elevation-z8"
+          style="
+            box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+              0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+              0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+            overflow: scroll;
+            border-radius: 8px;
+          "
+        >
+          <table
+            mat-table
+            [dataSource]="dataSource"
+            matSort
+            class="mat-elevation-z12"
+            style="font-family: Open sans; width: 100%; min-width: 500px"
+          >
+            <!-- Name Column -->
+            <ng-container matColumnDef="sr_no">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <span style="text-transform: uppercase"> {{ 'Sr.No' | translate }} </span>
+              </th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                {{ i + 1 }}
+              </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="name_and_des">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <span style="text-transform: uppercase">
+                  {{ "Name and Description" | translate }}</span
+                >
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.part_name }} <br />
+
+                <span style="color: #a5a5a5">{{ element.description }}</span>
+              </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <span style="text-transform: uppercase">
+                  {{ "Price" | translate }}
+                </span>
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <span style="color: #48c748">
+                  {{ element.unit_sale_price | number: "1.0-0" }}
+                </span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <span style="text-transform: uppercase">
+                  {{ "Action" | translate }}
+                </span>
+              </th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                <span style="cursor: pointer">
+                  <i
+                    matTooltip="Edit Service"
+                    (click)="editservice(element, i)"
+                    data-toggle="modal"
+                    data-target="#add_jobs"
+                    class="fa fa-pencil"
+                    aria-hidden="true"
+                    style="cursor: pointer; padding: 9px; color: #c30707"
+                  ></i>
+                  <i
+                    matTooltip="Remove Service"
+                    (click)="removeservice(element, i)"
+                    class="fa fa-times"
+                    aria-hidden="true"
+                    style="cursor: pointer; color: #c30707"
+                  ></i>
+                </span>
+              </td>
+            </ng-container>
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="displayedColumns; sticky: true"
+            ></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="garageonline == 'false'">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12" >
+          <img src="../../../assets/images/onlinegarage-set.png" class="image-center-garage">
+        </div>
+        <div class="col-sm-12" style="text-align: center;">
+          <span class="header-txt">Your own Digital Garage!</span>
+          <p class="paragraph-txt">Jobcard Live Tracking, Online Bookings Online Payment Collection and many more</p>
+          <button type="button" (click)="checkOnlineActivate()" class="activatenow-btn">Activate Now!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal inmodal"
+    id="add_jobs"
+    tabindex="-1"
+    role="dialog"
+    aria-hidden="true"
+    style="background: rgba(0, 0, 0, 0.5)"
+  >
+    <div class="modal-dialog" style="margin-right: -17px">
+      <div class="modal-content animated">
+        <div class="modal-header" style="padding: 0px">
+          <div
+            class="ibox-title"
+            style="
+              background-color: #f1f1f1;
+              padding: 8px 23px 8px;
+              border: none;
+              border-bottom: 1px solid #4d4f5c;
+            "
+          >
+            <div class="row">
+              <div class="col-lg-6 col-sm-6 col-md-6">
+                <h1 style="font-size: 22px; float: left; cursor: pointer">
+                  {{ "Add Service" | translate }}
+                </h1>
+              </div>
+
+              <div
+                class="col-lg-2 col-sm-2 col-md-2"
+                style="margin-top: 1%; float: right"
+              >
+                <label
+                  data-dismiss="modal"
+                  class="btn btn-white cir"
+                  style="padding: 1px 4px; background: none; border: none"
+                  ><i class="fa fa-times fa-2x" aria-hidden="true"></i
+                ></label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body" style="padding-top: 0">
+          <div
+            class="ibox-content"
+            style="background-color: #f1f1f1; padding: 5px 3%"
+          >
+            <form
+              [formGroup]="CreateJobForm"
+              novalidate
+              class="form-horizontal"
+            >
+              <div class="row">
+                <div class="col-lg-9 col-sm-9 col-md-9">
+                  <label
+                    class="control-label"
+                    style="
+                      font-size: 16px;
+                      border-bottom: 1px solid #ce0e17;
+                      margin-bottom: 1%;
+                    "
+                    ><b>{{ "Job Details" | translate }}</b></label
+                  >
+                  <div class="form-group">
+                    <div class="col-lg-5 col-sm-5 col-md-5">
+                      <label class="control-label txt_lbl"
+                        >{{ "Service Code" | translate }}</label
+                      >
+                      <div class="input-group m-b">
+                        <!-- <span class="input-group-addon cir" style="padding: 5%;width: 20%;">
+                                                <i class="fa fa-search fa-1x" aria-hidden="true"></i>
+                                            </span>  -->
+
+                        <span class="search_invenall">
+                          <ng-autocomplete
+                            [disabled]="showJobUpdate"
+                            formControlName="partnumber"
+                            (scrolledToEnd)="loadMoreDatajobsnew()"
+                            [(ngModel)]="jobmodelforcreate"
+                            placeHolder=""
+                            [data]="searchJobDatainven"
+                            (selected)="addselectedJobResultnew($event, false)"
+                            (input)="searchJobInputnew($event.target.value)"
+                            [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate"
+                          >
+                          </ng-autocomplete>
+
+                          <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item"></a>
+                          </ng-template>
+
+                          <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                          </ng-template>
+                        </span>
+                        <!-- <div *ngIf="CreateJobForm.controls['partnumber'].invalid && (CreateJobForm.controls['partnumber'].dirty || CreateJobForm.controls['partnumber'].touched)" class="text-danger">
+                                                            <div *ngIf="CreateJobForm.controls['partnumber'].errors.required">
+                                                            Part Number is required.
+                                                          </div>
+                                                        </div> -->
+                      </div>
+                    </div>
+                    <div class="col-lg-5 col-sm-5 col-md-5">
+                      <label class="control-label txt_lbl">
+                        {{ "Service Name" | translate
+                        }}<span style="color: #c30707; font-weight: bold"
+                          ><span style="color: #c30707; font-weight: bold"
+                            >*</span
+                          ></span
+                        ></label
+                      >
+                      <input
+                        id="job_name"
+                        type="text"
+                        class="form-control cir"
+                        formControlName="partname"
+                      />
+                      <div
+                        *ngIf="CreateJobForm.controls['partname'].invalid"
+                        class="text-danger"
+                      >
+                        <div
+                          *ngIf="
+                            CreateJobForm.controls['partname'].errors.required
+                          "
+                        >
+                          {{ "Service Name is required" | translate }}.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <!-- <div class="col-lg-4 col-sm-4 col-md-4">
+                                        <label class="control-label txt_lbl">Unit</label>
+                                        <select class="form-control cir" formControlName="unit">
+                                            <option *ngFor="let data of units" value="{{data}}">
+                                                {{data}}
+                                            </option>
+                                        </select>
+                                    </div> -->
+                    <div class="col-sm-8">
+                      <label class="control-label txt_lbl">{{
+                        "Sub Category" | translate
+                      }}</label>
+                      <select
+                        class="form-control cir"
+                        formControlName="subcategory"
+                      >
+                        <option
+                          *ngFor="let data of JobCategory"
+                          value="{{ data }}"
+                          id="{{ data }}"
+                        >
+                          {{ data }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-8">
+                      <label class="control-label txt_lbl">
+                        {{ "Description" | translate }}</label
+                      >
+                      <textarea
+                        id="w3review"
+                        name="w3review"
+                        rows="4"
+                        cols="50"
+                        formControlName="description"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3" style="text-align: right">
+                  <label class="control-label"
+                    ><b>{{ "Total Amount" | translate }}</b></label
+                  >
+                  <br />
+                  <label class="control-label"
+                    ><h2
+                      style="
+                        color: #54545e;
+                        padding-top: 0;
+                        font-size: 20px;
+                        margin: 0;
+                      "
+                    >
+                      <b>Rs. {{ totalamountonform }}</b>
+                    </h2></label
+                  >
+                  <br />
+                  <label
+                    *ngIf="
+                      allBillingData != undefined &&
+                      allBillingData.gst_number != ''
+                    "
+                    class="control-label"
+                    style="margin: 0; font-weight: 500; padding-top: 0"
+                    >{{ "CGST" | translate }} {{ toShowcgst }}</label
+                  >
+                  <br />
+                  <label
+                    *ngIf="
+                      allBillingData != undefined &&
+                      allBillingData.gst_number != ''
+                    "
+                    class="control-label"
+                    style="margin: 0; font-weight: 500; padding-top: 0"
+                    >{{ "SGST" | translate }} {{ toShowsgst }}</label
+                  >
+                  <br />
+                  <label
+                    *ngIf="
+                      allBillingData != undefined &&
+                      allBillingData.gst_number != ''
+                    "
+                    class="control-label"
+                    style="margin: 0; font-weight: 500; padding-top: 0"
+                    >{{ "GST" | translate }} {{ toShowtotal_gst }}</label
+                  >
+                  <br />
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <label
+                  class="control-label"
+                  style="
+                    font-size: 16px;
+                    border-bottom: 1px solid #ce0e17;
+                    margin-bottom: 1%;
+                  "
+                  ><b>{{ "Compatible For" | translate }}</b></label
+                >
+                <span class="for_all" style="margin-left: 43px">
+                  <label class="control-label txt_lbl"
+                    >{{ "For All Vehicles" | translate }}</label
+                  >
+                  <input
+                    *ngIf="foralltrue == false"
+                    style="margin-left: 6px"
+                    type="checkbox"
+                    data-toggle="toggle"
+                    (change)="forAllVehicles($event)"
+                  />
+                  <input
+                    *ngIf="foralltrue == true"
+                    checked
+                    style="margin-left: 6px"
+                    type="checkbox"
+                    data-toggle="toggle"
+                    (change)="forAllVehicles($event)"
+                  />
+                </span>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-6 jobcard">
+                  <label class="control-label txt_lbl"
+                    >{{ "Search and Select Vehicle" | translate
+                    }}<span style="color: #c30707; font-weight: bold"
+                      ><span style="color: #c30707; font-weight: bold"
+                        >*</span
+                      ></span
+                    ></label
+                  >
+                  <ng-autocomplete
+                    formControlName="searchspareVehicle"
+                    [disabled]="foralltrue"
+                    [(ngModel)]="vehiclesearchmodelspl"
+                    placeHolder="Search Vehicle by Make, Model, Varraint"
+                    [data]="searchVehicleDataSpl"
+                    (selected)="selectedResultForVechilespl($event)"
+                    (input)="searchBarForVechilespl($event.target.value)"
+                    [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate"
+                  >
+                  </ng-autocomplete>
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                </div>
+                <div
+                  class="col-sm-6"
+                  *ngIf="SelectedDataarrOfVehiclespl != undefined"
+                >
+                  <label class="control-label txt_lbl">
+                    {{ "Selected Vehicle" | translate }}</label
+                  >
+                  <span
+                    class="form-control"
+                    style="background: none; border: none"
+                  >
+                    <label
+                      style="
+                        background: linear-gradient(
+                          to bottom,
+                          #ff0000 0%,
+                          #563b3b 100%
+                        );
+                        width: 100px;
+                        height: 26px;
+                        text-align: center;
+                        padding: 3px;
+                        color: white;
+                        border-top-left-radius: 5px;
+                        border-bottom-left-radius: 5px;
+                      "
+                      >{{ SelectedDataarrOfVehiclespl.make }}</label
+                    >
+                    <label
+                      style="
+                        background-color: #52524f;
+                        width: 90px;
+                        height: 26px;
+                        text-align: center;
+                        padding: 3px;
+                        color: white;
+                      "
+                      >{{ SelectedDataarrOfVehiclespl.model }}</label
+                    >
+                    <label
+                      *ngIf="SelectedDataarrOfVehiclespl.variant"
+                      style="
+                        background-color: #52524f;
+                        width: auto;
+                        height: 26px;
+                        text-align: center;
+                        padding: 3px;
+                        color: white;
+                        border-top-right-radius: 5px;
+                        border-bottom-right-radius: 5px;
+                      "
+                      >{{ SelectedDataarrOfVehiclespl.variant }}</label
+                    >
+                  </span>
+                </div>
+              </div>
+
+              <label
+                class="control-label"
+                style="
+                  font-size: 16px;
+                  border-bottom: 1px solid #ce0e17;
+                  margin-bottom: 1%;
+                "
+                ><b>{{ "Pricing Details" | translate }}</b></label
+              >
+              <div class="form-group">
+                <div class="col-lg-4 col-sm-4 col-md-4">
+                  <label class="control-label txt_lbl"
+                    >{{ "Job Price" | translate
+                    }}<span style="color: #c30707; font-weight: bold"
+                      ><span style="color: #c30707; font-weight: bold"
+                        >*</span
+                      ></span
+                    ></label
+                  >
+                  <input
+                    id="job_price"
+                    type="text"
+                    class="form-control cir"
+                    (input)="
+                      checkpricefortotal(
+                        CreateJobForm.value.sellingprice,
+                        CreateJobForm.value.gstslab,
+                        CreateJobForm.value.gsttype
+                      )
+                    "
+                    formControlName="sellingprice"
+                  />
+                  <div
+                    *ngIf="CreateJobForm.controls['sellingprice'].invalid"
+                    class="text-danger"
+                  >
+                    <div
+                      *ngIf="
+                        CreateJobForm.controls['sellingprice'].errors.required
+                      "
+                    >
+                      {{ "Job Price is required" | translate }}.
+                    </div>
+                    <div
+                      *ngIf="
+                        CreateJobForm.controls['sellingprice'].errors.pattern
+                      "
+                    >
+                      {{ "Enter a Valid Job Price" | translate }}.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <label
+                *ngIf="
+                  allBillingData != undefined && allBillingData.gst_number != ''
+                "
+                class="control-label"
+                style="
+                  font-size: 16px;
+                  border-bottom: 1px solid #ce0e17;
+                  margin-bottom: 1%;
+                "
+                ><b>Tax Details{{ "Tax Details" | translate }}</b></label
+              >
+              <div
+                class="form-group"
+                *ngIf="
+                  allBillingData != undefined && allBillingData.gst_number != ''
+                "
+              >
+                <div class="col-lg-4 col-sm-4 col-md-4">
+                  <label class="control-label txt_lbl">{{
+                    "HSN Number" | translate
+                  }}</label>
+                  <input
+                    id="hsn_no1"
+                    type="text"
+                    class="form-control cir"
+                    formControlName="hsnno"
+                  />
+                </div>
+                <div
+                  class="col-lg-4 col-sm-4 col-md-4"
+                  *ngIf="
+                    allBillingData != undefined &&
+                    allBillingData.gst_number != ''
+                  "
+                >
+                  <label class="control-label txt_lbl">{{
+                    "GST Slab" | translate
+                  }}</label>
+                  <select
+                    id="gst_slab1"
+                    class="form-control cir"
+                    formControlName="gstslab"
+                    (change)="
+                      checkpricefortotal(
+                        CreateJobForm.value.sellingprice,
+                        CreateJobForm.value.gstslab,
+                        CreateJobForm.value.gsttype
+                      )
+                    "
+                  >
+                    <option
+                      *ngFor="let data of gstNumberArr"
+                      value="{{ data }}"
+                      id="{{ data }}"
+                    >
+                      {{ data }}
+                    </option>
+                  </select>
+                </div>
+                <div
+                  class="col-lg-4 col-sm-4 col-md-4"
+                  *ngIf="
+                    allBillingData != undefined &&
+                    allBillingData.gst_number != ''
+                  "
+                >
+                  <label class="control-label txt_lbl">{{
+                    "GST Type" | translate
+                  }}</label>
+                  <select
+                    id="gst_type1"
+                    class="form-control cir"
+                    formControlName="gsttype"
+                    (change)="
+                      checkpricefortotal(
+                        CreateJobForm.value.sellingprice,
+                        CreateJobForm.value.gstslab,
+                        CreateJobForm.value.gsttype
+                      )
+                    "
+                  >
+                    <option
+                      *ngFor="let data of gsttype"
+                      value="{{ data }}"
+                      id="{{ data }}"
+                    >
+                      {{ data }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-offset-4 col-lg-4">
+                  <button
+                    type="submit"
+                    *ngIf="showJobUpdate == false"
+                    data-dismiss="modal"
+                    [disabled]="
+                      SelectedDataarrOfVehiclespl == undefined ||
+                      CreateJobForm.pristine ||
+                      CreateJobForm.invalid
+                    "
+                    (click)="createJobByAPI('create')"
+                    class="btn btn-primary cir cir_btn"
+                    style="
+                      font-size: 12px;
+                      margin: 7% 0 0 0;
+                      background: linear-gradient(
+                        to bottom,
+                        #ff0000 0%,
+                        #563b3b 100%
+                      );
+                      border-color: #c30707;
+                      font-weight: bold;
+                      width: 90%;
+                    "
+                  >
+                    {{ "Create Service" | translate }}
+                  </button>
+                  <button
+                    type="submit"
+                    *ngIf="showJobUpdate == true"
+                    data-dismiss="modal"
+                    [disabled]="
+                      SelectedDataarrOfVehiclespl == undefined ||
+                      CreateJobForm.pristine ||
+                      CreateJobForm.invalid
+                    "
+                    (click)="createJobByAPI('update')"
+                    class="btn btn-primary cir cir_btn"
+                    style="
+                      font-size: 12px;
+                      margin: 7% 0 0 0;
+                      background: linear-gradient(
+                        to bottom,
+                        #ff0000 0%,
+                        #563b3b 100%
+                      );
+                      border-color: #c30707;
+                      font-weight: bold;
+                      width: 90%;
+                    "
+                  >
+                    {{ "Update Service" | translate }}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

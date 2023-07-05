@@ -1,0 +1,16 @@
+<div class="closepoup" style="float: right; margin-bottom: 8px; margin-top: 7px; margin-right: 10px;">
+    <label (click)="closePopup(false)" class="btn btn-white cir" style="padding: 1px 4px;
+    
+    background: none;
+    border: none;"><i class="fa fa-times fa-2x" aria-hidden="true"></i></label>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <span>
+            <p style="font-weight: bold;">{{data.question}}</p>
+        </span>
+    </div>
+</div>
+<button class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 11% 9px 2% 9px; float: left;" (click)="closePopup(true)">{{data.button}}</button>
+<button *ngIf='data.showDelete==true' class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 11% 9px 2% 9px; float: left;" (click)="closePopup(false)">{{'Cancel' | translate}}</button>
+

@@ -1,0 +1,465 @@
+<!--  =========================== Changes by Aaliya ===============================-->
+
+<app-spin></app-spin>
+<div class="wrapper wrapper-content animated px-3">
+  <div class="row">
+    <div class="col-lg-3 col-sm-3 col-md-3" style="padding-left: 0px">
+      <h3 style="font-size: 25px">
+        Feedback&nbsp;&#x2605;&nbsp;{{ overallRatingAvg }}
+      </h3>
+    </div>
+  </div>
+  <div class="row">({{ numberOfRatings }} Customers rating overall)</div>
+  <div
+    style="
+      display: flex, justify;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    "
+  >
+    <div class="col-lg-3 col-sm-3 col-md-3 card margin-sm">
+      <div class="row font-17px">Service Quality</div>
+      <div class="row">
+        <div class="circle red">{{ serviceQualityAvg }}</div>
+      </div>
+      <div class="row">
+        <div class="feedback-rating">
+          <ngb-rating [max]="5">
+            <ng-template let-fill="fill" let-index="index">
+              <span
+                class="star"
+                [class.filled]="index < [serviceQualityAvgRound]"
+                >&#9733;</span
+              >
+            </ng-template>
+          </ngb-rating>
+        </div>
+      </div>
+      <div class="row">
+        <div class="progress">
+          5&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="serviceQualityFive" class="green"></div>
+          </div>
+        </div>
+        <div class="progress">
+          4&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="serviceQualityFour" class="light-green"></div>
+          </div>
+        </div>
+        <div class="progress">
+          3&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="serviceQualityThree" class="blue"></div>
+          </div>
+        </div>
+        <div class="progress">
+          2&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="serviceQualityTwo" class="orange"></div>
+          </div>
+        </div>
+        <div class="progress">
+          1&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="serviceQualityOne" class="red"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-sm-3 col-md-3 card margin-sm">
+      <div class="row font-17px">Customer Support</div>
+      <div class="row">
+        <div class="circle blue">{{ customerSupportAvg }}</div>
+      </div>
+      <div class="row">
+        <div class="feedback-rating">
+          <ngb-rating [max]="5">
+            <ng-template let-fill="fill" let-index="index">
+              <span
+                class="star"
+                [class.filled]="index < [customerSupportAvgRound]"
+                >&#9733;</span
+              >
+            </ng-template>
+          </ngb-rating>
+        </div>
+      </div>
+      <div class="row">
+        <div class="progress">
+          5&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="cusSupportFive" class="green"></div>
+          </div>
+        </div>
+        <div class="progress">
+          4&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="cusSupportFour" class="light-green"></div>
+          </div>
+        </div>
+        <div class="progress">
+          3&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="cusSupportThree" class="blue"></div>
+          </div>
+        </div>
+        <div class="progress">
+          2&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="cusSupportTwo" class="orange"></div>
+          </div>
+        </div>
+        <div class="progress">
+          1&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="cusSupportOne" class="red"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-sm-3 col-md-3 card margin-sm">
+      <div class="row font-17px">Timeliness</div>
+      <div class="row">
+        <div class="circle light-green">{{ timelinessAvg }}</div>
+      </div>
+      <div class="row">
+        <div class="feedback-rating">
+          <ngb-rating [max]="5">
+            <ng-template let-fill="fill" let-index="index">
+              <span class="star" [class.filled]="index < [timelinessAvgRound]"
+                >&#9733;</span
+              >
+            </ng-template>
+          </ngb-rating>
+        </div>
+      </div>
+      <div class="row">
+        <div class="progress">
+          5&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="timelinessFive" class="green"></div>
+          </div>
+        </div>
+        <div class="progress">
+          4&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="timelinessFour" class="light-green"></div>
+          </div>
+        </div>
+        <div class="progress">
+          3&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="timelinessThree" class="blue"></div>
+          </div>
+        </div>
+        <div class="progress">
+          2&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="timelinessTwo" class="orange"></div>
+          </div>
+        </div>
+        <div class="progress">
+          1&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="timelinessOne" class="red"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-sm-3 col-md-3 card margin-sm">
+      <div class="row font-17px">Pricing</div>
+      <div class="row">
+        <div class="circle gray">{{ pricingAvg }}</div>
+      </div>
+      <div class="row">
+        <div class="feedback-rating">
+          <ngb-rating [max]="5">
+            <ng-template let-fill="fill" let-index="index">
+              <span class="star" [class.filled]="index < [pricingAvgRound]"
+                >&#9733;</span
+              >
+            </ng-template>
+          </ngb-rating>
+        </div>
+      </div>
+      <div class="row">
+        <div class="progress">
+          5&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="pricingFive" class="green"></div>
+          </div>
+        </div>
+        <div class="progress">
+          4&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="pricingFour" class="light-green"></div>
+          </div>
+        </div>
+        <div class="progress">
+          3&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="pricingThree" class="blue"></div>
+          </div>
+        </div>
+        <div class="progress">
+          2&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="pricingTwo" class="orange"></div>
+          </div>
+        </div>
+        <div class="progress">
+          1&nbsp;&nbsp;
+          <div class="progressbar">
+            <div [style.width.%]="pricingOne" class="red"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row" style="margin-top: 45px">
+ 
+    <div
+      class="col-lg-5 col-sm-5 col-md-5"
+      style="padding-left: 0px; max-width: fit-content"
+    >
+      <div class="input-group rounded" style="width: 197px">
+        <input
+          matInput
+          class="search form-control rounded"
+          (keyup.enter)="getTableData($event.target.value)"
+          placeholder="Search by Name / Mobile number"
+        />
+      </div>
+      &nbsp;&nbsp;&nbsp;
+    </div>
+   
+    <div
+      class="col-lg-4 col-sm-4 col-md-4"
+      style="max-width: fit-content; margin: auto"
+    >
+      <div class="dropdown">
+        <button
+          class="btn btn-outline-secondary bg-white text-muted dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+          style="
+            background: white;
+            border: 1px solid rgb(206, 206, 206);
+            width: 160px;
+            text-align: inherit;
+          "
+        >
+          All
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" (click)="filterTableData('')">All</a
+          >
+          <a class="dropdown-item" (click)="filterTableData('5')"
+            >5 star ratings</a
+          >
+          <a class="dropdown-item" (click)="filterTableData('4')"
+            >4 star ratings</a
+          >
+          <a class="dropdown-item" (click)="filterTableData('3')"
+            >3 star ratings</a
+          >
+          <a class="dropdown-item" (click)="filterTableData('2')"
+            >2 star ratings</a
+          >
+          <a class="dropdown-item" (click)="filterTableData('1')"
+            >1 star ratings</a
+          >
+        </div>
+      </div>
+    </div>
+
+  </div> -->
+
+  <!-- ------------------------------------------------New Search bar and dropdown---------------------------------------- -->
+
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+      <div class="input-group m-b col-12">
+        <span class="input-group-addon">
+          <i class="fa fa-search fa-1x" aria-hidden="true"></i>
+        </span>
+        <span
+          class="data"
+          style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+        >
+          <input
+            matInput
+            class="form-control rounded"
+            style="border-style: none"
+            (keyup.enter)="getTableData($event.target.value)"
+            placeholder="Search by Name / Mobile number"
+          />
+        </span>
+      </div>
+    </div>
+    <div class="col-lg-3 col-sm-3 col-md-3" style="display: flex">
+      <select
+        class="report-select"
+        (change)="filterTableData($event.target.value)"
+      >
+        >
+        <option value="">All</option>
+        <option value="5">5 Star Ratings</option>
+        <option value="4">4 Star Ratings</option>
+        <option value="3">3 Star Ratings</option>
+        <option value="2">2 Star Ratings</option>
+
+        <option value="1">1 Star Ratings</option>
+      </select>
+    </div>
+  </div>
+  <!-- ------------------------------------------------------------------------------------------------------------------- -->
+  <div class="row">
+    <div class="col-lg-12 col-sm-12 col-md-12" style="padding: 0px">
+      <div
+        class="mat-elevation-z8"
+        (scroll)="onScroll($event)"
+        *ngIf="tabelData != undefined"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          border-radius: 8px;
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          <ng-container
+            class="col-lg-2 col-sm-2 col-md-2"
+            matColumnDef="created_at"
+          >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              &nbsp; Date
+            </th>
+            <td mat-cell *matCellDef="let element">
+              &nbsp;{{ element.created_at | date: "MMM d, h:mm a" }}
+            </td>
+          </ng-container>
+
+          <ng-container
+            class="col-lg-2 col-sm-2 col-md-2"
+            matColumnDef="jobcard_number"
+          >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Jobcard Number
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.jobcard_number }}
+            </td>
+          </ng-container>
+
+          <ng-container
+            class="col-lg-2 col-sm-2 col-md-2"
+            matColumnDef="cutsomer_name"
+          >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Customer Name
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.cutsomer_name }} ({{ element.customer_mobile }})
+            </td>
+          </ng-container>
+
+          <ng-container
+            class="col-lg-2 col-sm-2 col-md-2"
+            matColumnDef="overall_rating"
+          >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Rating</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.overall_rating }}
+            </td>
+          </ng-container>
+
+          <ng-container
+            class="col-lg-4 col-sm-4 col-md-4"
+            matColumnDef="comment"
+          >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Comment</th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.comment == ''"> - </span>
+              <span *ngIf="commentLenght(element.comment)">
+                {{ element.comment }}
+              </span>
+              <span *ngIf="!commentLenght(element.comment)">
+                <span *ngIf="element.expanded == false"
+                  >{{ element.comment | slice: 0:50 }}
+                  <span
+                    (click)="element.expanded = true"
+                    style="
+                      cursor: pointer;
+                      font-size: 1em;
+                      color: gray;
+                      margin-left: 1em;
+                    "
+                    >more...</span
+                  >
+                </span>
+                <span *ngIf="element.expanded == true"
+                  >{{ element.comment }}
+                  <span
+                    (click)="element.expanded = false"
+                    style="
+                      cursor: pointer;
+                      font-size: 1em;
+                      color: gray;
+                      margin-left: 1em;
+                    "
+                    >less</span
+                  >
+                </span>
+              </span>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+      <div
+        class="mat-elevation-z8"
+        *ngIf="tabelData == undefined"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          overflow-x: hidden;
+          border-radius: 8px;
+        "
+      >
+        <div
+          class="col-lg-12 col-sm-12 col-md-12 text-center"
+          *ngIf="tabelData == undefined"
+          style="
+            font-weight: bold;
+            padding: 10px 0px 10px 0px;
+            font-size: 29px;
+            color: black;
+          "
+        >
+          <span> No Records Found </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  =========================== Changes by Aaliya ===============================-->

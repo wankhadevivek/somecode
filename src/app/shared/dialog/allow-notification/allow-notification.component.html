@@ -1,0 +1,106 @@
+<div style="margin-top: -1rem">
+  <!-- <div class="closepoup" style="float: right; margin-bottom: 8px; margin-top: 7px; margin-right: 10px;">
+        <label (click)="closePopup(false)" class="btn btn-white cir" style="padding: 1px 4px;
+        
+        background: none;
+        border: none;"><i class="fa fa-times fa-2x" aria-hidden="true"></i></label>
+    </div> -->
+
+  <div>
+    <img
+      style="
+        margin-left: 12rem;
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+
+        padding: 2px;
+      "
+      src="../../../../assets/images/bell-jar-gbf8e64901_640.png"
+      alt=""
+    />
+
+    <!-- <p style="margin-left: auto; font-weight: bold">
+      Get Real-Time Updates about Your Workshop, Customers & Other Important
+      Notifications
+    </p> -->
+    <p style="margin-left: auto; font-weight: bold">
+      {{ data.messsage }}
+    </p>
+  </div>
+  <!-- <div>
+        <p style="font-weight: bold;">Please Allow the Notification to receive all real-time updates </p>
+    </div> -->
+  <div style="margin-top: 1rem; display: flex; justify-content: space-evenly">
+    <button mat-raised-button (click)="closePopup(false)">Deny</button>
+
+    <button mat-raised-button color="primary" (click)="closePopup(true)">
+      Allow
+    </button>
+  </div>
+
+  <!-- <div class="container">
+        <div class="d1">
+
+            <p style="font-weight: bold;">Please Allow the Notification to receive all real-time updates </p>
+            </div>
+        <div class="d2"> 
+            <img 
+            style=" 
+            margin:0;
+        height: 50px;
+        width: 50px;
+        border-radius:50%;
+       
+        padding: 2px;"
+            src="../../../../assets/images/logo.png"
+            alt=""
+          /></div>
+       
+
+       
+    
+        <div class="d4">
+
+            <button mat-raised-button (click)="closePopup(true)">Cancel</button>
+        </div>
+        <div class="d5">
+            <button mat-raised-button color="primary" (click)="closePopup(false)">Allow</button>
+        </div>
+
+    </div> -->
+</div>
+
+<!-- <div>
+<div class="closepoup" style="float: right; margin-bottom: 8px; margin-top: 7px; margin-right: 10px;">
+    <label (click)="closePopup(false)" class="btn btn-white cir" style="padding: 1px 4px;
+    
+    background: none;
+    border: none;"><i class="fa fa-times fa-2x" aria-hidden="true"></i></label>
+</div>
+<div style=" display: flex;
+justify-content: space-between;
+flex-wrap: wrap;">
+    
+      <div>
+
+        <img style=" 
+        height: 80px;
+       
+        padding: 14px;"
+                                class="display-img_user"
+                                src="../../../../assets/images/logo.png"
+                                alt=""
+                              />
+      </div>
+      <div>
+            <p style="font-weight: bold;">Please Allow the Notification to receive all real-time updates </p>
+     
+    </div>
+</div>
+<div style="display: flex;
+justify-content: space-evenly;
+flex-wrap: wrap;" >
+    <button class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 11% 9px 2% 9px; float: left;" (click)="closePopup(true)">Cancel</button>
+    <button *ngIf='data.showDelete==true' class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 11% 9px 2% 9px; float: left;" (click)="closePopup(false)">Allow</button>
+</div> -->

@@ -1,0 +1,78 @@
+<app-spinlogin></app-spinlogin>
+<label class="control-label txt_lbl select-paymnet-title">{{'Please Select Recharge Type' | translate}}</label>
+<div class="closepoup" style="float: right; margin-bottom: 8px; margin-top: 7px; margin-right: 10px;">
+    <label (click)="closePopup(false)" class="btn btn-white cir" style="padding: 1px 4px;
+    
+    background: none;
+    border: none;"><i class="fa fa-times fa-2x" aria-hidden="true"></i></label>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="allType">
+            <div *ngFor="let data of rechnage;let i = index;" class="col-lg-6 wow zoomIn animated" style="visibility: visible;">
+                <ul *ngIf='data.recharge_type=="Gold"' [class]="goldClass">
+                    <li class="pricing-title" style="background: #eacf39;
+                    border-radius: 3px;
+                    padding: 6px;">{{'Gold Plan' | translate}}({{currency_symbol}} {{data.amount}})</li>
+                    <!-- <li class="pricing-desc">
+                                        Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.
+                                    </li> -->
+                    <li class="pricing-price"><span>{{currency_symbol}} {{data.amount}}</span> {{'for' | translate}} {{data.validity_month}} {{'Validity' | translate}}</li>
+                    <li class="pricing-price">{{'All Features' | translate}}</li>
+                    <li class="pricing-price">{{'Desktop Version' | translate}} &amp; {{'Online Support' | translate}}</li>
+                    <li class="pricing-price">Unlimited Jobcards, Analytics</li>
+                    <li class="pricing-price">{{'Training Free (Online / Offline)' | translate}}</li>
+                    <li class="pricing-price">{{'Jobcard Management, GST Billing,Daily Reports' | translate}}</li>
+                    <li class="pricing-price">{{'Customer Reminders, Customised Invoices' | translate}}</li>
+                    <li class="pricing-price">{{'Inventory Module, Labour Pricing, etc' | translate}}.</li>
+                    <li class="pricing-price">{{'Excluding 18% GST' | translate}}</li>
+                    <li style="background: #eacf39;
+                    border-radius: 3px;
+                    padding: 6px;width: 50%; margin-left: 84px;cursor: pointer;" class="pricing-price" (click)='getToken(data,"gold")'>{{'Select Gold' | translate}}</li>
+                </ul>
+                <ul *ngIf='data.recharge_type=="Platinum"' [class]="platinumclass">
+                    <li class="pricing-title" style="background: #e5e4e2;
+                    border-radius: 3px;
+                    padding: 6px;">{{'Platinum Plan' | translate}}({{currency_symbol}} {{data.amount}})</li>
+                    <!-- <li class="pricing-desc">
+                                        Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.
+                                    </li> -->
+                    <li class="pricing-price"><span>{{currency_symbol}} {{data.amount}}</span> {{'for' | translate}} {{data.validity_month}} {{'Validity' | translate}}</li>
+                    <li class="pricing-price">{{'All Features (Including Mobile App &amp; Web App)' | translate}}</li>
+                    <li class="pricing-price">{{'Desktop Version &amp; Online Support' | translate}}</li>
+                    <li class="pricing-price">{{'Unlimited Jobcards, Analytics' | translate}}</li>
+                    <li class="pricing-price">{{'Training Free (Online / Offline)' | translate}}</li>
+                    <li class="pricing-price">{{'Jobcard Management, GST Billing,Daily Reports' | translate}}</li>
+                    <li class="pricing-price">{{'Customer Reminders, Customised Invoices' | translate}}</li>
+                    <li class="pricing-price">{{'Inventory Module, Labour Pricing, etc' | translate}}.</li>
+                    <li class="pricing-price">{{'Excluding 18% GST' | translate}}</li>
+                    <li style="background: #e5e4e2;
+                    border-radius: 3px;
+                    padding: 6px;width: 50%;margin-left: 84px; cursor: pointer;" class="pricing-price" (click)='getToken(data,"pla")'>{{'Select Platinum' | translate}}</li>
+                </ul>
+                </div>
+        </div>
+    </div>
+</div>
+<form #form method="post" [action]="formUrl">
+    <input type="hidden" name="appId" [value]='appId'>
+    <input type="hidden" name="orderId" [value]='orderId'>
+    <input type="hidden" name="orderAmount" [value]='orderAmount'>
+    <input type="hidden" name="orderCurrency" [value]='orderCurrency'>
+    <input type="hidden" name="orderNote" [value]='orderNote'>
+    <input type="hidden" name="customerName" [value]='customerName'>
+    <input type="hidden" name="customerEmail" [value]='customerEmail'>
+    <input type="hidden" name="customerPhone" [value]='customerPhone'>
+    <input type="hidden" name="returnUrl" [value]='returnUrl'>
+    <input type="hidden" name="signature" [value]='signature'>
+    <input *ngIf='signature!=""' type="submit" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);
+    border-color: #c30707;font-weight: bold;
+    margin-left: 314px;
+    margin-top: 25px;
+    color: #fff;
+    font-size: 16px;
+    padding: 8px 25px;
+    border-radius: 6px;" (click)="form.submit()" [value]="Pay">
+</form>
+
+

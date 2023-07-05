@@ -1,0 +1,585 @@
+<app-spinend></app-spinend>
+<div
+  class="bg-light mb-5 mx-0"
+  style="background-color: #fff; border-bottom: 1px solid #e2e2e2"
+>
+  <div class="container" style="margin-bottom: 10px">
+    <div class="row topgargedetails">
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-left">
+          <span style="font-size: 14px; font-weight: 600; color: #000"
+            >{{ "Hi" | translate }}, {{ cusname }}</span
+          >
+          <br />
+          <span style="font-size: 12px; color: #000">{{ cusnumber }}</span>
+        </div>
+        <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-right">
+          <span></span>
+          <br />
+          <span
+            (click)="signout()"
+            style="
+              text-decoration: underline;
+              font-size: 12px;
+              color: #000;
+              cursor: pointer;
+            "
+            >{{ "Logout" | translate }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="bg-light mb-5 mx-0"
+  style="background-color: #fff; border-bottom: 1px solid #e2e2e2"
+>
+  <div class="container">
+    <div (click)="checkacticeclass('profile')" [class]="proclass">
+      <img
+        src="../../../assets/images/userpro.png"
+        alt=""
+        style="height: 22px"
+      />
+      <br />
+      <span style="font-size: 11px">{{ "Profile" | translate }}</span>
+    </div>
+    <div (click)="checkacticeclass('vehicle')" [class]="vehclass">
+      <img
+        src="../../../assets/images/steeringwheel.png"
+        alt=""
+        style="height: 22px"
+      />
+      <br />
+      <span style="font-size: 11px">{{ "Vehicles" | translate }}</span>
+    </div>
+    <div (click)="checkacticeclass('payment')" [class]="payclass">
+      <img
+        src="../../../assets/images/creditcard.png"
+        alt=""
+        style="height: 22px"
+      />
+      <br />
+      <span style="font-size: 11px">{{ "Payments" | translate }}</span>
+    </div>
+    <div (click)="checkacticeclass('about')" [class]="aboutclass">
+      <img
+        src="../../../assets/images/information.png"
+        alt=""
+        style="height: 22px"
+      />
+      <br />
+      <span style="font-size: 11px">{{ "About" | translate }}</span>
+    </div>
+  </div>
+</div>
+<div class="bg-light mb-5 mx-0" style="background-color: #fff">
+  <div
+    class="container"
+    style="margin-bottom: 10px; padding-right: 0px; padding-left: 0px"
+  >
+    <div
+      *ngIf="showprofile == true"
+      class="col-lg-12 col-sm-12 col-md-12 col-xs-12 showsection"
+    >
+      <div
+        class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-left"
+        style="padding-left: 0px"
+      >
+        <span style="color: #c71010; font-size: 12px">{{
+          "Personal Information" | translate
+        }}</span>
+      </div>
+      <div
+        *ngIf="savebitton == true"
+        class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-right"
+        style="padding-right: 0px"
+      >
+        <button
+          (click)="updatedetails()"
+          style="
+            padding: 5px 10px 5px 10px;
+            border-radius: 15px;
+            color: #fff;
+            background-color: #c71010;
+            font-size: 12px;
+            font-weight: 800;
+          "
+        >
+          {{ "Save" | translate }}
+        </button>
+      </div>
+      <div
+        *ngIf="editbitton == true"
+        class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-right"
+        style="padding-right: 0px"
+      >
+        <button
+          (click)="editdetails()"
+          style="
+            padding: 5px 10px 5px 10px;
+            border-radius: 15px;
+            color: #fff;
+            background-color: #c71010;
+            font-size: 12px;
+            font-weight: 800;
+          "
+        >
+          {{ "Edit" | translate }}
+        </button>
+      </div>
+      <div
+        *ngIf="updatebutton == true"
+        class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-right"
+        style="padding-right: 0px"
+      >
+        <button
+          (click)="updatedetails()"
+          style="
+            padding: 5px 10px 5px 10px;
+            border-radius: 15px;
+            color: #fff;
+            background-color: #c71010;
+            font-size: 12px;
+            font-weight: 800;
+          "
+        >
+          {{ "Update" | translate }}
+        </button>
+      </div>
+      <form novalidate class="form-horizontal" [formGroup]="customerform">
+        <div class="row">
+          <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+            <label
+              style="
+                color: #000;
+                font-weight: 600;
+                font-size: 12px;
+                margin-top: 5px;
+              "
+              class="control-label"
+              >{{ "Full Name" | translate
+              }}<span style="color: #c30707; font-weight: bold">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control cir"
+              formControlName="name"
+              placeholder="{{ 'Enter Full Name' | translate }}"
+            />
+            <div
+              *ngIf="submitted && customerform.controls['name'].errors"
+              class="text-danger"
+            >
+              <div *ngIf="customerform.controls['name'].errors.required">
+                {{ "Name is required" | translate }}.
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+            style="margin-top: -3px"
+          >
+            <label
+              style="
+                color: #000;
+                font-weight: 600;
+                font-size: 12px;
+                margin-top: 15px;
+              "
+              class="control-label"
+              >{{ "Mobile Number" | translate
+              }}<span style="color: #c30707; font-weight: bold">*</span>({{
+                "Preferable WhatsApp Number" | translate
+              }})</label
+            >
+            <input
+              type="text"
+              class="form-control cir"
+              formControlName="mobilenumber"
+              placeholder="{{ 'Enter Mobile Number' | translate }}"
+            />
+            <div
+              *ngIf="submitted && customerform.controls['mobilenumber'].errors"
+              class="text-danger"
+            >
+              <div
+                *ngIf="customerform.controls['mobilenumber'].errors.required"
+              >
+                {{ "Mobile Number is required" | translate }}.
+              </div>
+              <div *ngIf="customerform.controls['mobilenumber'].errors.pattern">
+                {{ "Enter a valid Mobile Number" | translate }}.
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+            style="margin-top: -3px"
+          >
+            <label
+              style="
+                color: #000;
+                font-weight: 600;
+                font-size: 12px;
+                margin-top: 15px;
+              "
+              class="control-label"
+              >{{ "Email Id (Optional)" | translate }}</label
+            >
+            <input
+              type="text"
+              class="form-control cir"
+              formControlName="email"
+              placeholder="{{ 'Enter Email ID' | translate }}"
+            />
+            <div
+              *ngIf="submitted && customerform.controls['email'].errors"
+              class="text-danger"
+            >
+              <div *ngIf="customerform.controls['email'].errors.pattern">
+                {{ "Enter a valid Mobile Number" | translate }}.
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+            style="margin-top: -3px"
+          >
+            <label
+              style="
+                color: #000;
+                font-weight: 600;
+                font-size: 12px;
+                margin-top: 15px;
+              "
+              class="control-label"
+              >{{ "Address" | translate }}</label
+            >
+            <input
+              type="text"
+              class="form-control cir"
+              formControlName="address"
+              placeholder="{{ 'Area, Locality, Street, Town' | translate }}"
+            />
+          </div>
+          <div
+            class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+            style="margin-top: -3px"
+          >
+            <label
+              style="
+                color: #000;
+                font-weight: 600;
+                font-size: 12px;
+                margin-top: 15px;
+              "
+              class="control-label"
+              >{{ "State" | translate }}</label
+            >
+            <input
+              type="text"
+              class="form-control cir"
+              formControlName="state"
+              placeholder=" {{ 'Enter State' | translate }}"
+            />
+          </div>
+          <div
+            class="col-lg-6 col-sm-6 col-md-6 col-xs-6"
+            style="margin-top: -3px"
+          >
+            <label
+              style="
+                color: #000;
+                font-weight: 600;
+                font-size: 12px;
+                margin-top: 15px;
+              "
+              class="control-label"
+              >{{ "city" | translate }}</label
+            >
+            <input
+              type="text"
+              class="form-control cir"
+              formControlName="city"
+              placeholder="{{ 'Enter City' | translate }}"
+            />
+          </div>
+          <div
+            class="col-lg-6 col-sm-6 col-md-6 col-xs-6"
+            style="margin-top: -3px"
+          >
+            <label
+              style="
+                color: #000;
+                font-weight: 600;
+                font-size: 12px;
+                margin-top: 15px;
+              "
+              class="control-label"
+              >{{ "Pin Code" | translate }}</label
+            >
+            <input
+              type="text"
+              class="form-control cir"
+              formControlName="pin"
+              placeholder="{{ 'Enter Pincode' | translate }}"
+            />
+          </div>
+          <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12"></div>
+        </div>
+      </form>
+    </div>
+    <div
+      *ngIf="showvehicle == true"
+      class="col-lg-12 col-sm-12 col-md-12 col-xs-12 showsection"
+    >
+      <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-left">
+        <span style="color: #c71010; font-size: 12px">{{
+          "Vehicle Information" | translate
+        }}</span>
+      </div>
+      <div
+        *ngIf="showaddveh == true"
+        class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-right"
+      >
+        <button
+          (click)="addveh()"
+          style="
+            padding: 5px 10px 5px 10px;
+            border-radius: 10px;
+            color: #fff;
+            background-color: #c71010;
+            font-size: 12px;
+            font-weight: 800;
+          "
+        >
+          {{ "Add New" | translate }}
+        </button>
+      </div>
+      <div *ngIf="showaddvehform == true">
+        <form novalidate class="form-horizontal" [formGroup]="vehform">
+          <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+            <label
+              style="
+                color: #000;
+                font-weight: 600;
+                font-size: 12px;
+                margin-top: 5px;
+              "
+              class="control-label"
+              >{{ "Select Vehicle" | translate
+              }}<span style="color: #c30707; font-weight: bold">*</span></label
+            >
+            <!-- <input style="margin-top: 5px;" type="text"  class="form-control cir" formControlName="serachvehicle" placeholder="Search Brand,Model"> -->
+            <ng-autocomplete
+              formControlName="serachvehicle"
+              placeHolder="{{ 'Search Brand,Model' | translate }}"
+              [data]="searchVehicleData"
+              (selected)="selectedResultForVechile($event)"
+              (input)="searchBarForVechile($event.target.value)"
+              [itemTemplate]="itemTemplate"
+              [notFoundTemplate]="notFoundTemplate"
+            >
+            </ng-autocomplete>
+
+            <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+            <div
+              *ngIf="submittedveh && vehform.controls['serachvehicle'].errors"
+              class="text-danger"
+            >
+              <div *ngIf="vehform.controls['serachvehicle'].errors.required">
+                {{ "Vehicle is required" | translate }}.
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+            <label
+              style="
+                color: #000;
+                font-weight: 600;
+                font-size: 12px;
+                margin-top: 15px;
+              "
+              class="control-label"
+              >{{ "Vehicle Number" | translate
+              }}<span style="color: #c30707; font-weight: bold">*</span> (Ex.
+              MH12AA1234)</label
+            >
+            <input
+              type="text"
+              class="form-control cir"
+              formControlName="vehiclenumber"
+              placeholder="Enter Vehicle Number"
+              oninput="this.value = this.value.toUpperCase()"
+            />
+            <div
+              *ngIf="submittedveh && vehform.controls['vehiclenumber'].errors"
+              class="text-danger"
+            >
+              <div *ngIf="vehform.controls['vehiclenumber'].errors.required">
+                {{ "Vehicle Number is required" | translate }}.
+              </div>
+              <div *ngIf="vehform.controls['vehiclenumber'].errors.pattern">
+                {{ "Enter a valid Vehicle Number" | translate }}.
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div
+        *ngIf="showaddvehform == true"
+        class="col-lg-6 col-sm-6 col-md-6 col-xs-6"
+        style="padding-right: 0px; margin-top: 10px"
+      >
+        <button
+          (click)="vehicleAdded()"
+          style="
+            background-color: #c71010;
+            font-size: 14px;
+            font-weight: 800;
+            color: #fff;
+            padding: 10px 10px 10px 10px;
+            width: 100%;
+            border-radius: 5px;
+          "
+        >
+          {{ "Add" | translate }}
+        </button>
+      </div>
+      <div
+        *ngIf="showaddvehform == true"
+        class="col-lg-6 col-sm-6 col-md-6 col-xs-6"
+        style="padding-left: 5px; margin-top: 10px"
+      >
+        <button
+          (click)="caceladd()"
+          style="
+            background-color: #c71010;
+            font-size: 14px;
+            font-weight: 800;
+            color: #fff;
+            padding: 10px 10px 10px 10px;
+            width: 100%;
+            border-radius: 5px;
+          "
+        >
+          {{ "Cancel" | translate }}
+        </button>
+      </div>
+      <div
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center"
+        style="margin-top: 17px"
+      >
+        <span *ngIf="showduperror != ''" class="text-danger">
+          {{ showduperror }}
+        </span>
+      </div>
+      <div
+        *ngIf="vehdata == false"
+        style="margin-top: 120px"
+        class="text-center"
+      >
+        <span style="font-weight: bold; color: #000; font-size: 16px">
+          {{ "No Vehicle Available To Show" | translate }}</span
+        >
+        <br />
+        <br />
+        <span
+          style="
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: underline;
+            color: #000;
+            font-size: 10px;
+          "
+          (click)="addveh()"
+          >{{ "Add Your First Vehicle" | translate }}</span
+        >
+      </div>
+      <div *ngIf="vehlist == true">
+        <div
+          class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+          style="margin-bottom: 60px; padding-right: 0px; padding-left: 0px"
+        >
+          <div
+            *ngFor="let data of vehiclesAllListArr; let i = index"
+            (click)="openForm(data)"
+            style="
+              cursor: pointer;
+              margin-top: 12px;
+              height: 60px;
+              padding: 4px;
+              background-color: #fff;
+              box-shadow: 0px 3px 7px;
+              border-left: 2px solid #04b579;
+            "
+          >
+            <div
+              class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-left"
+              style="margin-top: 6px"
+            >
+              <span style="font-size: 12px; color: #000000">
+                {{ data.vehicleNO }}
+              </span>
+              <br />
+              <span style="font-size: 8px; color: #8b8b8b">
+                {{ data.Vehiclemake }}
+              </span>
+            </div>
+            <div
+              *ngIf="data.due != 'No'"
+              class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-right"
+              style="margin-top: 6px"
+            >
+              <span style="font-size: 10px"
+                >{{ "Service Due" | translate }}
+                {{ data.date | date: "d MMM, yy" }}</span
+              >
+              <br />
+              <span
+                *ngIf="data.darefalg == 'false'"
+                style="font-size: 12px; color: #ff0000"
+                >{{ data.due }}</span
+              >
+              <span
+                *ngIf="data.darefalg == 'true'"
+                style="font-size: 12px; color: #65ff00"
+                >{{ data.due }}</span
+              >
+            </div>
+            <div
+              *ngIf="data.due == 'No'"
+              class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-right"
+              style="margin-top: 6px"
+            >
+              <span style="font-size: 10px">{{
+                "No Booking Yet" | translate
+              }}</span>
+              <br />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="showpayment == true"
+      class="col-lg-12 col-sm-12 col-md-12 col-xs-12 showsection"
+    >
+      <span>{{ "Coming Soon" | translate }}</span>
+    </div>
+    <div
+      *ngIf="showabout == true"
+      class="col-lg-12 col-sm-12 col-md-12 col-xs-12 showsection"
+    >
+      <span>{{ "Coming Soon" | translate }}</span>
+    </div>
+  </div>
+</div>

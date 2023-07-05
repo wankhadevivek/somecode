@@ -1,0 +1,302 @@
+<nav
+  class="navbar-default navbar-static-side"
+  role="navigation"
+  style="height: 100%; position: fixed;overflow-y: auto;"
+  id="navbar-static-side-id"
+>
+  <div class="sidebar-collapse">
+    <ul class="nav metismenu" id="side-menu" *ngIf="roleForNavbar != 'supplier'">
+      <li
+        *ngIf="showUpdate == true"
+        class="nav-header"
+        style="padding-right: 0px; padding-left: 6px"
+      >
+        <div class="dropdown profile-element">
+          <span>
+            <strong class="font-bold">TTN Garage</strong>
+          </span>
+         
+          <span
+            (click)="updateStatus()"
+            style="
+              font-size: 13px;
+              color: #fff;
+              background-color: #c30707;
+              cursor: pointer;
+              padding: 3px 5px 5px 2px;
+              border-radius: 5px;
+              margin-left: 6px;
+            "
+          >
+            Update App
+          </span>
+          <i
+            (click)="openInfo()"
+            style="
+              font-size: 19px;
+              margin-left: 7px;
+              position: relative;
+              top: 4px;
+              cursor: pointer;
+            "
+            class="fa fa-info-circle"
+            aria-hidden="true"
+          ></i>
+        </div>
+      </li>
+      <li *ngIf="showUpdate == false" class="nav-header">
+        <div class="dropdown profile-element">
+          <span>
+            <strong class="font-bold"> {{'Sitetitle' | translate }}</strong>
+          </span>
+        </div>
+      </li>
+      <li class="nav-header">
+        <span class="form-group">
+          <select 
+              class="form-control"
+              style="background-color: #ffffff00;" 
+              #selectedLang 
+              (change)="switchLang(selectedLang.value)">
+            <option style="background-color: black;" *ngFor="let language of translate.getLangs()" 
+              [value]="language"
+              [selected]="language === translate.currentLang">
+              {{ language }}
+            </option>
+          </select>
+        </span>
+      </li>
+      <li (click)="showActive('dashboard')" [class]="dashclass">
+        <a routerLink="/dashboard/">
+          <i class="fa fa-bar-chart" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{'Dashboard' | translate }}</span>
+        </a>
+      </li>
+      <li (click)="showActive('jobcards')" [class]="jobclass"
+     
+      >
+        <a routerLink="/jobcards/">
+          <i class="fa fa-list-alt" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{'Jobcards' | translate }}</span>
+        </a>
+      </li>
+      <li (click)="showActive('franchise')" [class]="franchiseclass"
+      *ngIf = "showFranchise == true">
+        <a routerLink="/franchise/">
+          <i class="fa fa-list-alt" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{'Franchise' | translate }}</span>
+        </a>
+      </li>
+      <li (click)="showActive('orders')" [class]="ordersclass" *ngIf="roleForNavbar == 'wsupplier'">
+        <a routerLink="/orders/">
+          <i class="fa fa-wpforms" aria-hidden="true"></i>
+          <span class="nav-label" onclick="smsidebarshowhide()">{{'Orders' | translate }}</span>
+        </a>
+      </li>
+      <li (click)="showActive('counter-sale')" [class]="couclass">
+        <a routerLink="/countersale/">
+          <i class="fa fa-wpforms" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{'Counter-Sale' | translate }}</span>
+        </a>
+      </li>
+      <li (click)="showActive('inventory')" [class]="invenclass">
+        <a href="javascript:">
+          <i class="fa fa-wrench" aria-hidden="true"></i
+          ><span class="nav-label" >{{'Inventory' | translate }}</span
+          ><span class="fa arrow"></span>
+        </a>
+        <ul [class]="collapseclass">
+          <li (click)="showActive('inventorycheck')">
+            <a routerLink="/inventory/" onclick="smsidebarshowhide()">{{'Stock' | translate }}</a>
+          </li>
+          <li (click)="showActive('supplier')">
+            <a routerLink="/supplier/" onclick="smsidebarshowhide()">{{'Supplier' | translate }}</a>
+          </li>
+          <li (click)="showActive('purchaseorder')">
+            <a routerLink="/purchaseorder/" onclick="smsidebarshowhide()">{{'Purchase Order' | translate }}</a>
+          </li>
+          <!-- <li (click)="showActive('cashbook')">
+            <a routerLink="/cashbook/" onclick="smsidebarshowhide()">{{'Cashbook' | translate }}</a>
+          </li> -->
+        </ul>
+      </li>
+      <li (click)="showActive('reports')" [class]="repoclass">
+        <a routerLink="/reports/">
+          <i class="fa fa-bar-chart" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{'Reports' | translate }}</span>
+        </a>
+      </li>
+      <li (click)="showActive('collect payment')" [class]="collclass">
+        <a routerLink="/collect/">
+          <i class="fa fa-credit-card" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{'Collect Payment' | translate }}</span>
+        </a>
+      </li>
+      <li (click)="showActive('appointment')" [class]="appclass">
+        <a routerLink="/appointment/">
+          <i class="fa fa-calendar" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{'Appointment' | translate }}</span>
+        </a>
+      </li>
+      <li (click)="showActive('online garage')" [class]="onlineclass">
+        <a routerLink="/onlinegarage/">
+          <i class="fa fa-user-o" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{'Online Garage' | translate }}</span>
+        </a>
+      </li>
+
+      <li (click)="showActive('expense')" [class]="expclass">
+        <a routerLink="/expense/">
+          <i class="fa fa-user-o" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{'Expenses' | translate }}</span>
+        </a>
+      </li>
+      <!-- <li>
+        <a routerLink="/onlinestore/" target="_blank">
+          <i class="fa fa-shopping-cart" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{'TTN Retail Store' | translate }}</span>
+        </a>
+      </li> -->
+      <li (click)="showActive('settings')" [class]="settclass">
+        <a routerLink="/settings/">
+          <i class="fa fa-cog" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{'Settings' | translate }}</span>
+        </a>
+      </li>
+      <li (click)="showActive('staff')" [class]="staffclass">
+        <a routerLink="/staff/">
+          <i class="fa fa-users" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{'Staff' | translate }}</span>
+        </a>
+      </li>
+      <li (click)="showActive('feedback')" [class]="feedbackclass">
+        <a routerLink="/feedback/">
+          <i class="fa fa-comments" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{
+            "Feedback" | translate
+          }}</span>
+        </a>
+      </li>
+      <li (click)="showActive('storeorders')" 
+          [class]="ordersclass"
+          *ngIf="workshopId == '4316'">
+        <a routerLink="/storeorders/">
+          <i class="fa fa-wpforms" aria-hidden="true"></i>
+          <span class="nav-label" onclick="smsidebarshowhide()">{{'Store Orders' | translate }}</span>
+        </a>
+      </li>
+      
+      <!-- virajcomment <li>
+        <a
+          target="_blank"
+          href="https://wa.me/919420534415?text=Request%20for%20Support" 
+        >
+          <i class="fa fa-whatsapp" aria-hidden="true"></i
+          ><span class="nav-label">{{'Support' | translate }}</span>
+        </a>
+      </li> -->
+    </ul>
+    <ul class="nav metismenu" id="side-menu" *ngIf="roleForNavbar == 'supplier'">
+      <li
+        *ngIf="showUpdate == true"
+        class="nav-header"
+        style="padding-right: 0px; padding-left: 6px"
+      >
+        <div class="dropdown profile-element">
+          <span>
+            <strong class="font-bold">TTN Retails</strong>
+          </span>
+         
+          <span
+            (click)="updateStatus()"
+            style="
+              font-size: 13px;
+              color: #fff;
+              background-color: #c30707;
+              cursor: pointer;
+              padding: 3px 5px 5px 2px;
+              border-radius: 5px;
+              margin-left: 6px;
+            "
+          >
+            Update App
+          </span>
+          <i
+            (click)="openInfo()"
+            style="
+              font-size: 19px;
+              margin-left: 7px;
+              position: relative;
+              top: 4px;
+              cursor: pointer;
+            "
+            class="fa fa-info-circle"
+            aria-hidden="true"
+          ></i>
+        </div>
+      </li>
+      <li *ngIf="showUpdate == false" class="nav-header">
+        <div class="dropdown profile-element">
+          <span>
+            <strong class="font-bold"> {{'TTN Retails' | translate }}</strong>
+          </span>
+        </div>
+      </li>
+      <li class="nav-header">
+        <span class="form-group">
+          <select 
+              class="form-control"
+              style="background-color: #ffffff00;" 
+              #selectedLang 
+              (change)="switchLang(selectedLang.value)">
+            <option style="background-color: black;" *ngFor="let language of translate.getLangs()" 
+              [value]="language"
+              [selected]="language === translate.currentLang">
+              {{ language }}
+            </option>
+          </select>
+        </span>
+      </li>
+      <li (click)="showActive('orders')" [class]="ordersclass">
+        <a routerLink="/orders/">
+          <i class="fa fa-wpforms" aria-hidden="true"></i>
+          <span class="nav-label" onclick="smsidebarshowhide()">{{'Orders' | translate }}</span>
+        </a>
+      </li>
+      <li (click)="showActive('counter-sale')" [class]="couclass">
+        <a routerLink="/countersale/">
+          <i class="fa fa-wpforms" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{'Counter-Sale' | translate }}</span>
+        </a>
+      </li>
+      <!-- <li (click)="showActive('expense')" [class]="expclass">
+        <a routerLink="/expense/">
+          <i class="fa fa-wpforms" aria-hidden="true"></i
+          ><span class="nav-label" onclick="smsidebarshowhide()">{{'Expenses' | translate }}</span>
+        </a>
+      </li> -->
+      <li (click)="showActive('inventory')" [class]="invenclass">
+        <a href="javascript:">
+          <i class="fa fa-wrench" aria-hidden="true"></i
+          ><span class="nav-label" >{{'Inventory' | translate }}</span
+          ><span class="fa arrow"></span>
+        </a>
+        <ul [class]="collapseclass">
+          <li (click)="showActive('inventorycheck')">
+            <a routerLink="/inventory/" onclick="smsidebarshowhide()">{{'Stock' | translate }}</a>
+          </li>
+          <!-- <li (click)="showActive('supplier')">
+            <a routerLink="/supplier/" onclick="smsidebarshowhide()">{{'Distributor' | translate }}</a>
+          </li>
+          <li (click)="showActive('purchaseorder')">
+            <a routerLink="/purchaseorder/" onclick="smsidebarshowhide()">{{'Purchase Order' | translate }}</a>
+          </li> -->
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div id="page-wrapper" class="gray-bg">
+  <app-header></app-header>
+  <router-outlet></router-outlet>
+</div>

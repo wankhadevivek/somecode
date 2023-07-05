@@ -1,0 +1,431 @@
+<!-- <div class="ibox-content">
+    <div class="row" style="height: 100vh;"> -->
+      <div style="width: 85%; margin: auto;">
+        <div class="card-container">
+          <div class="card user-card" *ngIf="!is_set_customer">
+            <mat-card class="details">
+              <mat-card-title> Search Workshop </mat-card-title>
+              <mat-divider></mat-divider>
+              <div class="form-create">
+                <div>
+                  <mat-card-content>
+                    <!-- ng select -->
+                    <div class="select-list">
+                      <div
+                        class="btn-toolbar ml-93 d-flex flex-row"
+                        role="toolbar"
+                        aria-label="Toolbar with button groups"
+                        
+                      >
+                        <div
+                          class="btn-group searchic table-div-sear"
+                          aria-label="First group"
+                        
+                        >
+                          <span class="table-span-sear">
+                            <i
+                              class="fa fa-search fa-1x"
+                              aria-hidden="true"
+                              style="margin-top: 14px"
+                            ></i>
+                          </span>
+                        </div>
+                        <div
+                          class="btn-group searchbar"
+                          aria-label="Second group"
+                        >
+                          <span class="jobcard-dashhf">
+
+                           
+
+                        <input  type="tel" style="height: 100%;
+                        padding: 1rem 2rem;
+                        border: 1px solid #e5e6e7;" id="phone" 
+                        [(ngModel)] = "wk_number" 
+                        name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+                            
+                        <span  class="help-block"
+                    *ngIf="showAlert">
+                    {{ alertMsg }} </span>
+                          
+                          </span>
+                        </div>
+                        <div
+                          class="btn-group addbut"
+                          aria-label="Third group"
+                          (click) = "onSearch()"
+                          style="cursor: pointer;"
+                        >
+                          
+                          <span
+                            class="input-group-addon cir totale-close-jobcrd"
+                            
+                          >Search
+                            <!-- <button  (click) = "onSearch()"
+                              >Search</button 
+                            > -->
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                   
+                  </mat-card-content>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+
+          <div class="card user-card" *ngIf="is_set_customer">
+            <mat-card class="details">
+              <mat-card-title
+                style="display: flex; justify-content: space-between"
+              >
+                <div class="">
+                  
+                  <span style="width: 50px" >
+                    <a href="javascript:">
+                      <button
+                      (click)="resetWk()"
+                      
+                        style="padding:1rem 0.5rem; border-radius: 50%"
+                      >
+                       
+                        <i
+                              class="fa fa-arrow-left"
+                              aria-hidden="true"
+                              style="color: rgb(138, 139, 138)"
+                            ></i
+                          >
+                        
+                      </button>
+                    </a>
+                  </span>
+                  Workshop Details
+
+                 </div>
+
+                <div class="">
+                  <span style="width: 50px" >
+                    <a href="javascript:" [href]="contactlink" target="_blank">
+                      <button
+                     
+                        class="btn btn-primary createjobcard search"
+                      >
+                        Contact
+                        
+                        <i
+                              class="fa fa-whatsapp"
+                              aria-hidden="true"
+                              style="color: green"
+                            ></i
+                          >
+                        
+                      </button>
+                    </a>
+                  </span>
+
+                 
+                </div>
+              </mat-card-title>
+              <mat-divider></mat-divider>
+              <div class="">
+                <div style="margin: 3% 6%;">
+                  <mat-card-content>
+                    <div class="">
+                    <div class="customer-details" >
+                      <span style=" font-size: 17px;   font-weight: bold;">
+                      {{ wk_details[0].workshop_name }}</span>
+                      <span style=" font-size: 17px;   font-weight: bold;">
+                        {{ wk_details[0].first_name }} {{ wk_details[0].last_name }}</span>
+                    </div>
+                    <div class="" style="margin-top: 1%;">
+                      <p>
+                        <span style="font-weight: bold;">
+                        {{ wk_details[0].wk_vehicle }}
+                      </span>
+                        </p>
+                      <p>
+                        {{ wk_details[0].workshop_mobile_number_1 }}
+
+                        <span *ngIf = "wk_details[0].workshop_mobile_number_2 != 0">
+                        /{{ wk_details[0].workshop_mobile_number_2 }}
+                      </span>
+                     
+                      </p>
+                      
+                    </div>
+                    <div class="">
+                      
+                        <p>
+                          <span>
+                            {{ wk_details[0].address }},
+                             {{ wk_details[0].city }},
+                             {{ wk_details[0].state }},
+                            </span></p>
+                     
+                    </div>
+                    <span style="color: #5f6062">
+                    <div >
+                   
+                      <p>Registration Date
+                        <span>
+                        {{ wk_details[0].register_date | date: " d MMM, yyyy" }}
+                     </span></p>
+                    </div>
+                    <!-- <div class="customer-details" style="margin-top: 1em;"> -->
+                    <div class="customer-details" style="margin-top: 3%;">
+                      <h3>Total Jobcards</h3>
+                      <h3>{{ wk_details[0].total_jc_count }}
+                        <button 
+                        *ngIf = "!requestedJCCount"
+                        style="color: #344ddb; margin: 0.5rem;"
+                        (click)="getJCCount()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                      </h3>
+                    </div>
+
+                    
+                    <div class="customer-details">
+                      <h3>Last Jobcard Created Date</h3>
+                      <h3>
+                        <!-- {{ wk_details[0].last_created | date: " d MMM, yyyy" }} -->
+                        {{ wk_details[0].last_created }}
+                      </h3>
+                    </div>
+                  </span>
+                  </div>
+            
+                  </mat-card-content>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+
+          <div class="card">
+            <mat-card class="details">
+              <mat-card-title
+                style="display: flex; justify-content: space-between"
+              >
+                <div class="">Recharge Detals</div>
+                <div
+                  style="width: 50px; margin-right: 25px"
+                  data-toggle="modal"
+                >
+                  <a href="javascript:">
+                    
+                    <button
+                    (click)="onSubmit()"
+                    type="button" [disabled]="!rechargeForm.valid"
+                      title="Require All the Details"
+                      class="btn btn-primary createjobcard history"
+                    >
+                      Update
+                    </button>
+                  </a>
+                </div>
+              </mat-card-title>
+              <mat-divider></mat-divider>
+              <mat-card-content>
+                <div class="jobcard-details">
+                  <div class="" style="margin: 2% 6% ;font-size: 16px">
+                    <div class="customer-details">
+                      <span style=" font-size: 16px;   font-weight: bold;">
+                        Last Recharge Date </span>
+                        <span style=" font-size: 16px;   font-weight: bold;">
+                          {{  rechargeForm.get('recharge_date').value }} </span>
+                        
+                   
+                    </div>
+                    <div class="customer-details">
+                      <span style=" font-size: 16px;   font-weight: bold;">
+                        Expiry Date </span>
+                        <span style=" font-size: 16px;   font-weight: bold; color: red;">
+                          {{  rechargeForm.get('expiry_date').value  }} </span>
+                        
+                
+                    </div>
+                  </div>
+
+
+                  <span><mat-divider></mat-divider></span>
+                  <div class="">
+                    <form
+                     [formGroup]="rechargeForm"
+                     (ngSubmit)="onSubmit()">
+                      <div
+                      class="jobcard-detail-form col-lg-12 col-sm-12 col-md-12"
+                    >
+               
+                      <div
+                        class="jobcard-detail-form-field col-lg-8 col-sm-8 col-md-8"
+                      >
+                       
+                      <mat-form-field appearance="outline">
+                        <mat-label>Transaction ID</mat-label>
+                        <input type="text"
+                         matInput 
+                        
+                         formControlName="transaction_id">
+                      </mat-form-field>
+                      </div>
+    
+                      <div
+                        class="jobcard-detail-form-field col-lg-4 col-sm-4 col-md-4"
+                      >
+                        
+                     
+                        <mat-form-field appearance="outline">
+                          <mat-label>Recharge Amount</mat-label>
+                          <input type="number"
+                           matInput 
+                           
+                           formControlName="amount">
+                        </mat-form-field>
+                    
+                      </div>
+    
+                      
+                    </div>
+    
+                      
+                      <div
+                        class="jobcard-detail-form col-lg-12 col-sm-12 col-md-12"
+                      >
+                        <div
+                          class="jobcard-detail-form-field col-lg-4 col-sm-4 col-md-4"
+                        >
+                         
+                        <mat-form-field appearance="outline">
+                          <mat-label style="font-weight: bold"
+                            >Package</mat-label
+                          >
+                          <mat-select
+                          formControlName="package_type"
+                          (selectionChange)="packageChange($event.value)"
+                           
+                          >
+                          <mat-option *ngFor="let package of packages" [value]="package.value">
+                            {{ package.viewValue }}
+                          </mat-option>
+                            
+                          </mat-select>
+                        </mat-form-field>
+                        </div>
+    
+                        <div
+                          class="jobcard-detail-form-field col-lg-4 col-sm-4 col-md-4"
+                        >
+                          
+                        <mat-form-field appearance="outline">
+                          <mat-label style="font-weight: bold"
+                            >Validity Date</mat-label
+                          >
+                         <input  
+                         matInput 
+                         placeholder="Validity Date" 
+                         [matDatepicker] ="picker"
+                         formControlName="v_date">
+                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        </div>
+    
+                        <div
+                          class="jobcard-detail-form-field col-lg-4 col-sm-4 col-md-4"
+                        >
+                          
+    
+                          <mat-form-field appearance="outline">
+                            <mat-label style="font-weight: bold"
+                              >Payment Type</mat-label
+                            >
+                            <mat-select
+                            formControlName="pay_type"
+                            >
+                            <mat-option *ngFor="let type of paymentTypes" [value]="type.value">
+                              {{type.viewValue}}
+                            </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+                    </form>
+                  </div>
+                 
+
+
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+
+        <div style="width: 100%; margin: auto; padding-top: 5rem;">
+          <div class="card-container">
+            <div class="card user-card" >
+                <mat-card class="details registration">
+                    <div class="">
+                   <div class="" style="margin:0 1rem;
+                       padding: 2rem 0;">
+                       <p>Enter the Registration Date to get the Workshop Data</p>
+                   </div>
+                    <div class=""
+                    style="display: flex; 
+                            align-items: center;
+                            justify-content: space-between;"   >
+    
+                    <div class="" >
+                        <label for="from_wk_id">From </label>
+                        <input
+                    type="date"
+                    [(ngModel)] = "start_date"
+                    
+                    style="width: 15rem; height:3.5rem; display:block"
+                    />
+                       
+                    </div>
+                    <div class="form-group" >
+                        <label for="to_wk_id">To</label>
+                        <input
+                        type="date"
+                        [(ngModel)] = "end_date"
+                        
+                        style="width: 15rem; height:3.5rem; display:block"
+                        />
+                  
+                    </div>
+    
+                    <button class="btn btn-primary"
+                    [disabled] = "start_date === undefined || 
+                    start_date == '' ||
+                    end_date== '' ||
+                    end_date== undefined"
+                     type="button"
+                     (click) = "getFile()"
+                    >Download</button>
+                </div>
+                </div>
+                </mat-card>
+            </div>
+        </div>
+        </div>
+        
+
+
+        <div 
+        (click)="routeToDataFile()"
+        class="footer"
+        style="position: fixed;
+        width: 1rem;
+        height: 1rem;
+       
+        bottom: 0;
+        left: 0;
+        background: transparent;
+        cursor: pointer;">
+          <button></button>
+      </div>
+</div>
+      <!-- </div>
+</div> -->

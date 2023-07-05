@@ -1,0 +1,119 @@
+<div class="enduser" *ngIf="workshopOnline == true">
+  <nav
+    *ngIf="showhead == true"
+    class="navbar navbar-default navbar-fixed-top"
+    id="mNavbar"
+    style="height: 65px"
+  >
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 col-sm-7 col-md-10 col-xs-7" style="padding: 8px">
+          <img [src]="workshoplogo" alt="" width="100" height="50" />
+        </div>
+        <div
+          *ngIf="showloginsection == true"
+          class="col-lg-2 col-sm-5 col-md-2 col-xs-5 text-right"
+          style="margin-top: 23px; cursor: pointer"
+        >
+          <div style="display: flex">
+            <div
+              [routerLink]="profilelink"
+              class="dropdown"
+              (click)="profileIcon()"
+            >
+              <span
+                class="dropdown-toggle"
+                aria-hidden="true"
+                data-toggle="dropdown"
+                style="font-size: 12px; color: #000; margin-left: 25px"
+                >{{ "Hi" | translate }},{{
+                  cusname.length > 10 ? (cusname | slice: 0:10) + ".." : cusname
+                }}</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
+  <div
+    class="navbar navbar-default navbar-fixed-bottom"
+    style="border-top: 1px solid #e2e2e2"
+  >
+    <div class="container">
+      <div class="row footerdata">
+        <div
+          [routerLink]="paramforhome"
+          style="outline: none !important"
+          [class]="homeClass"
+          (click)="homeIcon()"
+        >
+          <i class="fa fa-home footericon" aria-hidden="true"></i>
+          <h6 class="footername">{{ "Home" | translate }}</h6>
+        </div>
+        <div
+          [routerLink]="paramforservice"
+          style="outline: none !important"
+          [class]="serviceClass"
+          (click)="serviceIcon()"
+        >
+          <i class="fa fa-cog footericon" aria-hidden="true"></i>
+          <h6 class="footername">{{ "Services" | translate }}</h6>
+        </div>
+        <div
+          [routerLink]="paramforbooking"
+          style="outline: none !important"
+          [class]="bookingClass"
+          (click)="bookingIcon()"
+        >
+          <i class="fa fa-list-alt footericon" aria-hidden="true"></i>
+          <h6 class="footername">{{ "Bookings" | translate }}</h6>
+        </div>
+        <div
+          *ngIf="showprosec == false"
+          [class]="profileclass"
+          style="outline: none !important; cursor: pointer"
+          (click)="profileIcon()"
+        >
+          <i class="fa fa-user-circle-o footericon" aria-hidden="true"></i>
+          <h6 class="footername">{{ "Profile" | translate }}</h6>
+        </div>
+        <div
+          *ngIf="showprosec == true"
+          [routerLink]="profilelink"
+          [class]="profileclass"
+          style="outline: none !important; cursor: pointer"
+          (click)="profileIcon()"
+        >
+          <i class="fa fa-user-circle-o footericon" aria-hidden="true"></i>
+          <h6 class="footername">{{ "Profile" | translate }}</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="enduser"
+  *ngIf="workshopOnline == false"
+  style="background-color: #fff !important"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center">
+        <img
+          src="../../../assets/images/6908.png"
+          alt=""
+          style="margin-top: 111px"
+        />
+        <br />
+        <div style="margin-top: 33px">
+          <Span style="color: #000000; font-weight: bold; font-size: 24px">{{
+            "Online Services are not enabled for this Garage. Please Contact Garage Owner"
+              | translate
+          }}</Span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

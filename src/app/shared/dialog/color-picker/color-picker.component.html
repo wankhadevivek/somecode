@@ -1,0 +1,10 @@
+<div class="closepoup" style="float: right; margin-bottom: 8px; margin-top: 7px; margin-right: 10px;">
+    <label (click)="closePopup()" class="btn btn-white cir" style="padding: 1px 4px;
+    
+    background: none;
+    border: none;"><i class="fa fa-times fa-2x" aria-hidden="true"></i></label>
+</div>
+<button [disabled]="selectcolor==undefined" class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 2% 0px 2% 9px; float: left;" (click)="closePopup()">{{'Select Colour' | translate}}</button>
+<div class="Colorbox">
+    <color-circle [colors]="colors" (onChangeComplete)="handleChangeComplete($event)"></color-circle>
+</div>

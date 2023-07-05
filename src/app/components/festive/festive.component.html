@@ -1,0 +1,63 @@
+<div class="enduserlay" (click)="play()" style="background: linear-gradient(to bottom, #e671e4 0% , #ffc545 100%);padding: 10px 10px 10px 10px;">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-12 text-center">
+            <img src="../../../assets/images/holi3.png" class="img-responsive" alt="" style=" margin-left: auto;
+            margin-right: auto;
+            display: block;">
+            <div class="blinkkk" style="position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 28px;
+            color: #1e359d;
+            font-weight: bold;
+            font-family: cursive !important;">{{name}}</div>
+            
+            <div style='font-size: 12px;
+            color: #000;margin-top: 22px;'>{{'Powered By Tight The Nut' | translate}}</div>
+            <!-- <div style="    font-size: 28px;
+            color: #fff;
+            font-family: Monotype Corsiva;">Happy Holi!</div> -->
+        </div>
+    </div>
+    <div class="row" style="    margin-top: -50px;
+    height: 290px;">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-12 text-center" style="    margin-top: 66px;">
+            <div *ngIf="shownmamefalg==true">
+                <input style="width: 100%;
+                border-radius: 5px;
+                padding: 10px 10px 10px 10px;
+                text-align: center;" type="text" (input)="nameeneter($event.target.value)" placeholder="{{'Please enter your name' | translate}}" [value]='name'>
+            </div>
+            <span *ngIf="showbut==false">
+                <button *ngIf="shownmamefalg==true" (click)="showname()" style="    background-color: #9069fd;
+                        padding: 10px 10px 10px 10px;
+                        width: 100%;
+                        border-radius: 5px;margin-top: 20px;color: #fff;
+                font-size: 16px;margin-bottom: 78px;">{{'View Image' | translate}}</button>
+            </span>
+            <span *ngIf="showbut==true"> 
+                <button *ngIf="shownmamefalg==true" style="    background-color: #9f82f1;
+            padding: 10px 10px 10px 10px;
+            width: 100%;
+            border-radius: 5px;margin-top: 20px;color: #fff;
+    font-size: 16px;margin-bottom: 78px;">{{'View Image' | translate}}</button>
+            </span>
+            
+            <button *ngIf="shownmamefalg==false" (click)="shownameagaiin()" style="    background-color: #FF7304;
+            padding: 10px 10px 10px 10px;
+            width: 100%;
+            border-radius: 5px;color: #fff;
+    font-size: 16px;">{{'Edit Name' | translate}}</button>
+            <a [href]="contactlink" target="_blank">
+                <button *ngIf="shownmamefalg==false" (click)="shareonwhats()" style="    background-color: #a738b1;
+            padding: 10px 10px 10px 10px;
+            width: 100%;
+            border-radius: 5px;margin-top: 20px;color: #fff;
+    font-size: 16px;    margin-bottom: 78px;">{{'Share on WhatsApp' | translate}}</button>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- <iframe id="video-player" class="video" width="560" height="315" src="https://www.tightthenut.com/music/RepublicDaymusic.mp3" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="autoplay"></iframe> -->
+<!-- <audio controls autoplay loop> <source muted="muted" src="https://www.tightthenut.com/music/RepublicDaymusic.mp3" type="audio/mp3"></audio> -->

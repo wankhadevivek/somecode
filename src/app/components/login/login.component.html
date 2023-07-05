@@ -1,0 +1,401 @@
+<app-spinlogin></app-spinlogin> 
+<div class="container">  
+    <div class="header" style="margin-top: 10px;">
+        <span class="login100-form-title p-b-34" style="font-weight: bold;">
+            <span>
+                <img src="../../../assets/images/TTN-Garage-Automobile-Workshop-Management-logo.svg"
+                alt="LOGO" width="100%" style="height:90px"></span>
+            <span style="color: #c30707;">{{'TTN Garage' | translate}}</span><br>
+            <span>{{'Smart Workshop Manager' | translate}}</span>
+        </span>
+    </div>    
+    <div class="col-lg-6 col-sm-6 hidden-xs col-md-6 jumbotron" style="background-color: #f5f5f54f;">
+        <!-- <img src="../../../assets/images/login-screen.jpg" alt="" width="100%" style="height: -webkit-fill-available;"> -->
+        <h1 style="color: rgb(141, 8, 8);font-size: 40px;">Free 10-Days Trial Includes:</h1>
+        <h2 class="h2-login-text">All TTN Garage Features</h2>
+        <ul>
+            <li>Jobcard Management</li>
+            <li>Inventory Management (Including Purchase Order)</li>
+            <li>Invoicing</li>
+            <li>Service Due Reminders</li>
+            <li>Automated Jobcard Update SMS/Whatsapp</li>
+            <li>Online Garage</li>
+            <li>Feedback</li>
+            <li>Collect Online Payment</li>
+          </ul>
+    </div>
+    <div class="col-lg-6 col-sm-6 col-md-6">
+        <form  class="vertical-center" *ngIf="shwootp==false && otpVerified==false && usingPassword==false && isWorkshopUser ==false" [formGroup]="myForm" (ngSubmit)="submitForm()" novalidate>
+            <div class="container-fluid">
+                
+                <div class="row margin-l-lg">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <span class="login100-form-title p-b-34">
+                            {{'Login To Your Account' | translate}}
+                        </span>
+                    </div>
+                    <div class="validate-input m-b-20 col-lg-12 col-md-12 col-sm-12"> 
+                        <div class="form-group">
+                            <!-- <label for="sel1">Select Role:</label> -->
+                            <select class="form-control" id="sel1" formControlName="roleOpt">
+                                <option value="workshop" selected>Workshop Login</option>
+                                <option value="user">Staff Login</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="validate-input m-b-20 col-lg-12 col-md-12 col-sm-12" data-validate="Phone Number">
+                        
+                        <input id="first-name" class="form-control" type="text" name="phonenumber" placeholder="{{'Phone Number' | translate}}*" formControlName="phonenumber" maxlength="18">
+                        <span class="focus-input100"></span>
+                        <div *ngIf="myForm.controls['phonenumber'].invalid && (myForm.controls['phonenumber'].dirty || myForm.controls['phonenumber'].touched)" class="text-danger">
+                            <div *ngIf="myForm.controls['phonenumber'].errors.required">
+                            {{'Phone Number is required' | translate}}.
+                            </div>
+                            <div *ngIf="myForm.controls['phonenumber'].errors.pattern">
+                                {{'Enter a Valid Number' | translate}}
+                            </div>
+                        </div> 
+                        <div *ngIf="showerror==true" class="text-danger">
+                            {{'Phone Number Is Not Registered' | translate}}.
+                        </div>
+                    </div>
+                    
+                    <div class="m-b-20 col-lg-12 col-md-12 col-sm-12">
+                        <button type="submit" id="login-account" 
+                        [disabled]="myForm.pristine || myForm.invalid" 
+                        class="btn btn-primary login-btn col-lg-12 col-md-12 col-sm-12">
+                            {{'Login' | translate}}</button>
+                    </div>
+                    <div class="m-b-20 col-lg-12 col-md-12 col-sm-12 text-center">
+                        <a routerLink="/signup/" href="#" class="txt3">
+                            <span style="color: #6666f9;">{{'New User' | translate}}?</span>
+                            {{'Create An Account' | translate}}
+                        </a>
+                    </div>
+                </div>
+                
+            </div>
+        </form>
+        <form  class="vertical-center" *ngIf="shwootp==true"  [formGroup]="otpForm" (ngSubmit)="submitFormForLogin('by_otp')" novalidate>
+            <div class="container-fluid">
+                <div class="row margin-l-lg">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <span class="login100-form-title p-b-34">
+                            {{'Account Login' | translate}}
+                        </span>
+                    </div>
+                    <div class="validate-input m-b-20 col-lg-12 col-md-12 col-sm-12" data-validate="Enter OTP">
+                        <input id="first-name" class="form-control" type="text" name="otp" placeholder="{{'Enter OTP' | translate}}" formControlName="otp">
+                            <div *ngIf="otpForm.controls['otp'].invalid && (otpForm.controls['otp'].dirty || otpForm.controls['otp'].touched)" class="text-danger">
+                                <div *ngIf="otpForm.controls['otp'].errors.required">
+                                {{'This filed is required' | translate}}
+                                </div>
+                                <div *ngIf="otpForm.controls['otp'].errors.pattern">
+                                {{'Enter a valid OTP' | translate}}
+                                </div>
+                            </div>
+                            <div *ngIf="wrongOtpError==true" class="text-danger">
+                            {{'OTP Is not Correct' | translate}}.
+                            </div>
+                    </div>
+                    
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <button type="submit" [disabled]="otpForm.pristine || otpForm.invalid"
+                         class="btn btn-primary col-lg-12 col-md-12 col-sm-12" 
+                         style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold; width: 100px;">
+                            {{'Verify OTP' | translate}}</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="w-full text-center">
+                            <a href="#" class="txt3">
+                                {{'Create An Account' | translate}}
+                            </a>
+                        </div>
+                        <div class="w-full text-center p-t-27 p-b-239">
+                            <a *ngIf="timerfalse==false"href="javascript:" class="txt2">
+                                {{'OTP will be resend after' | translate}} {{timeLeft}}
+                            </a>
+                            <a  (click)="resendOTP()" *ngIf="timerfalse==true"href="javascript:" class="txt2">
+                                {{'Resend OTP' | translate}}
+                            </a>
+                        </div>
+                    </div>
+            </div>
+            
+            
+        </form>
+        <form  class="vertical-center" *ngIf="otpVerified==true"  [formGroup]="setPassForm" (ngSubmit)="setPassword('set')" novalidate>
+            <div class="container-fluid">
+                
+                <div class="row margin-l-lg">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <span class="login100-form-title p-b-34">
+                            {{'Please setup password' | translate}}
+                        </span>
+                    </div>
+                    <div class="validate-input m-b-20 col-lg-12 col-md-12 col-sm-12" data-validate="Enter OTP">
+                        <input id="password" class="form-control" type="password" 
+                        name="password" placeholder="{{'Enter Password' | translate}}"
+                        formControlName="password">
+                            <div *ngIf="setPassForm.controls['password'].invalid && (setPassForm.controls['password'].dirty || setPassForm.controls['password'].touched)" class="text-danger">
+                                <div *ngIf="setPassForm.controls['password'].errors.required">
+                                    {{'This filed is required' | translate}}
+                                </div>
+                                <div *ngIf="setPassForm.controls['password'].errors.pattern">
+                                {{'Enter a valid Password' | translate}}
+                                </div>
+                            </div>
+                    </div>
+                    <div class="validate-input m-b-20 col-lg-12 col-md-12 col-sm-12" data-validate="Enter OTP">
+                        <input id="confirm_password" class="form-control" type="text" 
+                        name="confirm_password" placeholder="{{'confirm Password' | translate}}"
+                        formControlName="confirm_password">
+                        
+                            <div *ngIf="setPassForm.controls['confirm_password'].invalid && (setPassForm.controls['confirm_password'].dirty || setPassForm.controls['confirm_password'].touched)" class="text-danger">
+                                <div *ngIf="setPassForm.controls['confirm_password'].errors.required">
+                                {{'This filed is required' | translate}}
+                                </div>
+                                <div *ngIf="setPassForm.controls['confirm_password'].errors.pattern">
+                                {{'Enter a valid Password' | translate}}
+                                </div>
+                            </div>
+                            <div class="text-danger" *ngIf="setPassForm.pristine || setPassForm.invalid">password does not match</div>
+                        </div>
+                    
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <button type="submit" [disabled]="setPassForm.pristine || setPassForm.invalid"
+                         class="btn btn-primary col-lg-12 col-md-12 col-sm-12"
+                          style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;">
+                            {{'Submit' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+        <form  class="vertical-center" *ngIf="usingPassword==true" [formGroup]="passForm"  (ngSubmit)="submitFormForLogin('by_pass')" novalidate>
+            <div class="container-fluid">
+                
+                <div class="row margin-l-lg">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <span class="login100-form-title p-b-34">
+                            {{'Login with password' | translate}}
+                        </span>
+                    </div>
+                    <div class="validate-input m-b-20 col-lg-12 col-md-12 col-sm-12" data-validate="Enter OTP">
+                        <input id="password" class="form-control" type="password" 
+                        name="password" placeholder="{{'Enter Password' | translate}}"
+                        formControlName="password">
+                            <div *ngIf="passForm.controls['password'].invalid && (passForm.controls['password'].dirty || passForm.controls['password'].touched)" class="text-danger">
+                                <div *ngIf="passForm.controls['password'].errors.required">
+                                    {{'This filed is required' | translate}}
+                                </div>
+                                <div *ngIf="passForm.controls['password'].errors.pattern">
+                                {{'Enter a valid Password' | translate}}
+                                </div>
+                            </div>
+                            <!-- <div *ngIf="wrongPasswordError==true" class="text-danger">
+                            {{'Password Is not Correct' | translate}}.
+                            </div> -->
+                    </div>
+                    
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <button type="submit" [disabled]="passForm.pristine || passForm.invalid"
+                         class="btn btn-primary col-lg-12 col-md-12 col-sm-12"
+                         style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;">
+                            {{'Submit' | translate}}</button>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12"> 
+                        <div class="w-full text-center" style="margin-top: 15px;">
+                            <a routerLink="/forget-pass/" href="#" class="txt3">
+                                <span style="color: #6666f9;">{{'Forget Password' | translate}}?</span>
+                                {{'Click here' | translate}}
+                            </a>
+                        </div>
+                    </div>
+                   
+                </div>
+                
+            </div>
+            
+        </form>
+        <form  class="vertical-center" *ngIf="isWorkshopUser==true" [formGroup]="workshopUserForm" (ngSubmit)="verifyUserWorkshop()" novalidate>
+            <div class="container-fluid">
+                
+                <div class="row margin-l-lg">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <span class="login100-form-title p-b-34">
+                            {{'Login Workshop User' | translate}}
+                        </span>
+                    </div>
+                    <div class="validate-input m-b-20 col-lg-12 col-md-12 col-sm-12" data-validate="user_name">
+                        <input id="user_name" class="form-control" type="text" 
+                        name="user_name" placeholder="{{'Enter Username' | translate}}"
+                        formControlName="user_name">
+                    </div>
+                    <div class="validate-input m-b-20 col-lg-12 col-md-12 col-sm-12" data-validate="Enter OTP">
+                        <input id="password" class="form-control" type="password" 
+                        name="password" placeholder="{{'Enter Password' | translate}}"
+                        formControlName="password">
+                            <div *ngIf="workshopUserForm.controls['password'].invalid && (workshopUserForm.controls['password'].dirty || workshopUserForm.controls['password'].touched)" class="text-danger">
+                                <div *ngIf="passForm.controls['password'].errors.required">
+                                    {{'This filed is required' | translate}}
+                                </div>
+                                <div *ngIf="workshopUserForm.controls['password'].errors.pattern">
+                                {{'Enter a valid Password' | translate}}
+                                </div>
+                            </div>
+                    </div>
+                    
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <button type="submit" [disabled]="workshopUserForm.pristine || workshopUserForm.invalid"
+                         class="btn btn-primary col-lg-12 col-md-12 col-sm-12"
+                         style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;">
+                            {{'Submit' | translate}}</button>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </form>
+    </div>
+    
+    <div class="footer footer-text">
+        <span class="login100-form-title p-b-34" style="font-weight: bold;">
+            <i style="font-size: 14px;
+            color: #25e425;" class="fa fa-shield" aria-hidden="true">
+        </i><span style="font-size: 14px;
+            color: #6666f9;">100% {{'Safe and Secure Guarantee' | translate}}</span>
+        </span>
+    </div>
+</div>
+
+<!-- <form  class="col-lg-6 col-sm-6 col-md-6 vertical-center" *ngIf="shwootp==false && usingPassword==false" [formGroup]="myForm" (ngSubmit)="submitForm()" novalidate>
+    <div class="container-fluid">
+        <div class="row">
+            <span class="login100-form-title p-b-34" style="font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1;
+            color: #b5b0b0;">
+                {{'Login To Your Account' | translate}}
+            </span>
+        </div>
+        <div class="row">
+            <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6" data-validate="Phone Number">
+                <input id="first-name" class="form-control" type="text" name="phonenumber" placeholder="{{'Phone Number' | translate}}*" formControlName="phonenumber" maxlength="10">
+                <span class="focus-input100"></span>
+                <div *ngIf="myForm.controls['phonenumber'].invalid && (myForm.controls['phonenumber'].dirty || myForm.controls['phonenumber'].touched)" class="text-danger">
+                    <div *ngIf="myForm.controls['phonenumber'].errors.required">
+                    {{'Phone Number is required' | translate}}.
+                    </div>
+                    <div *ngIf="myForm.controls['phonenumber'].errors.pattern">
+                        {{'Enter a Valid Number' | translate}}
+                    </div>
+                </div> 
+                <div *ngIf="showerror==true" class="text-danger">
+                    {{'Phone Number Is Not Registered' | translate}}.
+                </div>
+            </div>
+            
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <button type="submit" id="login-account" [disabled]="myForm.pristine || myForm.invalid" class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold; width: 100px;">
+                    {{'Login' | translate}}</button>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <button type="submit" id="login-account" [disabled]="myForm.pristine || myForm.invalid" class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold; width: 100px;">
+                    {{'Send OTP' | translate}}</button>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <button type="button" (click)="usePassword()" id="login-account" [disabled]="myForm.pristine || myForm.invalid" class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold; width: 100px;">
+                    {{'Use Password' | translate}}</button>
+            </div>
+        </div>
+        <div class="w-full text-center">
+            <a routerLink="/signup/" href="#" class="txt3">
+                <span style="color: #6666f9;">{{'New User' | translate}}?</span>
+                {{'Create An Account' | translate}}
+            </a>
+        </div>
+    </div>
+</form> 
+<form  class="col-lg-6 col-sm-6 col-md-6 vertical-center" *ngIf="shwootp==true"  [formGroup]="otpForm" (ngSubmit)="submitFormForLogin('by_otp')" novalidate>
+    <div class="container-fluid">
+        <div class="row">
+            <span class="login100-form-title p-b-34">
+                {{'Account Login' | translate}}
+            </span>
+        </div>
+        <div class="row">
+            <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6" data-validate="Enter OTP">
+                <input id="first-name" class="form-control" type="text" name="otp" placeholder="{{'Enter OTP' | translate}}" formControlName="otp">
+                
+                <div *ngIf="otpForm.controls['otp'].invalid && (otpForm.controls['otp'].dirty || otpForm.controls['otp'].touched)" class="text-danger">
+                    <div *ngIf="otpForm.controls['otp'].errors.required">
+                        {{'This filed is required' | translate}}
+                        </div>
+                        <div *ngIf="otpForm.controls['otp'].errors.pattern">
+                        {{'Enter a valid OTP' | translate}}
+                        </div>
+                    </div>
+                    <div *ngIf="wrongOtpError==true" class="text-danger">
+                    {{'OTP Is not Correct' | translate}}.
+                    </div>
+            </div>
+            
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <button type="submit" [disabled]="otpForm.pristine || otpForm.invalid" class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold; width: 100px;">
+                    {{'Login' | translate}}</button>
+                </div>
+        </div>
+        
+        <div class="w-full text-center">
+            <a href="#" class="txt3">
+                {{'Create An Account' | translate}}
+            </a>
+        </div>
+        <div class="w-full text-center p-t-27 p-b-239">
+            <a *ngIf="timerfalse==false"href="javascript:" class="txt2">
+                {{'OTP will be resend after' | translate}} {{timeLeft}}
+            </a>
+            <a  (click)="resendOTP()" *ngIf="timerfalse==true"href="javascript:" class="txt2">
+                {{'Resend OTP' | translate}}
+            </a>
+            </div>
+    </div>
+    
+    
+</form>
+<form  class="col-lg-6 col-sm-6 col-md-6 vertical-center" *ngIf="usingPassword==true"  [formGroup]="passForm" (ngSubmit)="submitFormForLogin('by_pass')" novalidate>
+    <div class="container-fluid">
+        <div class="row">
+            <span class="login100-form-title p-b-34">
+                {{'Account Login' | translate}}
+            </span>
+        </div>
+        <div class="row">
+            <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6" data-validate="Enter OTP">
+                <input id="password" class="form-control" type="text" name="password" placeholder="{{'Enter Password' | translate}}" formControlName="password">
+                
+                <div *ngIf="passForm.controls['password'].invalid && (passForm.controls['password'].dirty || passForm.controls['password'].touched)" class="text-danger">
+                    <div *ngIf="passForm.controls['password'].errors.required">
+                        {{'This filed is required' | translate}}
+                        </div>
+                        <div *ngIf="passForm.controls['password'].errors.pattern">
+                        {{'Enter a valid Password' | translate}}
+                        </div>
+                    </div>
+                    <div *ngIf="wrongPasswordError==true" class="text-danger">
+                    {{'Password Is not Correct' | translate}}.
+                    </div>
+                </div>
+            
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <button type="submit" [disabled]="passForm.pristine || passForm.invalid" class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold; width: 100px;">
+                    {{'Login' | translate}}</button>
+            </div>
+        </div>
+    </div>
+    
+    
+</form>-->

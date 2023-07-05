@@ -1,0 +1,329 @@
+<app-spinlogin></app-spinlogin>
+<div
+class="container-fluid"
+style="background: #eae6e6; margin-left: -25px; margin-right: -25px">
+<div class="row" style="background: #eae6e6; margin-top: -24px">
+  <div class="col-lg-12 col-sm-12 col-md-12 counter-sale-ccl">
+    <button class="btn btn-link hed-btn-colse">
+      <label (click)="closePopup()" class="cir">
+        <i class="fa fa-times fa-2x" aria-hidden="true"></i
+      ></label>
+    </button>
+    <div class="col-lg-7 col-sm-7 col-md-7">
+      <h1 class="ml-30">{{ "Create Expense" | translate }}</h1>
+    </div>
+    <div class="col-lg-2 col-sm-2 col-md-2">
+      <label class="control-label txt_lbl">{{
+        "Counter Sale Number" | translate
+      }}</label>
+      <input
+        type="text"
+        class="form-control cir"
+        [value]="counterId"
+        disabled
+        style="height: 41px"
+      />
+    </div>
+    <div class="col-lg-2 col-sm-2 col-md-2">
+      <label class="control-label txt_lbl">{{ "Date" | translate }}</label>
+      <div style="display: flex">
+        <input
+          matInput
+          [satDatepicker]="picker16"
+          style="
+            height: 0px;
+            border-radius: 5px;
+            padding: 20px;
+            font-family: 'Open sans';
+            font-size: 14px;
+            border: 1px solid #d2d0d0;
+            background: #d2d0d0;
+            width: 60%;
+          "
+          (ngModelChange)="counterDate($event)"
+          [max]="maxDate"
+          [ngModel]="counterDateField"
+          readonly
+        />
+        <sat-datepicker #picker16></sat-datepicker>
+        <sat-datepicker-toggle
+          matSuffix
+          [for]="picker16"
+        ></sat-datepicker-toggle>
+      </div>
+    </div>
+    <!-- <div class="col-lg-1 col-sm-1 col-md-1 text-right">
+              <label (click)="closePopup()" class="btn btn-white cir" 
+              style="padding: 1px 4px;margin-top: 24px;background: none;border: none;margin-right: 64px;">
+              <i class="fa fa-times fa-2x" aria-hidden="true"></i></label>
+          </div> -->
+  </div>
+</div>
+
+<div class="row" style="background: #eae6e6">
+  <div
+    class="col-lg-9 col-sm-9 col-md-9 text-left"
+    style="margin-top: 30px; margin-left: 20px"
+  >
+    <div class="name" style="margin-bottom: 11px">
+      <button
+        style="
+          background-color: rgb(195, 7, 7);
+          padding: 6px 6px 6px 6px;
+          color: #fff;
+          border-radius: 5px;
+        "
+        *ngIf="showaddcus == true"
+        (click)="event_handler_create() && addnewcustomer()"
+      >
+        {{ "Add New Expense" | translate }}
+      </button>
+      <button
+        style="
+          background-color: rgb(195, 7, 7);
+          padding: 6px 6px 6px 6px;
+          color: #fff;
+          border-radius: 5px;
+          margin-right: 11px;
+        "
+        *ngIf="showsearccus == true && showaddcus == false"
+        (click)="Searchcustomer()"
+      >
+        {{ "Search New Supplier" | translate }}
+      </button>
+      <button
+        style="
+          background-color: rgb(195, 7, 7);
+          padding: 6px 6px 6px 6px;
+          color: #fff;
+          border-radius: 5px;
+        "
+        *ngIf="showeditcus == true"
+        (click)="event_handler_edit() && editcustomer()"
+      >
+        {{ "Edit Expense" | translate }}
+      </button>
+      <button
+        style="
+          background-color: rgb(195, 7, 7);
+          padding: 6px 6px 6px 6px;
+          color: #fff;
+          border-radius: 5px;
+          margin-right: 11px;
+        "
+        *ngIf="showtupdate == true"
+        (click)="event_handler_edit() &&  updatecustomer()"
+      >
+        {{ "Update Expense" | translate }}
+      </button>
+      <button
+        style="
+          background-color: rgb(195, 7, 7);
+          padding: 6px 6px 6px 6px;
+          color: #fff;
+          border-radius: 5px;
+        "
+        *ngIf="showtupdate == true"
+        (click)="cancelupdate()"
+      >
+        {{ "Cancel Update" | translate }}
+      </button>
+    </div>
+    <div class="customerdetails">
+      <form
+        [formGroup]="CreateCustomerForm"
+        novalidate
+        class="form-horizontal"
+      >
+        <div class="form-group">
+          <div class="col-lg-4 col-sm-4 col-md-4">
+            <label style="margin-left: 11px"
+              >{{ "Supplier Name" | translate }}
+              <span style="color: #c30707; font-weight: bold">*</span>
+              <!-- <span
+                *ngIf="balacether == true"
+                style="color: #c30707; font-weight: bold; margin-left: 21px"
+                >{{ "Pending Bal" | translate }}:₹ {{ prebalance }}</span
+              > -->
+            </label>
+            <div class="input-group m-b" *ngIf="showtext == false">
+              <span
+                class="input-group-addon"
+                style="
+                  padding: 0 15px;
+                  border-top-left-radius: 5px;
+                  border-bottom-left-radius: 5px;
+                  top: -1px;
+                  position: relative;
+                "
+              >
+                <i class="fa fa-search fa-1x" aria-hidden="true"></i>
+              </span>
+              <span class="counter-dash data">
+                <ng-autocomplete
+                  placeHolder="{{
+                    'Search Supplier By Name and Bill Number' | translate
+                  }}"
+                  [data]="states"
+                  (selected)="selectedResult($event)"
+                  (input)="searchBar($event.target.value)"
+                  [itemTemplate]="itemTemplate"
+                  [notFoundTemplate]="notFoundTemplate"
+                >
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </span>
+            </div>
+            <input
+              type="hidden"
+              class="form-control cir"
+              formControlName="customerid"
+            />
+            <input
+              type="text"
+              *ngIf="showtext == true"
+              class="form-control cir"
+              formControlName="suppliername"
+            />
+            <div
+              *ngIf="
+                CreateCustomerForm.controls['suppliername'].invalid &&
+                (CreateCustomerForm.controls['suppliername'].dirty ||
+                  CreateCustomerForm.controls['suppliername'].touched)
+              "
+              class="text-danger"
+            >
+              <div
+                *ngIf="
+                  CreateCustomerForm.controls['suppliername'].errors.required
+                "
+              >
+                {{ "Supplier name is required" | translate }}.
+              </div>
+            </div>
+          </div>
+          <div
+            *ngIf="searchadded == true || counterOpenOrEdit == 'edit'"
+            class="col-lg-2 col-sm-2 col-md-2"
+          >
+            <label class="control-label txt_lbl"
+              >{{ "Bill No" | translate
+              }}<span style="color: #c30707; font-weight: bold"
+                ><span style="color: #c30707; font-weight: bold"
+                  >*</span
+                ></span
+              ></label
+            >
+            <input
+              type="text"
+              class="form-control cir"
+              formControlName="phoneOneNo"
+              maxlength="10"
+            />
+            <div
+              *ngIf="
+                CreateCustomerForm.controls['phoneOneNo'].invalid &&
+                (CreateCustomerForm.controls['phoneOneNo'].dirty ||
+                  CreateCustomerForm.controls['phoneOneNo'].touched)
+              "
+              class="text-danger"
+            >
+              <div
+                *ngIf="
+                  CreateCustomerForm.controls['phoneOneNo'].errors.required
+                "
+              >
+                {{ "Mobile Number is required" | translate }}.
+              </div>
+              <div
+                *ngIf="
+                  CreateCustomerForm.controls['phoneOneNo'].errors.pattern
+                "
+              >
+                {{ "Enter a valid Phone Number" | translate }}.
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-2 col-md-2">
+            <label class="control-label txt_lbl">{{
+              "Counter Sale Number" | translate
+            }}</label>
+            <input
+              type="text"
+              class="form-control cir"
+              [value]="counterId"
+              disabled
+              style="height: 41px"
+            />
+          </div>
+         
+        </div>
+       
+      </form>
+    </div>
+  </div>
+  <div
+    class="col-lg-3 col-sm-3 col-md-3 text-right"
+    style="float: right; margin-top: -150px"
+  >
+    <div class="invo">
+      <span style="font-weight: 800; font-size: 12px; color: #000000">{{
+        "Invoice" | translate
+      }}</span>
+    </div>
+    <div class="invoamount">
+      <span style="font-weight: 800; font-size: 14px; color: #000000"
+        >₹{{ JobTotal }}</span
+      >
+    </div>
+    <div *ngIf="balanceshow != 0" class="invoamountpal">
+      <span style="font-weight: 800; font-size: 12px; color: #c70c0c">{{
+        "Payment Balance" | translate
+      }}</span>
+    </div>
+    <!-- <div *ngIf="counterOpenOrEdit == 'edit' && showrefund == true">
+      <span style="font-weight: 800; font-size: 12px; color: #c70c0c"
+        >{{ "Refund Amount" | translate }} ₹{{ refundamount }}</span
+      >
+    </div> -->
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

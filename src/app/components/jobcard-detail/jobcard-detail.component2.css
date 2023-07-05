@@ -1,0 +1,207 @@
+/* .pdf-generate{
+    display: table;
+}
+.setting-pdf{
+    display: table-cell;}
+.preview-pdf{
+    display: table-cell;
+    height: 100%;
+    overflow: auto;}
+.preview-pdf.grow{
+    width: 100%;
+} */
+.pdf-generate{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.setting-pdf{
+    display: inline-block;
+    width: 25%;
+    float: left;
+
+}
+.preview-pdf{
+    margin-top: 10rem;
+    display: inline-block;
+   
+}
+/* .preview-pdf.grow{
+    width: 100%;
+} */
+
+table th {
+    padding: 5px 20px;
+    color: #333;
+   
+    font-weight: 900;
+    /* border-bottom: 1px solid #C1CED9; */
+    white-space: nowrap;        
+    padding: 1rem 20px;
+    color: #333;
+    font-weight: 900;
+    white-space: nowrap;
+   
+  }
+  
+  table .service,
+  table .desc {
+    text-align: left;
+  }
+  
+  table td {
+    padding: 20px;
+    padding: 0.5em 1rem;
+    /* text-align: right; */
+    color: #333;
+    font-weight: 600;
+   
+  }
+
+@media print {
+    * {
+        color: #000 !important;
+        text-shadow: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+    table th {
+        padding: 5px 20px;
+        color: #5D6975;
+        /* border-bottom: 1px solid #C1CED9; */
+        white-space: nowrap;        
+        font-weight: normal;
+      }
+    .setting-pdf{
+        display:none
+    }
+    .preview-pdf {
+        display: block;
+    }
+    .preview-pdf {
+    font-size: 10px!important;
+    overflow: hidden!important
+    }
+    .preview-pdf footer {
+    position: absolute;
+    bottom: 10px;
+    page-break-after: always
+    }
+    .preview-pdf{
+        padding: 1rem !important;
+    }
+    body::-webkit-scrollbar-thumb {
+    background: none;
+    outline: none;
+    }
+
+    table th {
+       
+        color: #333 !important;
+       
+        font-weight: 900 !important;
+     
+        white-space: nowrap;        
+        padding: 1rem 20px;
+        color: #333 !important;
+        font-weight: 900 !important;
+        white-space: nowrap;
+       
+      }
+      *{  transition: none !important }
+
+      .preview-pdf thead {
+ 
+        page-break-before: auto;
+        display: table-row-group;
+        background-color: gainsboro !important;
+        }
+        body, html, .pdf-generate, 
+ .preview-pdf {
+  height: 100% !important;
+  width: 100% !important;
+  /* display: inline-block; */
+}
+.pdf-generate{
+    display: inline-block;}
+.page-break{
+    height: 2rem;
+    /* page-break-before: auto; */
+    page-break-inside:avoid; 
+        page-break-after:auto 
+}
+.preview-pdf .signatures{
+    /* page-break-inside:avoid !important;
+    page-break-before:auto !important ; */
+    /* page-break-before:always !important  */
+    /* page-break-inside: avoid !important;
+    page-break-before:auto !important ;
+    display: block; */
+    /* display: block; */
+    width: 100%;
+    /* break-inside: avoid;
+    -webkit-break-inside: avoid; */
+    /* page-break-inside:avoid !important;
+    page-break-after: auto!important; */
+    height: 10rem;
+    border: 2px solid black;
+    color: aqua;
+    /* padding: 1rem; */
+    /* margin-top: 4rem; */
+    page-break-inside:avoid; 
+        page-break-before:auto 
+}
+
+
+
+
+.preview-pdf >table { page-break-inside:auto !important}
+.preview-pdf > table tr   
+ { page-break-inside:avoid !important
+    ; page-break-after:auto !important;
+    page-break-before:auto !important }
+/* .preview-pdf >table thead {
+    margin-top: 4rem;
+    page-break-inside:avoid !important;
+    page-break-after:auto !important;
+    display:table-header-group !important; } */
+    .preview-pdf >table th{
+        margin-top: 4rem !important;;
+    }
+.preview-pdf >table thead {
+    display:table-header-group !important;}
+tfoot { display:table-footer-group; }
+thead {
+    background-color: aqua;
+    display: table-row-group !important; }
+@page { 
+    size: auto;
+    margin: 20mm 0 10mm 0;
+}
+body {
+    margin:0;
+    padding:0;
+}
+.pdf-generate{
+    display: block;
+}
+    /* .preview-pdf>div:last-child {
+    page-break-before: always
+    } */
+    /* tr {
+        page-break-inside: initial;
+        display: block;
+    }
+    table { page-break-after:auto }
+    tr    { 
+        page-break-inside:avoid; 
+        page-break-after:auto }
+    td    { page-break-inside:avoid; page-break-after:auto }
+    thead { display:table-header-group }
+    tfoot { display:table-footer-group }
+    
+    */
+    
+  /* thead { display:table-header-group } */
+  
+    }

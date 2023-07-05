@@ -1,0 +1,76 @@
+<!-- <div class="closepoup" style="float: right;  margin-right: 10px;">
+    <label (click)="closePopup(false)" class="btn btn-white cir" style="padding: 1px 4px;
+    
+    background: none;
+    border: none;"><i class="fa fa-times fa-2x" aria-hidden="true"></i></label>
+</div> -->
+<div class="row">
+    <div class="col-sm-12">
+        <div *ngIf='shownumberformfalg==true'>
+            <form novalidate class="form-horizontal" [formGroup]="Numberorm">
+                <div class="row" style="padding: 13px;">
+                    <div class="col-sm-12">
+                        <div class="text-left" style=" margin-bottom: 13px;   font-size: 16px;
+                        font-weight: bold;">
+                            <span style="font-size: 14px;color: #000000;">{{'Mobile Verification' | translate}}</span>
+                            <br>
+                            <span style="font-size: 12px; color: #8B8B8B;">{{'Please Enter your 10 digit mobile number' | translate}}</span>
+                        </div>
+                        <label class="control-label txt_lbl" style="font-size: 10px; color: #FF3333;">{{'Mobile Number' | translate}} <span style="color: #c30707;">*</span></label>
+                        <input type="text" class="form-control cir" formControlName="number" maxlength="10">
+                        <div *ngIf=" submittednumber  && Numberorm.controls['number'].errors" class="text-danger">
+                            <div *ngIf="Numberorm.controls['number'].errors.required">
+                            {{'Number is required' | translate}}.
+                            </div>
+                            <div *ngIf="Numberorm.controls['number'].errors.pattern">
+                                {{'Enter a Valid Number' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+
+        
+        <div *ngIf='shownumberformfalg==false'>
+            <form novalidate class="form-horizontal" [formGroup]="OTPForm">
+                <div class="row" style="padding: 13px;">
+                    <div class="col-sm-12">
+                        <div class="text-left" style="
+                        font-size: 12px; color: #000000;">
+                            <span>{{'OTP Verification' | translate}}</span>
+                        </div>
+                        <div class="text-left" style="
+                        font-size: 10px;
+                        color: #8B8B8B; margin-bottom: 20px;">
+                            <span>{{'Please enter the 4 digit OTP sent to your number' | translate}} - {{Numberorm.getRawValue().number}}</span>
+                        </div>
+                        <label class="control-label txt_lbl" style="color: #FF3333; font-size: 10px;">{{'OTP Code' | translate}}*</label>
+                        <input type="text" class="form-control cir" formControlName="otp">
+                        <div *ngIf=" submitted  && OTPForm.controls['otp'].errors" class="text-danger">
+                            <div *ngIf="OTPForm.controls['otp'].errors.required">
+                            {{'OTP is required' | translate}}.
+                            </div>
+                            <div *ngIf="OTPForm.controls['otp'].errors.pattern">
+                                {{'Enter a Valid OTP' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div class="text-center" (click)='resend()' *ngIf='shownumberformfalg==false'>
+    <span style="cursor: pointer;  color: #FF3333; text-decoration: underline; font-size: 16px; font-weight: bold;">{{'Resend OTP' | translate}}</span>
+</div>
+<button *ngIf='shownumberformfalg==false' class="btn btn-primary cir cir_btn text-center" style="color: #FFFFFF; background: #FF0000;border-color: #FF0000;font-size: 14px;width: 94%;
+margin-left: 11px;    margin-top: 30px;" (click)="closePopup(true)">{{'Verify OTP' | translate}}</button>
+<button *ngIf='shownumberformfalg==true' class="btn btn-primary cir cir_btn text-center" style="color: #FFFFFF; background: #FF0000;border-color: #FF0000;font-size: 14px;width: 94%;
+margin-left: 11px;    margin-top: 30px;" (click)="verifyNumber(true)">{{'Send OTP' | translate}}</button>
+
+<!-- <button class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 2% 0px 2% 9px; float: left;" (click)="closePopup(false)">Cancel</button> -->
+

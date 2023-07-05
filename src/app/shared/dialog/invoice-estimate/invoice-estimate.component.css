@@ -1,0 +1,59 @@
+.tx_l{
+    text-align: left !important;
+}
+.tx_r{
+    text-align: right !important;
+}
+.bn{
+    border: none !important;
+}
+.table > tbody > tr > td {
+    padding: 4px 3px;
+}
+.bg_c > td{
+    background-color: #b6cdef !important;
+}
+.table{
+    margin-bottom: 0px !important;
+}
+.bn,.table > tbody > tr > td > .sm_tb > tbody > tr > td {
+    border: none !important;
+    margin-bottom: 0px !important;
+    padding: 2px;
+}
+.sm_tb1 > tbody > tr > td {
+    border: none !important;
+    margin-bottom: 0px !important;
+    padding: 2px;
+}
+.table-bordered > tbody > tr > td{
+    border:solid #333 !important;
+    border-width:1px !important;
+}
+.table-bordered > thead > tr > td{
+    border:solid #333 !important;
+    border-width:1px !important;
+}
+
+.in_ent td.brn{
+    border-width: 0 1px !important;
+}
+
+
+/* @media print {
+    .ui-options{
+        display: none;
+    }
+    .invoice {
+    font-size: 11px!important;
+    overflow: hidden!important
+    }
+    .invoice footer {
+    position: absolute;
+    bottom: 10px;
+    page-break-after: always
+    }
+    .invoice>div:last-child {
+    page-break-before: always
+    }
+    } */

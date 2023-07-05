@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="background-color: #f3f2f0;
+    padding: 5px 5px 5px 21px;">
+        <Span style="color: #000; font-size: 14px;">{{'Sort by' | translate}}:</Span>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-12" style="padding: 5px 5px 5px 21px;">
+        <div *ngFor="let option of sortType;">
+            <input type="radio" [name]="option.name" [value]="option.value" (click)="checkAnswer(option.value)" style="margin-right: 5px;
+            margin-bottom: 5px;">
+            <span style="color: #000; font-weight: 600;">{{option.name}}</span>
+        </div>
+    </div>
+</div>

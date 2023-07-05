@@ -1,0 +1,2349 @@
+<div style="background: #eae6e6">
+  <div class="row" style="padding-left: 10px">
+    <div class="col-lg-12 col-sm-12 col-md-12 header-stakpordr">
+      <div class="col-lg-7 col-sm-7 col-md-7 steps-div">
+        <h2 class="steps-div-h2">{{ "Add Stock with Purchase Order" | translate }}</h2>
+      </div>
+      <div class="col-lg-2 col-sm-2 col-md-2">
+        <label class="control-label txt_lbl"
+          >{{ "Bill Number" | translate
+          }}<span style="color: #c30707; font-weight: bold">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control cir"
+          [value]="counterId"
+          style="height: 41px"
+          (change)="billpoNumber($event.target.value, 'bill')"
+        />
+        <div *ngIf="billerror == true" class="text-danger">
+          {{ "Same Bill Number Exist" | translate }}
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-2 col-md-2">
+        <label class="control-label txt_lbl">{{
+          "Bill Date" | translate
+        }}</label>
+        <div style="display: flex">
+          <input
+            matInput
+            [satDatepicker]="picker16"
+            class="date-pick-input"
+            (ngModelChange)="counterDate($event)"
+            [max]="maxDate"
+            [ngModel]="counterDateField"
+            readonly
+          />
+          <sat-datepicker #picker16></sat-datepicker>
+          <sat-datepicker-toggle
+            matSuffix
+            [for]="picker16"
+          ></sat-datepicker-toggle>
+        </div>
+      </div>
+      <div class="col-lg-1 col-sm-1 col-md-1 text-right">
+        <button class="btn btn-link mdl-close-btn">
+          <label (click)="closePopup()" class="cir">
+            <i class="fa fa-times fa-2x" aria-hidden="true"></i
+          ></label>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    class="row"
+    style="background: #eae6e6; margin-right: -24px; margin-left: -24px"
+  >
+    <div class="col-lg-9 col-sm-9 col-md-9 text-left div-sowserch">
+      <div class="name" style="margin-bottom: 11px">
+        <button
+          class="search-supplier-btn"
+          *ngIf="showsearccus == true"
+          (click)="Searchcustomer()"
+        >
+          {{ "Search Supplier" | translate }}
+        </button>
+        <button
+          class="edit-supplier-btn"
+          *ngIf="isPermitData.edit || isPermitData == 0 && showeditcus == true"
+          (click)="opensupplier('edit', 'yes')"
+          data-toggle="modal"
+          data-target="#add_ssupplier">
+          {{ "Edit Supplier" | translate }}
+        </button>
+      </div>
+      <div class="customerdetails">
+        <form
+          [formGroup]="CreateCustomerForm"
+          novalidate
+          class="form-horizontal"
+        >
+          <div class="form-group">
+            <div class="col-lg-6 col-sm-6 col-md-6">
+              <label style="margin-left: 11px"
+                >{{ "Supplier Name" | translate }}
+                <span style="color: #c30707; font-weight: bold">*</span>
+                <span *ngIf="balacether == true" class="pending-bal-span"
+                  >{{ "Pending Bal" | translate }}:{{ currency_symbol }}
+                  {{ prebalance | number: "1.2-2"}}</span
+                >
+              </label>
+              <div class="input-group" *ngIf="showtext == false">
+                <span class="input-group-addon inpt-grp-serch-btn">
+                  <i class="fa fa-search fa-1x" aria-hidden="true"></i>
+                </span>
+                <span class="counter data">
+                  <ng-autocomplete
+                    placeHolder="{{
+                      'Search Supplier By Firm Name and Number' | translate
+                    }}"
+                    [data]="states"
+                    (selected)="selectedResult($event)"
+                    (input)="searchBar($event.target.value)"
+                    [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate"
+                  >
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+
+                  <span *ngIf="isPermitData.create_new || isPermitData == 0"
+                    class="input-serach-btn inpt-grp-addnw-btn-top"
+                    data-toggle="modal"
+                    data-target="#add_ssupplier"
+                    (click)="opensupplier('new', 'no')"
+                  >
+                    <span>{{ "Add New" | translate }}</span>
+                  </span>
+
+                  <span
+                    style="
+                      font-size: 30px;
+                      margin-left: -112px;
+                      cursor: pointer;
+                    "
+                    *ngIf="showsearchcnacel == true"
+                  >
+                    <i
+                      class="fa fa-times"
+                      aria-hidden="true"
+                      (click)="clearSearch()"
+                    ></i>
+                  </span>
+                </span>
+              </div>
+
+              <input
+                type="hidden"
+                class="form-control cir"
+                formControlName="customerid"
+              />
+              <input
+                type="hidden"
+                class="form-control cir"
+                formControlName="mobileOneNo"
+              />
+              <input
+                type="text"
+                *ngIf="showtext == true"
+                class="form-control cir"
+                formControlName="customername"
+                style="width: 32%"
+              />
+              <div
+                *ngIf="
+                  CreateCustomerForm.controls['customername'].invalid &&
+                  (CreateCustomerForm.controls['customername'].dirty ||
+                    CreateCustomerForm.controls['customername'].touched)
+                "
+                class="text-danger"
+              >
+                <div
+                  *ngIf="
+                    CreateCustomerForm.controls['customername'].errors.required
+                  "
+                >
+                  {{ "Customer name is required" | translate }}.
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-2 col-sm-2 col-md-2" style="padding-left: 0px">
+          <label style="margin-left: 11px">{{ "P.O. Number" | translate }}</label>
+          <input
+            type="text"
+            class="form-control cir"
+            (change)="billpoNumber($event.target.value, 'po')"
+            [value]="poNumberdata"
+            readonly />
+          <div *ngIf="poerror == true" class="text-danger">
+            {{ "Same PO Number Exist" | translate }}
+          </div>
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2" style="padding-left: 0px">
+          <label style="margin-left: 11px">{{ "P.O. Date" | translate }}</label>
+          <div style="display: flex">
+            <input
+              matInput
+              [satDatepicker]="picker17"
+              class="st-date-pick-mtinpt"
+              (ngModelChange)="poDate($event)"
+              [max]="maxDate"
+              [ngModel]="poDateField"
+              readonly
+            />
+            <sat-datepicker #picker17></sat-datepicker>
+            <sat-datepicker-toggle
+              matSuffix
+              [for]="picker17"
+            ></sat-datepicker-toggle>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-lg-3 col-sm-3 col-md-3 text-right"
+      style="float: right; margin-top: -150px"
+    >
+      <div class="invo">
+        <span class="font-w-800 font-s-12 text-black">{{
+          "Bill Amount" | translate
+        }}</span>
+      </div>
+      <div class="invoamount">
+        <span class="font-w-800 font-s-14 text-black"
+          >{{ currency_symbol }}{{ JobTotal | number: "1.2-2" }}</span
+        >
+      </div>
+      <div *ngIf="balanceshow != 0" class="invoamountpal">
+        <span class="font-w-800 font-s-14 text-red">{{
+          "Payment Balance" | translate
+        }}</span>
+      </div>
+      <div *ngIf="counterOpenOrEdit == 'edit' && showrefund == true">
+        <span class="font-w-800 font-s-14 text-red"
+          >{{ "Refund Amount" | translate }} {{ currency_symbol
+          }}{{ refundamount }}</span
+        >
+      </div>
+    </div>
+  </div>
+  <div
+    class="row"
+    style="background: #eae6e6; margin-right: -24px; margin-left: -24px"
+  >
+    <div
+      class="col-lg-12 col-sm-12 col-md-12 text-left"
+      style="margin-top: 30px"
+    >
+      <div class="col-lg-2 col-sm-2 col-md-2">
+        <span class="stock-detail-spn text-black">{{
+          "Stock Details" | translate
+        }}</span>
+      </div>
+      <div class="col-lg-12 col-sm-12 col-md-12">
+        <div class="table-responsive-custom">
+          <table class="table table-bordered" style="margin-top: 10px">
+            <thead class="th-border-b5">
+              <tr>
+                <th scope="col th-border-b5">#</th>
+                <th scope="col th-border-b5">
+                  {{ "Particulars" | translate }}
+                </th>
+                <th scope="col th-border-b5">{{ "HSN" | translate }}</th>
+                <th scope="col th-border-b5">{{ "Qty" | translate }}</th>
+                <th scope="col th-border-b5">
+                  {{ "Unit Price" | translate }}(RS.)
+                </th>
+                <th scope="col th-border-b5">
+                  {{ "Selling price" | translate }}(RS.)
+                </th>
+                <th scope="col th-border-b5">{{ "GST" | translate }}(%)</th>
+                <th scope="col th-border-b5">{{ "Discount" | translate }}</th>
+                <th scope="col th-border-b5">
+                  {{ " Unit Purchase price" | translate }} (RS.)
+                </th>
+                <th scope="col th-border-b5">
+                  {{ "Amount" | translate }}(RS.)
+                </th>
+                <th
+                  scope="col th-border-b5 text-red font-w-800"
+                  *ngIf="counterOpenOrEdit == 'edit'"
+                >
+                  {{ "Return" | translate }}
+                </th>
+                <th scope="col th-border-b5">{{ "Action" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of jobdatatabel; let i = index">
+                <th
+                  class="text-center th-border-b5 bg-white"
+                  scope="row"
+                  style="width: 2%"
+                >
+                  {{ i + 1 }}
+                </th>
+                <td
+                  class="text-center th-border-b5 bg-white"
+                  style="width: 28%"
+                >
+                  {{ data.part_name }} (Current Qty.{{ data.alterqty }})
+                </td>
+                <td class="bg-white th-border-b5" style="width: 8%">
+                  <input
+                    class="form-control cir sml_in"
+                    type="text"
+                    (input)="hsnforjob($event.target.value, i, data)"
+                    [value]="data.hsn_no"
+                    placeholder="{{ 'Please enter HSN no' | translate }}."
+                  />
+                </td>
+                <td class="text-center th-border-b5 bg-white" style="width: 8%">
+                  <span>
+                    <i
+                      *ngIf="data.showqunatityerrorjob == true"
+                      class="fa fa-exclamation-triangle text-red"
+                      aria-hidden="true"
+                      data-toggle="tooltip"
+                      title="{{
+                        'Please enter only Numeric value' | translate
+                      }}"
+                      style="font-weight: bold; padding: 3px 8px"
+                    ></i>
+                    <input
+                      class="form-control cir sml_in"
+                      type="text"
+                      (change)="
+                        checkvalueenteredforjob(
+                          $event.target.value,
+                          i,
+                          data,
+                          true
+                        )
+                      "
+                      [value]="data.quantity"
+                      style="text-align: center"
+                      placeholder="{{ 'Please enter Quantity' | translate }}"
+                    />
+                  </span>
+                </td>
+                <td
+                  class="text-center bg-white th-border-b5"
+                  style="width: 10%"
+                >
+                  <span style="display: flex">
+                    <i
+                      *ngIf="data.showpriceerrorjob == true"
+                      class="fa fa-exclamation-triangle text-red"
+                      aria-hidden="true"
+                      data-toggle="tooltip"
+                      title="{{
+                        'Please enter only Numeric value' | translate
+                      }}"
+                      style="font-weight: bold; padding: 3px 8px"
+                    ></i>
+                    <!-- <input
+                      class="form-control cir sml_in"
+                      type="text"
+                      (change)="
+                        checkvalueenteredPriceforjob(
+                          $event.target.value,
+                          i,
+                          data
+                        )
+                      "
+                      [value]="data.unit_purchase_price"
+                      style="text-align: center"
+                      placeholder="{{ 'Please enter Price' | translate }}"
+                    /> -->
+                    <input
+                    class="form-control cir sml_in"
+                    type="text"
+                    (change)="
+                      checkvalueenteredPriceforjob(
+                        $event.target.value,
+                        i,
+                        data
+                      )
+                    "
+                    [value]="data.alterunit"
+                    style="text-align: center"
+                    placeholder="{{ 'Please enter Price' | translate }}"
+                  />
+                  </span>
+                </td>
+                <td
+                  class="text-center bg-white th-border-b5"
+                  style="width: 10%"
+                >
+                  <span style="display: flex">
+                    <i
+                      *ngIf="data.showpriceerrorjobunit == true"
+                      class="fa fa-exclamation-triangle"
+                      aria-hidden="true"
+                      data-toggle="tooltip"
+                      title="{{
+                        'Please enter only Numeric value' | translate
+                      }}"
+                      style="
+                        color: #c30707;
+                        font-weight: bold;
+                        padding: 3px 8px;
+                      "
+                    ></i>
+                    <input
+                      class="form-control cir sml_in"
+                      type="text"
+                      (change)="
+                        checkvalueenteredPriceforjobunit(
+                          $event.target.value,
+                          i,
+                          data
+                        )
+                      "
+                      [value]="data.unit_sale_price"
+                      style="text-align: center"
+                      placeholder="{{ 'Please enter Price' | translate }}"
+                    />
+                  </span>
+                </td>
+                <td
+                  class="text-center bg-white th-border-b5"
+                  style="width: 13%"
+                >
+                  <span *ngIf="data.sale_gst_rate != ''">
+                    <div style="display: flex">
+                      <span
+                        *ngIf="data.showcalcluationinfo == true"
+                        style="padding: 10px 0px 0px 0px; margin-right: 2px"
+                      >
+                        <i
+                          class="fa fa-check-circle text-red font-w-b"
+                          aria-hidden="true"
+                          data-toggle="tooltip"
+                          title="{{ 'GST Amount' | translate }} ({{
+                            data.gstcalculateofjob
+                          }})  {{ 'CGST Amount' | translate }} ({{
+                            data.cgstcalculateofjob
+                          }})  {{ 'SGST Amount' | translate }} ({{
+                            data.sgstcalculateofjob
+                          }})"
+                        ></i>
+                      </span>
+                      <span
+                        *ngIf="
+                          !gstNumberArr.includes(data.sale_gst_rate) ||
+                          !gsttype.includes(data.sale_tax_type)
+                        "
+                        style="padding: 12px 5px 0px 0px"
+                      >
+                        <i
+                          class="fa fa-exclamation-triangle text-red font-w-b"
+                          aria-hidden="true"
+                          data-toggle="tooltip"
+                          title="{{ 'This Sale GST' | translate }} ({{
+                            data.sale_gst_rate
+                          }}) {{
+                            'Rate Is not Valid Please Select other one'
+                              | translate
+                          }}"
+                          style="color: #c30707; font-weight: bold"
+                        ></i>
+                      </span>
+                      <div class="row" style="padding: 0px 0px 0px 16px">
+                        <select
+                          style="width: 97%"
+                          class="form-control cir"
+                          (change)="
+                            checkjobgst(
+                              $event.target.value,
+                              data,
+                              i,
+                              'gstNotNull'
+                            )
+                          "
+                          [(ngModel)]="data.sale_gst_rate"
+                        >
+                          <option
+                            *ngFor="let dataarr of gstNumberArr"
+                            value="{{ dataarr }}"
+                          >
+                            {{ dataarr }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="row" style="margin-left: 19px">
+                        <select
+                          style="width: 95%"
+                          class="form-control cir"
+                          (change)="
+                            checkjobgsttype(
+                              $event.target.value,
+                              data,
+                              i,
+                              'gstNotNull'
+                            )
+                          "
+                          [(ngModel)]="data.sale_tax_type"
+                        >
+                          <option value="Exclusive">
+                            {{ "Excl" | translate }}.
+                          </option>
+                          <option value="Inclusive">
+                            {{ "Incl" | translate }}.
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </span>
+                  <span *ngIf="data.sale_gst_rate == ''">
+                    <div style="display: flex">
+                      <span
+                        *ngIf="data.showcalcluationinfo == true"
+                        style="padding: 10px 0px 0px 0px; margin-right: 2px"
+                      >
+                        <i
+                          class="fa fa-check-circle text-red font-w-b"
+                          aria-hidden="true"
+                          data-toggle="tooltip"
+                          title="{{ 'GST Amount' | translate }} ({{
+                            data.gstcalculateofjob
+                          }})  {{ 'CGST Amount' | translate }} ({{
+                            data.cgstcalculateofjob
+                          }})  {{ 'SGST Amount' | translate }} ({{
+                            data.sgstcalculateofjob
+                          }})"
+                        ></i>
+                      </span>
+                      <span
+                        *ngIf="
+                          !gstNumberArr.includes(data.purchase_gst_rate) ||
+                          !gsttype.includes(data.purchase_tax_type)
+                        "
+                        style="padding: 12px 5px 0px 0px"
+                      >
+                        <i
+                          class="fa fa-exclamation-triangle text-red font-w-b"
+                          aria-hidden="true"
+                          data-toggle="tooltip"
+                          title="{{ 'This Purchase GST' | translate }} ({{
+                            data.purchase_gst_rate
+                          }}) {{
+                            'Rate Is not Valid Please Select other one'
+                              | translate
+                          }}"
+                        ></i>
+                      </span>
+                      <div class="row" style="padding: 0px 0px 0px 16px">
+                        <select
+                          style="width: 97%"
+                          class="form-control cir"
+                          (change)="
+                            checkjobgst($event.target.value, data, i, 'gstNull')
+                          "
+                          [(ngModel)]="data.purchase_gst_rate"
+                        >
+                          <option
+                            *ngFor="let dataarr of gstNumberArr"
+                            value="{{ dataarr }}"
+                          >
+                            {{ dataarr }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="row" style="margin-left: 19px">
+                        <select
+                          style="width: 95%"
+                          class="form-control cir"
+                          (change)="
+                            checkjobgsttype(
+                              $event.target.value,
+                              data,
+                              i,
+                              'gstNull'
+                            )
+                          "
+                          [(ngModel)]="data.purchase_tax_type"
+                        >
+                          <option value="Exclusive">
+                            {{ "Excl" | translate }}.
+                          </option>
+                          <option value="Inclusive">
+                            {{ "Incl" | translate }}.
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- <input type="text" [value]="data.purchase_gst_rate" placeholder="Please enter GST Rate" style="background-color: #f0f0f1; width: 40px;"> -->
+                    <!-- {{data.purchase_gst_rate}}  {{data.purchase_tax_type | slice:0:4 }} -->
+                  </span>
+                </td>
+                <!-- extra discount column -->
+
+                <td
+                  class="text-center bg-white th-border-b5"
+                  style="width: 10%"
+                >
+                  <div style="display: flex">
+                    <i
+                      *ngIf="data.showdiscountjob == true"
+                      class="fa fa-exclamation-triangle"
+                      aria-hidden="true"
+                      data-toggle="tooltip"
+                      title="{{
+                        'Please enter only Numeric value' | translate
+                      }}"
+                      style="
+                        color: #c30707;
+                        font-weight: bold;
+                        padding: 3px 8px;
+                      "
+                    ></i>
+                    <input
+                      style="margin-right: 5px; width: 47px"
+                      (input)="jobdiscountvalue($event.target.value, data, i)"
+                      type="text"
+                      class="form-control cir sml_in"
+                      [value]="data.discountvalue"
+                    />
+                    <select
+                      (change)="
+                        checkjobdiscountData($event.target.value, data, i)
+                      "
+                      [(ngModel)]="data.discounttype"
+                      class="form-control form-control-sm"
+                      style="border-radius: 5px; width: 60px"
+                    >
+                      <option value="%">%</option>
+                      <option value="₹">₹</option>
+                    </select>
+                  </div>
+                
+                </td>
+
+                <td
+                  class="text-center bg-white th-border-b5"
+                  style="width: 10%"
+                >
+                  {{ data.unit_purchase_price }}
+                </td>
+
+                <td
+                  class="text-center"
+                  style="
+                    width: 10%;
+                    background: #fff;
+                    border: 1px solid #b5b1b1;
+                  "
+                >
+                  {{ data.amount }}
+                </td>
+                <td
+                  *ngIf="counterOpenOrEdit == 'edit'"
+                  class="text-center"
+                  style="
+                    width: 10%;
+                    background: #fff;
+                    border: 1px solid #b5b1b1;
+                  "
+                >
+                  <div style="display: flex">
+                    <span
+                      *ngIf="data.return != '' && data.return != '0'"
+                      style="padding: 10px 0px 0px 0px; margin-right: 4px"
+                    >
+                      <i
+                        class="fa fa-check-circle text-red font-w-b"
+                        aria-hidden="true"
+                        data-toggle="tooltip"
+                        title="Quantity-Return({{ data.qtyduplicate }}-{{
+                          data.return
+                        }})"
+                      ></i>
+                    </span>
+                    <span style="display: flex">
+                      <i
+                        *ngIf="data.showreturnerrorjob == true"
+                        class="fa fa-exclamation-triangle text-red font-w-b"
+                        aria-hidden="true"
+                        data-toggle="tooltip"
+                        title="{{
+                          'Please Enter Valid Return Value' | translate
+                        }}"
+                        style="padding: 3px 8px"
+                      ></i>
+                      <input
+                        class="form-control cir sml_in text-red font-w-800"
+                        type="text"
+                        (input)="returnvalue($event.target.value, i, data)"
+                        [value]="data.return"
+                        style="text-align: center"
+                        placeholder="Please enter Return Quantity"
+                      />
+                    </span>
+                  </div>
+                </td>
+                <td class="bg-white th-border-b5" style="width: 10%">
+                  <i
+                    (click)="removeJobItem(data, i)"
+                    class="fa fa-times"
+                    aria-hidden="true"
+                    style="cursor: pointer"
+                  ></i>
+                </td>
+              </tr>
+              <tr>
+                <td class="bg-white th-border-b5" style="width: 2%"></td>
+                <td class="bg-white th-border-b5">
+                  <div class="input-group">
+                    <span class="input-group-addon inpt-grp-serch-btn">
+                      <i class="fa fa-search fa-1x" aria-hidden="true"></i>
+                    </span>
+                    <span class="counter data">
+                      <ng-autocomplete
+                        style="width: 300px !important"
+                        (scrolledToEnd)="loadMoreDatajobs()"
+                        [(ngModel)]="jobmodel"
+                        placeHolder="{{
+                          'Search any spare or lube' | translate
+                        }}"
+                        [data]="searchJobData"
+                        (selected)="selectedJobResult($event)"
+                        (input)="searchJobInput($event.target.value)"
+                        [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate"
+                      >
+                      </ng-autocomplete>
+
+                      <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item"></a>
+                      </ng-template>
+
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                      <span *ngIf="isPermitData.create_new || isPermitData == 0"
+                        class="input-serach-btn inpt-grp-addnw-btn-table"
+                        (click)="openSparepopup()">
+                        <span data-toggle="modal" data-target="#add_spares">
+                          <span>{{ "Add New" | translate }}</span>
+                        </span>
+                      </span>
+
+                      <span
+                        style="
+                          font-size: 30px;
+                          margin-left: -112px;
+                          cursor: pointer;
+                        "
+                        *ngIf="showsearchcnacel == true"
+                      >
+                        <i
+                          class="fa fa-times"
+                          aria-hidden="true"
+                          (click)="clearSearch()"
+                        ></i>
+                      </span>
+                    </span>
+                  </div>
+                </td>
+                <td class="bg-white th-border-b5" style="width: 8%"></td>
+                <td class="bg-white th-border-b5" style="width: 8%"></td>
+                <td class="bg-white th-border-b5" style="width: 10%"></td>
+                <td class="bg-white th-border-b5" style="width: 10%"></td>
+                <td class="bg-white th-border-b5" style="width: 15%"></td>
+                <td class="bg-white th-border-b5" style="width: 10%"></td>
+                <td class="bg-white th-border-b5" style="width: 10%"></td>
+                <td class="bg-white th-border-b5" style="width: 10%"></td>
+                <td
+                  class="bg-white th-border-b5"
+                  *ngIf="counterOpenOrEdit == 'edit'"
+                  style="width: 10%"
+                ></td>
+                <td class="bg-white th-border-b5" style="width: 10%"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-lg-6 col-sm-6 col-md-6" style="margin-top: -12px">
+        <span
+          class="text-red font-w-b"
+          *ngIf="showduplicatejob == true"
+          style="font-size: 15px"
+        >
+          {{ "You have already added" | translate }} {{ duplicatejobname }}
+        </span>
+        <div
+          class="col-lg-6 col-sm-6 col-md-6 text-red font-w-b"
+          *ngIf="showmasterinven == true"
+          style="padding: 8px 0px; font-size: 15px; display: flex"
+        >
+          <div style="padding: 5px 13px">
+            <i
+              class="fa fa-exclamation-triangle text-red font-w-b"
+              aria-hidden="true"
+              data-toggle="tooltip"
+              title="This is master inventory"
+              style="padding: 3px 8px"
+            ></i>
+          </div>
+          <div style="display: flex">
+            <input
+              type="checkbox"
+              [(ngModel)]="checkforquantityforjob"
+              (ngModelChange)="addinvne($event)"
+            />
+            <label style="margin-left: 7px"
+              >{{ "Want to add the master inventory" | translate }}?</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="row"
+    style="background: #eae6e6; margin-right: -24px; margin-left: -24px"
+  >
+    <div
+      class="col-lg-2 col-sm-2 col-md-2"
+      style="padding-left: 21px; margin-top: 30px"
+    >
+      <span class="transport-details-title">{{
+        "Transport Details" | translate
+      }}</span>
+    </div>
+    <div
+      class="col-lg-12 col-sm-12 col-md-12 text-left"
+      style="margin-top: 10px; margin-left: -10px; margin-bottom: 8px"
+    >
+      <div class="col-lg-6 col-sm-6 col-md-6" style="display: grid">
+        <form
+          [formGroup]="TransportForm"
+          novalidate
+          class="form-horizontal"
+          style="padding-left: 16px"
+        >
+          <div class="form-group">
+            <div class="col-lg-3 col-sm-3 col-md-3" style="padding-left: 0px">
+              <label class="control-label txt_lbl">{{
+                "Transporter Name" | translate
+              }}</label>
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="transport"
+              />
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3" style="padding-left: 0px">
+              <label class="control-label txt_lbl">{{
+                "Received Date" | translate
+              }}</label>
+              <div style="display: flex">
+                <input
+                  matInput
+                  [satDatepicker]="picker18"
+                  class="st-date-pick-mtinpt"
+                  (ngModelChange)="deliveryDate($event)"
+                  [max]="maxDate"
+                  [ngModel]="DeliveryDateField"
+                  [ngModelOptions]="{ standalone: true }"
+                  readonly
+                />
+                <sat-datepicker #picker18></sat-datepicker>
+                <sat-datepicker-toggle
+                  matSuffix
+                  [for]="picker18"
+                ></sat-datepicker-toggle>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-3 col-sm-3 col-md-3" style="padding-left: 0px">
+              <label class="control-label txt_lbl" style="padding-left: 5%">{{
+                "Vehicle Number" | translate
+              }}</label>
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="vehicle"
+                maxlength="10"
+                oninput="this.value = this.value.toUpperCase()"
+              />
+              <div
+                *ngIf="
+                  TransportForm.controls['vehicle'].invalid &&
+                  (TransportForm.controls['vehicle'].dirty ||
+                    TransportForm.controls['vehicle'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="TransportForm.controls['vehicle'].errors.pattern">
+                  {{ "Valid Vehicle Number" | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3" style="padding-left: 0px">
+              <label class="control-label txt_lbl">{{
+                "Delivery Person" | translate
+              }}</label>
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="person"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-3 col-sm-3 col-md-3" style="padding-left: 0px">
+              <label class="control-label txt_lbl" style="padding-left: 5%">{{
+                "LT. Number" | translate
+              }}</label>
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="ltno"
+              />
+            </div>
+          </div>
+        </form>
+        <label class="control-label txt_lbl">{{ "Note" | translate }}</label>
+        <textarea
+          rows="4"
+          (input)="onExitNoteChange($event.target.value)"
+          cols="50"
+          class="form-control cir"
+          [value]="exitdata"
+        ></textarea>
+      </div>
+      <div class="col-lg-3 col-sm-3 col-md-3"></div>
+      <div class="col-lg-3 col-sm-3 col-md-3">
+        <table class="table table-borderless table-mb-sm-53">
+          <tbody>
+            <tr>
+              <th class="countertab text-right" style="font-weight: bold">
+                {{ "Subtotal" | translate }}
+              </th>
+              <td
+                class="countertabhead"
+                style="text-align: end; width: 1%; font-weight: bold"
+              >
+                {{ currency_symbol }}{{ ConvertToInt(JobTotal) }}
+              </td>
+            </tr>
+            <tr>
+              <th class="countertab text-right">
+                {{ "Taxable Subtotal" | translate }}
+              </th>
+              <td class="countertabhead" style="text-align: end; width: 1%">
+                {{ currency_symbol }}{{ ConvertToInt(jobtaxableamount) }}
+              </td>
+            </tr>
+            <tr>
+              <th class="countertab text-right">{{ "GST" | translate }}</th>
+              <td class="countertabhead" style="text-align: end; width: 1%">
+                {{ currency_symbol }}{{ ConvertToInt(calTotalGstForJobamount) }}
+              </td>
+            </tr>
+            <tr>
+              <th class="countertab text-right" style="font-weight: bold">
+                {{ "Total Payable" | translate }}
+              </th>
+              <td
+                class="countertabhead"
+                style="text-align: end; width: 1%; font-weight: bold"
+              >
+                {{ currency_symbol
+                }}{{ ConvertToInt(JobTotal - discountamount) }}
+              </td>
+            </tr>
+            <tr>
+              <th class="countertab text-right">
+                <div style="display: flex">
+                  <span
+                    style="position: relative; top: 6px; margin-right: 5px"
+                    >{{ "Paid" | translate }}</span
+                  >
+                  <select
+                    (change)="receviedtype($event.target.value)"
+                    [(ngModel)]="receviedty"
+                    class="form-control cir"
+                    style="border-radius: 5px"
+                  >
+                    <option value="partial">{{ "Partial" | translate }}</option>
+                    <option value="total">
+                      {{ "Total Paid" | translate }}
+                    </option>
+                    <option
+                      *ngIf="balacether == true || receviedDate != null"
+                      value="balance"
+                    >
+                      {{ "Total Balance Received" | translate }}
+                    </option>
+                  </select>
+                  <input
+                    class="form-control cir sml_in"
+                    [disabled]="showre"
+                    type="text"
+                    (input)="receviedamount($event.target.value)"
+                    [value]="recveedam"
+                    style="text-align: center"
+                    placeholder="{{ 'Please enter Discount' | translate }}"
+                  />
+                </div>
+                <div>
+                  <span *ngIf="showerrorinfield == true" class="text-danger">{{
+                    "Please Enter a Valid Amount" | translate
+                  }}</span>
+                </div>
+              </th>
+              <td
+                class="countertabhead"
+                style="text-align: end; width: 1%; position: relative; top: 6px"
+              >
+                {{ currency_symbol }}{{ ConvertToInt(recveedam) }}
+              </td>
+            </tr>
+            <tr *ngIf="recveedam > 0">
+              <th class="countertab text-right">
+                <select
+                  (change)="receviedtypemeth($event.target.value)"
+                  [(ngModel)]="receviedtymethod"
+                  class="form-control cir"
+                  style="border-radius: 5px"
+                >
+                  <option value="re">{{ "Paid Type" | translate }}</option>
+                  <option value="cash">{{ "Cash" | translate }}</option>
+                  <option value="upi">{{ "UPI" | translate }}</option>
+                  <option value="Cheque">{{ "Cheque" | translate }}</option>
+                </select>
+              </th>
+            </tr>
+            <tr *ngIf="counterOpenOrEdit == 'edit'">
+              <th class="countertab text-right">{{ "Return" | translate }}</th>
+              <td class="countertabhead" style="text-align: end; width: 1%">
+                {{ currency_symbol }}{{ ConvertToInt(returnamount) }}
+              </td>
+            </tr>
+            <tr>
+              <th class="countertab text-right">{{ "Balance" | translate }}</th>
+              <td class="countertabhead" style="text-align: end; width: 1%">
+                {{ currency_symbol }}{{ ConvertToInt(balanceshow) }}
+              </td>
+            </tr>
+            <tr *ngIf="balacether == true">
+              <th class="countertab text-right">
+                {{ "Previous Balance" | translate }}
+              </th>
+              <td class="countertabhead" style="text-align: end; width: 1%">
+                {{ currency_symbol }}{{ ConvertToInt(prebalance) }}
+              </td>
+            </tr>
+            <tr>
+              <th class="countertab text-right font-s-14 text-red font-w-b">
+                {{ "Total Balance" | translate }}
+              </th>
+              <td
+                class="countertabhead text-red font-w-b font-s-14"
+                style="text-align: end; width: 1%"
+              >
+                {{ currency_symbol }}{{ ConvertToInt(totalbalance) }}
+              </td>
+            </tr>
+            <tr *ngIf="counterOpenOrEdit == 'edit' && showrefund == true">
+              <th class="countertab text-right text-red font-w-b font-s-14">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="isredund"
+                  (ngModelChange)="refundamountcheck($event)"
+                /><label>{{ "Refund" | translate }}</label>
+              </th>
+              <td
+                class="countertabhead text-red font-w-b font-s-14"
+                style="text-align: end; width: 1%"
+              >
+                {{ currency_symbol }}{{ ConvertToInt(showrefundvalue) }}
+              </td>
+            </tr>
+            <tr *ngIf="receviedDateedit != null">
+              <th class="countertab text-right text-red font-w-700 font-s-12">
+                <span
+                  >{{ "Pervious Bal. Paid" | translate }}
+                  {{ receviedDateedit | date: "MMM d, y, h:mm a" }}</span
+                >
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-lg-6 col-sm-6 col-md-6" style="margin-top: -55px">
+        <!-- <label class="control-label">Entry date & Time</label>
+                <br>
+                <span>Reminder 1:</span>
+                <span>2021-01-21 18:00:00</span> -->
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="row"
+  style="
+    background-color: #52524f;
+    margin-right: -24px;
+    margin-left: -24px;
+    padding: 12px 12px 12px 12px;
+    position: sticky;
+    bottom: 0;
+  "
+>
+  <div class="col-lg-8 col-sm-6 col-md-8 col-xs-6 text-left">
+    <button (click)="closePopup();" class="cancel-btn-close">
+      {{ "Cancel" | translate }}
+    </button>
+  </div>
+  <div class="col-lg-4 col-sm-6 col-md-4 col-xs-6 text-right">
+    <button
+      *ngIf="counterOpenOrEdit != 'edit'"
+      (click)="event_handler_create() && createPO('create')"
+      class="createcounter create-close-btn"
+      [disabled]="
+        showbutton == true ||
+        billerror == true ||
+        counterId == '0' ||
+        showerrorre == true ||
+        showerror == true ||
+        CreateCustomerForm.getRawValue().customername == ''
+      "
+    >
+      {{ "Create & Close" | translate }}
+    </button>
+    <!-- <button *ngIf="counterOpenOrEdit!='edit'" (click)="createCounter('createprint')" class="createcounter" [disabled]= 'showerrorre==true||showerror==true||CreateCustomerForm.getRawValue().mobileOneNo==""||CreateCustomerForm.getRawValue().customername==""' style="color: #fff; background-color: #c70c0c; font-size: 12px;padding: 10px 10px 10px 10px;
+        border-radius: 5px;">Create & Print</button> -->
+    <button
+      *ngIf="counterOpenOrEdit == 'edit'"
+      (click)="event_handler_edit() && createPO('update')"
+      class="createcounter update-close-btn"
+      [disabled]="
+        showbutton == true ||
+        billerror == true ||
+        counterId == '0' ||
+        showerrorre == true ||
+        showerror == true ||
+        CreateCustomerForm.getRawValue().customername == ''
+      "
+    >
+      {{ "Update & Close" | translate }}
+    </button>
+    <!-- <button *ngIf="counterOpenOrEdit=='edit'" (click)="createCounter('updateprint')" class="createcounter" [disabled]= 'showerrorre==true||showerror==true||CreateCustomerForm.getRawValue().mobileOneNo==""||CreateCustomerForm.getRawValue().customername==""' style="color: #fff; background-color: #c70c0c; font-size: 12px;padding: 10px 10px 10px 10px;
+        border-radius: 5px;">Update & Print</button> -->
+  </div>
+</div>
+<div
+  class="modal inmodal"
+  id="add_spares"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+  style="background: rgba(0, 0, 0, 0.5)"
+>
+  <div class="modal-dialog">
+    <div class="modal-content animated">
+      <div class="modal-header" style="padding: 0px">
+        <div
+          class="ibox-title"
+          style="
+            background-color: #f1f1f1;
+            padding: 8px 23px 8px;
+            border: none;
+            border-bottom: 1px solid #4d4f5c;
+          "
+        >
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-md-6" style="display: flex">
+              <h1 style="font-size: 22px; float: left">
+                {{ "Add" | translate }}
+              </h1>
+              <select
+                style="margin-top: 9px; width: 30%"
+                id="unit_spare"
+                class="form-control cir"
+                (change)="checkseletectype($event.target.value)"
+                [(ngModel)]="selectedtype"
+              >
+                <option value="spare">{{ "Spare" | translate }}</option>
+                <option value="lube">{{ "Lube" | translate }}</option>
+              </select>
+            </div>
+
+            <div
+              class="col-lg-2 col-sm-2 col-md-2"
+              style="margin-top: 1%; float: right"
+            >
+              <label
+                data-dismiss="modal"
+                class="btn btn-white cir"
+                style="padding: 1px 4px; background: none; border: none"
+                ><i class="fa fa-times fa-2x" aria-hidden="true"></i
+              ></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body" style="padding-top: 0">
+        <div
+          class="ibox-content"
+          style="background-color: #f1f1f1; padding: 5px 3%"
+        >
+          <form
+            [formGroup]="CreateSpareForm"
+            novalidate
+            class="form-horizontal"
+          >
+            <div class="row">
+              <div class="col-lg-9 col-sm-9 col-md-9">
+                <label
+                  class="control-label"
+                  style="
+                    font-size: 16px;
+                    border-bottom: 1px solid #ce0e17;
+                    margin-bottom: 1%;
+                  "
+                  ><b>Part Details</b></label
+                >
+                <div class="form-group">
+                  <div class="col-lg-5 col-sm-5 col-md-5">
+                    <label class="control-label txt_lbl">{{
+                      "Part Number" | translate
+                    }}</label>
+                    <div class="input-group m-b">
+                      <!-- <span class="input-group-addon cir" style="padding: 5%;width: 20%;">
+                                                <i class="fa fa-search fa-1x" aria-hidden="true"></i>
+                                            </span>  -->
+                      <span class="search_invenall">
+                        <ng-autocomplete
+                          [disabled]="showSpareUpdate"
+                          formControlName="partnumber"
+                          (scrolledToEnd)="loadMoreDataspare()"
+                          placeHolder=""
+                          [data]="searchSpareData"
+                          (selected)="addselectedSpareResultsearch($event)"
+                          (input)="searchSpareInputnew($event.target.value)"
+                          [itemTemplate]="itemTemplate"
+                          [notFoundTemplate]="notFoundTemplate"
+                        >
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                          <a [innerHTML]="item"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                      </span>
+
+                      <!-- <div *ngIf="CreateSpareForm.controls['partnumber'].invalid && (CreateSpareForm.controls['partnumber'].dirty || CreateSpareForm.controls['partnumber'].touched)" class="text-danger">
+                                                            <div *ngIf="CreateSpareForm.controls['partnumber'].errors.required">
+                                                            Part Number is required.
+                                                          </div>
+                                                        </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-5 col-sm-5 col-md-5">
+                    <label class="control-label txt_lbl"
+                      >{{ "Part Name" | translate
+                      }}<span style="color: #c30707; font-weight: bold"
+                        ><span style="color: #c30707; font-weight: bold"
+                          >*</span
+                        ></span
+                      ></label
+                    >
+                    <input
+                      id="part_name_spare"
+                      type="text"
+                      class="form-control cir"
+                      formControlName="partname"
+                    />
+                    <div
+                      *ngIf="CreateSpareForm.controls['partname'].invalid"
+                      class="text-danger"
+                    >
+                      <div
+                        *ngIf="
+                          CreateSpareForm.controls['partname'].errors.required
+                        "
+                      >
+                        {{ "Part Name is required" | translate }}.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-6 jobcard">
+                    <label class="control-label txt_lbl">{{
+                      "Part Make" | translate
+                    }}</label>
+                    <!-- <input id="company_name_sapre" type="text" class="form-control cir" formControlName="companynameSpare"> -->
+                    <ng-autocomplete
+                      id="spare_company_search"
+                      formControlName="companynameSpare"
+                      placeHolder="Search Spare Company"
+                      [data]="searchSpareCompany"
+                      (selected)="selectedcomapny($event)"
+                      (input)="searchBarForCompany($event.target.value)"
+                      [itemTemplate]="itemTemplate"
+                      [notFoundTemplate]="notFoundTemplate"
+                    >
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                    <div
+                      *ngIf="
+                        CreateSpareForm.controls['companynameSpare'].invalid
+                      "
+                      class="text-danger"
+                    >
+                      <div
+                        *ngIf="
+                          CreateSpareForm.controls['companynameSpare'].errors
+                            .required
+                        "
+                      >
+                        {{ "Part Make is required" | translate }}.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-lg-4 col-sm-4 col-md-4">
+                    <label class="control-label txt_lbl">{{
+                      "Unit" | translate
+                    }}</label>
+                    <select
+                      id="unit_spare"
+                      class="form-control cir"
+                      formControlName="unit"
+                    >
+                      <option *ngFor="let data of units" value="{{ data }}">
+                        {{ data }}
+                      </option>
+                    </select>
+                  </div>
+                  <div
+                    class="col-lg-4 col-sm-4 col-md-4"
+                    *ngIf="selectedtype == 'spare'"
+                  >
+                    <label class="control-label txt_lbl">{{
+                      "Sub Category" | translate
+                    }}</label>
+                    <select
+                      id="sub_category"
+                      class="form-control cir"
+                      formControlName="subcategory"
+                    >
+                      <option
+                        *ngFor="let data of spareCategory"
+                        value="{{ data }}"
+                        id="{{ data }}"
+                      >
+                        {{ data }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3" style="text-align: right">
+                <label class="control-label"
+                  ><b>{{ "Total Amount" | translate }}</b></label
+                >
+                <br />
+                <label class="control-label"
+                  ><h2
+                    style="
+                      color: #54545e;
+                      padding-top: 0;
+                      font-size: 20px;
+                      margin: 0;
+                    "
+                  >
+                    <b>{{ "Rs" | translate }}. {{ totalamountonform }}</b>
+                  </h2></label
+                >
+                <br />
+                <label
+                  class="control-label"
+                  style="margin: 0; font-weight: 500; padding-top: 0"
+                  >{{ "CGST" | translate }} {{ toShowcgst }}</label
+                >
+                <br />
+                <label
+                  class="control-label"
+                  style="margin: 0; font-weight: 500; padding-top: 0"
+                  >{{ "SGST" | translate }} {{ toShowsgst }}</label
+                >
+                <br />
+                <label
+                  class="control-label"
+                  style="margin: 0; font-weight: 500; padding-top: 0"
+                  >{{ "GST" | translate }} {{ toShowtotal_gst }}</label
+                >
+                <br />
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <label
+                class="control-label"
+                style="
+                  font-size: 16px;
+                  border-bottom: 1px solid #ce0e17;
+                  margin-bottom: 1%;
+                "
+                ><b>Compatible For</b></label
+              >
+              <span class="for_all" style="margin-left: 43px">
+                <label class="control-label txt_lbl">{{
+                  "For All Vehicles" | translate
+                }}</label>
+                <input
+                  *ngIf="foralltrue == false"
+                  style="margin-left: 6px"
+                  type="checkbox"
+                  data-toggle="toggle"
+                  (change)="forAllVehicles($event)"
+                />
+                <input
+                  *ngIf="foralltrue == true"
+                  checked
+                  style="margin-left: 6px"
+                  type="checkbox"
+                  data-toggle="toggle"
+                  (change)="forAllVehicles($event)"
+                />
+              </span>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-6" *ngIf="foralltrue == true">
+                <label class="control-label txt_lbl">{{
+                  "Selected Vehicle" | translate
+                }}</label>
+                <span
+                  class="form-control"
+                  style="background: none; border: none"
+                >
+                  <label
+                    style="
+                      background: linear-gradient(
+                        to bottom,
+                        #ff0000 0%,
+                        #563b3b 100%
+                      );
+                      width: 100px;
+                      height: 26px;
+                      text-align: center;
+                      padding: 3px;
+                      color: white;
+                      border-top-left-radius: 5px;
+                      border-bottom-left-radius: 5px;
+                    "
+                    >{{ "All" | translate }}</label
+                  >
+                  <label
+                    style="
+                      background-color: #52524f;
+                      width: 90px;
+                      height: 26px;
+                      text-align: center;
+                      padding: 3px;
+                      color: white;
+                    "
+                    >{{ "All" | translate }}</label
+                  >
+                  <label
+                    style="
+                      background-color: #52524f;
+                      width: auto;
+                      height: 26px;
+                      text-align: center;
+                      padding: 3px;
+                      color: white;
+                      border-top-right-radius: 5px;
+                      border-bottom-right-radius: 5px;
+                    "
+                    >All</label
+                  >
+                </span>
+              </div>
+              <!-- <div class="col-sm-6 jobcard">
+                                <label class="control-label txt_lbl">Search and Select Vehicle<span style="color: #c30707; font-weight: bold;"><span style="color: #c30707; font-weight: bold;">*</span></span></label>
+                                <ng-autocomplete
+                                    id="spare_search"
+                                    formControlName="searchspareVehicle"
+                                    [disabled]="foralltrue"
+                                    [(ngModel)]="vehiclesearchmodelspl" 
+                                    placeHolder	="Search Vehicle by Make, Model, Varraint"  
+                                    [data]="searchVehicleDataSpl"
+                                    (selected)='selectedResultForVechilespl($event)'
+                                    (input)='searchBarForVechilespl($event.target.value)'
+                                    [itemTemplate]="itemTemplate"
+                                    [notFoundTemplate]="notFoundTemplate">                                 
+                                    </ng-autocomplete>
+                                    
+                                    <ng-template #itemTemplate let-item>
+                                    <a [innerHTML]="item"></a>
+                                    </ng-template>
+                                    
+                                    <ng-template #notFoundTemplate let-notFound>
+                                    <div [innerHTML]="notFound"></div>
+                                    </ng-template>
+                            </div>
+                            <div class="col-sm-6" *ngIf="SelectedDataarrOfVehiclespl!=undefined">
+                                <label class="control-label txt_lbl">Selected Vehicle</label>
+                                <span class="form-control" style="background: none;border: none;">
+                                    <label style="    background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);
+                                    width: 100px;
+                                    height: 26px;
+                                    text-align: center;
+                                    padding: 3px;
+                                    color: white;border-top-left-radius: 5px;border-bottom-left-radius: 5px">{{SelectedDataarrOfVehiclespl.make}}</label>
+                                    <label style="background-color: #52524f;
+                                    width: 90px;
+                                    height: 26px;
+                                    text-align: center;
+                                    padding: 3px;
+                                    color: white;">{{SelectedDataarrOfVehiclespl.model}}</label>
+                                    <label *ngIf="SelectedDataarrOfVehiclespl.variant" style="background-color: #52524f;
+                                    width: auto;
+                                    height: 26px;
+                                    text-align: center;
+                                    padding: 3px;
+                                    color: white;border-top-right-radius: 5px;border-bottom-right-radius: 5px">{{SelectedDataarrOfVehiclespl.variant}}</label>
+                                </span>
+                            </div> -->
+              <div class="col-sm-12" *ngIf="foralltrue == false">
+                <table
+                  class="table table_left table-bordered"
+                  style="background-color: #fff"
+                >
+                  <thead>
+                    <tr>
+                      <th style="background-color: #61605d; color: #fff">
+                        {{ "Make,Model & Variants" | translate }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div>
+                          <div style="display: flex">
+                            <span
+                              class="input-group-addon"
+                              style="
+                                padding: 0 15px 0 5px;
+                                border-top-left-radius: 5px;
+                                border-bottom-left-radius: 5px;
+                              "
+                            >
+                              <i
+                                style="margin-top: 9px"
+                                class="fa fa-search fa-1x"
+                                aria-hidden="true"
+                              ></i>
+                            </span>
+                            <span>
+                              <ng-autocomplete
+                                id="spare_search_make"
+                                formControlName="searchspareVehicle"
+                                placeHolder="Search & Add Model, Variants"
+                                (inputFocused)="
+                                  searchModelVariforCompfo($event)
+                                "
+                                (scrolledToEnd)="loadMoreDataveh()"
+                                [data]="searchModelvari"
+                                (selected)="
+                                  selectModelVariForComp($event, 'lube')
+                                "
+                                (input)="
+                                  searchModelVariforComp($event.target.value)
+                                "
+                                [itemTemplate]="itemTemplate"
+                                [notFoundTemplate]="notFoundTemplate"
+                              >
+                              </ng-autocomplete>
+
+                              <ng-template #itemTemplate let-item>
+                                <a [innerHTML]="item"></a>
+                              </ng-template>
+
+                              <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                              </ng-template>
+                            </span>
+                          </div>
+                          <div style="margin-top: 10px">
+                            <div
+                              *ngFor="
+                                let data of allSelectedMake;
+                                let i = index
+                              "
+                              class="col-lg-4 col-sm-4 col-md-4"
+                              style="
+                                padding-bottom: 9px;
+                                text-align: left;
+                                width: auto;
+                                padding-right: 4px;
+                                padding-left: 0px;
+                              "
+                            >
+                              <span class="modelvaripro">
+                                {{ data.make }}-{{ data.model }}-{{
+                                  data.variant
+                                }}
+                                <i
+                                  (click)="removemodve(data, i)"
+                                  class="fa fa-times"
+                                  aria-hidden="true"
+                                  style="
+                                    cursor: pointer;
+                                    margin-left: 4px;
+                                    font-size: 12px;
+                                  "
+                                ></i>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <label
+              class="control-label"
+              style="
+                font-size: 16px;
+                border-bottom: 1px solid #ce0e17;
+                margin-bottom: 1%;
+              "
+              ><b>{{ "Stock Details" | translate }}</b></label
+            >
+            <div class="form-group">
+              <div class="col-lg-4 col-sm-4 col-md-4">
+                <label class="control-label txt_lbl">{{
+                  "Quantity" | translate
+                }}</label>
+                <input
+                  id="qty_spare"
+                  type="text"
+                  class="form-control cir"
+                  formControlName="quantity"
+                />
+                <div
+                  *ngIf="
+                    CreateSpareForm.controls['quantity'].invalid &&
+                    (CreateSpareForm.controls['quantity'].dirty ||
+                      CreateSpareForm.controls['quantity'].touched)
+                  "
+                  class="text-danger"
+                >
+                  <div
+                    *ngIf="CreateSpareForm.controls['quantity'].errors.pattern"
+                  >
+                    {{ "Enter a Valid Quantity" | translate }}.
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-4 col-md-4">
+                <label class="control-label txt_lbl">{{
+                  "Lower Limit" | translate
+                }}</label>
+                <input
+                  id="lower_limit_spare"
+                  type="text"
+                  class="form-control cir"
+                  formControlName="lowerlimit"
+                />
+                <div
+                  *ngIf="
+                    CreateSpareForm.controls['lowerlimit'].invalid &&
+                    (CreateSpareForm.controls['lowerlimit'].dirty ||
+                      CreateSpareForm.controls['lowerlimit'].touched)
+                  "
+                  class="text-danger"
+                >
+                  <div
+                    *ngIf="
+                      CreateSpareForm.controls['lowerlimit'].errors.pattern
+                    "
+                  >
+                    {{ "Enter a Valid Lower Limit" | translate }}.
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-4 col-md-4">
+                <label class="control-label txt_lbl">{{
+                  "Rack Number" | translate
+                }}</label>
+                <input
+                  id="rack_no_spare"
+                  type="text"
+                  class="form-control cir"
+                  formControlName="rackno"
+                />
+              </div>
+            </div>
+            <label
+              class="control-label"
+              style="
+                font-size: 16px;
+                border-bottom: 1px solid #ce0e17;
+                margin-bottom: 1%;
+              "
+              ><b>{{ "Pricing Details" | translate }}</b></label
+            >
+            <div class="form-group">
+              <div class="col-lg-4 col-sm-4 col-md-4">
+                <label class="control-label txt_lbl">{{
+                  "Purchase Price" | translate
+                }}</label>
+                <input
+                  id="purchase_price_spare"
+                  type="text"
+                  class="form-control cir"
+                  (input)="
+                    checkpricefortotal(
+                      CreateSpareForm.value.purchaseprice,
+                      CreateSpareForm.value.gstslab,
+                      CreateSpareForm.value.gsttype
+                    )
+                  "
+                  formControlName="purchaseprice"
+                />
+                <div
+                  *ngIf="
+                    CreateSpareForm.controls['purchaseprice'].invalid &&
+                    (CreateSpareForm.controls['purchaseprice'].dirty ||
+                      CreateSpareForm.controls['purchaseprice'].touched)
+                  "
+                  class="text-danger"
+                >
+                  <div
+                    *ngIf="
+                      CreateSpareForm.controls['purchaseprice'].errors.pattern
+                    "
+                  >
+                    {{ "Enter a Valid Purchase Price" | translate }}.
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-4 col-md-4">
+                <label class="control-label txt_lbl"
+                  >{{ "Selling Price" | translate
+                  }}<span style="color: #c30707; font-weight: bold"
+                    ><span style="color: #c30707; font-weight: bold"
+                      >*</span
+                    ></span
+                  ></label
+                >
+                <input
+                  id="selling_price_spare"
+                  type="text"
+                  class="form-control cir"
+                  formControlName="sellingprice"
+                />
+                <div
+                  *ngIf="CreateSpareForm.controls['sellingprice'].invalid"
+                  class="text-danger"
+                >
+                  <div
+                    *ngIf="
+                      CreateSpareForm.controls['sellingprice'].errors.required
+                    "
+                  >
+                    {{ "Selling Price" | translate }}.
+                  </div>
+                  <div
+                    *ngIf="
+                      CreateSpareForm.controls['sellingprice'].errors.pattern
+                    "
+                  >
+                    {{ "Enter a Valid Selling Price" | translate }}.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <label
+              class="control-label"
+              style="
+                font-size: 16px;
+                border-bottom: 1px solid #ce0e17;
+                margin-bottom: 1%;
+              "
+              ><b>{{ "Tax Details" | translate }}</b></label
+            >
+            <div class="form-group">
+              <div class="col-lg-4 col-sm-4 col-md-4">
+                <label class="control-label txt_lbl">{{
+                  "HSN Number" | translate
+                }}</label>
+                <input
+                  id="gst_no_spare"
+                  type="text"
+                  class="form-control cir"
+                  formControlName="hsnno"
+                />
+              </div>
+              <div class="col-lg-4 col-sm-4 col-md-4">
+                <label class="control-label txt_lbl">{{
+                  "GST Slab" | translate
+                }}</label>
+                <select
+                  id="gst_slab_spare"
+                  class="form-control cir"
+                  formControlName="gstslab"
+                  (change)="
+                    checkpricefortotal(
+                      CreateSpareForm.value.purchaseprice,
+                      CreateSpareForm.value.gstslab,
+                      CreateSpareForm.value.gsttype
+                    )
+                  "
+                >
+                  <option
+                    *ngFor="let data of gstNumberArr"
+                    value="{{ data }}"
+                    id="{{ data }}"
+                  >
+                    {{ data }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-lg-4 col-sm-4 col-md-4">
+                <label class="control-label txt_lbl">{{
+                  "GST Type" | translate
+                }}</label>
+                <select
+                  id="gst_type_spare"
+                  class="form-control cir"
+                  formControlName="gsttype"
+                  (change)="
+                    checkpricefortotal(
+                      CreateSpareForm.value.purchaseprice,
+                      CreateSpareForm.value.gstslab,
+                      CreateSpareForm.value.gsttype
+                    )
+                  "
+                >
+                  <option
+                    *ngFor="let data of gsttype"
+                    value="{{ data }}"
+                    id="{{ data }}"
+                  >
+                    {{ data }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-lg-offset-4 col-lg-4">
+                <button
+                  type="submit"
+                  *ngIf="showSpareUpdate == false"
+                  data-dismiss="modal"
+                  [disabled]="
+                    allSelectedMake == undefined ||
+                    CreateSpareForm.pristine ||
+                    CreateSpareForm.invalid
+                  "
+                  (click)="event_handler_create() && createSpareByAPI('create')"
+                  class="btn btn-primary cir cir_btn"
+                  style="
+                    font-size: 12px;
+                    margin: 7% 0 0 0;
+                    background: linear-gradient(
+                      to bottom,
+                      #ff0000 0%,
+                      #563b3b 100%
+                    );
+                    border-color: #c30707;
+                    font-weight: bold;
+                    width: 90%;
+                  "
+                >
+                  {{ "Create Spare" | translate }}
+                </button>
+                <button
+                  type="submit"
+                  *ngIf="showSpareUpdate == true"
+                  data-dismiss="modal"
+                  [disabled]="
+                    allSelectedMake == undefined ||
+                    CreateSpareForm.pristine ||
+                    CreateSpareForm.invalid
+                  "
+                  (click)="event_handler_edit() && createSpareByAPI('update')"
+                  class="btn btn-primary cir cir_btn"
+                  style="
+                    font-size: 12px;
+                    margin: 7% 0 0 0;
+                    background: linear-gradient(
+                      to bottom,
+                      #ff0000 0%,
+                      #563b3b 100%
+                    );
+                    border-color: #c30707;
+                    font-weight: bold;
+                    width: 90%;
+                  "
+                >
+                  {{ "Update Spare" | translate }}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal inmodal"
+  id="add_ssupplier"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+  style="background: rgba(0, 0, 0, 0.5)"
+>
+  <div class="modal-dialog">
+    <div class="modal-content animated">
+      <div class="modal-header" style="padding: 0px">
+        <div
+          class="ibox-title"
+          style="
+            background-color: #f1f1f1;
+            padding: 8px 23px 8px;
+            border: none;
+            border-bottom: 1px solid #4d4f5c;
+          "
+        >
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-md-6">
+              <h1 style="font-size: 22px; float: left">
+                {{ "Add Supplier" | translate }}
+              </h1>
+            </div>
+
+            <div
+              class="col-lg-2 col-sm-2 col-md-2"
+              style="margin-top: 1%; float: right"
+            >
+              <label
+                data-dismiss="modal"
+                class="btn btn-white cir"
+                style="
+                  padding: 1px 4px;
+
+                  background: none;
+                  border: none;
+                "
+                ><i class="fa fa-times fa-2x" aria-hidden="true"></i
+              ></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body" style="padding-top: 0">
+        <div
+          class="ibox-content"
+          style="background-color: #f1f1f1; padding: 5px 3%"
+        >
+          <form
+            [formGroup]="CreateSupplierForm"
+            novalidate
+            class="form-horizontal"
+          >
+            <div class="row">
+              <div class="col-lg-12 col-sm-12 col-md-12">
+                <div class="form-group" >
+                  <div class="col-lg-6 col-sm-6 col-md-6" *ngIf="!isSupplierNotFound">
+                    <label class="control-label txt_lbl"
+                      > {{'Enter Mobile No' | translate}}<span
+                        style="color: #c30707; font-weight: bold"
+                        >*</span
+                      ></label>
+                    <div style="display: flex;">
+                      <input
+                        id="part_name_spare"
+                        type="text"
+                        class="form-control cir"
+                        formControlName="contact1"
+                        maxlength="10"
+                        (change)="getSupplierDetailsByPhone($event.target.value)"
+                      />
+                      <div *ngIf="isRunSpinner" class="spinner-border spinner-ml" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                    </div>
+                    <div *ngIf="isExistingSupplier"  class="text-danger">
+                      {{'Supplier found with this contact number.' | translate}}
+                    </div>
+                    <div *ngIf="CreateSupplierForm.controls['contact1'].invalid"
+                      class="text-danger" >
+                      <div
+                        *ngIf="
+                          CreateSupplierForm.controls['contact1'].errors
+                            .required
+                        "
+                      >
+                      {{'Contact 1 is required' | translate}}.
+                      </div>
+                      <div
+                        *ngIf="
+                          CreateSupplierForm.controls['contact1'].errors
+                            .pattern " >
+                        {{'Enter Valid Contact' | translate}} 1
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-sm-6 col-md-6" *ngIf="isSupplierNotFound" class="text-danger">
+                    {{'No existing supplier found, you can fill details and continue' | translate}}
+                  </div>
+                </div>
+                <label
+                  class="control-label"
+                  style="
+                    font-size: 16px;
+                    border-bottom: 1px solid #ce0e17;
+                    margin-bottom: 1%;
+                  "
+                  ><b>Bussiness Info</b></label
+                >
+                <div class="form-group">
+                  <div class="col-lg-12 col-sm-12 col-md-12">
+                    <label class="control-label txt_lbl"
+                      >{{ "Firm Name" | translate
+                      }}<span style="color: #c30707; font-weight: bold"
+                        >*</span
+                      ></label
+                    >
+                    <input
+                      id="part_name_spare"
+                      type="text"
+                      class="form-control cir"
+                      formControlName="firm"
+                    />
+                    <div
+                      *ngIf="CreateSupplierForm.controls['firm'].invalid"
+                      class="text-danger"
+                    >
+                      <div
+                        *ngIf="
+                          CreateSupplierForm.controls['firm'].errors.required
+                        "
+                      >
+                        {{ "Firm Name is required" | translate }}.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-lg-12 col-sm-12 col-md-12">
+                    <label class="control-label txt_lbl"
+                      >{{ "Address" | translate
+                      }}<span style="color: #c30707; font-weight: bold"
+                        >*</span
+                      ></label
+                    >
+                    <input
+                      id="part_name_spare"
+                      type="text"
+                      class="form-control cir"
+                      formControlName="address"
+                    />
+                    <div
+                      *ngIf="CreateSupplierForm.controls['address'].invalid"
+                      class="text-danger"
+                    >
+                      <div
+                        *ngIf="
+                          CreateSupplierForm.controls['address'].errors.required
+                        "
+                      >
+                        {{ "Address is required" | translate }}.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="form-group">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <label class="control-label txt_lbl">City</label>
+                                        <input id="part_name_spare" type="text" class="form-control cir" formControlName="city">
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <label class="control-label txt_lbl">State</label>
+                                        <input id="part_name_spare" type="text" class="form-control cir" formControlName="state">
+                                    </div>
+                                </div> -->
+                <div class="form-group">
+                  <!-- <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <label class="control-label txt_lbl">Pincode<span style="color: #c30707; font-weight: bold;">*</span></label>
+                                        <input id="part_name_spare" type="text" class="form-control cir" formControlName="pincode" maxlength="6">
+                                        <div *ngIf="CreateSupplierForm.controls['pincode'].invalid" class="text-danger">
+                                            <div *ngIf="CreateSupplierForm.controls['pincode'].errors.required">
+                                            Pin code is required.
+                                        </div>
+                                        <div *ngIf="CreateSupplierForm.controls['pincode'].errors.pattern">
+                                            Enter a Valid Pincode
+                                          </div>
+                                        </div>
+                                    </div> -->
+                  <div class="col-lg-12 col-sm-12 col-md-12">
+                    <label class="control-label txt_lbl">{{
+                      "GSTIN" | translate
+                    }}</label>
+                    <input
+                      id="part_name_spare"
+                      type="text"
+                      class="form-control cir"
+                      formControlName="gst"
+                    />
+                    <div
+                      *ngIf="CreateSupplierForm.controls['gst'].invalid"
+                      class="text-danger"
+                    >
+                      <div
+                        *ngIf="
+                          CreateSupplierForm.controls['gst'].errors.pattern
+                        "
+                      >
+                        {{ "Enter Valid GST number" | translate }}.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <label
+                  class="control-label"
+                  style="
+                    font-size: 16px;
+                    border-bottom: 1px solid #ce0e17;
+                    margin-bottom: 1%;
+                  "
+                  ><b>Owner Info</b></label
+                >
+                <div class="form-group">
+                  <input
+                    type="hidden"
+                    class="form-control cir"
+                    formControlName="id"
+                  />
+                  <div class="col-lg-12 col-sm-12 col-md-12">
+                    <label class="control-label txt_lbl"
+                      >{{ "First Name" | translate
+                      }}<span style="color: #c30707; font-weight: bold"
+                        >*</span
+                      ></label
+                    >
+                    <input
+                      id="part_name_spare"
+                      type="text"
+                      class="form-control cir"
+                      formControlName="firstname"
+                    />
+                    <div
+                      *ngIf="CreateSupplierForm.controls['firstname'].invalid"
+                      class="text-danger"
+                    >
+                      <div
+                        *ngIf="
+                          CreateSupplierForm.controls['firstname'].errors
+                            .required
+                        "
+                      >
+                        {{ "First Name is required" | translate }}.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-lg-6 col-sm-6 col-md-6">
+                    <label class="control-label txt_lbl"
+                      >{{ "Contact" | translate }} 1<span
+                        style="color: #c30707; font-weight: bold"
+                        >*</span
+                      ></label
+                    >
+                    <input
+                      id="part_name_spare"
+                      type="text"
+                      class="form-control cir"
+                      formControlName="contact1"
+                      maxlength="10"
+                    />
+                    <div
+                      *ngIf="CreateSupplierForm.controls['contact1'].invalid"
+                      class="text-danger"
+                    >
+                      <div
+                        *ngIf="
+                          CreateSupplierForm.controls['contact1'].errors
+                            .required
+                        "
+                      >
+                        {{ "Contact 1 is required" | translate }}.
+                      </div>
+                      <div
+                        *ngIf="
+                          CreateSupplierForm.controls['contact1'].errors.pattern
+                        "
+                      >
+                        {{ "Enter Valid Contact" | translate }} 1
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-sm-6 col-md-6">
+                    <label class="control-label txt_lbl"
+                      >{{ "Contact" | translate }} 2</label
+                    >
+                    <input
+                      id="part_name_spare"
+                      type="text"
+                      class="form-control cir"
+                      formControlName="contact2"
+                      maxlength="10"
+                    />
+                    <div
+                      *ngIf="CreateSupplierForm.controls['contact2'].invalid"
+                      class="text-danger"
+                    >
+                      <div
+                        *ngIf="
+                          CreateSupplierForm.controls['contact2'].errors.pattern
+                        "
+                      >
+                        {{ "Enter Valid Contact" | translate }} 2
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-lg-12 col-sm-12 col-md-12">
+                    <label class="control-label txt_lbl">{{
+                      "Email" | translate
+                    }}</label>
+                    <input
+                      id="part_name_spare"
+                      type="text"
+                      class="form-control cir"
+                      formControlName="email"
+                    />
+                    <div
+                      *ngIf="CreateSupplierForm.controls['email'].invalid"
+                      class="text-danger"
+                    >
+                      <div
+                        *ngIf="
+                          CreateSupplierForm.controls['email'].errors.required
+                        "
+                      >
+                        {{ "Email is required" | translate }}.
+                      </div>
+                      <div
+                        *ngIf="
+                          CreateSupplierForm.controls['email'].errors.pattern
+                        "
+                      >
+                        {{ "Enter a Valid Email" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" *ngIf="showCreateButton == true">
+                  <!-- <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <button type="submit" [disabled]="CreateSupplierForm.pristine || CreateSupplierForm.invalid" (click)="createSupplier('createnew')" class="btn btn-primary cir cir_btn" style="font-size: 12px;margin: 7% 0 0 0;background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;width: 90% ">Save & New</button>
+                                    </div> -->
+                  <div class="col-lg-6 col-sm-6 col-md-6">
+                    <button
+                      type="submit"
+                      data-dismiss="modal"
+                      [disabled]="
+                        CreateSupplierForm.pristine ||
+                        CreateSupplierForm.invalid
+                      "
+                      (click)="event_handler_create() && createSupplier('create')"
+                      class="btn btn-primary cir cir_btn"
+                      style="
+                        font-size: 12px;
+                        margin: 7% 0 0 0;
+                        background: linear-gradient(
+                          to bottom,
+                          #ff0000 0%,
+                          #563b3b 100%
+                        );
+                        border-color: #c30707;
+                        font-weight: bold;
+                        width: 90%;
+                        padding: 8px;
+                      "
+                    >
+                      {{ "Save" | translate }}
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="form-group text-center"
+                  *ngIf="showCreateButton == false"
+                >
+                  <div class="col-lg-6 col-sm-6 col-md-6">
+                    <button
+                      type="submit"
+                      data-dismiss="modal"
+                      [disabled]="
+                        CreateSupplierForm.pristine ||
+                        CreateSupplierForm.invalid
+                      "
+                      (click)="event_handler_edit() && createSupplier('update')"
+                      class="btn btn-primary cir cir_btn"
+                      style="
+                        font-size: 12px;
+                        margin: 7% 0 0 0;
+                        background: linear-gradient(
+                          to bottom,
+                          #ff0000 0%,
+                          #563b3b 100%
+                        );
+                        border-color: #c30707;
+                        font-weight: bold;
+                        width: 90%;
+                      "
+                    >
+                      {{ "Update" | translate }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

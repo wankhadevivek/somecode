@@ -1,0 +1,511 @@
+<app-spin></app-spin>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div *ngIf="showapp == false">
+    <div class="row">
+      <div class="col-lg-2 col-sm-3 col-md-3 text-left titlebtnbookap">
+        <span (click)="openBookappoitment()" class="booksapt-spn">
+          {{ "Book Appointment" | translate }}
+        </span>
+      </div>
+      <div class="col-md-4 text-left">
+        <div class="btn-group">
+          <div
+            class="btn btn-primary"
+            mwlCalendarPreviousView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()"
+          >
+            {{ "Previous" | translate }}
+          </div>
+          <div
+            class="btn btn-outline-secondary"
+            mwlCalendarToday
+            [(viewDate)]="viewDate"
+          >
+            {{ "Today" | translate }}
+          </div>
+          <div
+            class="btn btn-primary"
+            mwlCalendarNextView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()"
+          >
+            {{ "Next" | translate }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 text-center" style="margin-top: 6px">
+        <h3>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h3>
+      </div>
+      <div
+        class="allmon col-md-4 text-right"
+        style="padding-right: 33px; margin-right: -17px"
+      >
+        <div class="btn-group">
+          <div
+            class="btn btn-primary"
+            (click)="setView(CalendarView.Month)"
+            [class.active]="view === CalendarView.Month"
+          >
+            {{ "Month" | translate }}
+          </div>
+          <div
+            class="btn btn-primary"
+            (click)="setView(CalendarView.Week)"
+            [class.active]="view === CalendarView.Week"
+          >
+            {{ "Week" | translate }}
+          </div>
+          <div
+            class="btn btn-primary"
+            (click)="setView(CalendarView.Day)"
+            [class.active]="view === CalendarView.Day"
+          >
+            {{ "Day" | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div [ngSwitch]="view">
+      <mwl-calendar-month-view
+        *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen"
+        (dayClicked)="checkevent($event)"
+      >
+        <!-- (dayClicked)="checkevent($event)" -->
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view
+        *ngSwitchCase="CalendarView.Week"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        (dayClicked)="checkevent($event)"
+      >
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view
+        *ngSwitchCase="CalendarView.Day"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        (dayClicked)="checkevent($event)"
+      >
+      </mwl-calendar-day-view>
+    </div>
+  </div>
+
+  <div class="appoitmentview" *ngIf="showapp == true">
+    <div class="row">
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 apt-card-top">
+        <div
+          class="col-lg-4 col-sm-4 col-md-4 col-xs-4 text-left"
+          style="margin-top: 7px"
+        >
+          <i
+            (click)="showallbook()"
+            class="fa fa-chevron-left"
+            aria-hidden="true"
+            style="
+              margin-right: 10px;
+              border-style: solid;
+              padding: 3px 3px 3px 3px;
+              border-width: thin;
+              cursor: pointer;
+            "
+          ></i>
+          <span
+            (click)="showallbook()"
+            style="color: #000000; cursor: pointer; text-decoration: underline"
+          >
+            {{ "All Bookings" | translate }}
+          </span>
+        </div>
+        <div class="col-lg-4 col-sm-8 col-md-4 col-xs-8 text-center">
+          <span style="color: #000000; font-size: 14px"
+            >{{ bookingtype }} {{ "Booking" | translate }}</span
+          >
+          <br />
+          <span style="color: #656565; font-size: 12px"
+            >{{ "Received Date" | translate }}:
+            {{ bookCustomerdate | date: "MMMM d, y" }}</span
+          >
+        </div>
+        <div
+          class="col-lg-4 col-sm-12 col-md-4 col-xs-12 text-right"
+          style="margin-top: 3px"
+          (click)="openDeclinedBox()"
+        >
+          <button
+            *ngIf="showthisdec == false"
+            class="btn btn-primary createjobcard"
+          >
+            {{ "Decline Booking" | translate }}
+          </button>
+        </div>
+      </div>
+      <div class="container-custom">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 apt-card-1">
+              <div
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+                style="margin-left: -14px"
+              >
+                <div
+                  *ngIf="bookingsta == 'Booking Canceled'"
+                  class="col-lg-5 col-sm-5 col-md-5 col-xs-5 text-left"
+                  style="color: #c30707"
+                >
+                  <i
+                    class="fa fa-check-circle"
+                    aria-hidden="true"
+                    style="font-size: 18px"
+                  ></i>
+                  <span style="font-size: 16px">
+                    {{ bookingsta }}
+                  </span>
+                </div>
+                <div
+                  *ngIf="bookingsta != 'Booking Canceled'"
+                  class="col-lg-5 col-sm-5 col-md-5 col-xs-5 text-left"
+                  style="color: #008000"
+                >
+                  <i
+                    class="fa fa-check-circle"
+                    aria-hidden="true"
+                    style="font-size: 18px"
+                  ></i>
+                  <span style="font-size: 16px">
+                    {{ bookingsta }}
+                  </span>
+                </div>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 text-left">
+                  <span style="font-size: 14px; color: #000000">
+                    {{ isPickOrDrop }}
+                  </span>
+                </div>
+              </div>
+              <div
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+                style="margin-left: -14px; margin-top: 15px"
+              >
+                <div class="col-lg-8 col-sm-12 col-md-8 col-xs-12 text-left">
+                  <img
+                    src="../../../assets/images/Group 182.png"
+                    alt=""
+                    style="width: 35px; height: 35px; margin-top: 12px"
+                  />
+                  <span
+                    style="font-size: 16px; color: #000000; margin-left: 8px"
+                  >
+                    {{ bookCustomerName }} {{ bookCustomermobile }}
+                  </span>
+                  <br />
+                  <div class="vehical-lbl">
+                    <span style="font-size: 12px; color: #c4c4c4">
+                      {{ bookCustomervehicle }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <hr />
+              </div>
+              <div
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+                style="margin-left: -14px"
+              >
+                <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12 text-left">
+                  <span style="font-size: 12px; color: #c4c4c4">
+                    {{ "Booking Date & Time" | translate }}
+                  </span>
+                  <br />
+                  <span style="font-size: 16px; color: #000000">
+                    {{
+                      bookCustomerbookingdate
+                        | date: "EEEE, d MMM, y, h:mm:ss a"
+                    }}
+                  </span>
+                </div>
+                <div
+                  class="col-lg-4 col-sm-12 col-md-12 col-xs-12 text-right"
+                  style="margin-top: 3px"
+                  (click)="openToReschedule()"
+                >
+                  <button
+                    *ngIf="showreshedule == false"
+                    class="btn btn-primary reshedule"
+                  >
+                    {{ "Reschedule Booking" | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-sm-12 col-md-6 col-xs-12 apt-card-2">
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left">
+                <span style="font-size: 16px; color: #000000">
+                  {{ "Address Details" | translate }}
+                </span>
+                <br />
+                <br />
+                <div *ngIf="showaddressall == true">
+                  <span
+                    style="font-size: 16px; color: #008000"
+                    *ngIf="bookCustomeraddress != ''"
+                  >
+                    {{ "Pick Up" | translate }}:
+                  </span>
+                  <span
+                    style="color: #c4c4c4; font-size: 12px"
+                    *ngIf="bookCustomeraddress != ''"
+                  >
+                    {{ bookCustomeraddress }}
+                  </span>
+                  <br />
+                  <span
+                    style="font-size: 16px; color: #008000"
+                    *ngIf="bookdropaddress != ''"
+                  >
+                    {{ "Delivery" | translate }}:
+                  </span>
+                  <span
+                    style="color: #c4c4c4; font-size: 12px"
+                    *ngIf="bookdropaddress != ''"
+                  >
+                    {{ bookdropaddress }}
+                  </span>
+                </div>
+                <div *ngIf="showaddressall == false">
+                  <span style="font-size: 16px; color: #008000">
+                    {{ "Customer Will Visit the Workshop" | translate }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-sm-12 col-md-6 col-xs-12 apt-card-3">
+              <div
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+                style="margin-bottom: 15px"
+              >
+                <span style="font-size: 16px; color: #000000">
+                  {{ "Contact Customers" | translate }}
+                </span>
+                <span
+                  *ngIf="isedited == 'true'"
+                  style="
+                    margin-left: 10px;
+                    font-size: 12px;
+                    color: #000000;
+                    font-weight: 700;
+                  "
+                >
+                  {{
+                    "Note*: Booking has been updated want to notify customer"
+                      | translate
+                  }}
+                </span>
+                <br />
+              </div>
+              <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-left">
+                <!-- <span style="font-size: 12px; color: #c4c4c4">
+                  {{
+                    "WhatsApp your Customer for any update
+                  in booking timing, unavailability of slots,
+                  Pick up and Drop Issue, etc."
+                      | translate
+                  }}
+                  </span> -->
+
+                <span
+                  *ngIf="this.bookcustomerstatus == 'in process'"
+                  style="font-size: 12px; color: #2e2a2a"
+                >
+                  WhatsApp your Customer acknowledging the received online
+                  booking.
+                </span>
+
+                <span
+                  *ngIf="this.bookcustomerstatus == 'approved'"
+                  style="font-size: 12px; color: #2e2a2a"
+                >
+                  WhatsApp your Customer Informing them about confirming their
+                  online booking request.
+                </span>
+
+                <span
+                  *ngIf="this.bookcustomerstatus == 'rejected'"
+                  style="font-size: 12px; color: #2e2a2a"
+                >
+                  WhatsApp your Customer Informing them that you have declined
+                  their online booking request .
+                </span>
+              </div>
+              <div
+                class="
+                  col-lg-6 col-sm-6 col-md-6 col-xs-6
+                  text-right
+                  whts-btn-crd-3
+                "
+              >
+                <span (click)="sharewhatsApp()">
+                  <a [href]="contactlink" target="_blank">
+                    <img
+                      src="../../../assets/images/whatsapppng.png"
+                      alt=""
+                      style="
+                        height: 25px;
+                        width: 25px;
+                        cursor: pointer;
+                        margin-right: 12px;
+                      "
+                    />
+                    <span style="color: #ffff; font-size: 14px">
+                      {{ "Contact Now" | translate }}
+                    </span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="col-lg-12 col-sm-12 col-md-5 col-xs-12 apt-card-4">
+              <div
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+                style="font-size: 16px; color: #000000"
+              >
+                <span>
+                  {{ "Order Checklist" | translate }}
+                  ({{ "Estimated Cost" | translate }}: {{ currency_symbol }}
+                  {{ bookCustomeramount }})
+                </span>
+              </div>
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <hr />
+              </div>
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <span style="color: #c4c4c4; font-size: 12px">
+                  {{ bookCustomerservices }}
+                </span>
+                <br />
+                <br />
+              </div>
+              <div
+                *ngIf="showconfirm == false"
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+              >
+                <hr />
+              </div>
+              <div
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center"
+                (click)="openConfirmBookingBox()"
+              >
+                <button
+                  *ngIf="showconfirm == false"
+                  class="btn btn-primary confirm"
+                  style="width: 100%"
+                >
+                  {{ "Confirm Booking" | translate }}
+                </button>
+                <button
+                  style="margin-bottom: 57px"
+                  *ngIf="showconfirm == true"
+                ></button>
+              </div>
+            </div>
+            <div
+              class="col-lg-12 col-sm-12 col-md-5 col-xs-12 apt-card-5"
+              *ngIf="jobcreated == false && showcrejob == false"
+            >
+              <div
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+                style="margin-bottom: 24px; font-size: 16px; color: #000000"
+              >
+                <span> {{ "Want to Create Jobcard" | translate }}? </span>
+              </div>
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center">
+                <button
+                  *ngIf="btnFlag == true"
+                  (click)="openToCreateJobcard()"
+                  class="btn btn-primary createbookjob"
+                  style="width: 100%"
+                >
+                  Create Jobcard
+                </button>
+                <button
+                  *ngIf="btnFlag == false"
+                  class="btn btn-primary createbookjob"
+                  style="width: 100%"
+                >
+                  {{
+                    "Membership is expired !! You can not create Jobcard"
+                      | translate
+                  }}
+                </button>
+              </div>
+            </div>
+            <div
+              class="col-lg-12 col-sm-12 col-md-5 col-xs-12 apt-card-6"
+              *ngIf="jobcreated == true && showcrejob == false"
+            >
+              <div
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+                style="margin-bottom: 24px; font-size: 16px; color: #000000"
+              >
+                <span>
+                  {{ "Jobcard Details" | translate }}
+                </span>
+              </div>
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center">
+                <table class="table" style="margin-bottom: 1px !important">
+                  <tbody>
+                    <tr>
+                      <th>
+                        <span>{{ "Jobcard Number" | translate }}</span>
+                      </th>
+                      <td>
+                        <span>{{ jobcardnumber }}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        <span>{{ "Estimated Amount" | translate }}</span>
+                      </th>
+                      <td>
+                        <span>{{ currency_symbol }} {{ jobcardamount }}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        <span>{{ "Delivery Date" | translate }}</span>
+                      </th>
+                      <td>
+                        <span>{{
+                          deliverydatetime | date: "EEEE, d MMM, y, h:mm a"
+                        }}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        <span>{{ "Created Date" | translate }}</span>
+                      </th>
+                      <td>
+                        <span>{{
+                          creteddate | date: "EEEE, d MMM, y, h:mm a"
+                        }}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

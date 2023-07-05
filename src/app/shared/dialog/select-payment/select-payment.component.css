@@ -1,0 +1,38 @@
+
+.select-paymnet-title{
+    font-weight: bold;
+        color: #fff;
+        background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);
+        border-radius: 3px;
+        padding: 5px;
+        text-align: center;
+        margin-left: 281px;
+        font-size: 17px;
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .select-paymnet-title{
+        font-weight: bold;
+        color: #fff;
+        background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);
+        border-radius: 3px;
+        padding: 5px;
+        text-align: center;
+        margin-left: 9%;
+        font-size: 17px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+.select-paymnet-title{
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);
+    border-radius: 3px;
+    padding: 5px;
+    text-align: center;
+    margin-left: 9%;
+    font-size: 17px;
+}
+}

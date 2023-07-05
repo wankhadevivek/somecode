@@ -1,0 +1,31 @@
+    {
+        "0":{
+            "country":"India",
+            "currency":"The Indian rupee",
+            "symbol":"₹",
+            "code":"INR",
+            "dialing_code":"+91"
+        },
+        "1":{
+            "country":"Indonesia",
+            "currency":"The Indonesian rupiah",
+            "symbol":"Rp",
+            "code":"IDR",
+            "dialing_code":"+62"
+        },
+        "2":{
+            "country":"Myanmar",
+            "currency":"Myanmar kyat",
+            "symbol":"K",
+            "code":"MMK",
+            "dialing_code":"+95"
+        },
+        "3":{
+            "country":"Philippines",
+            "currency":"The Philippine peso",
+            "symbol":"₱",
+            "code":"PHP",
+            "dialing_code":"+63"
+        }
+
+}

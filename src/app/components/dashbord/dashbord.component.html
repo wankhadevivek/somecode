@@ -1,0 +1,117 @@
+<app-spin></app-spin>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row justify-content-center" >
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                    <!-- <span class="label label-success pull-right">Total</span> -->
+                    <h5 style="    font-size: 17px;
+                    font-weight: bold;">{{'Revenue' | translate}}</h5>
+                
+                <div class="ibox-content" style="padding-bottom: 10px;">
+                    <h1  style="font-size: 28px" class="no-margins">₹ {{totalRevenue}}</h1>
+                    <img src="../../../assets/images/Bar Chart.png" alt="Bar chart" style="float: right;
+                        margin-top: -28px; height: 45px;">
+                    <small data-toggle='tooltip' title='Total Income'><i class="fa fa-inr" aria-hidden="true"></i></small>
+                    <div class="stat-percent font-bold text-success" style="float: left; margin-right: 7px;">{{remunepercen}}% <i class="fa fa-bolt"></i></div>
+                    <div style="color: #c3c3c3;
+                    font-size: 12px;">
+                        <span>*{{'Last 30 Days' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                    <!-- <span class="label label-info pull-right">Total</span> -->
+                    <h5 style="    font-size: 17px;
+                    font-weight: bold;">{{'Purchase' | translate}}</h5>
+                
+                <div class="ibox-content" style="padding-bottom: 10px;">
+                    <img src="../../../assets/images/Bar Chart2.png" alt="Bar chart" style="float: right;
+                    margin-top: 15px;height: 45px;">
+                    <h1 style="font-size: 28px" class="no-margins">₹ {{totalPurchase}}</h1>
+                    <small data-toggle='tooltip' title='New Orders'><i class="fa fa-shopping-cart" aria-hidden="true"></i></small>
+                    <div *ngIf="showpaidincrease!=true" style="float: left; margin-right: 7px;color: #c30707; font-weight: bold;" class="stat-percent font-bold text-info">{{paidpercen}}% 
+                        <i   class="fa fa-level-down"></i>
+                    </div>
+                    <div *ngIf="showpaidincrease==true" style="float: left; margin-right: 7px;color: green;" class="stat-percent font-bold text-info">{{paidpercen}}% 
+                        <i  class="fa fa-level-up"></i>
+                    </div>
+                    <div style="color: #c3c3c3;
+                    font-size: 12px;">
+                        <span>*{{'Last 30 Days' | translate}}</span>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                    <!-- <span class="label label-primary pull-right">Total</span> -->
+                    <h5 style="    font-size: 17px;
+                    font-weight: bold;">{{'Pending Balance' | translate}}</h5>
+                
+                <div class="ibox-content" style="padding-bottom: 10px;">
+                    <img src="../../../assets/images/Bar Chart3.png" alt="Bar chart" style="float: right;
+                    margin-top:15px;height: 45px;">
+                    <h1 style="font-size: 28px" class="no-margins">₹ {{totalpending}}</h1>
+                    <small data-toggle='tooltip' title='Balance Remaining'><i class="fa fa-balance-scale" aria-hidden="true"></i></small>
+                    <div *ngIf="showpenindgincrease!=true" style="float: left; margin-right: 7px;color: #c30707; font-weight: bold;" class="stat-percent font-bold text-navy">{{pendingpercen}}% 
+                        <i  class="fa fa-level-down"></i>
+                    </div>
+                    <div *ngIf="showpenindgincrease==true" style="float: left; margin-right: 7px;color: green;" class="stat-percent font-bold text-navy">{{pendingpercen}}% 
+                        <i class="fa fa-level-up"></i>
+                    </div>
+                    <div style="color: #c3c3c3;
+                    font-size: 12px;">
+                        <span>*{{'Till Date' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" [class]="activecalssweek" (click)="dayCalculate('weekly')">{{'Weekly' | translate}}</button>
+                                <button type="button" [class]="activeclassmonth" (click)="dayCalculate('monthly')">{{'Monthly' | translate}}</button>
+                                <button type="button" [class]="activeclasssix"(click)="dayCalculate('sixMonths')">{{'6 Months' | translate}}</button>
+                            </div>
+                        </div>
+                        <div *ngIf='showbarchart==true' class="chart-wrapper">
+                            <highcharts-chart [Highcharts]="Highcharts" 
+                            [options]="barChartOptionss" style="width: 100%; display: block;">
+                          </highcharts-chart>
+                        </div>
+                    </div>
+                    
+               
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="chart-wrapper">
+                        <highcharts-chart [Highcharts]="Highcharts" 
+                        [options]="chartOptions" style="width: 100%; display: block;">
+                    </highcharts-chart>
+                    </div>  
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content barchar">
+                    <div *ngIf='showbarchart==true' class="chart-wrapper">
+                        <highcharts-chart [Highcharts]="Highcharts" 
+                        [options]="barChartOptionsClosed" style="width: 100%; display: block;">
+                        </highcharts-chart>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

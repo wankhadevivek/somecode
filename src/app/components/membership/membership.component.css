@@ -1,0 +1,22 @@
+.mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+  .mat-expansion-panel-header{
+    font-family: "Open sans";
+  }
+  .mat-form-field-infix{
+    width: 37px;
+}
+#shift-down {
+  float: right;
+  margin-top: -90px;
+}
+
+@media only screen and (max-width: 570px) {
+  #shift-left {
+    margin-left: auto;
+  }
+  #shift-down {
+    margin-top: 10px;
+  }
+}

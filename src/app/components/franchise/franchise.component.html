@@ -1,0 +1,464 @@
+<app-spin></app-spin>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-3 col-sm-3 col-md-3">
+      <h3 style="font-size: 20px">{{ "Franchise" | translate }}</h3>
+    </div>
+    <div
+      class="col-lg-12 col-sm-12 col-md-12"
+      style="margin-top: 17px; margin-bottom: 20px; padding: 0px 0px 0px 0px"
+    >
+      <div
+        class="col-lg-4 col-sm-4 col-md-4 counter-hd-card"
+        data-toggle="tooltip"
+        title="No. of Invoices"
+      >
+        <div class="totalandname totaldivvcollect">
+          <div class="namejobb">
+            <label
+              style="
+                color: #a6a7ab !important;
+                font-family: Open sans;
+                font-size: 13px;
+              "
+              >{{ "No. of Franchise" | translate }}</label
+            >
+          </div>
+          <div class="amountofjobb">
+            <label
+              class="control-label txt_lbl countt"
+              style="font-family: Open sans; font-size: 25px; font-weight: bold"
+              >{{ noOfFranchise }}</label
+            >
+          </div>
+          <div class="totaljobbb">
+            <button class="countbuttonnn">
+              <img
+                src="../../../assets/images/franchise.png"
+                alt=""
+                style="width: 71px; margin-top: -47px; margin-right: 6px"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="col-lg-4 col-sm-4 col-md-4 counter-hd-card"
+        data-toggle="tooltip"
+        title="{{ 'Total Jobcards' | translate }}"
+      >
+        <div class="totalandname totaldivvcollect">
+          <div class="namejobb">
+            <label
+              style="
+                color: #a6a7ab !important;
+                font-family: Open sans;
+                font-size: 13px;
+              "
+              >{{ "Total Jobcards" | translate }}</label
+            >
+          </div>
+          <div class="amountofjobb">
+            <label
+              class="control-label txt_lbl countt"
+              style="font-family: Open sans; font-size: 25px; font-weight: bold"
+              > {{ totalJc }}</label
+            >
+          </div>
+          <div class="totaljobbb">
+            <button class="countbuttonnn">
+              <img
+                src="../../../assets/images/pending.png"
+                alt=""
+                style="width: 71px; margin-top: -47px; margin-right: 6px"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="col-lg-4 col-sm-4 col-md-4 counter-hd-card"
+        data-toggle="tooltip"
+        title="Total Revenue"
+      >
+        <div class="totalandname totaldivvcollect">
+          <div class="namejobb">
+            <label
+              style="
+                color: #a6a7ab !important;
+                font-family: Open sans;
+                font-size: 13px;
+              "
+              >{{ "Total Revenue" | translate }}</label
+            >
+          </div>
+          <div class="amountofjobb">
+            <label
+              class="control-label txt_lbl countt"
+              style="font-family: Open sans; font-size: 25px; font-weight: bold"
+              >Rs. {{ totalRev }}</label
+            >
+          </div>
+          <div class="totaljobbb">
+            <button class="countbuttonnn">
+              <img
+                src="../../../assets/images/india.svg"
+                alt=""
+                style="width: 51px; margin-top: -47px; margin-right: 6px"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div
+      class="col-lg-12 col-sm-12 col-md-12"
+      style="margin-top: 10px; padding: 0px 0px 0px 0px"
+    >
+      <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12 m-b">
+        <div class="input-group">
+          <span
+            class="input-group-addon"
+            style="
+              padding: 0 15px;
+              border-top-left-radius: 5px;
+              border-bottom-left-radius: 5px;
+              top: -1px;
+              position: relative;
+            "
+          >
+            <i class="fa fa-search fa-1x" aria-hidden="true"></i>
+          </span>
+          <span class="jobcard-dash data">
+            <ng-autocomplete
+              [(ngModel)]="selectedvaluefoprsearch"
+              placeHolder="{{
+                'Search Counter By Customer Name,number or  Counter Number'
+                  | translate
+              }}"
+              [data]="states"
+              (selected)="selectedResult($event)"
+              (input)="searchBar($event.target.value)"
+              [itemTemplate]="itemTemplate"
+              [notFoundTemplate]="notFoundTemplate"
+            >
+            </ng-autocomplete>
+
+            <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+            <span
+              style="font-size: 30px; margin-left: -50px; cursor: pointer"
+              *ngIf="showsearchcnacel == true"
+            >
+              <i
+                class="fa fa-times"
+                aria-hidden="true"
+                (click)="clearSearch()"
+              ></i>
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 col-md-6 col-xs-12 m-b">
+        <div style="display: flex">
+          <input
+            matInput
+            placeholder="{{ 'Select Start Date and End Date' | translate }}"
+            [satDatepicker]="picker1"
+            style="
+              height: 35px;
+              border-radius: 5px;
+              padding: 20px;
+              font-family: 'Open sans';
+              font-size: 14px;
+              border: 1px solid #fff;
+              background: #fff;
+              width: 206px;
+            "
+            (dateInput)="onDateSelection($event.value)"
+          />
+          <sat-datepicker #picker1 [rangeMode]="true"></sat-datepicker>
+          <sat-datepicker-toggle
+            matSuffix
+            [for]="picker1"
+          ></sat-datepicker-toggle>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 col-md-6 col-xs-12 m-b">
+        <div class="input-group m-b mtsm-10">
+          <a
+            href="javascript:"
+            (click)="event_handler_create() && opencounter('open', '0')"
+          >
+            <button class="btn btn-primary createjobcard">
+              {{ "Create Counter Sale" | translate }}
+            </button>
+          </a>
+        </div>
+      </div>
+    </div> -->
+  </div>
+<div class="row">
+  <div class="col-lg-4 col-sm-6 col-md-4 col-xs-6">
+    <label
+      for="reports-label-list"
+      class="reports-label"
+      style="margin-right: 2rem;"
+      >{{ "Select Month" | translate }}
+      
+    </label>
+  
+    <select
+     
+      class="report-select"
+      (change)="selectDate($event.target.value)"
+  
+    
+  
+    >
+      <option value="current">
+        {{ "Current Month" | translate }}
+      </option>
+     
+      <option value="last">{{ "Last Month" | translate }}</option>
+    </select>
+  </div>
+</div>
+  <div class="mat-elevation-z8" 
+  >
+  <!-- *ngIf="this.datasource.data.length > 0"> -->
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      class="mat-elevation-z12"
+      style="font-family: Open sans; width: 100%"
+    >
+      <ng-container matColumnDef="id">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          
+          class="web-show"
+        >
+          <span class="mat-title-ctm"> {{ "Sr.No." | translate }}</span>
+        </th>
+        <span class="web-show">
+          <td
+            mat-cell
+            class="web-show"
+            *matCellDef="let element; let i = index"
+          >
+            {{ i + 1 }}
+          </td>
+        </span>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>
+          <span class="mat-title-ctm"> {{ "Workshop Name" | translate }}</span>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          
+          {{ element.name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="mobile">
+        <th mat-header-cell *matHeaderCellDef >
+          <span class="mat-title-ctm">
+            {{ "Mobile Number" | translate }}</span
+          >
+        </th>
+        <td mat-cell *matCellDef="let element">
+        
+          {{ element.mobile }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="city">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          
+          class="web-show"
+        >
+          <span class="mat-title-ctm"> {{ "City " | translate }}</span>
+        </th>
+        <td mat-cell *matCellDef="let element" >
+          {{ element.city }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="count">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          
+          class="web-show"
+        >
+          <span class="mat-title-ctm">
+            {{ "Jobcard Count" | translate }}</span
+          >
+        </th>
+        <td mat-cell *matCellDef="let element" class="td-center">
+          {{ element.count }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="final_sum">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          
+          class="web-show"
+        >
+          <span class="mat-title-ctm">
+            {{ "Revenue" | translate }}</span
+          >
+        </th>
+        <td mat-cell *matCellDef="let element" class="td-center">
+          {{ element.final_sum }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="job_total">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          
+          class="web-show"
+        >
+          <span class="mat-title-ctm">
+            {{ "Job Total  " | translate }}</span
+          >
+        </th>
+        <td mat-cell *matCellDef="let element" class="td-center">
+          {{ element.job_total }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="lube_total">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          
+          class="web-show"
+        >
+          <span class="mat-title-ctm">
+            {{ "Lube Total" | translate }}</span
+          >
+        </th>
+        <td mat-cell *matCellDef="let element" class="td-center">
+          {{ element.lube_total }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="spare_total">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          
+          class="web-show"
+        >
+          <span class="mat-title-ctm">
+            {{ "Spare Total" | translate }}</span
+          >
+        </th>
+        <td mat-cell *matCellDef="let element" class="td-center">
+          {{ element.spare_total }}
+        </td>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>
+          <span class="mat-title-ctm"> {{ "Action" | translate }}</span>
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="color: #c30707; font-weight: bold"
+        >
+          <span class="mobile-label">{{ "Action" | translate }}:</span>
+          <span>
+            <i
+              matTooltip=" {{ 'Edit Staff' | translate }}"
+              (click)="openDialog(element, 'edit')"
+              class="fa fa-pencil"
+              aria-hidden="true"
+              style="cursor: pointer; padding: 9px"
+            ></i>
+            <i
+              matTooltip="  {{ 'Delete Staff' | translate }}"
+              (click)="onDeleteStaff(element.id)"
+              class="fa fa-times"
+              aria-hidden="true"
+              style="cursor: pointer"
+            ></i>
+          </span>
+        </td>
+      </ng-container> -->
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns; sticky: true"
+      ></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <div
+    class="mat-elevation-z8"
+    *ngIf="datasource == undefined"
+    style="
+      box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+        0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+        0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+      overflow-x: hidden;
+      border-radius: 8px;
+    "
+  >
+    <div
+      class="col-lg-12 col-sm-12 col-md-12 text-center"
+      *ngIf="datasource == undefined"
+      style="
+        font-weight: bold;
+        padding: 10px 0px 10px 0px;
+        font-size: 29px;
+        color: black;
+      "
+    >
+      <span> {{ "No Records Found" | translate }}</span>
+    </div>
+  </div>
+  <!-- <div class="">
+    <table mat-table
+       [dataSource]="dataSource" multiTemplateDataRows
+       class="mat-elevation-z8">
+  <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+  </ng-container>
+  <ng-container matColumnDef="expand">
+    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+        <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+        <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element">
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>
+  </div> -->
+
+</div>

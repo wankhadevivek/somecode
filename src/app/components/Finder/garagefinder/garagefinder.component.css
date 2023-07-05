@@ -1,0 +1,252 @@
+.nav.navbar-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+}
+
+@media (min-width: 768px) {
+    .navbar-nav {
+        float: none;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid #e2e8eb;
+    float: left;
+    width: 80%;
+    background: #e2e8eb;
+    border-radius: 0 10px 10px 0;
+    border-left: none;
+}
+
+form.example button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #e2e8eb;
+    color: white;
+    font-size: 17px;
+    border: 1px solid #e2e8eb;
+    border-right: none;
+    cursor: pointer;
+    border-radius: 10px 0 0 10px;
+}
+
+form.example select {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid #e2e8eb;
+    float: left;
+    width: 100%;
+    background: #e2e8eb;
+    border-radius: 10px 10px 10px 10px;
+}
+
+form.example button:hover {
+    background: #d5d7d8;
+}
+
+form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.example-card {
+    margin: 1%;
+    box-shadow: 2px 2px 3px #aaaaaa;
+}
+
+/* .mat-card-sm-image{
+    width: 116px;
+    height: 108px;
+    object-fit: fill;
+    float: left;
+    margin-right: 13px;
+  } */
+.mat-card-sm-image {
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+    float: left;
+    margin-right: 13px;
+}
+
+.mat-card-text {
+    margin: 4px;
+    margin-left: 6px;
+    display: grid;
+}
+
+.checked {
+    color: orange;
+}
+
+.badge {
+    border-radius: 5px;
+}
+
+.badge-secondary {
+    background-color: #6e6464;
+    color: white;
+}
+
+.rating {
+    margin: 2px;
+}
+
+.btn-primary {
+    background-color: rgb(4, 4, 139);
+}
+.btn-secondary{
+    background-color: #d4cfcf;
+    color: red;
+}
+
+
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none;
+}
+    
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+    width: 340px;
+}
+.vertical-align-center-2{
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+    width: 100vw;
+    height: 100vh;
+}
+  .modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    max-width:inherit; /* For Bootstrap 4 - to avoid the modal window stretching 
+    full width */
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events:all;
+    border-radius: 20px;
+}
+.location_img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80px;
+}
+.ui-autocomplete {
+    z-index: 215000000 !important;
+  }
+  
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .mat-card-text {
+        margin-left: 6px;
+        display: grid;
+    }
+    .mat-card-title {
+        font-size: 19px;
+        font-weight: 500;
+    }
+    .mat-card-sm-image {
+        height: 131px;
+        width: 92px;
+    }
+    .mat-card-subtitle, .mat-card-content {
+        font-size: 12px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    
+    .mat-card-text {
+        margin-left: 6px;
+        display: grid;
+    }
+    .mat-card-title {
+        font-size: 19px;
+        font-weight: 500;
+    }
+    .mat-card-sm-image {
+        height: 153px;
+        width: 165px;
+    }
+    .mat-card-subtitle, .mat-card-content {
+        font-size: 12px;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .mat-card-text {
+        margin-left: 6px;
+        display: grid;
+    }
+    .mat-card-title {
+        font-size: 22px;
+        font-weight: 500;
+    }
+    .mat-card-sm-image {
+        height: 153px;
+        width: 165px;
+    }
+    .mat-card-subtitle, .mat-card-content {
+        font-size: 14px;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .mat-card-text {
+        margin-left: 6px;
+        display: grid;
+    }
+    .mat-card-title {
+        font-size: 22px;
+        font-weight: 500;
+    }
+    .mat-card-sm-image {
+        height: 153px;
+        width: 165px;
+    }
+    .mat-card-subtitle, .mat-card-content {
+        font-size: 14px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .mat-card-text {
+        margin-left: 6px;
+        display: grid;
+    }
+    .mat-card-title {
+        font-size: 22px;
+        font-weight: 500;
+    }
+    .mat-card-sm-image {
+        height: 153px;
+        width: 165px;
+    }
+    .mat-card-subtitle, .mat-card-content {
+        font-size: 14px;
+    }
+}

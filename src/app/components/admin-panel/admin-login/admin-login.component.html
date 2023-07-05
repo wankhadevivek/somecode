@@ -1,0 +1,104 @@
+<!-- <app-spinlogin></app-spinlogin>  -->
+<div class="container">  
+    <div class="header" style="margin-top: 10px;">
+        <span class="login100-form-title p-b-34" style="font-weight: bold;">
+            <span>
+                <img src="../../../assets/images/TTN-Garage-Automobile-Workshop-Management-logo.svg"
+                alt="LOGO" width="100%" style="height:90px"></span>
+            <span style="color: #c30707;">{{'TTN Garage' }}</span><br>
+            <span>'Admin Panel' </span>
+        </span>
+    </div>    
+    <!-- <div class="col-lg-6 col-sm-6 hidden-xs col-md-6 jumbotron" style="background-color: #f5f5f54f;">
+        <h1 style="color: rgb(141, 8, 8);font-size: 40px;">Free 10-Days Trial Includes:</h1>
+        <h2 class="h2-login-text">All TTN Garage Features</h2>
+        <ul>
+            <li>Jobcard Management</li>
+            <li>Inventory Management (Including Purchase Order)</li>
+            <li>Invoicing</li>
+            <li>Service Due Reminders</li>
+            <li>Automated Jobcard Update SMS/Whatsapp</li>
+            <li>Online Garage</li>
+            <li>Feedback</li>
+            <li>Collect Online Payment</li>
+          </ul>
+    </div> -->
+    <div class="row" style="margin-top: 5%">
+    <!-- <div class="col-xs-12  col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2"> -->
+<div style="width: 40%; margin:auto; ">
+        <form (ngSubmit)="onSubmit()" #f="ngForm">
+            <div class="user-data" >
+                <div class="form-group" style="margin-top: 5%">
+                    <label for="admin">Admin Name</label>
+                    <input type="text" 
+                        name="admin" 
+                        id="admin" 
+                        class="form-control"
+                        ngModel
+                        required
+                        #admin="ngModel">
+                    <span  class="help-block"
+                    *ngIf="!admin.valid && admin.touched">
+                    Please Enter Admin Name </span>
+                </div>
+                <div class="form-group" style="margin-top: 5%">
+                    <label for="password">Password</label>
+                    <input type="password" 
+                    name="password" 
+                    id="password" 
+                    class="form-control"
+                    ngModel
+                    required
+                    #pwd="ngModel">
+                </div>
+
+                <button class="btn btn-primary"
+                [disabled]="!f.valid" type="submit"
+                style="margin-top: 7%; margin-left: 30%; padding: 2% 10%;">Login</button>
+            </div>
+        </form>
+      
+<!--    
+        <form  class="vertical-center" *ngIf="usingPassword==true" [formGroup]="passForm"  (ngSubmit)="submitFormForLogin('by_pass')" novalidate>
+            <div class="container-fluid">
+                
+                <div class="row margin-l-lg">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <span class="login100-form-title p-b-34">
+                            {{'Login with password' | translate}}
+                        </span>
+                    </div>
+                    <div class="validate-input m-b-20 col-lg-12 col-md-12 col-sm-12" data-validate="Enter OTP">
+                        <input id="password" class="form-control" type="password" 
+                        name="password" placeholder="{{'Enter Password' | translate}}"
+                        formControlName="password">
+                            <div *ngIf="passForm.controls['password'].invalid && (passForm.controls['password'].dirty || passForm.controls['password'].touched)" class="text-danger">
+                                <div *ngIf="passForm.controls['password'].errors.required">
+                                    {{'This filed is required' | translate}}
+                                </div>
+                                <div *ngIf="passForm.controls['password'].errors.pattern">
+                                {{'Enter a valid Password' | translate}}
+                                </div>
+                            </div>
+                           
+                    </div>
+                    
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <button type="submit" [disabled]="passForm.pristine || passForm.invalid"
+                         class="btn btn-primary col-lg-12 col-md-12 col-sm-12"
+                         style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;">
+                            {{'Submit' | translate}}</button>
+                    </div>
+                    
+                   
+                </div>
+                
+            </div>
+            
+        </form>
+       -->
+    </div>
+</div>
+
+</div>
+

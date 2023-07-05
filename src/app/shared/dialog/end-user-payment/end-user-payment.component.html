@@ -1,0 +1,139 @@
+<!-- <div class="closepoup" style="float: right;  margin-right: 10px;">
+    <label (click)="closePopup(false)" class="btn btn-white cir" style="padding: 1px 4px;
+    
+    background: none;
+    border: none;"><i class="fa fa-times fa-2x" aria-hidden="true"></i></label>
+</div> -->
+<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center" style="background-color: #7682A8;
+padding: 10px 0px 10px 0px;
+color: #ffff;
+font-size: 16px;">
+    <span>{{'Invoice Details' | translate}}</span>
+</div>
+<div class="row" >
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center">
+        <!-- <span style="color: #000; font-weight: bold; font-size: 16px;"> Invoice Details (Total ₹ {{totalAmount}}) </span> -->
+        <div class="text-right">
+            <span style="font-size: 14px;color: #000;"> {{'INVOICE' | translate}}</span>
+            <br>
+            <span style="font-size: 10px;color: #000;"> {{jobcardname}} </span>
+        </div>
+        <div class="text-right" style="margin-top: 10px; margin-bottom: 10px;">
+            <span style="font-size: 10px;color: #000;"> {{'Date' | translate}} </span>
+            <br>
+            <span style="font-size: 10px;color: #000;"> {{createdat | date: 'h:mm a d MMM yy'}} </span>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th style="background-color: #404040;
+                    color: #fff;padding: 6px !important;">#</th>
+                    <th  style="background-color:#404040;
+                    color: #fff;padding: 6px !important;">{{'Particulars' | translate}}</th>
+                    <th  style="background-color:#404040;
+                    color: #fff;padding: 6px !important;">{{'Qty' | translate}}</th>
+                    <th  style="background-color: #404040;
+                    color: #fff;padding: 6px !important;">{{'Price' | translate}}</th>
+                    <th  style="background-color: #404040;
+                    color: #fff;padding: 6px !important;">{{'Amount' | translate}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of spares;let i = index;">
+                    <td>{{i+1}}</td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.qty}}</td>
+                    <td>{{data.price}}</td>
+                    <td>{{data.amount}}</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <div class="col-lg-9 col-sm-9 col-md-9 col-xs-9 text-right"style="margin-top: 10px;">
+
+        </div>
+        <div class="table-responsive col-lg-3 col-sm-3 col-md-3 col-xs-3 text-right" style="margin-top: 10px;">
+            <table class="table">
+                <tbody class="historyy">
+                  <tr >
+                    <th style="float: right;"> <span >{{'Total' | translate}}</span></th>
+                    <td style="    text-align: right;"><span>{{currency_symbol}} {{totalAmount}}</span></td>
+                  </tr>
+                  <tr >
+                    <th style="float: right;"> <span >{{'Advance' | translate}}</span></th>
+                    <td style="    text-align: right;"><span>{{currency_symbol}} {{advance}}</span></td>
+                  </tr>
+                  <tr >
+                    <th style="float: right;"> <span >{{'Discount' | translate}}</span></th>
+                    <td style="    text-align: right;"><span>{{discount}}</span></td>
+                  </tr>
+                  <tr style="background-color: #bbbaba;">
+                    <th style="float: right; padding: 3px 0px 3px 0px !important;"> <span >{{'Balance Due' | translate}}</span></th>
+                    <td style="text-align: right;padding: 3px 0px 3px 2px !important;"><span>{{currency_symbol}} {{balance}}</span></td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+        <!-- <span style="color: #000; font-size: 16px;">Amount to be Paid: ₹ {{amount}}</span> -->
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <div class="text-left">
+                  <label class="control-label txt_lbl"> {{'Email Id' | translate}}<span style="color:red;">*</span> </label>
+                  <br>
+                  <input class="form-control cir" (input)='checkemail($event.target.value)' type="text" [value]="customerEmail" placeholder="{{'Please Enter Email Id' | translate}}">
+                  <div *ngIf="showpayform==false">
+                    <span class="text-danger">{{'Please Enter the Valid Email ID' | translate}}</span>
+                  </div>
+                </div>
+                <form *ngIf="showpayform==false" #form method="post">
+                  <input type="hidden" name="appId" [value]='appId'>
+                  <input type="hidden" name="orderId" [value]='orderId'>
+                  <input type="hidden" name="orderAmount" [value]='orderAmount'>
+                  <input type="hidden" name="orderCurrency" [value]='orderCurrency'> 
+                  <input type="hidden" name="orderNote" [value]='orderNote'>
+                  <input type="hidden" name="customerName" [value]='customerName'>
+                  <input type="hidden" name="customerEmail" [value]='customerEmail'>
+                  <input type="hidden" name="customerPhone" [value]='customerPhone'>
+                  <input type="hidden" name="returnUrl" [value]='returnUrl'>
+                  <input type="hidden" name="signature" [value]='signature'>
+                  <input type="hidden" name="vendorSplit" [value]='vendorSplit'>
+                  <input *ngIf='signature!=""' type="submit" style="margin-top: 18px;
+                  background: #f72929;color: #fff;
+                  padding: 11px;
+                  border-radius: 5px;
+                  font-size: 13px;
+                  font-weight: bold;
+                  color: #fff;float: left;
+                  width: 100%;" [value]="Pay">
+              </form>
+                <form *ngIf="showpayform==true" #form method="post" [action]="redirectForm">
+                    <input type="hidden" name="appId" [value]='appId'>
+                    <input type="hidden" name="orderId" [value]='orderId'>
+                    <input type="hidden" name="orderAmount" [value]='orderAmount'>
+                    <input type="hidden" name="orderCurrency" [value]='orderCurrency'> 
+                    <input type="hidden" name="orderNote" [value]='orderNote'>
+                    <input type="hidden" name="customerName" [value]='customerName'>
+                    <input type="hidden" name="customerEmail" [value]='customerEmail'>
+                    <input type="hidden" name="customerPhone" [value]='customerPhone'>
+                    <input type="hidden" name="returnUrl" [value]='returnUrl'>
+                    <input type="hidden" name="signature" [value]='signature'>
+                    <input type="hidden" name="vendorSplit" [value]='vendorSplit'>
+                    <input *ngIf='signature!=""' type="submit" style="margin-top: 18px;
+                    background: #FF0000;color: #fff;
+                    padding: 11px;
+                    border-radius: 5px;
+                    font-size: 13px;
+                    font-weight: bold;
+                    color: #fff;float: left;
+                    width: 100%;" (click)="form.submit()" [value]="Pay">
+                </form>
+                
+            </div>
+            <div class="text-center" style="margin-top: 5px;">
+              <span style="font-size: 10px;color: #000;"> {{'Note The requested amount is' | translate}} {{orderAmount}} </span>
+          </div>
+        </div>
+    </div>
+    
+</div>

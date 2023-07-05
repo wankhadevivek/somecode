@@ -1,0 +1,684 @@
+<app-spin></app-spin>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title style="font-weight: bold">
+          {{ "Login Details" | translate }}
+        </mat-panel-title>
+        <mat-panel-description style="color: #42413d; margin-left: 55px">
+          {{ "Last Login" | translate }}:
+          {{ loginDate | date: "MMM d, y, h:mm a" }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>
+        {{ "You Are Logged in Since" | translate }} {{ loginDays }}
+        {{ "Days" | translate }}.
+      </p>
+    </mat-expansion-panel>
+    <mat-expansion-panel
+      (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title style="font-weight: bold">
+          {{ "Membership Details" | translate }}
+        </mat-panel-title>
+        <mat-panel-description style="margin-left: -61px">
+          <span id="shift-left" [style.color]="color">{{ message }}</span>
+          <button
+            *ngIf="expireMenber == true"
+            style="
+              margin-left: 20px;
+              padding: 6px;
+              color: #ffff;
+              background: linear-gradient(to bottom, #ff0000 0%, #563b3b 100%);
+              border-radius: 2px;
+            "
+            (click)="selectRecharge()"
+          >
+            {{ "Recharge Now" | translate }}
+          </button>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="row">
+        <div
+          class="col-lg-3 progress-wrapper"
+          style="margin-left: 16px; margin-bottom: 29px"
+        >
+          <div>
+            <round-progress
+              [current]="DaysForCircle"
+              [max]="MaxDays"
+              [color]="'#eaeaea'"
+              [background]="'#ce0e17'"
+              [radius]="50"
+              [stroke]="5"
+              [semicircle]="false"
+              [rounded]="true"
+              [clockwise]="true"
+              [responsive]="false"
+              [duration]="800"
+              [animation]="'easeInOutQuart'"
+              [animationDelay]="0"
+            ></round-progress>
+          </div>
+          <div
+            class="text"
+            style="
+              margin-top: -72px;
+              margin-left: 21px;
+              color: #c30707;
+              font-size: 16px;
+            "
+          >
+            {{ daysLeft }}
+            <span style="color: #54534d">{{ "Days" | translate }}</span>
+            <br /><span style="color: #54534d; margin-left: 10px">{{
+              "left" | translate
+            }}</span>
+          </div>
+        </div>
+        <div class="col-lg-9" id="shift-down">
+          <div class="col-lg-12">
+            <div class="col-lg-6">
+              <p>
+                {{ "Workshop Registered" | translate }}:
+                <span>{{
+                  workshopRegisterDate | date: "MMM d, y, h:mm a"
+                }}</span>
+              </p>
+            </div>
+            <div class="col-lg-6">
+              <p>
+                {{ "Membership Expiry Date" | translate }}:
+                <span>{{ expiryDate | date: "MMM d, y, h:mm a" }}</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-12" style="margin-top: 12px">
+            <div class="col-lg-6">
+              <p>
+                {{ "Plan Type" | translate }}: <span>{{ plan }}</span>
+              </p>
+            </div>
+            <div class="col-lg-6">
+              <p>
+                {{ "Plan Price " | translate }}: <span>{{currency_symbol}} {{ planPrice }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel
+      (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title style="font-weight: bold">
+          {{ "Payment Details" | translate }}
+        </mat-panel-title>
+        <mat-panel-description
+          *ngIf="lastPaymnetDate != ''"
+          style="margin-left: 43px; color: #42413d"
+        >
+          {{ "Last Payment" | translate }}:
+          {{ lastPaymnetDate | date: "MMM d, y, h:mm a" }}
+        </mat-panel-description>
+        <mat-panel-description
+          *ngIf="lastPaymnetDate == ''"
+          style="margin-left: 22px; color: #42413d"
+        >
+          {{ "Last Payment: No Payment Yet" | translate }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div
+        class="mat-elevation-z8"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          overflow-x: auto;
+          border-radius: 8px;
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          <!-- Position Column -->
+          <ng-container matColumnDef="orderid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ "Order Id" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.orderid }}</td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="plantype">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ "Plan Type" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.plantype }}</td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ "Amount" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.amount }}</td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="paymentmode">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ "Payment Mode" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.paymentmode }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ "Payment Status" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span
+                *ngIf="
+                  element.status == 'SUCCESS' ||
+                  element.status == 'payment_successfull' ||
+                  element.status == 'successful'
+                "
+                style="color: #5ede5e"
+                >{{ "Success" | translate }}</span
+              >
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="validitydays">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ "Validity Days" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.validitydays }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="tranactiondate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ "Transaction Date" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.tranactiondate | date: "MMM d, y, h:mm a" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "Action" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <i
+                style="
+                  color: #c30707;
+                  font-weight: bold;
+                  font-size: 24px;
+                  font-weight: bold;
+                  margin-left: 20px;
+                  cursor: pointer;
+                "
+                matTooltip="Download Recharge Invoice"
+                (click)="opnePdf(element)"
+                class="fa fa-file-pdf-o"
+                aria-hidden="true"
+              ></i>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-paginator
+          [pageSizeOptions]="[5, 10, 20]"
+          showFirstLastButtons
+        ></mat-paginator>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="isexpanded">
+      <mat-expansion-panel-header>
+        <mat-panel-title style="font-weight: bold">
+          {{ "Account Details" | translate }}
+        </mat-panel-title>
+        <mat-panel-description
+          *ngIf="accNoForTop != ''"
+          style="margin-left: 28px; color: #42413d"
+        >
+          {{ "Bank Account" | translate }}: {{ accNoForTop }}
+        </mat-panel-description>
+        <mat-panel-description
+          *ngIf="accNoForTop == ''"
+          style="margin-left: 35px; color: #42413d"
+        >
+          {{ "Bank Account" | translate }}:
+          {{ "No Account Details" | translate }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="col-sm-12">
+        <div class="accountnote">
+          <ul
+            style="
+              margin-left: 10px;
+              font-size: 14px;
+              font-weight: bold;
+              color: #c30707;
+            "
+          >
+            <li style="padding: 2px">
+              {{
+                "All the Payments will be Credited to your below mentioned Bank
+              Account."
+                  | translate
+              }}
+            </li>
+            <li style="padding: 2px">
+              Account Number, Account Holder Name, IFSC Code is not editable.{{
+                "" | translate
+              }}
+            </li>
+            <li style="padding: 2px">
+              {{
+                "Please Contact TTN Support for the Bank Account Information
+              Update."
+                  | translate
+              }}
+            </li>
+          </ul>
+        </div>
+        <form novalidate class="form-horizontal" [formGroup]="Accform">
+          <div class="row" style="padding: 13px">
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl"
+                >{{ "Name" | translate
+                }}<span style="color: #c30707; font-weight: bold"
+                  >*</span
+                ></label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="name"
+              />
+              <div
+                *ngIf="submitted && Accform.controls['name'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="Accform.controls['name'].errors.required">
+                  {{ "Name is required" | translate }}.
+                </div>
+                <div *ngIf="Accform.controls['name'].errors.pattern">
+                  {{ "Enter a Valid Name" | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl"
+                >{{ "Phone" | translate
+                }}<span style="color: #c30707; font-weight: bold"
+                  >*</span
+                ></label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="phonenumber"
+                maxlength="10"
+              />
+              <div
+                *ngIf="submitted && Accform.controls['phonenumber'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="Accform.controls['phonenumber'].errors.required">
+                  {{ "Phone Number is required" | translate }}.
+                </div>
+                <div *ngIf="Accform.controls['phonenumber'].errors.pattern">
+                  {{ "Enter a Valid Number" | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl"
+                >{{ "Email" | translate
+                }}<span style="color: #c30707; font-weight: bold"
+                  >*</span
+                ></label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="email"
+              />
+              <div
+                *ngIf="submitted && Accform.controls['email'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="Accform.controls['email'].errors.required">
+                  {{ "Email is required" | translate }}.
+                </div>
+                <div *ngIf="Accform.controls['email'].errors.email">
+                  {{ "Enter a Valid Email" | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="padding: 13px">
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl"
+                >{{ "Bank Account Number" | translate
+                }}<span style="color: #c30707; font-weight: bold"
+                  >*</span
+                ></label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="accnumber"
+              />
+              <div
+                *ngIf="submitted && Accform.controls['accnumber'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="Accform.controls['accnumber'].errors.required">
+                  {{ "Account Number is required." | translate }}
+                </div>
+                <div *ngIf="Accform.controls['accnumber'].errors.pattern">
+                  {{ "Enter a Valid Account Number" | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl"
+                >{{ "Account Holder Name" | translate
+                }}<span style="color: #c30707; font-weight: bold"
+                  >*</span
+                ></label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="accname"
+                maxlength="50"
+              />
+              <div
+                *ngIf="submitted && Accform.controls['accname'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="Accform.controls['accname'].errors.required">
+                  {{ "Account Holder Name is required" | translate }}.
+                </div>
+                <div *ngIf="Accform.controls['accname'].errors.pattern">
+                  {{ "Enter a Valid Account Name" | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl">
+                {{ "IFSC Code" | translate
+                }}<span style="color: #c30707; font-weight: bold"
+                  >*</span
+                ></label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="ifsc"
+              />
+              <div
+                *ngIf="submitted && Accform.controls['ifsc'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="Accform.controls['ifsc'].errors.required">
+                  {{ "IFSC Code is required" | translate }}/
+                </div>
+                <div *ngIf="Accform.controls['ifsc'].errors.pattern">
+                  {{ "Enter a Valid IFSC Code" | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="padding: 13px">
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl">
+                {{ "Pan Number" | translate }}</label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="panno"
+              />
+              <div
+                *ngIf="submitted && Accform.controls['panno'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="Accform.controls['panno'].errors.pattern">
+                  {{ "Enter a Valid Pan Number" | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl">{{
+                "Aadhar Number" | translate
+              }}</label>
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="aadharno"
+                maxlength="12"
+              />
+              <div
+                *ngIf="submitted && Accform.controls['aadharno'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="Accform.controls['aadharno'].errors.pattern">
+                  {{ "Enter a Valid Aadhar Number" | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl">{{
+                "GSTIN" | translate
+              }}</label>
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="gstin"
+              />
+              <div
+                *ngIf="submitted && Accform.controls['gstin'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="Accform.controls['gstin'].errors.pattern">
+                  {{ "Enter a Valid GSTIN Number" | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="padding: 13px">
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl">
+                {{ "Address 1" | translate
+                }}<span style="color: #c30707; font-weight: bold"
+                  >*</span
+                ></label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="address1"
+              />
+              <div
+                *ngIf="submitted && Accform.controls['address1'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="Accform.controls['address1'].errors.required">
+                  {{ "Address is required" | translate }}.
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl">{{
+                "Address 2" | translate
+              }}</label>
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="address2"
+              />
+            </div>
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl"
+                >{{ "City" | translate
+                }}<span style="color: #c30707; font-weight: bold"
+                  >*</span
+                ></label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="city"
+              />
+              <div
+                *ngIf="submitted && Accform.controls['city'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="Accform.controls['city'].errors.required">
+                  {{ "city is required" | translate }}.
+                </div>
+                <div *ngIf="Accform.controls['city'].errors.pattern">
+                  {{ "Enter a Valid City" | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="padding: 13px">
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl"
+                >{{ "State" | translate
+                }}<span style="color: #c30707; font-weight: bold"
+                  >*</span
+                ></label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="state"
+              />
+              <div
+                *ngIf="submitted && Accform.controls['state'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="Accform.controls['state'].errors.required">
+                  {{ "State is required" | translate }}.
+                </div>
+                <div *ngIf="Accform.controls['state'].errors.pattern">
+                  {{ "Enter a Valid State" | translate }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label txt_lbl"
+                >{{ "Pin code" | translate
+                }}<span style="color: #c30707; font-weight: bold"
+                  >*</span
+                ></label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="zipcode"
+                maxlength="6"
+              />
+              <div
+                *ngIf="submitted && Accform.controls['zipcode'].errors"
+                class="text-danger"
+              >
+                <div *ngIf="Accform.controls['zipcode'].errors.required">
+                  {{ "Pin Code is required." | translate }}
+                </div>
+                <div *ngIf="Accform.controls['zipcode'].errors.pattern">
+                  {{ "Enter a Valid Zip Code" | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <button
+          *ngIf="adddetailsbutton == true && updatebutton == false"
+          type="submit"
+          (click)="addAccountDetails('create')"
+          class="btn btn-primary cir cir_btn"
+          style="
+            background: linear-gradient(to bottom, #ff0000 0%, #563b3b 100%);
+            border-color: #c30707;
+            font-weight: bold;
+            width: 14%;
+            margin-left: 10px;
+          "
+        >
+          {{ "Add Account" | translate }}
+        </button>
+        <button
+          *ngIf="adddetailsbutton == false && updatebutton == false"
+          type="submit"
+          (click)="EditAccountDetails()"
+          class="btn btn-primary cir cir_btn"
+          style="
+            background: linear-gradient(to bottom, #ff0000 0%, #563b3b 100%);
+            border-color: #c30707;
+            font-weight: bold;
+            width: 14%;
+            margin-left: 10px;
+          "
+        >
+          {{ "Edit Account" | translate }}
+        </button>
+        <button
+          *ngIf="updatebutton == true"
+          type="submit"
+          (click)="addAccountDetails('update')"
+          class="btn btn-primary cir cir_btn"
+          style="
+            background: linear-gradient(to bottom, #ff0000 0%, #563b3b 100%);
+            border-color: #c30707;
+            font-weight: bold;
+            width: 14%;
+            margin-left: 10px;
+          "
+        >
+          {{ "Update Account" | translate }}
+        </button>
+        <button
+          *ngIf="updatebutton == true"
+          type="submit"
+          (click)="ResetAccountDetails()"
+          class="btn btn-primary cir cir_btn"
+          style="
+            background: linear-gradient(to bottom, #ff0000 0%, #563b3b 100%);
+            border-color: #c30707;
+            font-weight: bold;
+            width: 14%;
+            margin-left: 10px;
+          "
+        >
+          {{ "Cancel Edit" | translate }}
+        </button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

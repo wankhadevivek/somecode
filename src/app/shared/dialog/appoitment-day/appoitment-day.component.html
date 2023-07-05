@@ -1,0 +1,220 @@
+<div
+  class="col-lg-12 col-sm-12 col-md-12 text-center"
+  style="margin-bottom: 10px"
+>
+  <label
+    (click)="closePopup(false)"
+    class="btn btn-white cir"
+    style="background: none; border: none; float: right; margin-bottom: 0px"
+    ><i class="fa fa-times fa-2x" aria-hidden="true"></i
+  ></label>
+  <span style="font-weight: 700; font-size: 16px; color: #000">{{
+    bookingdate | date: "MMM d, y"
+  }}</span>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="app mat-elevation-z8">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="mat-elevation-z12"
+        style="
+          box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+            0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+          font-family: Open sans;
+          width: 100%;
+        "
+      >
+        <ng-container matColumnDef="sr_no">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            {{'Sr No' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="Status">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            {{'Status' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">{{'Status' | translate}}:</span>
+            <span
+              *ngIf="element.status == 'in process'"
+              style="color: #8686ea; font-weight: 700"
+              >{{'Open' | translate}}</span
+            >
+            <span
+              *ngIf="element.status == 'rejected'"
+              style="color: #efe02b; font-weight: 700"
+              >{{'Declined' | translate}}</span
+            >
+            <span
+              *ngIf="element.status == 'approved'"
+              style="color: #56ef77; font-weight: 700"
+              >{{'Approved' | translate}}</span
+            >
+            <span
+              *ngIf="element.status == 'completed'"
+              style="color: #e3bc08; font-weight: 700"
+              >{{'Completed' | translate}}</span
+            >
+            <span
+              *ngIf="element.status == 'deleted'"
+              style="color: #ad2121; font-weight: 700"
+              >{{'Deleted' | translate}}</span
+            >
+          </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="time">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            {{'Time' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">{{'Time' | translate}}:</span>
+            {{ element.time }} {{'AM' | translate}}
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="name">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            {{'Name' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">{{'Name' | translate}}:</span>
+            {{ element.customer_name }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            {{'Phone Number' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">{{'Phone No' | translate}}.:</span>
+            {{ element.customer_phone }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="vehiclenumber">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            {{'Vehicle Number' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">{{'Vehicle No' | translate}}.:</span>
+            {{ element.vehicle_number }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="vehicledetail">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            {{'Vehicle' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">{{'Vehicle' | translate}}:</span>
+            {{ ConvertToInt(element.vehicle_details) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th
+            style="background: #eee"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            {{'Action' | translate}}
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            style="font-weight: bold; color: #c30707"
+          >
+            <span class="mobile-label">{{'Action' | translate}}:</span>
+            <span (click)="closeandview(element)" style="cursor: pointer"
+              >{{'View' | translate}}</span
+            >
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+    </div>
+    <!-- <div class="ibox float-e-margins">
+            <div class="ibox-content" style="padding: 0">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" style="margin-bottom: 0">
+                        <thead>
+                            <tr>
+                                <th>Sr. No</th>
+                                <th>Customer Details</th>
+                                <th>Vehicle Details</th>
+                                <th>Total</th>
+                                <th>Discount</th>
+                                <th>Final Amount</th>
+                                <th>Receined Amount</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of customerTabelData;let i = index;">
+                                <td>{{i+1}}</td>
+                                <td>{{data.customer}}</td>
+                                <td>{{data.vehicledetails}}</td>
+                                <td>{{data.total}}</td>
+                                <td>{{data.discount}}</td>
+                                <td>{{data.final}}</td>
+                                <td>{{data.received}}</td>
+                                <td>{{data.balance}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> -->
+  </div>
+</div>

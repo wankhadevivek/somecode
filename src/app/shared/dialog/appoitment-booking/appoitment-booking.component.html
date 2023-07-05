@@ -1,0 +1,591 @@
+<app-spinlogin></app-spinlogin>
+<div class="row">
+  <div class="col-lg-12 col-sm-12 col-md-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title ibox-background">
+        <button class="btn btn-link hed-btn-colse">
+          <label (click)="closePopup('e')" class="cir">
+            <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+          </label>
+        </button>
+        <div class="row">
+          <div class="col-lg-3 col-sm-3 col-md-3">
+            <h1 class="ibox-title-h1">{{ "Appointment" | translate }}</h1>
+          </div>
+          <div class="col-lg-9 col-sm-9 col-md-9">
+            <div class="form-group lbl-grp-vp">
+              <div
+                class="
+                  col-lg-offset-4
+                  col-sm-offset-4
+                  col-md-offset-4
+                  col-lg-2
+                  col-sm-2
+                  col-md-2
+                  pick-lbl-div
+                "
+              >
+                <label class="control-label txt_lbl lbl-visit">{{
+                  "Visit" | translate
+                }}</label>
+                <span class="lbl-span">
+                  <input
+                    type="checkbox"
+                    [checked]="dropcheck"
+                    (change)="cheangedroptopic($event)"
+                  />
+                </span>
+              </div>
+              <div class="col-lg-2 col-sm-2 col-md-2 pick-lbl-div">
+                <label class="control-label txt_lbl lbl-pick">{{
+                  "Pick" | translate
+                }}</label>
+                <span class="lbl-span">
+                  <input
+                    type="checkbox"
+                    [checked]="pickcheck"
+                    (change)="changepicktodrop($event)"
+                  />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ibox-contentt ibox-content-background">
+          <div class="form-group">
+            <div class="col-lg-3 col-sm-3 col-md-3">
+              <label class="control-label txt_lbl" style="display: contents"
+                >{{ "Select Date" | translate
+                }}<span style="color: #c30707; font-weight: bold"
+                  ><span style="color: #c30707; font-weight: bold"
+                    >*</span
+                  ></span
+                ></label
+              >
+              <div style="display: flex">
+                <input
+                  style="width: 114px"
+                  class="form-control cir"
+                  matInput
+                  placeholder="Choose a date"
+                  [satDatepicker]="picker7"
+                  [max]="maxDate"
+                  [ngModelOptions]="{ standalone: true }"
+                  (ngModelChange)="deliveryDate($event)"
+                  [ngModel]="deliveryDateField"
+                  readonly
+                />
+                <sat-datepicker #picker7> </sat-datepicker>
+                <sat-datepicker-toggle
+                  matSuffix
+                  [for]="picker7"
+                ></sat-datepicker-toggle>
+              </div>
+              <!-- <input type="text" class="form-control cir"> -->
+              <!-- <div *ngIf="ddate==true" style="color: #c30707; font-weight: bold;">
+                                Please Select Delivery Date.
+                            </div> -->
+            </div>
+            <div class="col-lg-6 col-sm-6 col-md-6">
+              <label class="control-label txt_lbl" style="display: contents"
+                >{{ "Select Time" | translate
+                }}<span style="color: #c30707; font-weight: bold"
+                  ><span style="color: #c30707; font-weight: bold"
+                    >*</span
+                  ></span
+                ></label
+              >
+              <div
+                class="d-flex flex-row"
+                style="margin-top: 2%; margin-bottom: 2%; overflow: scroll"
+              >
+                <span class="col-sm-2" (click)="time1()" [class]="time11"
+                  >08:30 {{'AM' | translate}}</span
+                >
+                <span class="col-sm-2" (click)="time2()" [class]="time12"
+                  >09:00 {{'AM' | translate}}</span
+                >
+                <span class="col-sm-2" (click)="time3()" [class]="time13"
+                  >09:30 {{'AM' | translate}}</span
+                >
+                <span class="col-sm-2" (click)="time4()" [class]="time14"
+                  >10:00 {{'AM' | translate}}</span
+                >
+                <span class="col-sm-2" (click)="time5()" [class]="time15"
+                  >10:30 {{'AM' | translate}}</span
+                >
+                <span class="col-sm-2" style="color: #ada8a8">
+                  {{ "OR" | translate }}
+                </span>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3">
+              <label class="control-label txt_lbl" style="display: contents"
+                >{{ "Select Time" | translate
+                }}<span style="color: #c30707; font-weight: bold"
+                  ><span style="color: #c30707; font-weight: bold"
+                    >*</span
+                  ></span
+                ></label
+              >
+              <!-- <i *ngIf="dtimeenable==true" class="fa fa-times-circle" aria-hidden="true" (click)="cancleTime()"></i> -->
+              <input
+                class="form-control cir"
+                aria-label="24hr format"
+                [ngxTimepicker]="defaultTime"
+                [value]="deliveryTimeField"
+                readonly
+                [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="deliveryTime($event)"
+                [ngModel]="deliveryTimeField"
+                style="background-color: #fff; width: 40%"
+              />
+              <ngx-material-timepicker #defaultTime></ngx-material-timepicker>
+
+              <!-- <div *ngIf="dtime==true" style="color: #c30707; font-weight: bold;">
+                                Please Select Delivery Time.
+                            </div>
+                            <div *ngIf="validtime==true" style="color: #c30707; font-weight: bold;">
+                                Please Select Valid Time For Today.
+                            </div> -->
+            </div>
+          </div>
+
+          <br />
+          <label
+            class="control-label"
+            style="
+              margin-top: 7%;
+              font-size: 16px;
+              border-bottom: 3px solid #ce0e17;
+              margin-bottom: 1%;
+              margin-left: -827px;
+            "
+            ><b
+              ><i class="fa fa-car" aria-hidden="true"></i>
+              {{ "Vehicle Details" | translate }}</b
+            ></label
+          >
+
+          <label
+            style="
+              background: linear-gradient(
+                rgb(255, 0, 0) 0%,
+                rgb(86, 59, 59) 100%
+              );
+              border-color: rgb(195, 7, 7);
+              font-weight: bold;
+              padding: 7px;
+              margin: 2% 10px;
+              width: 108px;
+              color: #fff;
+              border-radius: 5px;
+              cursor: pointer;
+            "
+            *ngIf="showdisbale == true"
+            (click)="removedisable()"
+          >
+            {{ "Edit Customer" | translate }}
+          </label>
+          <label
+            style="
+              background: linear-gradient(
+                rgb(255, 0, 0) 0%,
+                rgb(86, 59, 59) 100%
+              );
+              border-color: rgb(195, 7, 7);
+              font-weight: bold;
+              padding: 7px;
+              margin: 2% 10px;
+              width: 129px;
+              color: #fff;
+              border-radius: 5px;
+              cursor: pointer;
+            "
+            *ngIf="shoeupdate == true"
+            (click)="updatecustomerdetails()"
+          >
+            {{ "Update Customer" | translate }}
+          </label>
+          <label
+            style="
+              background: linear-gradient(
+                rgb(255, 0, 0) 0%,
+                rgb(86, 59, 59) 100%
+              );
+              border-color: rgb(195, 7, 7);
+              font-weight: bold;
+              padding: 7px;
+              margin: 2% 10px;
+              width: 108px;
+              color: #fff;
+              border-radius: 5px;
+              cursor: pointer;
+            "
+            *ngIf="shoeupdate == true"
+            (click)="cancelupdatecustomerdetails()"
+          >
+            {{ "Cancel Update" | translate }}
+          </label>
+          <form
+            [formGroup]="CreateCustomerFormBooking"
+            novalidate
+            class="form-horizontal"
+          >
+            <div class="form-group">
+              <div class="col-lg-3 col-sm-3 col-md-3">
+                <label class="control-label txt_lbl"
+                  >Vehicle Number<span style="color: #c30707; font-weight: bold"
+                    ><span style="color: #c30707; font-weight: bold"
+                      >*</span
+                    ></span
+                  ></label
+                >
+                <input
+                  type="text"
+                  [style.background-color]="inputcolor"
+                  class="form-control cir"
+                  formControlName="vechilenumber"
+                  (change)="searchVehicleNumber($event.target.value)"
+                  maxlength="10"
+                  oninput="this.value = this.value.toUpperCase()"
+                />
+                <input type="hidden" formControlName="cusid" />
+                <div
+                  *ngIf="
+                    CreateCustomerFormBooking.controls['vechilenumber']
+                      .invalid &&
+                    (CreateCustomerFormBooking.controls['vechilenumber']
+                      .dirty ||
+                      CreateCustomerFormBooking.controls['vechilenumber']
+                        .touched)
+                  "
+                  class="text-danger"
+                >
+                  <div
+                    *ngIf="
+                      CreateCustomerFormBooking.controls['vechilenumber'].errors
+                        .required
+                    "
+                  >
+                    {{ "Vehicle Number is required" | translate }}.
+                  </div>
+                  <div
+                    *ngIf="
+                      CreateCustomerFormBooking.controls['vechilenumber'].errors
+                        .pattern
+                    "
+                  >
+                    {{ "Enter a valid Vehicle Number" | translate }}.
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-4 col-md-4 jobcard data">
+                <label class="control-label txt_lbl"
+                  >Search and Select Vehicle{{ "" | translate
+                  }}<span style="color: #c30707; font-weight: bold"
+                    ><span style="color: #c30707; font-weight: bold"
+                      >*</span
+                    ></span
+                  ></label
+                >
+                <ng-autocomplete
+                  formControlName="searchVehicle"
+                  [(ngModel)]="vehiclesearchmodel"
+                  placeHolder="Search Brand,Model"
+                  [data]="searchVehicleData"
+                  (selected)="selectedResultForVechile($event)"
+                  (input)="searchBarForVechile($event.target.value)"
+                  [itemTemplate]="itemTemplate"
+                  [notFoundTemplate]="notFoundTemplate"
+                >
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+              <div
+                class="col-lg-5 col-sm-5 col-md-5"
+                *ngIf="vehicelefinal != undefined"
+              >
+                <label class="control-label txt_lbl">{{
+                  "Selected Vehicle" | translate
+                }}</label>
+                <span
+                  class="form-control"
+                  style="background: none; border: none"
+                >
+                  <label
+                    style="
+                      background: linear-gradient(
+                        to bottom,
+                        #ff0000 0%,
+                        #563b3b 100%
+                      );
+                      width: 100px;
+                      height: 26px;
+                      text-align: center;
+                      padding: 3px;
+                      color: white;
+                      border-top-left-radius: 5px;
+                      border-bottom-left-radius: 5px;
+                    "
+                    >{{ vehicelefinal.make }}</label
+                  >
+                  <label
+                    style="
+                      background-color: #52524f;
+                      width: 90px;
+                      height: 26px;
+                      text-align: center;
+                      padding: 3px;
+                      color: white;
+                    "
+                    >{{ vehicelefinal.model }}</label
+                  >
+                  <label
+                    *ngIf="vehicelefinal.variant"
+                    style="
+                      background-color: #52524f;
+                      width: auto;
+                      height: 26px;
+                      text-align: center;
+                      padding: 3px;
+                      color: white;
+                      border-top-right-radius: 5px;
+                      border-bottom-right-radius: 5px;
+                    "
+                    >{{ vehicelefinal.variant }}</label
+                  >
+                </span>
+              </div>
+            </div>
+            <br />
+            <label
+              class="control-label"
+              style="
+                margin-top: 2%;
+                font-size: 16px;
+                border-bottom: 3px solid #ce0e17;
+                margin-bottom: 1%;
+              "
+              ><b
+                ><i class="fa fa-user" aria-hidden="true"></i> Customer
+                Details</b
+              ></label
+            >
+            <div class="form-group">
+              <div class="col-sm-4">
+                <label class="control-label txt_lbl"
+                  >{{ "Customer Name" | translate
+                  }}<span style="color: #c30707; font-weight: bold"
+                    ><span style="color: #c30707; font-weight: bold"
+                      >*</span
+                    ></span
+                  ></label
+                >
+                <input
+                  formControlName="customername"
+                  [style.background-color]="inputcolor"
+                  type="text"
+                  class="form-control cir"
+                />
+                <div
+                  *ngIf="
+                    CreateCustomerFormBooking.controls['customername']
+                      .invalid &&
+                    (CreateCustomerFormBooking.controls['customername'].dirty ||
+                      CreateCustomerFormBooking.controls['customername']
+                        .touched)
+                  "
+                  class="text-danger"
+                >
+                  <div
+                    *ngIf="
+                      CreateCustomerFormBooking.controls['customername'].errors
+                        .required
+                    "
+                  >
+                    {{ "Customer Name is required" | translate }}.
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <label class="control-label txt_lbl"
+                  >{{ "Mobile No. 1" | translate
+                  }}<span style="color: #c30707; font-weight: bold"
+                    ><span style="color: #c30707; font-weight: bold"
+                      >*</span
+                    ></span
+                  ></label
+                >
+                <input
+                  formControlName="mobileOneNo"
+                  [style.background-color]="inputcolor"
+                  type="text"
+                  class="form-control cir"
+                  maxlength="10"
+                />
+                <div
+                  *ngIf="
+                    CreateCustomerFormBooking.controls['mobileOneNo'].invalid &&
+                    (CreateCustomerFormBooking.controls['mobileOneNo'].dirty ||
+                      CreateCustomerFormBooking.controls['mobileOneNo'].touched)
+                  "
+                  class="text-danger"
+                >
+                  <div
+                    *ngIf="
+                      CreateCustomerFormBooking.controls['mobileOneNo'].errors
+                        .required
+                    "
+                  >
+                    {{ "Mobile Number is required" | translate }}.
+                  </div>
+                  <div
+                    *ngIf="
+                      CreateCustomerFormBooking.controls['mobileOneNo'].errors
+                        .pattern
+                    "
+                  >
+                    {{ "Enter a valid Phone Number" | translate }}.
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <label class="control-label txt_lbl">{{
+                  "Mobile No. 2" | translate
+                }}</label>
+                <input
+                  formControlName="mobileTwoNo"
+                  [style.background-color]="inputcolor"
+                  type="text"
+                  class="form-control cir"
+                  formControlName="mobileTwoNo"
+                  maxlength="10"
+                />
+                <!-- <div *ngIf="CreateCustomerFormBooking.value.mobileOneNo!='' && CreateCustomerFormBooking.value.mobileOneNo==CreateCustomerFormBooking.value.mobileTwoNo && (CreateCustomerFormBooking.controls['mobileTwoNo'].dirty || CreateCustomerFormBooking.controls['mobileTwoNo'].touched)" class="text-danger">
+                                    Mobile No. 2 Can't be same as Mobile No. 1
+                                </div> -->
+                <div
+                  *ngIf="
+                    CreateCustomerFormBooking.controls['mobileTwoNo'].invalid &&
+                    (CreateCustomerFormBooking.controls['mobileTwoNo'].dirty ||
+                      CreateCustomerFormBooking.controls['mobileTwoNo'].touched)
+                  "
+                  class="text-danger"
+                >
+                  <div
+                    *ngIf="
+                      CreateCustomerFormBooking.controls['mobileTwoNo'].errors
+                        .pattern
+                    "
+                  >
+                    {{ "Enter a valid Phone Number" | translate }}.
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <label class="control-label txt_lbl">{{
+                  "Email Address" | translate
+                }}</label>
+                <input
+                  formControlName="email"
+                  [style.background-color]="inputcolor"
+                  id="createjobcard2"
+                  type="text"
+                  class="form-control cir"
+                />
+                <div
+                  *ngIf="
+                    CreateCustomerFormBooking.controls['email'].invalid &&
+                    (CreateCustomerFormBooking.controls['email'].dirty ||
+                      CreateCustomerFormBooking.controls['email'].touched)
+                  "
+                  class="text-danger"
+                >
+                  <div
+                    *ngIf="
+                      CreateCustomerFormBooking.controls['email'].errors.email
+                    "
+                  >
+                    {{ "Enter a valid Email" | translate }}.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-5">
+                <label class="control-label txt_lbl" style="padding-left: 5%">{{
+                  "Pickup Address" | translate
+                }}</label>
+                <input
+                  formControlName="pickupaddress"
+                  [style.background-color]="inputcolor"
+                  type="text"
+                  class="form-control cir"
+                />
+              </div>
+              <div class="col-sm-5">
+                <label class="control-label txt_lbl" style="padding-left: 5%">{{
+                  "Drop Address" | translate
+                }}</label>
+                <span
+                  style="
+                    font-size: 11px;
+                    float: right;
+                    margin-right: 20px;
+                    margin-top: 5px;
+                  "
+                >
+                  <!-- <input [disabled]='showdisbale'  [disabled]="CreateCustomerFormBooking.value.pickupaddress==''" type="checkbox" (change)="sameAsPickupAddress($event)" value="newregister"> -->
+                  <input
+                    formControlName="dropaddress"
+                    type="checkbox"
+                    (change)="sameAsPickupAddress($event)"
+                    value="newregister"
+                  />
+                  {{ "Same as Pickup Address" | translate }}
+                </span>
+                <input
+                  [style.background-color]="inputcolor"
+                  *ngIf="samePickup == false"
+                  type="text"
+                  class="form-control cir"
+                />
+                <input
+                  [style.background-color]="inputcolor"
+                  *ngIf="samePickup == true"
+                  type="text"
+                  class="form-control cir"
+                  [value]="CreateCustomerFormBooking.value.pickupaddress"
+                />
+              </div>
+            </div>
+          </form>
+          <button
+            type="submit"
+            (click)="createbooking()"
+            class="btn btn-primary cir cir_btn"
+            style="
+              background: linear-gradient(to bottom, #ff0000 0%, #563b3b 100%);
+              border-color: #c30707;
+              font-weight: bold;
+              padding: 10px;
+              width: 142px;
+              margin: 2% 15px 0%;
+              float: right;
+            "
+          >
+            {{ "Book Appointment" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

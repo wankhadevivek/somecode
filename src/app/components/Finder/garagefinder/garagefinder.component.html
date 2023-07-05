@@ -1,0 +1,167 @@
+<app-spinend></app-spinend>
+
+<div class="container-fluid" style="height: 100vh;" *ngIf="!isFindMyLocation">
+
+    <nav class="navbar navbar-default" style="background-color: transparent;justify-content: center;">
+        <div class="container-fluid">
+            <div class="nav navbar-nav navbar-header">
+                <img src="/assets/images/logo.png" alt="banner" style="width: 50px;height: auto; margin-right: 2%;" />
+                <a class="navbar-brand" href="#" style="color: black;font-size: larger;font-weight:bold;">
+                    Tight The Nut
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row" style="justify-content: center;margin: auto;">
+
+        <form class="example">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-8 col-xs-7">
+                    <button type="submit" style="color: red;"><i class="fa fa-search"></i></button>
+                    <input id="seacrh-input" type="text" placeholder="Search by Workshop Name" name="search2"
+                        [(ngModel)]="searchWorkshop">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-4 col-xs-5">
+                    <select id="seacrh-select" (change)="onWheelerSelect($event.target.value)">
+                        <option value="bike">Bike / Scooter</option>
+                        <option value="car">Car</option>
+                        <option value="all">All</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+            style="justify-content: center;margin: auto;text-align: center;margin: 2%;">
+            <hr>
+            <div class="row">
+                <div class="col-sm-6 col-xs-6 card" style="border-right: 1px solid black;">
+                    <button mat-button color="primary" (click)="onSort()">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" width="20px" height="20px">
+                            <path
+                                d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z" />
+                        </svg>
+                        Sort
+                    </button>
+                </div>
+                <div class="col-sm-6 col-xs-6 card">
+                    <button mat-button color="primary" [matMenuTriggerFor]="menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20px" height="20px">
+                            <path
+                                d="M3.853 54.87C10.47 40.9 24.54 32 40 32H472C487.5 32 501.5 40.9 508.1 54.87C514.8 68.84 512.7 85.37 502.1 97.33L320 320.9V448C320 460.1 313.2 471.2 302.3 476.6C291.5 482 278.5 480.9 268.8 473.6L204.8 425.6C196.7 419.6 192 410.1 192 400V320.9L9.042 97.33C-.745 85.37-2.765 68.84 3.854 54.87L3.853 54.87z" />
+                        </svg>
+                        Filter
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <!-- <button mat-menu-item>Pincode</button> -->
+                        <button mat-menu-item (click)="isFindMyLocation=true">Search By Address</button>
+                    </mat-menu>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <li *ngFor="let workshop of workshopData | searchTerm:searchWorkshop">
+                <div class="card example-card">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+                            <img *ngIf="workshop.workshop_logo != false" class="mat-card-sm-image"
+                                [src]="domSanitizer.bypassSecurityTrustResourceUrl(workshop.workshop_logo)">
+                            <img *ngIf="workshop.workshop_logo == false" class="mat-card-sm-image"
+                                src="/assets/images/onlinegarage-icon.png">
+                        </div>
+                        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
+                            <div class="mat-card-text d-flex flex-column">
+                                <mat-card-title> {{workshop.workshop_name}}</mat-card-title>
+                                <mat-card-subtitle>
+                                    <span class="badge badge-secondary">4.7</span>
+                                    <span class="rating fa fa-star checked"></span>
+                                    <span class="rating fa fa-star checked"></span>
+                                    <span class="rating fa fa-star checked"></span>
+                                    <span class="rating fa fa-star checked"></span>
+                                    <span class="rating fa fa-star"></span>
+                                </mat-card-subtitle>
+                                <mat-card-subtitle style="width: 200px;" matTooltip="{{workshop.workshop_address}}"
+                                    matTooltipHideDelay="1000">{{workshop.workshop_address | readmore: 60: '...'}}
+                                </mat-card-subtitle>
+                                 
+                                    <a *ngIf="workshop.url_param != 'false'" href="/cus/{{workshop.url_param}}"
+                                    class="btn btn-primary col-sm-8 col-xs-12">Visit Website</a>
+                                    <a *ngIf="workshop.url_param == 'false'"
+                                    class="btn btn-secondary col-sm-8 col-xs-12">Website url not found</a>
+                                 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </div>
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog-centered vertical-align-center" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row center" style="margin: 2%;">
+                                <img class="location_img" src="/assets/images/location_pic.PNG" />
+                                <h4 style="text-align: center;margin: 3%;">Find Garages near You!</h4>
+                                <div class="col-sm-12" style="margin-left: auto;margin-right: auto;text-align:center;">
+                                    <button type="button" class="btn btn-primary"
+                                        style="background-color: rgb(202, 22, 22);color:white;width: 100%;"
+                                        data-dismiss="modal" (click)="OnLocationAllowed()">Allow Location</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" style="height: 100vh;margin-top: 2%;" *ngIf="isFindMyLocation">
+    <nav class="navbar navbar-default" style="background-color: transparent;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            style="float: left;font-weight: bold;" (click)="isFindMyLocation = false">
+            <span aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" width="20px" height="20px">
+                    <path
+                        d="M192 448c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25l160-160c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L77.25 256l137.4 137.4c12.5 12.5 12.5 32.75 0 45.25C208.4 444.9 200.2 448 192 448z" />
+                </svg>
+            </span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLongTitle" style="text-align: center;">
+            Your Location</h5>
+
+    </nav>
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="example">
+                <button type="submit" style="color: red;"><i class="fa fa-search"></i></button>
+                <input ngx-google-places-autocomplete id="seacrh-input" type="text" placeholder="Search Address"
+                    #placesRef="ngx-places" name="search2" [(ngModel)]="searchAddress"
+                    (onAddressChange)="AddressChange($event)">
+
+            </form>
+        </div>
+        <div class="col-sm-12">
+            <h3 style="text-align: center;margin:2%">OR</h3>
+        </div>
+        <div class="col-sm-12">
+            <button type="button" (click)="GetCurrentLocation()">
+                <h3 style="margin:2%;width:200px;">
+                    <img src="/assets/images/location_pic.PNG"
+                        style="float: left;width: 40px;height: auto;margin-top: -7px;" />
+                    Detect My Location
+                </h3>
+            </button>
+        </div>
+        <div class="col-sm-12">
+            {{formatted_address}}
+        </div>
+    </div>
+
+
+
+
+</div>

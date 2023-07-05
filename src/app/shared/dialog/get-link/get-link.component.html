@@ -1,0 +1,81 @@
+<div class="closepoup" style="float: right;">
+    <label (click)="closePopup(false)" class="btn btn-white cir" style="padding: 1px 4px;
+    
+    background: none;
+    border: none;"><i class="fa fa-times fa-2x" aria-hidden="true"></i></label>
+</div>
+<div class="row" style="margin-bottom: 17px;">
+    <div class="col-sm-12">
+        <div class="col-sm-12" style="margin-bottom: 7px;
+        margin-top: 2px;">
+            <span style="font-size: 16px;
+            font-weight: bold;">{{data.question}}</span>
+            <br>
+            <span *ngIf="messageoldbal==true" style="font-size: 12px;">{{'Previous Requested Amount' | translate}} ({{messageamount}}) {{'has been cancel by system' | translate}}</span>
+        </div>
+        <div class="checkforpayment" *ngIf="data.jobcardtype=='complete'" style="margin-top: 50px;">
+            <div class="col-sm-6">
+                <label>{{'Payment By Cash' | translate}}</label> 
+                <label class="switch" *ngIf='linkdisabled==false' style=" margin-left: 5px; ">
+                    <input type="checkbox" data-toggle="toggle" (change)="getCash($event)" [checked]='cashValue'/>
+                    <span class="slider round" style="margin-bottom: 8px;
+                    margin-top: -7px;"></span>
+                </label>
+                <label class="switch" *ngIf='linkdisabled==true' style="margin-left: 5px;">
+                    <input type="checkbox" data-toggle="toggle" disabled [checked]='cashValue'/>
+                    <span class="slider round" style="margin-bottom: 8px;
+                    margin-top: -7px;"></span>
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label>{{'Payment Online' | translate}}</label>
+                <label class="switch" style="margin-left: 5px;">
+                    <input type="checkbox" [disabled]='linkdisabled' data-toggle="toggle" (change)="getlink($event)" [checked]='linkValue' />
+                    <span class="slider round" style="margin-bottom: 8px;
+                    margin-top: -7px;"></span>
+                </label>
+            </div>
+            
+            <div *ngIf='showAmount==true'>
+                <div class="col-sm-6">
+                    <label>{{'Payable Amount' | translate}}</label>
+                    <input type="text" class="form-control cir sml_in" [value]="data.amount"  disabled>
+                </div>
+                <div class="col-sm-6">
+                    <label>{{'Received Amount' | translate}}*</label>
+                    <input type="text" (input)="onamountChange($event.target.value)" class="form-control cir sml_in" [value]="getAmount">
+                    <div *ngIf='Advanceerrors==true'>
+                        <span class="text-danger">
+                            {{'Please Enter a Valid Amount' | translate}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="checkforpayment" *ngIf="data.jobcardtype=='request'" style="margin-top: 50px;">
+            <div>
+                <div class="col-sm-6">
+                    <label>{{'Payable Amount' | translate}}</label>
+                    <input type="text" class="form-control cir sml_in" [value]="data.amount"  disabled>
+                </div>
+                <div class="col-sm-6">
+                    <label>Received Amount*</label>
+                    <input type="text" (input)="onamountChange($event.target.value)" class="form-control cir sml_in" [value]="getAmount">
+                    <div *ngIf='Advanceerrors==true'>
+                        <span class="text-danger">
+                            {{'Please Enter a Valid Amount' | translate}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button *ngIf="data.jobcardtype=='complete'" class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 2% 0px 2% 9px; float: left;" (click)="completejob(true)" [disabled]='Advanceerrors'>{{'Complete Jobcard' | translate}}</button>
+<button *ngIf="data.jobcardtype=='Close'" class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 2% 0px 2% 9px; float: left;" (click)="closejob(true)" [disabled]='Advanceerrors'>{{'Close Jobcard' | translate}}</button>
+<button *ngIf="data.jobcardtype=='request'" class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 2% 0px 2% 9px; float: left;" (click)="requestlink(true)" [disabled]='Advanceerrors'>{{'Request Link' | translate}}</button>
+<button class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 2% 0px 2% 9px; float: left;" (click)="closePopup(false)">Cancel</button>
+

@@ -1,0 +1,956 @@
+<app-spinend></app-spinend>
+<div class="bg-light mb-5 mx-0" style="background-color: #f3f3f4">
+  <div class="container" style="margin-top: 65px; margin-bottom: 10px">
+    <div class="row topgargedetails">
+      <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        <div
+          class="col-lg-1 col-sm-1 col-md-2 col-xs-1"
+          style="
+            background-color: #fff;
+            padding: 7px 31px;
+            font-size: 30px;
+            border-radius: 31px;
+            width: 1px;
+          "
+        >
+          <img
+            [src]="vehiclepic"
+            alt=""
+            style="margin-left: -23px; height: 47px; width: 47px"
+          />
+        </div>
+        <div
+          class="col-lg-9 col-sm-9 col-md-9 col-xs-9"
+          style="margin-top: 8px; padding-right: 0px !important"
+        >
+          <span style="color: #000000; font-weight: bold; font-size: 12px">{{
+            workshopname
+          }}</span
+          ><br />
+          <span
+            *ngIf="workshoptiltle != 'none'"
+            style="font-size: 11px; color: #7487ff"
+            >{{ workshoptiltle }}</span
+          >
+          <br />
+          <span
+            style="color: #008000; font-size: 10px"
+            *ngIf="workshopverified == true"
+          >
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+            <span style="margin-left: 5px">{{ "Verified" | translate }}</span>
+          </span>
+        </div>
+        <!-- <div style="margin-bottom: 9px; margin-top: 14px;" *ngIf="showVehicles==false" class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left">
+                    <span (click)="openList()">
+                        <i style="cursor: pointer;" class="fa fa-arrow-left" aria-hidden="true"></i>
+                        <span style="margin-left: 9px;cursor: pointer;text-decoration: underline;">Back</span>
+                    </span>
+                </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="showVehicles == true"
+  class="bg-light mb-5 mx-0"
+  style="background-color: #fff"
+>
+  <div class="container">
+    <div class="row">
+      <div
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+        style="margin-top: 20px; margin-left: 14px"
+      >
+        <span style="font-weight: bold; font-size: 14px; color: #8b8b8b">
+          {{ "Book a Service" | translate }}
+        </span>
+      </div>
+      <div
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+        style="margin-top: 20px"
+      >
+        <div
+          class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-left"
+          style="font-weight: 600; font-size: 12px; color: #8b8b8b"
+        >
+          {{ "Select Vehicle from list" | translate }}
+        </div>
+        <div
+          (click)="openForm('empty', 'no')"
+          class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-right"
+          style="
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            color: #ff0000;
+          "
+        >
+          {{ "Add New Vehicle" | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+        style="margin-bottom: 86px"
+      >
+        <div
+          *ngFor="let data of vehiclesAllListArr; let i = index"
+          (click)="openForm(data, 'no')"
+          style="
+            cursor: pointer;
+            margin-top: 12px;
+            height: 60px;
+            padding: 4px;
+            background-color: #fff;
+            box-shadow: 0px 3px 7px;
+            border-left: 2px solid #04b579;
+          "
+        >
+          <div
+            class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-left"
+            style="margin-top: 6px"
+          >
+            <span style="font-size: 12px; color: #000000">
+              {{ data.vehicleNO }}
+            </span>
+            <br />
+            <span style="font-size: 8px; color: #8b8b8b">
+              {{ data.Vehiclemake }}
+            </span>
+          </div>
+          <div
+            class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-right"
+            style="margin-top: 6px"
+          >
+            <span style="font-size: 10px"
+              >{{ "Service Due" | translate }}
+              {{ data.date | date: "d MMM, y" }} & Last KM Reading {{ data.km }}</span
+            >
+            <br />
+            <span
+              *ngIf="data.darefalg == 'false'"
+              style="font-size: 12px; color: #ff0000"
+              >{{ data.due }}</span
+            >
+            <span
+              *ngIf="data.darefalg == 'true'"
+              style="font-size: 12px; color: #65ff00"
+              >{{ data.due }}</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="showVehicles == false"
+  class="bg-light mb-5 mx-0"
+  style="background-color: #fff"
+>
+  <div class="container" style="margin-bottom: 40px">
+    <div class="row">
+      <div
+        *ngIf="showfirst == true"
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+        style="margin-top: 20px; margin-left: 25px"
+      >
+        <span
+          *ngIf="successmessage == false"
+          style="font-weight: bold; font-size: 14px; color: #757575"
+        >
+          {{ "Book a Service" | translate }}
+        </span>
+      </div>
+      <div
+        *ngIf="showfirst == false"
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center"
+        style="margin-top: 20px; margin-left: 25px"
+      >
+        <span style="font-weight: bold; font-size: 14px; color: #c30707">
+          {{ timeofservice }} {{ deliveryDateField | date: "d MMMM y" }}
+        </span>
+      </div>
+      <div
+        *ngIf="successmessage == false"
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+      >
+        <mat-horizontal-stepper [linear]="isLinear" #stepper>
+          <mat-step [stepControl]="firstFormGroup" *ngIf="showStep">
+            <form
+              novalidate
+              class="form-horizontal"
+              [formGroup]="firstFormGroup"
+            >
+              <div class="row">
+                <div
+                  class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+                  style="margin-bottom: 7px"
+                >
+                  <span style="font-weight: bold; font-size: 14px; color: #000">
+                    {{ "Vehicle Details" | translate }}
+                  </span>
+                </div>
+                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                  <label
+                    style="color: #858586; font-size: 12px; margin-top: 5px"
+                    class="control-label"
+                    >{{ "Select Vehicle" | translate
+                    }}<span style="color: #c30707; font-weight: bold"
+                      >*</span
+                    ></label
+                  >
+                  <!-- <input style="margin-top: 5px;" type="text"  class="form-control cir" formControlName="serachvehicle" placeholder="Search Brand,Model"> -->
+                  <ng-autocomplete
+                    formControlName="serachvehicle"
+                    [(ngModel)]="vehiclesearchmodel"
+                    placeHolder="{{ 'Search Brand,Model' | translate }}"
+                    [data]="searchVehicleData"
+                    (selected)="selectedResultForVechile($event)"
+                    (input)="searchBarForVechile($event.target.value)"
+                    [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate"
+                  >
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                  <div
+                    *ngIf="
+                      submitted &&
+                      firstFormGroup.controls['serachvehicle'].errors
+                    "
+                    class="text-danger"
+                  >
+                    <div
+                      *ngIf="
+                        firstFormGroup.controls['serachvehicle'].errors.required
+                      "
+                    >
+                      {{ "Vehicle is required" | translate }}.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                  <label
+                    style="
+                      color: #858586;
+                      font-weight: 100;
+                      font-size: 12px;
+                      margin-top: 15px;
+                    "
+                    class="control-label"
+                    >{{ "Vehicle Number" | translate
+                    }}<span style="color: #c30707; font-weight: bold">*</span>
+                    (Ex. MH12AA1234)</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control cir"
+                    formControlName="vehiclenumber"
+                    placeholder="{{ 'Enter Vehicle Number' | translate }}"
+                    oninput="this.value = this.value.toUpperCase()"
+                  />
+                  <div
+                    *ngIf="
+                      submitted &&
+                      firstFormGroup.controls['vehiclenumber'].errors
+                    "
+                    class="text-danger"
+                  >
+                    <div
+                      *ngIf="
+                        firstFormGroup.controls['vehiclenumber'].errors.required
+                      "
+                    >
+                      {{ "Vehicle Number is required" | translate }}.
+                    </div>
+                    <div
+                      *ngIf="
+                        firstFormGroup.controls['vehiclenumber'].errors.pattern
+                      "
+                    >
+                      {{ "Enter a valid Vehicle Number" | translate }}.
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+                  style="margin-top: 24px; margin-bottom: 7px"
+                >
+                  <span style="font-weight: bold; font-size: 14px; color: #000">
+                    {{ "Personal Details" | translate }}
+                  </span>
+                </div>
+                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                  <label
+                    style="
+                      color: #858586;
+                      font-weight: 100;
+                      font-size: 12px;
+                      margin-top: 5px;
+                    "
+                    class="control-label"
+                    >{{ "Full Name" | translate
+                    }}<span style="color: #c30707; font-weight: bold"
+                      >*</span
+                    ></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control cir"
+                    formControlName="name"
+                    placeholder="Enter Full Name"
+                  />
+                  <div
+                    *ngIf="submitted && firstFormGroup.controls['name'].errors"
+                    class="text-danger"
+                  >
+                    <div
+                      *ngIf="firstFormGroup.controls['name'].errors.required"
+                    >
+                      {{ "Name is required" | translate }}.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                  <label
+                    style="
+                      color: #858586;
+                      font-weight: 100;
+                      font-size: 12px;
+                      margin-top: 15px;
+                    "
+                    class="control-label"
+                    >{{ "Mobile Number" | translate
+                    }}<span style="color: #c30707; font-weight: bold">*</span
+                    >(Preferable WhatsApp Number)</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control cir"
+                    formControlName="mobilenumber"
+                    placeholder="{{ 'Enter Mobile Number' | translate }}"
+                  />
+                  <div
+                    *ngIf="
+                      submitted &&
+                      firstFormGroup.controls['mobilenumber'].errors
+                    "
+                    class="text-danger"
+                  >
+                    <div
+                      *ngIf="
+                        firstFormGroup.controls['mobilenumber'].errors.required
+                      "
+                    >
+                      {{ "Mobile Number is required" | translate }}.
+                    </div>
+                    <div
+                      *ngIf="
+                        firstFormGroup.controls['mobilenumber'].errors.pattern
+                      "
+                    >
+                      {{ "Enter a valid Mobile Number" | translate }}.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                  <label
+                    style="
+                      color: #858586;
+                      font-weight: 100;
+                      font-size: 12px;
+                      margin-top: 15px;
+                    "
+                    class="control-label"
+                    >{{
+                      "Email Id (Confirmation Email Will be Sent)" | translate
+                    }}</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control cir"
+                    formControlName="email"
+                    placeholder="{{ 'Enter Email ID' | translate }}"
+                  />
+                  <div
+                    *ngIf="submitted && firstFormGroup.controls['email'].errors"
+                    class="text-danger"
+                  >
+                    <div
+                      *ngIf="firstFormGroup.controls['email'].errors.pattern"
+                    >
+                      {{ "Enter a valid Email ID" | translate }}.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  *ngIf="vehiclesAllListArr.length != 0"
+                  class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center"
+                >
+                  <div class="row" style="display: flex">
+                    <div
+                      (click)="openList('true')"
+                      class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center"
+                      style="
+                        background: #fff;
+                        color: #ce0e17;
+                        padding: 7px;
+                        margin-top: 8px;
+                        font-size: 16px;
+                        margin-left: 15px;
+                        border-radius: 5px;
+                        border: 2px solid;
+                      "
+                    >
+                      <button mat-button matStepperPrevious>
+                        {{ "Back" | translate }}
+                      </button>
+                    </div>
+                    <div
+                      (click)="updatefirst()"
+                      class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center"
+                      style="
+                        background: #ce0e17;
+                        color: #fff;
+                        padding: 7px;
+                        margin-top: 8px;
+                        font-size: 16px;
+                        margin-left: 15px;
+                        border-radius: 5px;
+                        border: 2px solid;
+                      "
+                    >
+                      <button mat-button matStepperNext>
+                        {{ "Save" | translate }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  *ngIf="vehiclesAllListArr.length == 0"
+                  class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center"
+                >
+                  <div class="row">
+                    <div
+                      (click)="updatefirst()"
+                      style="
+                        background: #ce0e17;
+                        color: #fff;
+
+                        margin-top: 16px;
+                        margin-bottom: 25px;
+                        font-size: 16px;
+                        width: 100%;
+                        border-radius: 5px;
+                      "
+                    >
+                      <button mat-button matStepperNext>
+                        {{ "Save" | translate }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step *ngIf="showStep">
+            <div class="row">
+              <div
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+                style="margin-bottom: 7px"
+              >
+                <span style="font-weight: bold; font-size: 14px; color: #000">
+                  {{ "Booking Date" | translate }}
+                </span>
+              </div>
+              <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+                <label style="margin-top: 5px" class="control-label">{{
+                  "Select Date" | translate
+                }}</label>
+                <div style="display: flex">
+                  <input
+                    style="width: 114px; padding: 13px"
+                    class="form-control cir"
+                    matInput
+                    placeholder="{{ 'Choose a date' | translate }}"
+                    [satDatepicker]="picker15"
+                    [min]="maxDate"
+                    [ngModelOptions]="{ standalone: true }"
+                    (ngModelChange)="deliveryDate($event)"
+                    [ngModel]="deliveryDateField"
+                    readonly
+                  />
+                  <sat-datepicker #picker15> </sat-datepicker>
+                  <sat-datepicker-toggle
+                    matSuffix
+                    [for]="picker15"
+                  ></sat-datepicker-toggle>
+                </div>
+              </div>
+              <div
+                class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-left"
+                style="margin-top: 36px"
+              >
+                <span
+                  (click)="todayDate()"
+                  [class]="todaycalss"
+                  style="margin-right: 60px; margin-left: 2px"
+                  >Today</span
+                >
+                <span (click)="tomorrowDate()" [class]="toclass">{{
+                  "Tomorrow" | translate
+                }}</span>
+              </div>
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left">
+                <label style="margin-top: 5px" class="control-label">{{
+                  "Time" | translate
+                }}</label>
+              </div>
+              <div
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+                style="margin-left: 33px; margin-top: 13px"
+              >
+                <span
+                  (click)="time1()"
+                  [class]="time11"
+                  style="margin-right: 57px; margin-left: -33px"
+                  >08:30 {{ "AM" | translate }}</span
+                >
+                <span
+                  (click)="time2()"
+                  [class]="time12"
+                  style="margin-right: 63px"
+                  >09:00 {{ "AM" | translate }}</span
+                >
+                <span
+                  (click)="time3()"
+                  [class]="time13"
+                  style="margin-right: 46px"
+                  >09:30 {{ "AM" | translate }}</span
+                >
+                <br />
+                <div style="margin-top: 32px">
+                  <span
+                    (click)="time4()"
+                    [class]="time14"
+                    style="
+                      margin-right: 56px;
+                      margin-top: 48px;
+                      margin-left: -32px;
+                    "
+                    >10:00 {{ "AM" | translate }}</span
+                  >
+                  <span
+                    (click)="time5()"
+                    [class]="time15"
+                    style="margin-right: 66px; margin-top: 28px"
+                    >10:30 {{ "AM" | translate }}</span
+                  >
+                  <span
+                    (click)="time6()"
+                    [class]="time16"
+                    style="margin-right: 34px; margin-top: 28px"
+                    >11:00 {{ "AM" | translate }}</span
+                  >
+                </div>
+              </div>
+              <div
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+                style="margin-top: 30px"
+              >
+                <label style="margin-top: 5px" class="control-label">{{
+                  "Select Time" | translate
+                }}</label>
+                <div style="display: flex">
+                  <input
+                    class="form-control cir"
+                    aria-label="24hr format"
+                    [ngxTimepicker]="defaultTime"
+                    [value]="deliveryTimeField"
+                    readonly
+                    [ngModelOptions]="{ standalone: true }"
+                    (ngModelChange)="deliveryTime($event)"
+                    [ngModel]="deliveryTimeField"
+                    style="background-color: #fff; width: 40%"
+                  />
+                  <ngx-material-timepicker
+                    #defaultTime
+                  ></ngx-material-timepicker>
+                </div>
+              </div>
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center">
+                <div class="row" style="display: flex">
+                  <div
+                    (click)="backtofirst()"
+                    class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center"
+                    style="
+                      background: #fff;
+                      color: #ce0e17;
+                      padding: 7px;
+                      margin-top: 8px;
+                      font-size: 16px;
+                      margin-left: 15px;
+                      border-radius: 5px;
+                      border: 2px solid;
+                    "
+                  >
+                    <button mat-button matStepperPrevious>
+                      {{ "Back" | translate }}
+                    </button>
+                  </div>
+                  <div
+                    (click)="updateSecond()"
+                    class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center"
+                    style="
+                      background: #ce0e17;
+                      color: #fff;
+                      padding: 7px;
+                      margin-top: 8px;
+                      font-size: 16px;
+                      margin-left: 15px;
+                      border-radius: 5px;
+                    "
+                  >
+                    <button mat-button matStepperNext>
+                      {{ "Save" | translate }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-step>
+          <mat-step *ngIf="showStep">
+            <div class="row">
+              <div
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+                style="margin-bottom: 7px"
+              >
+                <span style="font-weight: bold; font-size: 14px; color: #000">
+                  {{ "Service Details" | translate }}
+                </span>
+              </div>
+              <div
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+                style="margin-left: 33px; margin-top: 13px"
+              >
+                <div *ngFor="let data of allOnlineServices; let i = index">
+                  <span
+                    (click)="addORRemoveService(data, i)"
+                    [class]="data.classhave"
+                    style="margin-left: -33px"
+                    >{{ data.part_name }}</span
+                  >
+                  <br />
+                  <br />
+                  <br />
+                </div>
+              </div>
+              <div
+                class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+                style="margin-left: 17px; margin-top: 23px; margin-bottom: 5px"
+              >
+                <div
+                  class="row"
+                  style="color: #000; font-weight: bold; font-size: 12px"
+                >
+                  <span>
+                    {{
+                      "Note: BreakDown Charges will be applicable" | translate
+                    }}
+                  </span>
+                  <br />
+                  <span>
+                    {{ "Free Pickup and Drop with in 5 KM" | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center">
+                <div class="row" style="display: flex">
+                  <div
+                    class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center"
+                    style="
+                      background: #fff;
+                      color: #ce0e17;
+                      padding: 7px;
+                      margin-top: 8px;
+                      font-size: 16px;
+                      margin-left: 15px;
+                      border-radius: 5px;
+                      border: 2px solid;
+                    "
+                  >
+                    <button mat-button matStepperPrevious>
+                      {{ "Back" | translate }}
+                    </button>
+                  </div>
+                  <div
+                    (click)="updatethird()"
+                    class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center"
+                    style="
+                      background: #ce0e17;
+                      color: #fff;
+                      padding: 7px;
+                      margin-top: 8px;
+                      font-size: 16px;
+                      margin-left: 15px;
+                      border-radius: 5px;
+                    "
+                  >
+                    <button mat-button matStepperNext>
+                      {{ "Save" | translate }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-step>
+          <mat-step [stepControl]="secondFormGroup" *ngIf="showStep">
+            <form
+              *ngIf="successmessage == false"
+              novalidate
+              class="form-horizontal"
+              [formGroup]="secondFormGroup"
+            >
+              <div class="row">
+                <div
+                  class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left"
+                  style="margin-bottom: 7px"
+                >
+                  <span style="font-weight: bold; font-size: 14px; color: #000">
+                    {{ "Address Details" | translate }}
+                  </span>
+                </div>
+                <div
+                  class="col-lg-3 col-sm-3 col-md-3 col-xs-3 text-left"
+                  style="padding-right: 0px"
+                >
+                  <label
+                    class="control-label txt_lbl"
+                    style="padding-left: 5%; font-size: 16px; margin-right: 6px"
+                    >{{ "Visit" | translate }}</label
+                  >
+                  <span style="font-size: 11px">
+                    <input
+                      type="checkbox"
+                      [checked]="dropcheck"
+                      (change)="cheangedroptopic($event)"
+                    />
+                  </span>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-left">
+                  <label
+                    class="control-label txt_lbl"
+                    style="padding-left: 5%; font-size: 16px"
+                    >{{ "Pick & Drop" | translate }}</label
+                  >
+                  <span style="font-size: 11px; margin-left: 5px">
+                    <input
+                      type="checkbox"
+                      [checked]="pickcheck"
+                      (change)="changepicktodrop($event)"
+                    />
+                  </span>
+                </div>
+                <div
+                  *ngIf="pickcheck == true"
+                  class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+                >
+                  <label style="margin-top: 5px" class="control-label txt_lbl"
+                    >{{ "Pick Up Address" | translate }}
+                    <span style="color: #c30707; font-weight: bold"
+                      >*</span
+                    ></label
+                  >
+                  <input
+                    style="margin-top: 5px"
+                    type="text"
+                    class="form-control cir"
+                    formControlName="pick"
+                    placeholder="{{ 'Pickup Address' | translate }}"
+                  />
+                  <div
+                    *ngIf="
+                      submittedsecond && secondFormGroup.controls['pick'].errors
+                    "
+                    class="text-danger"
+                  >
+                    <div
+                      *ngIf="secondFormGroup.controls['pick'].errors.required"
+                    >
+                      {{ "Please Enter Pickup Address" | translate }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  *ngIf="pickcheck == true"
+                  class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+                >
+                  <label style="margin-top: 5px" class="control-label txt_lbl">
+                    {{ "Drop Address" | translate }}
+                    <span style="color: #c30707; font-weight: bold">*</span>
+                  </label>
+                  <span
+                    style="float: right; margin-top: 3px; font-weight: bold"
+                  >
+                    <input
+                      type="checkbox"
+                      *ngIf="istrue == false"
+                      (change)="sameAsPickupAddress($event)"
+                    />
+                    <input
+                      type="checkbox"
+                      *ngIf="istrue == true"
+                      checked
+                      (change)="sameAsPickupAddress($event)"
+                    />
+                    {{ "Same as pickup address" | translate }}
+                  </span>
+                  <input
+                    style="margin-top: 5px"
+                    type="text"
+                    class="form-control cir"
+                    formControlName="drop"
+                    placeholder="Drop Address"
+                  />
+
+                  <!-- <input
+                    *ngIf="istrue == true"
+                    style="margin-top: 5px"
+                    type="text"
+                    class="form-control cir"
+                    formControlName="drop"
+                    [value]="pick_up"
+                    readonly
+                  /> -->
+                  <div
+                    *ngIf="
+                      submittedsecond && secondFormGroup.controls['drop'].errors
+                    "
+                    class="text-danger"
+                  >
+                    <div
+                      *ngIf="secondFormGroup.controls['drop'].errors.required"
+                    >
+                      {{ "Please Enter Drop Address" | translate }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center"
+                >
+                  <div class="row" style="display: flex">
+                    <div
+                      class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center"
+                      style="
+                        background: #fff;
+                        color: #ce0e17;
+                        padding: 7px;
+                        margin-top: 8px;
+                        font-size: 16px;
+                        margin-left: 15px;
+                        border-radius: 5px;
+                        border: 2px solid;
+                      "
+                    >
+                      <button mat-button matStepperPrevious>
+                        {{ "Back" | translate }}
+                      </button>
+                    </div>
+                    <div
+                      (click)="updateforth()"
+                      class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-center"
+                      style="
+                        background: #ce0e17;
+                        color: #fff;
+                        padding: 7px;
+                        margin-top: 8px;
+                        font-size: 16px;
+                        margin-left: 15px;
+                        border-radius: 5px;
+                      "
+                    >
+                      <button type="submit" mat-button matStepperNext>
+                        {{ "Book" | translate }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </div>
+      <div
+        *ngIf="successmessage == true"
+        class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center"
+      >
+        <img
+          src="../../../assets/images/Group 249.png"
+          alt=""
+          style="height: 160px; margin-bottom: 10px"
+        />
+        <br />
+        <span style="color: #000000; font-weight: 500; font-size: 14px"
+          >{{ "Thank You" | translate }}!</span
+        >
+        <br />
+        <span style="color: #000000; font-weight: 500; font-size: 14px">{{
+          "Booking Successful" | translate
+        }}</span>
+        <br />
+        <br />
+        <span style="color: #888585; font-weight: 300; font-size: 12px">
+          {{ "Your Booking has been received for" | translate }}
+          {{ servicetime | date: "EEEE, d MMM, y" }} {{ "at" | translate }}
+          {{ servicetime | date: "h:mm: a" }}.
+          {{ "You have booked for servicing of" | translate }}
+          {{ vehiclebookdetails }} {{ vehiclebooknumber }}
+        </span>
+        <br />
+        <br />
+        <span style="color: #888585; font-weight: 300; font-size: 12px">
+          {{
+            "An email confirmation will be sent to you shortly with the booking details"
+              | translate
+          }}
+          .
+        </span>
+        <br />
+        <span style="font-weight: bold; font-weight: 300; font-size: 12px">
+          {{ "Your Booking ID" | translate }}:
+        </span>
+        <span style="color: #f13636; font-weight: 300; font-size: 12px">
+          {{ bookingid }}
+        </span>
+        <div
+          [routerLink]="paramforbooking"
+          (click)="showallbookings()"
+          class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center"
+          style="
+            background: #ce0e17;
+            color: #fff;
+            padding: 7px;
+            margin-top: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 2px solid;
+          "
+        >
+          <button>{{ "My Booking" | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

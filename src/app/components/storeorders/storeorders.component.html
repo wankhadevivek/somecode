@@ -1,0 +1,194 @@
+
+<div class="enduser">
+<div class="bg-light mb-5 mx-0" 
+style="background-color: #fff;
+padding-top: 2rem;">
+<div class="bg-light mb-5 mx-0" style="background-color: #fff;
+ padding: 20px 10px 20px 10px;border-bottom: 1px solid #e2e2e2;
+ margin-top: 5%;">
+    <div class="row">
+      <div class="container">
+        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-left">
+          <span style="font-weight: 700; font-size: 14px;">{{ 'My Orders' | translate }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+          <div  >
+            <div class="row" style="margin-top:10px">
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center" style="margin-bottom: 68px;">
+                  <span  >
+                    <div class="search-results"
+                    style = "
+                    max-width: 90%;
+                    padding-top: 2rem;
+                "
+                       >
+                        <!-- <ng-container *ngFor="let data of ordersPlaced;let i = index;"
+                               class="col-xl-3 col-lg-4 col-md-4 col-12 text-center" style="margin-top: 15px;
+                           margin-bottom: 15px;"> -->
+                        <ng-container *ngFor="let data of ordersPlaced | 
+                        paginate: { itemsPerPage: 5, 
+                               currentPage: page,
+                               totalItems:totalLength };let i = index" 
+                               class="col-xl-3 col-lg-4 col-md-4 col-12 text-center" style="margin-top: 15px;
+                           margin-bottom: 15px;">
+                          <div class="row" style="padding: 11px;">
+                              <div class="col-sm-12">
+                                  <mat-accordion class="pilot">
+                                      <mat-expansion-panel>
+                                          <mat-expansion-panel-header 
+                                          style="    padding: 4px 12px 4px 5px;
+                                          height: 188px !important;">
+                                              <mat-panel-title style="font-size: 13px;">
+                                                <span
+                                                style="height: 10px;
+                                                width: 10px;
+                                                background-color: #141401;
+                                                border-radius: 50%;
+                                                display: inline-block;margin-top: 7px;  margin-right: 1rem;"
+                                                              [style.backgroundColor]='colorArray[data.status]'></span>
+                                  
+                                                <!-- <span *ngIf="data.status=='completed'" style="color: green; height: 10px;
+                                                width: 10px;
+                                                background-color: green;
+                                                border-radius: 50%;
+                                                display: inline-block;margin-top: 7px; "></span>
+                                                <span *ngIf="data.status=='canceled'" style="color: red; height: 10px;
+                                                width: 10px;
+                                                background-color: rgb(248, 234, 234);
+                                                border-radius: 50%;
+                                                display: inline-block;margin-top: 7px; "></span> -->
+                                                 <select
+                                                 class="report-select"
+                                                 (change)="statusChange($event, data)"
+                                                 [ngModelOptions]="{ standalone: true }"
+                                                 [(ngModel)]="data.status"
+                                               >
+                                                 <option
+                                                 *ngFor="let status of orderStatuses" 
+                                                 [value]="status.value">
+                                                 {{ status.viewValue }}
+                                                 </option>
+                                                 </select>
+                                                
+                                                <!-- <mat-form-field appearance="outline" style="max-width: 30%; max-height:50%">
+                                                    <mat-label style="font-weight: bold"
+                                                      >Order Status</mat-label
+                                                    >
+                                                    <mat-select
+                                                    [(ngModel)] = "data.status"
+                                                    (selectionChange)="statusChange($event.value, data)"
+                                                     
+                                                    >
+                                                    <mat-option *ngFor="let status of orderStatuses" [value]="status.value">
+                                                      {{ status.viewValue }}
+                                                    </mat-option>
+                                                      
+                                                    </mat-select>
+                                                  </mat-form-field> -->
+                                                <!-- <span *ngIf="data.status=='inprocess'" style="margin-left: 7px;  margin-top: 6px;">Order Pending</span>
+                                                <span *ngIf="data.status=='completed'" style="margin-left: 7px;  margin-top: 6px;">Order Completed</span>
+                                                <span  *ngIf="data.status=='canceled'" style="margin-left: 7px;  margin-top: 6px;">Order canceled</span> -->
+                                                <span style="    margin-left: 8px;">{{ 'Order' | translate }} #{{data.orderid}}<br>({{currency_symbol}} {{data.price}})</span>
+                                              </mat-panel-title>
+                                              <mat-panel-description 
+                                              style="font-size: 11px;   
+                                               font-weight: bold;
+                                                color: black;
+                                               display: flex;
+                                                flex-direction: row;
+                                                justify-content: space-between;">
+                                                <div class="" style="">
+                                                <h5> {{ data.customername }}</h5>
+                                                
+                                                <h5> {{ data.customerphone }}</h5>
+                                                <h5>{{ data.address }}, {{ data.city }} </h5>
+                                                </div>
+                                                <div class="">
+                                                <span>{{data.created_at | date:'MMM d, y, h:mm'}}</span>
+                                                <br>
+                                                <div
+                                                      class="closepoup"
+                                                      data-toggle="tooltip"
+                                                      title="Share WhatsApp"
+                                                      style="margin-left: 10px"
+                                                    >
+                                                      <a [href]="contactlink" target="_blank">
+                                                        <label
+                                                          (click)="onShareWhatsApp(data)"
+                                                          class="btn btn-white cir"
+                                                          style="padding: 5px 9px"
+                                                        >
+                                                          <i
+                                                            class="fa fa-whatsapp"
+                                                            aria-hidden="true"
+                                                            style="color: green"
+                                                          ></i
+                                                        ></label>
+                                                      </a>
+                                      
+                                                    </div>
+                                                <!-- <span style="color: #000000;
+                                                font-size: 10px;
+                                                font-weight: 800;
+                                                margin-left: 12px;
+                                                margin-top: 3px; cursor: pointer; text-decoration: underline;">{{ 'Download Invoice' | translate }}</span> -->
+                                            </div> 
+                                            </mat-panel-description>
+                                          </mat-expansion-panel-header>
+                                          <div *ngFor="let dataproduct of data.cartdetails;let j = index;" style="border-top: 3px solid rgb(226, 226, 226);margin-bottom: 65px;padding-top: 9px;">
+                                              <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding: 0px;    margin-right: 17px;">
+                                              <img [src]="dataproduct.image" alt=""style="    height: 50px;
+                                              width: 80px;
+                                              margin-right: 5px;">
+                                              </div>
+                                              <div class="col-lg-4 col-sm-4 col-md-4 col-xs-4" style="    font-size: 12px;
+                                            text-align: left;
+                                            padding-right: 0px;">
+                                              <span>{{dataproduct.name}}</span>
+                                              <br>
+                                              <span>{{ 'Qty' | translate }}: {{dataproduct.qunatuty}}</span>
+                                              </div>
+                                              <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6 text-right" style="font-size: 12px;
+                                            font-weight: 800;
+                                            padding-left: 0px;
+                                            margin-left: -17px;">
+                                              <span>{{currency_symbol}} {{dataproduct.price*dataproduct.qunatuty*dataproduct.units}}</span>
+                                              <br>
+                                              <!-- <span style="color: green;">{{ 'You Saved' | translate }} {{currency_symbol}} {{(dataproduct.orprice-dataproduct.price)*dataproduct.qunatuty*dataproduct.units}}</span> -->
+                                              </div>
+                                          </div>
+                                      </mat-expansion-panel>
+                                  </mat-accordion>
+                              </div>
+                          </div>
+                        </ng-container>
+                    
+                    <div>
+                        <pagination-controls class="text-center" (pageChange)="onPageChange((page= $event))"
+        style="margin-top: 1rem;
+        display: block;"></pagination-controls>
+                    </div>
+                    </div>
+                  </span>
+                  <!-- <div *ngIf='jobcardListed==false' class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center">
+                    <p  style="font-size: 20px; font-weight: bold;">
+                        {{ 'No Order' | translate }}
+                    </p>
+                    <img src="../../../assets/images/6908.png" alt="" style="    margin-top: 6px;
+                    height: 180px;">
+                  
+                  </div> -->
+              </div>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

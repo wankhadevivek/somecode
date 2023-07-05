@@ -1,0 +1,328 @@
+<app-spinlogin></app-spinlogin>
+<div class="container-fluid" style="padding-left: 0;margin-bottom: 0;padding-bottom: 0;">
+  <div class="col-lg-6 col-sm-6 hidden-xs col-md-6 img-div-mt" style="margin-top: 25px;">
+    <img src="../../../assets/images/car-repair.jpg" alt="" width="100%" style="height: -webkit-fill-available;">
+  </div>
+  <div class="header" style="margin-top: 25px;">
+      <span class="login100-form-title p-b-34" style="font-weight: bold;">
+          <span style="color: #c30707;">{{'TTN Garage' | translate}}</span><br>
+          <span>{{'Smart Workshop Manager' | translate}}</span>
+      </span>
+  </div>
+  
+    <form class="col-lg-6 col-sm-6 col-xs-12 col-md-6 vertical-center" *ngIf="shwootp==false" [formGroup]="myForm" (ngSubmit)="submitForm()" novalidate>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6 col-xs-6" data-validate="First name">
+            <input id="first-name" class="form-control" type="text" name="firstname" placeholder="{{'First name' | translate}}*" formControlName="firstname">
+            <!-- <span class="focus-input100"></span> -->
+            <div *ngIf="submitted  && myForm.controls['firstname'].errors" class="text-danger">
+              <div *ngIf="myForm.controls['firstname'].errors.required">
+              {{'First Name is required' | translate}}.
+            </div>
+            <div *ngIf="myForm.controls['firstname'].errors.pattern">
+              {{'Enter a Valid Name' | translate}}
+            </div>
+          </div>
+          </div>
+          <div class="validate-input m-b-20 col-lg-6 col-md-6 col-md-6 col-sm-6 col-xs-6" data-validate="Last Name">
+            <input class="form-control" type="text" name="lastname" placeholder="{{'Last Name' | translate}}" formControlName="lastname">
+            <div *ngIf="submitted  && myForm.controls['lastname'].errors" class="text-danger">
+            <div *ngIf="myForm.controls['lastname'].errors.pattern">
+              {{'Enter a Valid Name' | translate}}
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="validate-input m-b-20 col-lg-12 col-md-12 col-sm-12" data-validate="Workshop Name">
+            <input  class="form-control" type="text" name="workshopname" placeholder="{{'WorkShop Name' | translate}}*" formControlName="workshopname">
+            <span class="focus-input100"></span>
+            <div *ngIf="submitted  && myForm.controls['workshopname'].errors" class="text-danger">
+              <div *ngIf="myForm.controls['workshopname'].errors.required">
+              {{'Workshop name is required' | translate}}.
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6 col-xs-6" data-validate="Email">
+            <input  class="form-control" type="text" name="Email" placeholder="Email*" formControlName="email">
+            
+            <div *ngIf=" submitted  && myForm.controls['email'].errors" class="text-danger">
+              <div *ngIf="myForm.controls['email'].errors.required">
+                  {{'Email is required' | translate}}.
+              </div>
+              <div *ngIf="myForm.controls['email'].errors.email">
+                {{'Enter a Valid Email' | translate}}
+              </div>
+          </div>
+          </div>
+          <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <input ngx-google-places-autocomplete class="form-control" type="text" id="address"
+             name="address" placeholder="{{'Address' | translate}}" 
+             formControlName="address" (onAddressChange)="AddressChange($event)">
+            
+            <!-- <input  ngx-google-places-autocomplete [options]=
+                  'options'  (onAddressChange)="AddressChange($event)"/>
+                {{ formattedaddress }} -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6 col-xs-6" data-validate="City">
+            <input class="form-control" type="text" name="city"
+            placeholder="{{'City' | translate}}" formControlName="city" [value]="mapCity">
+            
+          </div>
+          <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6 col-xs-6" data-validate="State">
+            <input  class="form-control" type="text" name="state" 
+            placeholder="{{'State' | translate}}" formControlName="state" [value]="mapState">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6 col-xs-6" data-validate="Zipcode">
+            <input  class="form-control" type="text" name="zipcode" placeholder="{{'Zipcode' | translate}}" formControlName="zipcode" maxlength="6" [value]="mapPaostalCode">
+            
+            <div *ngIf="myForm.controls['zipcode'].invalid && (myForm.controls['zipcode'].dirty || myForm.controls['zipcode'].touched)" class="text-danger">
+                                  
+              <div *ngIf="myForm.controls['zipcode'].errors.pattern">
+                  {{'Enter a Valid Zip code' | translate}}
+                </div>
+            </div>
+          </div>
+          <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <input class="form-control" type="text" id="country_name" name="country_name"
+             placeholder="{{'country' | translate}}" formControlName="country_name" [value]="mapCountry">
+          </div>
+          
+        </div>
+  
+        <div class="row">
+          
+          <!-- <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <input class="form-control" type="text" name="country_code" placeholder="{{'country code' | translate}}" formControlName="country_code">
+          </div>
+          <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <input class="form-control" type="text" name="country_currency" placeholder="{{'country currency' | translate}}" formControlName="country_currency">
+          </div>
+          <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6 col-xs-6" data-validate="Address">
+            <input class="form-control" type="text" name="primary_language" placeholder="{{'primary language' | translate}}" formControlName="primary_language">
+          </div> -->
+          <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6 col-xs-6" data-validate="Rto No.">
+            <input class="form-control" type="text" name="rtono" placeholder="{{'RTO No' | translate}}.*" formControlName="rtono" maxlength="4" oninput="this.value = this.value.toUpperCase()">
+            <div *ngIf=" submitted  && myForm.controls['rtono'].errors" class="text-danger">
+              <div *ngIf="myForm.controls['rtono'].errors.required">
+              {{'RTO No is required' | translate}}.
+            </div>
+            <div *ngIf="myForm.controls['rtono'].errors.pattern">
+                {{'Enter a Valid RTO Number' | translate}}
+              </div>
+          </div>
+          </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6">
+              <div class="validate-input m-b-20" data-validate="Phoen Number">
+                <!-- <input class="form-control" type="text" name="phonenumber" 
+                placeholder="{{'Phone Number' | translate}}*" formControlName="phonenumber" maxlength="10"> -->
+                <ngx-intl-tel-input 
+                [cssClass]="'phone-num-custom'"
+                [preferredCountries]="preferredCountries"
+                [enableAutoCountrySelect]="true"
+                [enablePlaceholder]="true"
+                [searchCountryFlag]="true"
+                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                [selectFirstCountry]="false"
+                [selectedCountryISO]="CountryISO.India"
+                [maxLength]="15"
+                [phoneValidation]="true"
+                [separateDialCode]="separateDialCode"
+                [customPlaceholder]="'Phone Number'"
+                name="phonenumber"
+                formControlName="phonenumber" (change)=checkPhoneCountry()>
+              </ngx-intl-tel-input>
+                <div *ngIf="submitted && myForm.controls['phonenumber'].errors" class="text-danger" style="margin-top: 2%;">
+                  <div *ngIf="myForm.controls['phonenumber'].errors.required || !myForm.controls['phonenumber'].valid">
+                  {{'Phone Number is required' | translate}}.
+                </div>
+                <div *ngIf="myForm.controls['phonenumber'].errors.pattern">
+                    {{'Enter a Valid Number' | translate}}
+                  </div>
+                </div> 
+                <div *ngIf="countryError == true" class="text-danger" style="margin-top: 5%;font-size: smaller;">
+                    We are not available for this country, Please Select Preferred Country Only.
+                </div>
+             
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <div class="validate-input m-b-20" data-validate="Phoen Number2">
+                <!-- <input class="form-control" type="text" name="phonenumber2"
+                 placeholder="{{'Phone Number' | translate}} 2" formControlName="phonenumbertwo" maxlength="10"> -->
+                 <ngx-intl-tel-input 
+                 [cssClass]="'phone-num-custom'"
+                 [preferredCountries]="preferredCountries"
+                 [enableAutoCountrySelect]="true"
+                 [enablePlaceholder]="true"
+                 [searchCountryFlag]="true"
+                 [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                 [selectFirstCountry]="false"
+                 [selectedCountryISO]="CountryISO.India"
+                 [maxLength]="15"
+                 [phoneValidation]="true"
+                 [separateDialCode]="separateDialCode"
+                 [customPlaceholder]="'Phone Number 2'"
+                 name="phonenumbertwo"
+                 formControlName="phonenumbertwo">
+               </ngx-intl-tel-input>
+                <div *ngIf="myForm.controls['phonenumbertwo'].invalid && (myForm.controls['phonenumbertwo'].dirty || myForm.controls['phonenumbertwo'].touched)" class="text-danger">
+                <div *ngIf="myForm.controls['phonenumbertwo'].errors.pattern">
+                    {{'Enter a Valid Number' | translate}}
+                  </div>
+                </div> 
+                <!-- <div *ngIf="myForm.value.phonenumber==myForm.value.phonenumbertwo" class="text-danger">
+                    {{'Phone Number 2 Can\u0027t be same as PhoneNumber 1' | translate}}
+                </div> -->
+    
+              </div>
+            </div>
+
+          
+          </div>
+        
+        <div class="row">
+          <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12"
+           style="padding: 0px 0px 6px 0px; margin-top: 10px;margin-bottom: 10px;">
+           <div class="d-flex flex-row">
+            <div *ngFor="let data of vechileType; let i=index"  class="col-md-2">
+              <label for="type_{{i}}">
+                <input type="checkbox" [checked]="data.checked" id="type_{{i}}"
+                formControlName="vechiletypesnotselected" 
+                [value]="data.value" 
+                (change)="onCheckboxChange($event)" />
+                {{data.name}}
+              </label>
+            </div>
+           </div>
+            
+            <div *ngIf="submitted  && myForm.controls['vechiletypes'].errors" class="text-danger">
+              <div *ngIf="myForm.controls['vechiletypes'].errors?.required" >
+                  {{'Checkbox is required, select at least one value' | translate}}.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+            <input type="checkbox" [formControl]="myForm.controls['isTosRead']">
+            <label style="padding: 2px;" class="form-check-label" for="exampleCheck5"> {{'I accept' | translate}} <a target="_blank" href="https://www.tightthenut.com/terms-and-conditions.html" style="color: #c30707;">{{'Terms and conditions' | translate}}</a></label>
+            <div *ngIf="submitted  && myForm.controls['isTosRead'].errors" class="text-danger">
+              <div *ngIf="myForm.controls['isTosRead'].errors.pattern">
+              {{'Please accept the terms and conditions' | translate}}
+            </div>
+          </div> 
+          </div>
+        </div>
+        <div class="row" style="display: flex; padding: 0px 0px 7px;">
+          <div class="col-sm-12 col-lg-12 container-login100-form-btn">
+            <button type="submit" id="register-account"
+             class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 8px;width: 100%;">
+              {{'Send OTP' | translate}}</button>
+          </div>
+          <div class="col-sm-12 col-lg-12 w-full text-center p-t-27 p-b-239">
+            <a routerLink="/login/" href="#" id="already-account" class="txt1" style="text-decoration: underline;">
+              {{'Already Have an account' | translate}}
+            </a>
+          </div>
+        </div>
+      </div>
+    </form >
+    <form class="col-lg-6 col-sm-6 col-md-6 vertical-center m-b-20" *ngIf="shwootp==true" [formGroup]="otpForm" (ngSubmit)="submitFormForRegister()" novalidate>
+      <div class="container-fluid">
+        <div class="row">
+            <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6" data-validate="Enter OTP">
+              <input class="form-control" type="text" name="otp" placeholder="Enter OTP" formControlName="otp">
+              <div *ngIf="otpForm.controls['otp'].invalid && (otpForm.controls['otp'].dirty || otpForm.controls['otp'].touched)" class="text-danger">
+                <div *ngIf="otpForm.controls['otp'].errors.required">
+                    {{'This filed is required' | translate}}
+                  </div>
+                  <div *ngIf="otpForm.controls['otp'].errors.pattern">
+                    {{'Enter a valid OTP' | translate}}
+                  </div>
+              </div>
+              <div *ngIf="wrongOtpError==true" class="text-danger">
+                {{'OTP Is not Correct' | translate}}.
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6" data-validate="Enter OTP">
+              <input id="password" class="form-control" type="password" 
+              name="password" placeholder="{{'Enter Password' | translate}}"
+              formControlName="password">
+                  <div *ngIf="otpForm.controls['password'].invalid && (otpForm.controls['password'].dirty || otpForm.controls['password'].touched)" class="text-danger">
+                      <div *ngIf="otpForm.controls['password'].errors.required">
+                          {{'This filed is required' | translate}}
+                      </div>
+                      <div *ngIf="otpForm.controls['password'].errors.pattern">
+                      {{'Enter a valid Password' | translate}}
+                      </div>
+                  </div>
+            </div>
+            <div class="validate-input m-b-20 col-lg-6 col-md-6 col-sm-6" data-validate="Enter OTP">
+                <input id="confirm_password" class="form-control" type="text" 
+                name="confirm_password" placeholder="{{'confirm Password' | translate}}"
+                formControlName="confirm_password">
+                
+                    <div *ngIf="otpForm.controls['confirm_password'].invalid && (otpForm.controls['confirm_password'].dirty || otpForm.controls['confirm_password'].touched)" class="text-danger">
+                        <div *ngIf="otpForm.controls['confirm_password'].errors.required">
+                        {{'This filed is required' | translate}}
+                        </div>
+                        <div *ngIf="otpForm.controls['confirm_password'].errors.pattern">
+                        {{'Enter a valid Password' | translate}}
+                        </div>
+                    </div>
+                    <div class="text-danger" *ngIf="otpForm.pristine || otpForm.invalid">password does not match</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <button type="submit" [disabled]="otpForm.pristine || otpForm.invalid" class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;">
+                {{'Login' | translate}}</button>
+            </div>
+          </div>
+        
+        <div class="w-full text-center p-t-27 p-b-239">
+          <a (click)="editnumber()" href="javascript:" class="txt1">
+            {{'Edit Number' | translate}}
+          </a>
+          <a *ngIf="timerfalse==false"href="javascript:" class="txt2">
+            {{'OTP will be resend after' | translate}} {{timeLeft}}
+          </a>
+          <a  (click)="resendOTP()"  *ngIf="timerfalse==true"href="javascript:" class="txt2">
+            {{'Resend OTP' | translate}}
+          </a>
+        </div>
+        <div class="w-full text-center">
+          <a routerLink="/login/" href="#" class="txt3">
+            {{'Already Have an account' | translate}}
+          </a>
+        </div>
+      </div>
+ 
+    </form>
+
+
+    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+      <div class="footer-text">
+        <span class="login100-form-title" style="font-weight: bold;">
+          <i style="font-size: 14px;
+          color: #25e425;" class="fa fa-shield" aria-hidden="true"></i><span style="font-size: 14px;
+          color: #6666f9;">100% {{'Safe and Secure Guarantee' | translate}}</span>
+      </span>
+      </div>
+    </div>
+</div>
+    
+

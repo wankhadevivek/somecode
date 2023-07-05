@@ -1,0 +1,328 @@
+<!-- <app-spinlogin></app-spinlogin> -->
+<div style="background: #eae6e6">
+  <div class="row">
+    <div class="col-lg-12 col-sm-12 col-md-12 add-stff-card">
+      <div class="col-lg-7 col-sm-7 col-md-7">
+        <h1 style="margin-left: 35px">
+          {{ isEdit ? "Edit Staff" : "Add Staff" }}
+        </h1>
+      </div>
+
+      <div class="col-lg-1 col-sm-1 col-md-1 text-right">
+        <label (click)="closePopup()" class="btn btn-white cir hed-btn-close">
+          <i class="fa fa-times fa-2x" aria-hidden="true"></i
+        ></label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-body" style="padding-top: 0">
+    <div
+      class="ibox-content"
+      style="background-color: #f1f1f1; padding: 5px 3%"
+    >
+      <form class="form-horizontal" [formGroup]="satffForm">
+        <div class="row">
+          <div class="col-lg-12 col-sm-12 col-md-12">
+            <label
+              class="control-label"
+              style="font-size: 16px; border-bottom: 1px solid #ce0e17"
+              ><b> {{ "Staff Details" | translate }}</b></label
+            >
+            <div class="form-group">
+              <div class="col-lg-3 col-sm-3 col-md-3">
+                <label class="control-label txt_lbl">
+                  {{ "Select Staff Type" | translate }}</label
+                >
+                <select
+                  class="form-control cir"
+                  formControlName="stafftype"
+                  [value]="satffForm.value.stafftype"
+                >
+                  <option value="Mechanic">{{ "Mechanic" | translate }}</option>
+                  <option value="Supervisor">
+                    {{ "Supervisor" | translate }}
+                  </option>
+                  <option value="Owner">{{ "Admin" | translate }}</option>
+                  <option value="Staff">{{ "Staff" | translate }}</option>
+                  <option value="Denter">{{ "Denter" | translate }}</option>
+                  <option value="Painter">{{ "Painter" | translate }}</option>
+                  <option value="Electrician">
+                    {{ "Electrician" | translate }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-9 col-sm-9 col-md-9">
+                <label class="control-label txt_lbl">
+                  {{ "Name" | translate
+                  }}<span style="color: #c30707; font-weight: bold"
+                    >*</span
+                  ></label
+                >
+                <input
+                  type="text"
+                  class="form-control cir"
+                  formControlName="name"
+                />
+                <div
+                  *ngIf="
+                    satffForm.controls['name'].invalid &&
+                    (satffForm.controls['name'].dirty ||
+                      satffForm.controls['name'].touched)
+                  "
+                  class="text-danger"
+                >
+                  <div *ngIf="satffForm.controls['name'].errors.required">
+                    {{ "Staff Name is required." | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- check -->
+
+            <div class="form-group">
+              <div class="col-lg-9 col-sm-9 col-md-9">
+                <label class="control-label txt_lbl"
+                  >{{ "Address" | translate
+                  }}<span style="color: #c30707; font-weight: bold"
+                    >*</span
+                  ></label
+                >
+                <input
+                  type="text"
+                  class="form-control cir"
+                  formControlName="address"
+                />
+                <div
+                  *ngIf="
+                    satffForm.controls['address'].invalid &&
+                    (satffForm.controls['address'].dirty ||
+                      satffForm.controls['address'].touched)
+                  "
+                  class="text-danger"
+                >
+                  <div *ngIf="satffForm.controls['address'].errors.required">
+                    {{ "Staff Address is required." | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-lg-4 col-sm-4 col-md-4">
+                <label class="control-label txt_lbl"
+                  >{{ "Mobile Number" | translate
+                  }}<span style="color: #c30707; font-weight: bold"
+                    >*</span
+                  ></label
+                >
+                <input
+                  type="text"
+                  maxlength="10"
+                  class="form-control cir"
+                  formControlName="mobile1"
+                />
+                <div
+                  *ngIf="
+                    satffForm.controls['mobile1'].invalid &&
+                    (satffForm.controls['mobile1'].dirty ||
+                      satffForm.controls['mobile1'].touched)
+                  "
+                  class="text-danger"
+                >
+                  <div *ngIf="satffForm.controls['mobile1'].errors.required">
+                    {{ "Mobile Number is required." | translate }}
+                  </div>
+                  <div *ngIf="satffForm.controls['mobile1'].errors.pattern">
+                    {{ " Enter a Valid Number" | translate }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-sm-4 col-md-4">
+                <label class="control-label txt_lbl">{{
+                  "Mobile Number 2" | translate
+                }}</label>
+                <input
+                  type="text"
+                  maxlength="10"
+                  class="form-control cir"
+                  formControlName="mobile2"
+                />
+                <div
+                  *ngIf="
+                    satffForm.controls['mobile2'].invalid &&
+                    (satffForm.controls['mobile2'].dirty ||
+                      satffForm.controls['mobile2'].touched)
+                  "
+                  class="text-danger"
+                >
+                  <div *ngIf="satffForm.controls['mobile2'].errors.pattern">
+                    {{ "Enter a Valid Number" | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-4 col-sm-4 col-md-4">
+                <label class="control-label txt_lbl">
+                  {{ "Email" | translate }}</label
+                >
+                <input
+                  type="text"
+                  class="form-control cir"
+                  formControlName="email"
+                />
+                <div
+                  *ngIf="
+                    satffForm.controls['email'].invalid &&
+                    (satffForm.controls['email'].dirty ||
+                      satffForm.controls['email'].touched)
+                  "
+                  class="text-danger"
+                >
+                  <div *ngIf="satffForm.controls['email'].errors.email">
+                    {{ "Enter a Valid Email" | translate }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- </div> -->
+
+              <div class="col-lg-4 col-sm-4 col-md-4">
+                <label class="control-label txt_lbl">
+                  {{ "Joining Date" | translate }}</label
+                >
+                <input
+                  class="form-control cir"
+                  formControlName="joindate"
+                  (click)="d.toggle()"
+                  ngbDatepicker
+                  #d="ngbDatepicker"
+                  style="background-color: #fff"
+                  readonly
+                />
+                <div
+                  *ngIf="
+                    satffForm.controls['joindate'].invalid &&
+                    (satffForm.controls['joindate'].dirty ||
+                      satffForm.controls['joindate'].touched)
+                  "
+                  class="text-danger"
+                >
+                  <div *ngIf="satffForm.controls['joindate'].errors.required">
+                    {{ "Enter a valid Date. " | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- change -->
+          </div>
+          <div class="form-group" style="margin-left: 0px">
+            <div class="col-lg-4 col-sm-4 col-md-4">
+              <label class="control-label txt_lbl"
+                >{{ "Salary" | translate }} ({{currency_symbol}})
+              </label>
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="salary"
+              />
+              <div
+                *ngIf="
+                  satffForm.controls['salary'].invalid &&
+                  (satffForm.controls['salary'].dirty ||
+                    satffForm.controls['salary'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="satffForm.controls['salary'].errors.pattern">
+                  {{ "Enter a Valid Salary" | translate }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-sm-4 col-md-4">
+              <label class="control-label txt_lbl">
+                {{ "Incentives" | translate }} (%)</label
+              >
+              <input
+                type="text"
+                class="form-control cir"
+                formControlName="incentive"
+              />
+              <div
+                *ngIf="
+                  satffForm.controls['incentive'].invalid &&
+                  (satffForm.controls['incentive'].dirty ||
+                    satffForm.controls['incentive'].touched)
+                "
+                class="text-danger"
+              >
+                <div *ngIf="satffForm.controls['incentive'].errors.pattern">
+                  {{ "Enter a Valid Incentive" | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div
+              class="col-lg-offset-4 col-lg-4 col-sm-4 col-md-4"
+              style="display: flex; margin-left: 90px"
+            >
+              <button
+                [disabled]="
+                  satffForm.getRawValue().name == '' ||
+                  satffForm.getRawValue().mobile1 == ''
+                "
+                class="btn btn-primary cir cir_btn"
+                style="
+                  font-size: 12px;
+                  margin: 7% 0 0 0;
+                  background: linear-gradient(
+                    to bottom,
+                    #ff0000 0%,
+                    #563b3b 100%
+                  );
+                  border-color: #c30707;
+                  font-weight: bold;
+                  width: 90%;
+                  margin-right: 24px;
+                "
+                (click)="addstaff('create', 'new')"
+              >
+                {{ "Save" | translate }}
+              </button>
+              <button
+                data-dismiss="modal"
+                class="btn btn-primary cir cir_btn"
+                style="
+                  font-size: 12px;
+                  margin: 7% 0 0 0;
+                  background: linear-gradient(
+                    to bottom,
+                    #ff0000 0%,
+                    #563b3b 100%
+                  );
+                  border-color: #c30707;
+                  font-weight: bold;
+                  width: 90%;
+                "
+                (click)="closePopup()"
+              >
+                {{ "Close" | translate }}
+              </button>
+            </div>
+          </div>
+
+          <!-- additon -->
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

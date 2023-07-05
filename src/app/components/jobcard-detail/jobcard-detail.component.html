@@ -1,0 +1,1291 @@
+<app-spinlogin></app-spinlogin>
+<div class="pdf-generate" id="print_template">
+    <div class="setting-pdf"
+    *ngIf="!printMode && !loadForEndUser"
+    >
+    <div class="template-setting" >
+        <div class="setting-header">
+            <a routerLink="/">
+                <button
+                
+                  style=" border-radius: 50%"
+                >
+                 
+                  <i
+                        class="fa fa-long-arrow-left"
+                        aria-hidden="true"
+                        style="color: rgb(138, 139, 138);
+                        font-size: 1.5em;
+    padding-right: 1rem;"
+                      ></i
+                    >
+                  
+                </button>
+              </a>
+            <span>
+                Template Settings
+            </span>
+        </div>
+
+
+
+        <div class="setting-page-design">
+            <div class="">
+                <div class="setting-title">
+                    <span>
+                        Page & Design*
+                    </span>
+                </div>
+                <div class="setting-list">
+                    <div class="setting-option">
+                        <span class="setting-option-name">
+                            Template Font
+                        </span>
+                        
+                        <select
+                        class="setting-option-select"
+                        [(ngModel)]= "invoiceFontFamily"
+                        >
+
+                        <option
+                        *ngFor="let option of fontOptions" 
+                        [value]="option.value"
+                            
+                        >
+                        {{ option.viewValue }}
+                            </option>
+                            <!-- <option
+                            value="Roboto"
+                        >
+                        Roboto
+                            </option>
+                            <option
+                            value="fantasy"
+                        >
+                        fantasy
+                            </option> -->
+                        </select>
+                    </div>
+                    <div class="setting-option">
+                        <span class="setting-option-name">
+                            Template Font Size
+                        </span>
+                        
+                        <input 
+                        [(ngModel)] = "invoiceFontSize"
+                        class="setting-option-num"
+                        type="number" id="tentacles" name="tentacles"
+                        min="10" max="100">
+                    </div>
+                </div>
+            </div>
+
+            <div class="">
+                <div class="setting-title">
+                    <span>
+                        Workshop Logo & Details*
+                    </span>
+                </div>
+                <div class="setting-list">
+
+                    <div class="setting-option"
+                    style="height: auto;
+                    padding: 2rem 0;
+                    ;">
+
+                        <div class=""
+                        *ngIf = "!logo">
+                            <span
+                            style="width: 18rem; 
+                        height: 13rem;
+                        background: white;
+                        box-sizing: border-box;
+                        
+                        border: 1px dashed;
+                        display: flex;
+                    justify-content: center;
+                    align-items: center
+                        "
+                            >
+                                No Logo Available
+                            </span>
+                        </div>
+                        <div 
+                        *ngIf = "logo"
+                        class=""
+                        style="width: 18rem; 
+                        height: 13rem;
+                        background: white;
+                        box-sizing: border-box;
+                        
+                        border: 1px dashed;
+                        display: flex;
+                    justify-content: center;
+                    align-items: center
+                        ">
+                        <img
+                        style="
+                            border: 3px solid #eee;"
+                        [style.max-width.rem]= 'settingLogoSize'
+                        [ngStyle] = "logoSizeClass"
+                        id='base64image'
+                        [src]= "logo" />
+
+                        </div>
+                        
+                     <div class="">
+                        <div class="">
+                            <mat-label>Logo Size</mat-label>
+                        </div>
+                        <div class="">
+                            <mat-slider
+                              [max]=16
+                              [min]=6
+                              
+                              [(ngModel)]="settingLogoSize"
+                             
+                              style="width: 00px; min-width: 138px"
+                            >
+                            </mat-slider>
+                        </div>
+                     </div>       
+                            <!-- <mat-form-field appearance="outline">
+                                <mat-label style="font-weight: bold"
+                                  ></mat-label
+                                >
+                                <input
+                                  matInput
+                                 
+                                  placeholder="eg: 700"
+                                 
+                                  maxlength="6"
+                                  
+                                />
+                              </mat-form-field>
+                      -->
+                    </div>
+
+
+                    <div class="setting-option">
+                        <span class="setting-option-name">
+                            Workshop Name Font
+                        </span>
+                        
+                        <select
+                        class="setting-option-select"
+                        [(ngModel)]="wkFontFamily"
+                        >
+                        <option
+                        *ngFor="let option of fontOptions" 
+                        [value]="option.value"
+                            
+                        >
+                        {{ option.viewValue }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="setting-option">
+                        <span class="setting-option-name">
+                            Workshop Name Font Size
+                        </span>
+                        
+                        <input 
+                        [(ngModel)] = "wkFontSize"
+                        class="setting-option-num"
+                        type="number" id="tentacles" name="tentacles"
+                        min="10" max="100">
+                    </div>
+                    <!-- <div class="setting-option">
+                        <span class="setting-option-name">
+                            Workshop Name Font Color
+                        </span>
+                        
+                        <input 
+                        style="background-color:black"
+                        class="setting-option-num"
+                        type="text" i
+                        >
+                    </div> -->
+                </div>
+            </div>
+            <div class="">
+                <div class="setting-title">
+                    <span>
+                        Billing Table Details*
+                    </span>
+                </div>
+                <div class="setting-list">
+                    <div class="setting-option">
+            
+                        <label for="" class="setting-option-name">
+                            <input type="checkbox"
+                            [(ngModel)] = extraColumns.Discount.added>
+                            <span >
+                                Show Discount Column
+                            </span>
+                        </label>
+                        
+                        <label for="" class="setting-option-name">
+                            <input type="checkbox"
+                            [(ngModel)] = extraColumns.PartNumber.concat
+                            >
+                            <span >
+                                Show Part Number
+                            </span>
+                        </label>
+                    </div>
+                    
+                    <div class="setting-option">
+            
+                        <label for="" class="setting-option-name">
+                            <input type="checkbox"
+                            [(ngModel)] = "spareLabourSeparate">
+                            <span >
+                                Show Spare & Labour Seperate 
+                            </span>
+                        </label>
+                        
+                        <label for="" class="setting-option-name">
+                            <input type="checkbox"
+                            [(ngModel)] = "mapFooterDetails.showSubTotal"
+                            >
+                            <span >
+                                Show Sub Total
+                            </span>
+                        </label>
+                    </div>
+                    
+                    <div class="setting-option">
+            
+                        <label for="" class="setting-option-name">
+                            <input type="checkbox"
+                            [(ngModel)] = extraColumns.Unit.concat>
+                            <span >
+                                Show Unit for Items
+                            </span>
+                        </label>
+                        
+                        </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="setting-title">
+                    <span>
+                        Footer Details*
+                    </span>
+                </div>
+                <div class="setting-list">
+                    <div class="setting-option">
+            
+                        <label for="" class="setting-option-name">
+                            <input type="checkbox"
+                            [(ngModel)] = "mapFooterDetails.showCustomerVoice"
+                            >
+                            <span >
+                                Show Customer Voice
+                            </span>
+                        </label>
+                        
+                        <label for="" class="setting-option-name">
+                            <input type="checkbox"
+                            [(ngModel)] = "mapFooterDetails.showWorkNote">
+                            <span >
+                                Show Work Note
+                            </span>
+                        </label>
+                    </div>
+                    
+                    <div class="setting-option">
+            
+                        <label for="" class="setting-option-name">
+                            <input type="checkbox"
+                            [(ngModel)] = "mapFooterDetails.showExitNote"
+                            >
+                            <span >
+                                Show Exit Note
+                            </span>
+                        </label>
+                        
+                        <label for="" class="setting-option-name">
+                            <input type="checkbox"
+                            [(ngModel)] = "mapFooterDetails.showTerms"
+                            >
+                            <span >
+                                Show Terms & Conditions
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="setting-option">
+            
+                        <label for="" class="setting-option-name">
+                            <input type="checkbox"
+                            [(ngModel)] = "mapFooterDetails.showCustomerSig"
+                            >
+                            <span >
+                                Show Customer Signature
+                            </span>
+                        </label>
+                        
+                        </div>
+                </div>
+            </div>
+
+            <div class="">
+                <div class="setting-title">
+                    <span>
+                        Workshop Signature/Stamp*
+                    </span>
+                </div>
+                <div class="setting-list">
+                    <div class="setting-option"
+                    style="height: auto;
+                    padding: 2rem 0;
+                    ;">
+
+                        <div class=""
+                        *ngIf = "!signature">
+                            <span
+                            style="width: 18rem; 
+                        height: 13rem;
+                        background: white;
+                        box-sizing: border-box;
+                        
+                        border: 1px dashed;
+                        display: flex;
+                    justify-content: center;
+                    align-items: center
+                        "
+                            >
+                                No Signature Available
+                            </span>
+                        </div>
+                        <div 
+                        *ngIf = "signature"
+                        class=""
+                        style="width: 18rem; 
+                        height: 13rem;
+                        background: white;
+                        box-sizing: border-box;
+                        
+                        border: 1px dashed;
+                        display: flex;
+                    justify-content: center;
+                    align-items: center
+                        ">
+                        <img
+                        style="
+                            border: 3px solid #eee;"
+                        [style.max-width.rem]= 'settingSigSize'
+                        id='base64image'
+                        [src]= "signature" />
+
+                        </div>
+                        
+                     <div class="">
+                        <div class="">
+                            <mat-label>Signature Size</mat-label>
+                        </div>
+                        <div class="">
+                            <mat-slider
+                              [max]=15
+                              [min]=6
+                              
+                              [(ngModel)]="settingSigSize"
+                             
+                              style="width: 00px; min-width: 138px"
+                            >
+                            </mat-slider>
+                        </div>
+                     </div>       
+                           
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="setting-footer" >
+            <button 
+            (click) = "setStyle('fromUser') "
+            style="    background: rgb(240, 75, 75);
+            color: white;"
+            
+            >
+                Preview
+            </button>
+            <button 
+            style="    background: white;
+            border: 1px solid rgb(240, 75, 75);
+            color:  rgb(240, 75, 75);
+
+           "
+           (click)="storeSettings() "
+            >
+                Save
+            </button>
+        </div>
+    </div>
+
+
+        <div class="setting-submit" style="display: none">
+            <button (click)="downloadAsPDF()"
+            style="    background: cornflowerblue;
+            color: white;
+            padding: 1.5rem 4rem;
+            border-radius: 4%;
+            font-size: 1.5rem;"
+            >
+                Preview
+            </button>
+        </div>
+    </div>
+    <div class="add-shadow-padding">
+        
+        <div class="invoice-options" >
+            <div class="invoice-options-div">
+
+                <button 
+                class="invoice-actions"
+                style="    background: rgb(106 195 125);
+                color: white;
+                /* background: linear-gradient(to bottom,rgb(106 195 125) 0,#201a1a 126%) */
+                "
+                
+                >
+                <a 
+                style="text-decoration: none;
+                color: white;"
+                [href]="whatsappLink" target="_blank">
+                <!-- <i class="fa fa-mobile" aria-hidden="true"
+                style="    font-size: 2rem;
+                padding-right: 0.5rem;"></i> -->
+                    WhatsApp 
+                </a>
+                </button>
+                <button 
+                class="invoice-actions"
+                style="    
+                background: #e1d7d7;
+                color: black;
+               
+                margin-left: 1rem;
+                width: 14rem;
+                font-weight: bold;
+    /* background: linear-gradient(to bottom,#e1d7d7 0,#8f8282 126%); */
+                "
+            
+                
+                >
+                <a
+                style="text-decoration: none;
+                "
+                [href]="whatsappWebLink" target="_blank">
+
+                    WhatsApp Web
+                </a>
+                </button>
+            </div>
+
+            <div class="invoice-options-div">
+
+                <button 
+                class="invoice-actions"
+                style="    color: white;
+                background:#e7584a;
+                /* background: linear-gradient(to bottom,#e7584a 0,#201a1a 126%) */
+               
+    
+               "
+               (click)="previewPdf2()"
+                >
+                    Print
+                </button>
+                <button 
+                class="invoice-actions"
+                style="    color: white;
+                background: #458dd1;
+                /* background: linear-gradient(to bottom,#458dd1 0,#201a1a 126%); */
+               
+                margin-left: 1rem;
+    
+               "
+               (click)="downloadInvoice()"
+                >
+                    Download
+                </button>
+            </div>
+        </div>
+        <div class="add-shadow">
+    <div class="preview-pdf"
+    [ngStyle] = "invoiceFont"
+    id="pdfTable" #pdfTable
+    >
+    
+    <div class="doc-header" 
+    #docHeader
+    
+    >
+        <!-- <h1>INVOICE</h1> -->
+        <span
+        *ngIf = "billSetting && billSetting.bill_header"
+        #doctitle
+        >
+        {{ billSetting.bill_header }}
+        </span>
+    </div>
+    <div class="invoice-details"
+    #invoiceDetails
+    >
+        <div class="workshop-details"
+        style="max-width: 60%">
+            <div class="workshop-logo"
+            *ngIf = "logo"
+            style="width: 16rem;
+            display: flex;
+                    justify-content: center; ">
+                <!-- <img
+                id='base64image'
+                [src]= "logo" /> -->
+                <img
+                
+                [style.max-width.rem]= 'settingLogoSize'
+                [ngStyle] = "logoSizeClass"
+                id='base64image'
+                [src]= "logo" />
+            </div>
+            <div class="workshop-info">
+                <div class="wk-name font-600"
+               
+                ><span
+               id="wkS"
+ 
+               [ngStyle] ="wkNameFont"
+               style="color:#1a3e81 !important"
+                >{{ workshop?.workshop_name }}</span></div>
+                <div class="tagline font-600">
+                    <span>
+                        {{ billSetting?.tag_line }}
+                    </span></div>
+                <div class="">
+                    <span>
+                        {{ workshop?.workshop_address }}
+                    </span></div>
+                <div class=""><span>
+                    {{ workshop?.workshop_city }}
+                </span></div>
+                <div class=""><span>
+                    {{ workshop?.workshop_state }}
+                     {{ workshop?.workshop_pincode }}
+                </span></div>
+                <div class=""><span>
+                    {{ workshop?.country_name }}
+                </span></div>
+                <div class=""
+                *ngIf = "gstApplied"
+                ><span>
+                    
+                    GSTIN {{ billSetting?.gst_number }}
+                </span></div>
+                <div class=""
+               
+                ><span>
+                    
+                     {{ workshop?.workshop_mobile_number_1 }}
+                     <span *ngIf = "workshop && workshop.workshop_mobile_number_2 != 0">
+                        /{{ workshop?.workshop_mobile_number_2 }}
+                     </span>
+                </span></div>
+                <div class=""
+               
+                >
+                     <span *ngIf = "workshop && workshop.workshop_email != ''">
+                        {{ workshop?.workshop_email }}
+                     </span>
+              </div>
+            </div>
+        </div>
+        <div class="jobcard-details">
+            <div class="doc-type font-600">
+                
+                <span
+                *ngIf="jobcard?.jobcard_status > 0" 
+                >Invoice</span>
+                <span
+                *ngIf="jobcard?.jobcard_status == 0" 
+                >Estimate</span>
+            </div>
+            <div class="jc-number font-600"><span>
+                {{
+                    jobcard?.invoice_number
+                  }}
+            </span></div>
+            <div class=""><span></span>
+                {{
+                    jobcard?.invoice_date
+                      | date: "d MMM  y"
+                  }}
+            </div>
+            <div class=""><span>
+                {{
+                    jobcard?.invoice_date
+                      | date: " h:mm a"
+                  }}
+            </span></div>
+            <div class=""
+            *ngIf = "jobcard && jobcard.payment_mode"
+            ><span>Payment Type: {{
+                jobcard?.payment_mode
+              }}</span></div>
+        </div>
+    </div>
+
+
+    <div class="bill-info-table"
+    #billInfo
+    >
+        <table style="margin-top: 2rem;">
+            <!-- <thead
+             style=" background-color: #eee;"> -->
+            <thead
+        >
+                <tr>
+                <th class="service">Bill To</th>
+                <th class="desc">Vehicle Info</th>
+                
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td class="bill-info-table-h3 font-600"> 
+                <span>
+                    {{ customer?.customer_name }}
+                </span>
+                </td>
+                <td class="bill-info-table-h3 font-600">Vehicle Number: 
+                    <span>
+                        {{ customer?.vehicle_number }}
+                    </span> </td>
+                
+                </tr>
+                <tr>
+                    <td class="service">Mobile: 
+                        <span>
+                            {{ customer?.customer_mobile }}
+                        </span>
+                    </td>
+                <td class="desc">Vehicle: 
+                    <span>
+                        {{ customer?.vehicle_make + ' ' +
+                            customer?.vehicle_model +  ' ' +
+                            customer?.vehicle_variant}}
+                    </span></td>
+                
+                </tr>
+                <tr>
+                <td class="service">
+                    <span
+                    *ngIf = "customer && customer.gst_number"
+                    >
+                    GSTIN: {{ customer?.gst_number }}
+                    </span></td>
+                <td class="desc">
+                    <span
+                    *ngIf = "customer && customer.engine_number"
+                    >
+                    Engine No: {{ customer?.engine_number }}
+                    </span></td>
+                
+                </tr>
+                <tr>
+                
+                <td class="service">
+                    <span
+                    *ngIf = "customer && customer.state"
+                    >
+                    Address:  {{ customer?.state}}
+                    </span></td>
+                <td class="desc"> 
+                    <span
+                    *ngIf = "customer && customer.chassis_number"
+                    >
+                    Chassis No: {{ customer?.chassis_number }}
+                    </span>
+                </td>
+                
+                </tr>
+                <tr>
+                <td class="service"> 
+                    <span  *ngIf = "customer && customer.customer_email">
+                        Email: {{ customer?.customer_email }}
+                    </span>
+                </td>
+                <td class="desc">
+                    <span  
+                    style="margin-right: 2rem;"
+                    *ngIf = "customer && customer.km_read && customer.km_read != '0'">
+                        KM Reading:  {{ customer?.km_read }}
+                        
+                    </span>
+                    <span 
+                    
+                    *ngIf = " jobcard?.fuel && jobcard?.fuel != '0'">
+                        Fuel Level:  {{ jobcard?.fuel }}
+
+                    </span>
+                </td>
+                
+                </tr>
+                </tbody>
+        </table>
+    </div>
+    
+    
+    <div class="items-table"
+    [ngClass]="{'html2pdf__page-break' : elementHeights['allItemsContent']['appBreak']}"
+    #allItemsContent>
+        <table style="margin-top: 2.5rem;"
+        *ngIf = "showSeparate && sparestock.length !==0"  
+        #spareContent
+        >
+            <thead style=" background-color: #b6cdef    !important;">
+                <th >
+                #</th>
+                
+                
+                <th [ngStyle]="col.style" 
+                *ngFor="let col of dynamicTableColumnInfo;let j = index">
+                {{j ===0 ? col.field.split(':')[0] : col.field }}
+                </th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let stock of sparestock;let i = index">
+                    <td
+                    
+                    > 
+                    {{ i +1 }}</td>
+                    <td  *ngFor="let  col of dynamicTableColumnInfo;"
+                    [ngStyle]="col.style" >
+                    <span>
+                    {{ stock[col.param_name] }}
+                    
+                    </span>
+                    
+                    <!-- <span>
+                        {{ (col.param_name== 'part_name' && extraColumns["PartNumber"]["concat"]) ? stock[col.param_number]: ''}}
+                    </span> -->
+                    <span *ngIf ="col.param_name== 'part_name' && showPartNumber">
+                        - {{ stock["part_number"] }}
+                    </span>
+                    <span *ngIf ="col.param_name== 'quantity' && showUnit">
+                        - {{ stock["unit"] }}
+                    </span>
+                    <span *ngIf ="col.param_name== 'discountvalue'">
+                        {{ stock["discounttype"] }}
+                    </span>
+                    <!-- {{ (col.param_name== 'part_name' && extraColumns["PartNumber"]["concat"]) ? stock["part_number"]: '' }} -->
+                    <div 
+                    class="td-meta"
+                    *ngIf="col.param_name =='part_name' && gstApplied">
+                        <span>HSN:
+                            {{ stock["hsn_no"] }}
+                        </span>
+                    </div>
+                    <div 
+                    class="td-meta"
+                    *ngIf="col.param_name =='gstcalculateofjob'">
+                        <span>(  
+                            {{ stock["sale_gst_rate"] }}
+                            )</span>
+                    </div>
+                    <!-- {{ col.param_name }} -->
+                    </td>
+                    </tr>
+
+                    <tr
+                    *ngIf ="displayFooterInvoiceDetails.showSubTotal">
+                    <td 
+                    [attr.colspan]="this.dynamicTableColumnInfo.length"
+                
+                    style="text-align: right;
+                    border-top: 1px solid #eee;
+                    font-weight: 700;
+                    ">SUBTOTAL</td>
+                    <td class="total"
+                    style="
+                    text-align: center;
+                    border-top: 1px solid #eee;
+                    font-weight: 700;">
+                    
+                    ₹ {{ subtotals["spareTotal"] + subtotals["lubeTotal"] }}
+                    </td>
+                    </tr>
+            </tbody>
+        </table>
+        
+        <table style="margin-top: 2.5rem;"
+        *ngIf = "showSeparate && labourItems.length !==0"
+        class="jc-items-table"
+        >
+            <thead style=" background-color: #b6cdef    !important;">
+                <th >
+                #</th>
+                
+                <th 
+                *ngFor="let col of dynamicTableColumnInfo; let j = index">
+                {{ j ===0 ? col.field.split(':')[1] : col.field }}</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let stock of labourItems;let i = index"
+                style="page-break-inside: avoid !important;">
+                    <td
+                    
+                    >
+                    <div class=""
+                        style="  page-break-inside: avoid !important;">
+                        {{ i +1 }}
+                    </div>
+                    </td>
+                
+                    <td  *ngFor="let  col of dynamicTableColumnInfo;"
+                    [ngStyle]="col.style" 
+                    >
+                        <div class=""
+                            style="page-break-inside: avoid !important;">
+                                {{stock[col.param_name]}}
+                            <span *ngIf ="col.param_name== 'part_name' && showPartNumber">
+                                - {{ stock["part_number"] }}
+                            </span>
+                            <span *ngIf ="col.param_name== 'discountvalue'">
+                                {{ stock["discounttype"] }}
+                            </span>
+                            <div 
+                                class="td-meta"
+                               
+                                *ngIf="col.param_name =='part_name' && gstApplied">
+                                    <span>SAC: {{ stock["hsn_no"] }}
+                                    </span>
+                            </div>
+                            <div 
+                            class="td-meta"
+                           
+                            *ngIf="col.param_name =='gstcalculateofjob'">
+                                <span>(  
+                                    {{ stock["sale_gst_rate"] }}
+                                    )</span>
+                            </div>
+                        </div>
+                    <!-- {{ col.param_name }} -->
+                    </td>
+                    </tr>
+
+                    <tr
+                    *ngIf ="displayFooterInvoiceDetails.showSubTotal"
+                    >
+                    <td 
+                    [attr.colspan]="this.dynamicTableColumnInfo.length"
+                    style="text-align: right;
+                    border-top: 1px solid #eee;
+                    font-weight: 700;
+                    ">SUBTOTAL</td>
+                    <td class="total"
+                    style="text-align: center;
+                    border-top: 1px solid #eee;
+                     font-weight: 700;">
+                        ₹ {{ subtotals["labourTotal"]}}
+                    </td>
+                    </tr>
+            </tbody>
+        </table>
+    
+
+        <table style="margin-top: 4rem;"
+        *ngIf = "!showSeparate"
+    
+        >
+            <thead style=" background-color: #b6cdef    !important;">
+                <th >
+                #</th>
+                
+                <th [ngStyle]="col.style" 
+                *ngFor="let col of dynamicTableColumnInfo; let j = index">
+                {{ j ===0 ? 'Items' : col.field }}</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let stock of spareLabourTable;let i = index">
+                    <td
+                    
+                    > {{ i +1 }}</td>
+                
+                    <td  *ngFor="let  col of dynamicTableColumnInfo;"
+                    [ngStyle]="col.style"
+                    >
+                    {{stock[col.param_name]}}
+                    <span *ngIf ="col.param_name== 'part_name' && showPartNumber">
+                        - {{ stock["part_number"] }}
+                    </span>
+                    <span *ngIf ="col.param_name== 'discountvalue'">
+                        {{ stock["discounttype"] }}
+                    </span>
+                    <div 
+                    class="td-meta"
+                    *ngIf="col.param_name =='part_name'">
+                        <span>
+                            <span
+                            *ngIf ="stock.category == 'job'"
+                            >
+                                SAC:
+                            </span>
+                            <span
+                            *ngIf ="stock.category !== 'job'"
+                            >
+                                HSN: 
+                            </span>
+                            
+                            {{ stock["hsn_no"] }}
+                        </span>
+                    </div>
+                    <div 
+                    class="td-meta"
+                    *ngIf="col.param_name =='gstcalculateofjob'">
+                        <span>(  
+                            {{ stock["sale_gst_rate"] }}
+                            )</span>
+                    </div>
+                    <!-- {{ col.param_name }} -->
+                    </td>
+                    </tr>
+
+                    <tr
+                    *ngIf ="displayFooterInvoiceDetails.showSubTotal"
+                    >
+                    <td 
+                    [attr.colspan]="this.dynamicTableColumnInfo.length"
+                    style="text-align: right;
+                    border-top: 1px solid #eee;
+                    font-weight: 700;
+                    ">SUBTOTAL</td>
+                    <td class="total"
+                    style="text-align: center;
+                    border-top: 1px solid #eee;
+                    font-weight: 700;">
+                    ₹ {{ subtotals["spareTotal"] + subtotals["lubeTotal"]+ subtotals["labourTotal"]}}
+                    </td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- <div class="page-break
+    html2pdf__page-break
+    "></div> -->
+
+
+    <div class="page-break"
+            style="
+        /* display: inline-block; */
+            width: 100%;
+        "
+         [ngClass]="{'html2pdf__page-break' : elementHeights['taxSummary']['appBreak']}"
+        #taxSummary>
+     <div class="tax-total-summary page-break">
+        <div class="tax-summary"
+        *ngIf ="!gstApplied"
+        >
+        </div>
+
+        <div class="tax-summary"
+        *ngIf ="gstApplied">
+            <div class="tax-header"
+            style="border-bottom: 1px solid;"
+
+            >Tax Details</div>
+            <div class="">
+                <div class="tax-span"
+                *ngFor="let key of objectKeys(gstSlabDetails)"
+                >
+                    <span>SGST @
+                        {{ (key.split('%')[0]/2).toFixed(1) }}%
+                        ₹  {{ (gstSlabDetails[key]/2).toFixed(2) }}</span>
+                    <span>CGST @
+                        {{ (key.split('%')[0]/2).toFixed(1) }}%
+                        ₹  {{ (gstSlabDetails[key]/2).toFixed(2) }}</span>
+                    <span>GST @
+                        {{ key }}
+                        ₹  {{ (gstSlabDetails[key]).toFixed(2) }}</span>
+                    
+                    
+                </div>
+                <!-- <div class="tax-span">
+                    <span>SGST @14% ₹ 100</span>
+                    <span>CGST @14% ₹ 100</span>
+                    <span>GGST @28% ₹ 100</span>
+                    
+                </div>
+                <div class="tax-span">
+                    <span>SGST @14% ₹ 100</span>
+                    <span>CGST @14% ₹ 100</span>
+                    <span>GGST @28% ₹ 100</span>
+                    
+                </div>
+                 -->
+            </div>
+        </div>
+
+        <div class="total-summary page-break">
+            <div class="total-header total-flex">
+                <div class="">Total</div>
+                <div class=""> {{ jobcard?.total_amount }}</div>
+            </div>
+            <div class="total-flex">
+                <div class="">
+                    <div class=""
+                        *ngIf ="jobcard && jobcard.advance !== '0.0'"
+                        >Advance</div>
+                    <div class=""
+                        *ngIf ="jobcard && jobcard.discount.split(' ')[0] !== '0'"
+                        >Discount</div>
+                    <div class=""
+                        *ngIf ="jobcard && jobcard.payable !== '0.0'"
+                        >Payable</div>
+                </div>
+                <div class="">
+                    <div class=""
+                        *ngIf ="jobcard && jobcard.advance !== '0.0'"
+                        >₹ {{ jobcard?.advance }}</div>
+                    <div class=""
+                        *ngIf ="jobcard && jobcard.discount.split(' ')[0] !== '0'"
+                        >{{ jobcard?.discount }}</div>
+                    <div class=""
+                        *ngIf ="jobcard && jobcard.payable !== '0.0'"
+                        >₹ {{ payable }}</div>
+                </div>
+            </div>
+            <div class="total-flex"
+            style="border: none;">
+                <div class="">
+                    <div class=""
+                    *ngIf ="jobcard && jobcard.paid_amount !== '0.0'"
+                    >Paid</div>
+                    <div class="">Balance</div>
+                </div>
+                <div class="">
+                    <div class=""
+                    *ngIf ="jobcard && jobcard.paid_amount !== '0.0'"
+                    >₹ {{ jobcard?.paid_amount }}</div>
+                    <div class="font-600 invoice-bal"
+                   >₹  {{ jobcard?.balance_amount }}</div>
+                </div>
+               
+            </div>
+          
+        </div>
+    </div>
+
+    <!-- amount in words -->
+    <div class="notice page-break" 
+    style="text-align: right;
+    /* font-weight: 700; */
+    margin-top:1.5rem;
+    ">
+        <span>Amount In Words: {{ amountInWords }}</span>
+    </div>
+    <!-- -------------- -->
+</div>
+
+    <div class="page-break"
+    style=" 
+    /* display: inline-block; */
+    width: 100%;"
+    >
+
+        <div class="voice-accessories-description tax-span page-break"
+        *ngIf ="displayFooterInvoiceDetails.showCustomerVoice && customerVoice[0] && customerVoice[0].length > 0">
+            <table 
+           
+            style="margin-top: 2rem; width: 50%;">
+                <thead style=" background-color: #b6cdef    !important;">
+                    <tr>
+                    <th class="service">#</th>
+                    <th class="desc">Customer Voice</th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+
+                        <tr *ngFor="let voice of customerVoice[0];let i = index">
+                            <td class="service">{{ i+1 }}</td>
+                            <td class="desc"> {{ voice }}</td>
+                        </tr>
+                       
+                </tbody>
+            </table>
+            <table style="margin-top: 2rem;  width: 50%;"
+            *ngIf = "customerVoice[1].length > 0"
+            >
+                <thead style=" background-color: #b6cdef    !important;">
+                    <tr>
+                    <th class="service">#</th>
+                    <th class="desc">Customer Voice</th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let voice of customerVoice[1];let i = index">
+                        <td class="service">{{ i+1+customerVoice[0].length }}</td>
+                        <td class="desc"> {{ voice }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div
+    *ngIf ="displayFooterInvoiceDetails.showWorkNote && workNotes && workNotes.length > 0"
+    class="voice-accessories-description tax-span work-note page-break">
+        <table style="margin-top: 2rem; width: 100%;">
+            <thead style=" background-color: #b6cdef    !important;">
+                <tr>
+                <th class="service">#</th>
+                <th class="desc">Work Note</th>
+                
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let note of workNotes;let i = index">
+                    <td class="service">{{ i+1 }}</td>
+                    <td class="desc"> {{ note }}</td>
+                </tr>
+            </tbody>
+        </table>
+        
+    </div>
+
+
+    <div class="page-break default-margin"
+    #nextServiceInfo
+    [ngClass]="{'html2pdf__page-break' : elementHeights['nextServiceInfo']['appBreak']}"
+    style="text-align: center;">
+        <hr>
+        <div class="default-margin">
+            <span style="font-weight: 600;"
+            *ngIf = "billSetting && billSetting?.bill_footer"
+            >
+            {{ billSetting.bill_footer }}
+            </span>
+        </div>
+        <div class="default-margin">
+            <span class="next-service">
+                Your next service is due on:
+                Date <span class="next-service-hg">
+
+                    {{ reminderdate | date: "MMM d, y" }}
+                </span>
+                or before <span class="next-service-hg"> {{ reminderKM }} KM</span>
+            </span>
+        </div>
+    </div>
+
+
+    <!-- <div class="html2pdf__page-break"></div> -->
+    <span class="page-break default-margin " 
+    [ngClass]="{'html2pdf__page-break' : elementHeights['termsAndCondi']['appBreak']}"
+    style="width: 60%;
+        float: left;
+        ;"
+        #termsAndCondi
+        >
+        
+        <div 
+        *ngIf ="displayFooterInvoiceDetails.showExitNote && jobcard?.exit_note && jobcard?.exit_note != ''" 
+        class="default-margin next-service-hg">
+            Exit Note-
+            <span> {{ jobcard?.exit_note }}</span>
+        </div>
+        <div class="default-margin"
+        *ngIf ="displayFooterInvoiceDetails.showTerms && termsList && termsList.length > 0"
+        >
+            <div class="next-service-hg">Terms and Conditions</div>
+            <div class=""
+            *ngIf ="termsList.length > 0">
+                <div class="terms-items" *ngFor="let terms of termsList;let i = index">
+                    <span style="margin-right: 2%;"> {{ i+1 }}</span>
+                    {{ terms }}</div>
+               
+            </div>
+        </div>
+    </span>
+    <!-- <div class="page-break"></div> -->
+ 
+    <!-- <div class="page-break"></div> -->
+    <div class="page-break"
+        #signatureContent
+        [ngClass]="{'html2pdf__page-break' : elementHeights['signatureContent']['appBreak']}"
+        style="
+        width: 100%;
+        "
+    >
+   
+     <div class="page-break"
+     style="
+     /* display: inline-block; */
+     width: 100%;"
+     
+     >
+        <div class=" signatures page-break "
+    style="width: 25%;
+    float: right;
+    "
+    *ngIf ="!displayFooterInvoiceDetails.showCustomerSig"
+        >
+            
+            <div class="auth-signature">
+                <div class="workshop-logo"
+                *ngIf = "signature"
+                style="width: 16rem;
+                display: flex;
+                        justify-content: center; ">
+                    <!-- <img
+                    id='base64image'
+                    [src]= "logo" /> -->
+                    <img
+                    
+                    [style.max-width.rem]= 'settingSigSize'
+                    id='base64image'
+                    [src]= "signature" />
+                </div>
+                <span>Authorized Signature</span>
+            </div>
+        </div>
+
+        <div class="signatures page-break"
+        *ngIf ="displayFooterInvoiceDetails.showCustomerSig"
+        >
+            <div class="cus-signature">
+                <span>Customer Signature</span>
+            </div>
+            <div class="auth-signature">
+                <div class="auth-signature">
+                    <div class="workshop-logo"
+                    *ngIf = "signature"
+                    style="width: 16rem;
+                    display: flex;
+                            justify-content: center; ">
+                        <!-- <img
+                        id='base64image'
+                        [src]= "logo" /> -->
+                        <img
+                        
+                        [style.max-width.rem]= 'settingSigSize'
+                        id='base64image'
+                        [src]= "signature" />
+                    </div>
+                <span>Authorized Signature</span>
+            </div>
+        </div>
+    </div> 
+     
+    </div>
+    <!-- </div> -->
+        </div>  
+    </div>
+    </div>

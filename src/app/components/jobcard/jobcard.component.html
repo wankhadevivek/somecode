@@ -1,0 +1,844 @@
+<app-spin></app-spin>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <!-- <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <div class="row carousel-inner">
+      <div
+        class="
+          row
+          col-sm-12 col-xs-12 col-md-12 col-lg-12
+          card-online-garge
+          item
+          active
+        "
+      >
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xs-4 icon-online-grage">
+          <img
+            src="../../../assets/images/onlinegarage-icon.png"
+            alt="onlinegarage-icon"
+            width="60"
+            height="50"
+          />
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-8 col-xs-8 text-online-grage">
+          <span class="text-online-grage-h2">{{
+            "Your Personalized Online Garage
+          " | translate
+          }}</span>
+          <h4>
+            {{
+              "List your service offerings, Collect Online Bookings and Many more"
+                | translate
+            }}
+          </h4>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xs-12 link-online-garge">
+          <a
+            class="btn btn-link link-online-garge-btn"
+            routerLink="/onlinegarage/"
+            ><ul>
+              Activate Now!
+            </ul></a
+          >
+        </div>
+       
+      </div>
+      <div
+        class="
+          row
+          col-sm-12 col-xs-12 col-md-12 col-lg-12
+          card-online-garge
+          item
+        "
+      >
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xs-4 icon-online-grage">
+          <img
+            src="../../../assets/images/onlinegarage-icon.png"
+            alt="onlinegarage-icon"
+            width="60"
+            height="50"
+          />
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-8 col-xs-8 text-online-grage">
+          <span class="text-online-grage-h2">{{
+            "TTN Retail Store" | translate
+          }}</span>
+          <h4>{{ "Online Spare & Oil Shop" | translate }}</h4>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xs-12 link-online-garge">
+          <a
+            class="btn btn-link link-online-garge-btn"
+            routerLink="/onlinestore/"
+            target="_blank"
+            ><ul>
+              Shop Now!
+            </ul></a
+          >
+        </div>
+      </div>
+    </div>
+
+  </div> -->
+  <div class="row mb-2">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+      <div class="p-2 d-flex justify-content-start mb-2">
+        <h3 style="font-size: 20px">{{ "Jobcards" | translate }}</h3>
+      </div>
+    </div>
+    <div
+      class="col-lg-9 col-md-9 col-sm-9 col-xs-12 mrn-sm-left"
+      style="overflow: auto"
+    >
+      <div class="d-flex flex-row mb-2" style="float: right">
+        <div class="p-2 justify-content-end">
+          <a
+            href="javascript:"
+            (click)="event_handler_create() && openCreateJobCard([], 'nostaus', 'create')">
+            <button class="btn btn-primary createjobcard cards-btn-hide">
+              {{ "Create Jobcard" | translate }} (J)
+            </button>
+            <button
+              class="btn btn-primary createjobcard cards-btn-show"
+              data-toggle="tooltip"
+              title="Create Jobcard (J)"
+            >
+              <i class="fa fa-pencil"></i> {{ "Jobcard" | translate }}
+            </button>
+          </a>
+        </div>
+        <div class="p-2 justify-content-end">
+          <a
+            href="javascript:"
+            (click)="event_handler_create() && openShortInvoice([], 'nostaus', 'create')">
+            <button class="btn btn-primary createjobcard cards-btn-hide">
+              {{ "Create Short Invoice" | translate }} (S)
+            </button>
+            <button
+              class="btn btn-primary createjobcard cards-btn-show"
+              data-toggle="tooltip"
+              title="Create Short Invoice (S)"
+            >
+              <i class="fa fa-pencil"></i> {{ "Invoice" | translate }}
+            </button>
+          </a>
+        </div>
+        <div class="p-2 justify-content-end">
+          <a
+            href="javascript:"
+            (click)="
+              event_handler_create() && openSetReminder([], 'nostaus', 'create')
+            "
+          >
+            <button class="btn btn-primary createjobcard cards-btn-hide">
+              {{ "Set Only Reminders" | translate }} (R)
+            </button>
+            <button
+              class="btn btn-primary createjobcard cards-btn-show"
+              data-toggle="tooltip"
+              title="Set Only Reminders (R)"
+            >
+              <i class="fa fa-pencil"></i> {{ "Reminders" | translate }}
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="padding: 0px 0px 13px">
+    <div
+      (click)="checkStatus('0', 'pen')"
+      class="col-lg-2 col-md-3 col-sm-4 col-xs-12"
+      data-toggle="tooltip"
+      title="Open Jobcard"
+      style="cursor: pointer"
+    >
+      <div class="card-tab-size">
+        <div [class]="pendingMainClass">
+          <div class="totaljobb">
+            <button
+              style="background-color: #c30707 !important"
+              class="countbuttonn"
+            >
+              {{ totalpending }}
+            </button>
+          </div>
+          <div class="namejob">
+            <label
+              style="
+                color: #4d4f5c !important;
+                font-family: Open sans;
+                font-size: 13px;
+              "
+              >{{ "Open Jobcard" | translate }}</label
+            >
+          </div>
+          <!-- <div class="lineadd"></div>
+          <div class="amountofjob">
+            <label
+              class="control-label txt_lbl countt"
+              style="
+                color: #aaaaaa !important;
+                font-family: Open sans;
+                font-size: 13px;
+              "
+              >{{ currency_symbol }} {{ openJobcard }}</label
+            >
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <div
+      (click)="checkStatus('1', 'com')"
+      class="col-lg-2 col-md-3 col-sm-4 col-xs-12"
+      data-toggle="tooltip"
+      title="Complete Jobcard"
+      style="cursor: pointer"
+    >
+      <div class="card-tab-size">
+        <div [class]="completeMainClass">
+          <div class="totaljobb">
+            <button
+              style="background-color: #cead06 !important"
+              class="countbuttonn"
+            >
+              {{ totalcompleted }}
+            </button>
+          </div>
+          <div class="namejob">
+            <label
+              style="
+                color: #4d4f5c !important;
+                font-family: Open sans;
+                font-size: 12px;
+              "
+              >{{ "Complete Jobcard" | translate }}</label
+            >
+          </div>
+          <!-- <div class="lineadd"></div>
+          <div class="amountofjob">
+            <label
+              class="control-label txt_lbl countt"
+              style="
+                color: #aaaaaa !important;
+                font-family: Open sans;
+                font-size: 13px;
+              "
+              >{{ currency_symbol }} {{ completedJobcard }}</label
+            >
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <div
+      (click)="checkStatus('2', 'clo')"
+      class="col-lg-2 col-md-3 col-sm-4 col-xs-12"
+      data-toggle="tooltip"
+      title="Closed Jobcard"
+      style="cursor: pointer"
+    >
+      <div class="card-tab-size">
+        <div [class]="closedMainClass">
+          <div class="totaljobb">
+            <button
+              style="background-color: #10a71a !important"
+              class="countbuttonn"
+            >
+              {{ totalclosed }}
+            </button>
+          </div>
+          <div class="namejob">
+            <label
+              style="
+                color: #4d4f5c !important;
+                font-family: Open sans;
+                font-size: 13px;
+              "
+              >{{ "Closed Jobcard" | translate }}</label
+            >
+          </div>
+          <!-- <div class="lineadd"></div>
+          <div class="amountofjob">
+            <label
+              class="control-label txt_lbl countt"
+              style="
+                color: #aaaaaa !important;
+                font-family: Open sans;
+                font-size: 13px;
+              "
+              >{{ currency_symbol }} {{ closedJobcard }}</label
+            >
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <div
+      (click)="checkStatus('total', 'tot')"
+      class="col-lg-2 col-md-3 col-sm-4 col-xs-12"
+      data-toggle="tooltip"
+      title="Total Jobcard"
+      style="cursor: pointer"
+    >
+      <div class="card-tab-size">
+        <div [class]="totalMainClass">
+          <div class="totaljobb">
+            <button
+              style="background-color: #544545 !important"
+              class="countbuttonn"
+            >
+              {{ totaljobcardcount }}
+            </button>
+          </div>
+          <div class="namejob">
+            <label
+              style="
+                color: #4d4f5c !important;
+                font-family: Open sans;
+                font-size: 13px;
+              "
+              >{{ "Total Jobcard" | translate }}</label
+            >
+          </div>
+          <!-- <div class="lineadd"></div>
+          <div class="amountofjob">
+            <label
+              class="control-label txt_lbl countt"
+              style="
+                color: #aaaaaa !important;
+                font-family: Open sans;
+                font-size: 13px;
+              "
+              >{{ currency_symbol }} {{ billAmount }}</label
+            >
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-lg-2" *ngIf="showDatePicker==true">
+            <input [(ngModel)]="endDate" autocomplete="off" class="form-control cir" placeholder="Select End Month" name="date" bsDatepicker [bsConfig]="{dateInputFormat: 'MM/YYYY'}" (onShown)="onOpenEndDate($event)">
+        </div> -->
+
+    <!-- <div class="col-lg-3">
+            <select class="form-control cir" [(ngModel)]="selectedOption" (change)="checkStatus(selectedOption)">
+                <option value="3">Please Select the Status</option>
+                <option value="0">Open/Pending</option>
+                <option value="1">Completed</option>
+                <option value="2">Closed</option>
+                <option value="total">Total Jobcard</option>
+            </select>
+        </div> -->
+
+    <!-- <div class="col-lg-2"> 
+            <select class="form-control cir" name="pageSize" [(ngModel)]="service.pageSize">
+                <option [ngValue]="2">2 items per page</option>
+                <option [ngValue]="4">4 items per page</option>
+                <option [ngValue]="6">6 items per page</option>
+            </select>
+        </div> -->
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+      <div class="input-group m-b col-12">
+        <span class="input-group-addon">
+          <i class="fa fa-search fa-1x" aria-hidden="true"></i>
+        </span>
+        <span
+          class="data"
+          style="border-top-right-radius: 0px; border-bottom-right-radius: 0px"
+        >
+          <ng-autocomplete
+            [(ngModel)]="selectedvaluefoprsearch"
+            placeHolder="{{
+              'Search Customer by Name, Mobile, Invoice No., Vehicle No.'
+                | translate
+            }}"
+            [data]="states"
+            (selected)="selectedResult($event)"
+            (input)="searchBar($event.target.value)"
+            [itemTemplate]="itemTemplate"
+            [notFoundTemplate]="notFoundTemplate"
+          >
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+          <span
+            style="font-size: 30px; margin-left: -55px; cursor: pointer"
+            *ngIf="showsearchcnacel == true"
+          >
+            <i
+              class="fa fa-times"
+              aria-hidden="true"
+              (click)="clearSearch()"
+            ></i>
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      class="col-lg-3 col-sm-3 col-md-3"
+      *ngIf="showDatePicker == true"
+      style="display: flex"
+    >
+      <input
+        matInput
+        placeholder="{{ 'Select Start Date and End Date' | translate }}"
+        [satDatepicker]="picker1"
+        style="
+          height: 35px;
+          border-radius: 5px;
+          padding: 20px;
+          font-family: 'Open sans';
+          font-size: 14px;
+          border: 1px solid #fff;
+          background: #fff;
+          width: 206px;
+        "
+        (dateInput)="onDateSelection($event.value)"
+      />
+      <sat-datepicker #picker1 [rangeMode]="true"></sat-datepicker>
+      <sat-datepicker-toggle matSuffix [for]="picker1"></sat-datepicker-toggle>
+    </div>
+
+    <!-- <div class="col-lg-3">
+            <label class="control-label txt_lbl">Bill Amount Rs. {{billAmount}}</label>
+        </div> -->
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-sm-12 col-md-12">
+      <div
+        class="mat-elevation-z8"
+        (scroll)="onScroll($event)"
+        *ngIf="tabelData != undefined"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          border-radius: 8px;
+        "
+      >
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="mat-elevation-z12"
+          style="font-family: Open sans; width: 100%"
+        >
+          <ng-container matColumnDef="status">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="web-show"
+            >
+              <span class="mat-title-ctm">Status</span>
+            </th>
+            <td mat-cell *matCellDef="let element" class="web-show">
+              <span *ngIf="element.jobcard_status == '0'">
+                {{ "Open" | translate }}
+              </span>
+              <span *ngIf="element.jobcard_status == '1'">
+                {{ "Completed" | translate }}
+              </span>
+              <span *ngIf="element.jobcard_status == '2'">
+                {{ "Closed" | translate }}
+              </span>
+            </td>
+          </ng-container>
+          <!-- Position Column -->
+          <ng-container matColumnDef="jobcard_number">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="mat-title-ctm">{{
+                "Jobcard Number" | translate
+              }}</span>
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              (click)="editJobcard(element, 1)"
+              style="cursor: pointer"
+            >
+              <span class="mobile-label">{{ "Jobcard No" | translate }}:</span>
+
+              <span *ngIf="element.jobcard_status != '2'" class="link-edit">{{
+                element.jobcard_number
+              }}</span>
+              <span
+                matTooltip="{{ 'Edit Short Invoice' | translate }}"
+                class="link-edit"
+                *ngIf="
+                  element.jobcard_status == '2' &&
+                  element.jobcard_form_type == 'short_invoice_form'
+                "
+                >{{ element.jobcard_number }}</span
+              >
+              <span
+                matTooltip="Edit Set Only Reminders"
+                class="link-edit"
+                *ngIf="
+                  element.jobcard_status == '2' &&
+                  element.jobcard_form_type == 'reminder_jobcard_form'
+                "
+                >{{ element.jobcard_number }}</span
+              >
+              <span
+                matTooltip="Edit Create Jobcard"
+                class="link-edit"
+                *ngIf="
+                  element.jobcard_status == '2' &&
+                  element.jobcard_form_type == 'jocard_form'
+                "
+                >{{ element.jobcard_number }}</span
+              >
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="vehicle_number">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="mat-title-ctm"
+                >{{ "Vehicle Number" | translate }}
+              </span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label">{{ "Vehicle No" | translate }}:</span>
+              {{ element.vehicle_number }}
+            </td>
+          </ng-container>
+          <!-- Name Column -->
+          <ng-container matColumnDef="customer_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="mat-title-ctm">{{
+                "Customer Name" | translate
+              }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Customer Name" | translate }}:</span
+              >
+              {{ element.cutsomer_name }}
+            </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="mobile_number">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="mat-title-ctm">
+                {{ "Mobile Number" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="mobile-label"
+                >{{ "Mobile Number" | translate }}:</span
+              >
+              {{ element.customer_mobile }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="vehicle">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="web-show"
+            >
+              <span class="mat-title-ctm"> {{ "Vehicle" | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element" class="web-show">
+              <span *ngIf="element.vehicle_details.make != undefined">
+                {{ element.vehicle_details.make }}&nbsp;{{
+                  element.vehicle_details.model
+                }}&nbsp;{{ element.vehicle_details.variant }}
+              </span>
+              <span *ngIf="element.vehicle_details.make == undefined">
+                {{ element.vehicle_details.vehicle_make }}&nbsp;{{
+                  element.vehicle_details.vehicle_model
+                }}&nbsp;{{ element.vehicle_details.vehicle_variant }}
+              </span>
+              <span *ngIf="element.vehicle_details == undefined"></span>
+            </td>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="assigned_mechanic">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Assigned Mechanic </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            <span *ngIf="element.jobcard_mechanic_parsed!=[]">{{element.jobcard_mechanic_parsed}}</span>
+                            <span *ngIf="element.jobcard_mechanic_parsed==[]"></span>    
+                        </td>
+                    </ng-container> -->
+
+          <ng-container matColumnDef="pending_amount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="mat-title-ctm" class="web-show"
+                >{{ "Pending Amount" | translate }}
+              </span>
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              style="color: #c30707"
+              class="web-show"
+            >
+              {{ currency_symbol }}
+              {{ element.balance_amount | number: "1.0-0" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="total_amount">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="web-show"
+            >
+              <span class="mat-title-ctm"
+                >{{ "Total Amount" | translate }}
+              </span>
+            </th>
+            <td mat-cell *matCellDef="let element" class="web-show">
+              {{ currency_symbol }} {{ element.total_amount | number: "1.0-0" }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="discount">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="web-show"
+            >
+              <span class="mat-title-ctm"> {{ "Discount" | translate }}</span>
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              style="color: #2f2fe2; text-align: center"
+              class="web-show"
+            >
+              {{ element.discountagain }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="bill_amount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="mat-title-ctm">
+                {{ "Bill Amount" | translate }}</span
+              >
+            </th>
+            <td mat-cell *matCellDef="let element" style="color: #08f308">
+              <span class="mobile-label">
+                {{ "Bill Amount" | translate }}:</span
+              >
+              {{ currency_symbol }}
+              {{
+                ConvertToInt(element.paid_amount) +
+                  ConvertToInt(element.advance) +
+                  ConvertToInt(element.balance_amount)
+              }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef class="web-show">
+              <span class="mat-title-ctm">{{ "Action" | translate }} </span>
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              style="color: #c30707; font-weight: bold; padding: 1px"
+              class="web-show"
+            >
+              <span *ngIf="element.jobcard_status == '2'">
+                <i
+                  matTooltip="Edit Jobcard"
+                  (click)="editJobcard(element, 1)"
+                  class="fa fa-pencil"
+                  aria-hidden="true"
+                  style="cursor: pointer; padding-right:4px"
+                ></i>
+                <i
+                  matTooltip="Print, Download OR Share Invoice"
+                  (click)="openInvoice(element, '1')"
+                  class="fa fa-print"
+                  aria-hidden="true"
+                  style="cursor: pointer; padding: 4px"
+                ></i>
+                <i
+                  matTooltip="Print, Download OR Share Invoice"
+                  (click)="redirectToDoc(element, '1')"
+                  class="fa fa-print"
+                  aria-hidden="true"
+                  style="cursor: pointer ;padding-left: 4px;
+                  color: #2f2fe2;"
+
+                ></i>
+              </span>
+              <span *ngIf="element.jobcard_status != '2'">
+                <i
+                  matTooltip="Edit Jobcard"
+                  (click)="editJobcard(element, 1)"
+                  class="fa fa-pencil"
+                  aria-hidden="true"
+                  style="cursor: pointer; padding-right:4px"
+                ></i>
+                <i
+                  matTooltip="Print, Download OR Share Invoice"
+                  (click)="openEstimate(element, '1')"
+                  class="fa fa-print"
+                  aria-hidden="true"
+                  style="cursor: pointer; padding: 4px"
+                ></i>
+                <i
+                  matTooltip="Print, Download OR Share Invoice"
+                  (click)="redirectToDoc(element, '1')"
+                  class="fa fa-print"
+                  aria-hidden="true"
+                  style="cursor: pointer;padding-left: 4px;
+                   color: #2f2fe2;"
+                ></i>
+              </span>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+      </div>
+      <div
+        class="mat-elevation-z8"
+        *ngIf="tabelData == undefined"
+        style="
+          box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+            0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+          overflow-x: hidden;
+          border-radius: 8px;
+        "
+      >
+        <div
+          class="col-lg-12 col-sm-12 col-md-12 text-center"
+          *ngIf="tabelData == undefined"
+          style="
+            font-weight: bold;
+            padding: 10px 0px 10px 0px;
+            font-size: 29px;
+            color: black;
+          "
+        >
+          <span> {{ "No Records Found" | translate }} </span>
+        </div>
+        <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+      </div>
+      <!-- <div class="ibox float-e-margins">
+                <div class="ibox-content" style="padding: 0">
+                    <div #panel class="table-responsive tableFixHead" [style.height.px]="scrollheight" (scroll)="onScroll($event)" > 
+                        <table class="table table-bordered table-hover" [mfData]="data" #mf="mfDataTable" style="margin-bottom: 0">
+                            <thead>
+                                <tr> 
+                                    <th>Status</th>
+                                    <th> <mfDefaultSorter by="jobcard_number">Jobcard Number</mfDefaultSorter></th>
+                                    <th><mfDefaultSorter by="cutsomer_name">Customer Name</mfDefaultSorter></th>
+                                    <th><mfDefaultSorter by="customer_mobile">Mobile Number</mfDefaultSorter></th>
+                                    <th><mfDefaultSorter by="vehicle_number">Vehicle Number</mfDefaultSorter></th>
+                                    <th>Vehicle</th>
+                                    <th>Assigned Mechanic</th>
+                                    <th><mfDefaultSorter by="balance_amount">Pending Amount</mfDefaultSorter></th>
+                                    <th><mfDefaultSorter by="total_amount">Total Amount</mfDefaultSorter></th>
+                                    <th><mfDefaultSorter by="discount">Discount</mfDefaultSorter></th>
+                                    <th><mfDefaultSorter by="total_amount">Bill Amount</mfDefaultSorter></th>
+                                    <th style="z-index: 9; width: 7%;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="tabelData!=undefined">
+                                    <ng-container *ngFor="let data of mf.data;let i = index;">
+                                        <tr *ngIf="data.jobcard_status=='2'" >
+                                        <td *ngIf="data.jobcard_status=='0'">
+                                            Open
+                                        </td>
+                                        <td *ngIf="data.jobcard_status=='1'">
+                                            Complete
+                                        </td>
+                                        <td *ngIf="data.jobcard_status=='2'">
+                                            Closed
+                                        </td>
+                                        <td data-toggle="tooltip" title="Edit Jobcard" (click)=editJobcard(data,"1") style="cursor: pointer; width: 127px;">
+                                            <span class="link-edit">{{data.jobcard_number}}</span>
+                                            <button data-toggle="tooltip" title="Short Invoice" style="cursor: default;background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%); color: white;width: 22px; border-radius: 10px;" *ngIf='data.jobcard_form_type=="short_invoice_form"'>S</button>
+                                            <button data-toggle="tooltip" title="Set Only Reminders" style="cursor: default;background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%); color: white;width: 22px; border-radius: 10px;" *ngIf='data.jobcard_form_type=="reminder_jobcard_form"'>R</button>
+                                            <button data-toggle="tooltip" title="Create Jobcard" style="cursor: default;background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%); color: white;width: 22px; border-radius: 10px;" *ngIf='data.jobcard_form_type=="jocard_form"'>J</button>
+                                        </td>
+                                        <td>{{data.cutsomer_name}}</td>
+                                        <td>{{data.customer_mobile}}</td>
+                                        <td>{{data.vehicle_number}}</td>
+                                        <td *ngIf="data.vehicle_details.make!=undefined">{{data.vehicle_details.make}}&nbsp;{{data.vehicle_details.model}}&nbsp;{{data.vehicle_details.variant}}</td>
+                                        <td *ngIf="data.vehicle_details.make==undefined">{{data.vehicle_details.vehicle_make}}&nbsp;{{data.vehicle_details.vehicle_model}}&nbsp;{{data.vehicle_details.vehicle_variant}}</td>
+                                        <td *ngIf="data.vehicle_details==undefined"></td>
+                                        <td *ngIf="data.jobcard_mechanic_parsed!=[]">{{data.jobcard_mechanic_parsed}}</td>
+                                        <td *ngIf="data.jobcard_mechanic_parsed==[]"></td>
+                                        <td>{{data.balance_amount}}</td>
+                                        <td>{{data.total_amount}}</td>
+                                        <td>{{data.discount}}</td>
+                                       
+                                        <td>{{ ConvertToInt(data.paid_amount) + ConvertToInt(data.advance)+ConvertToInt(data.balance_amount)}}</td>
+                                        <td style="color: #c30707;font-weight: bold; cursor: pointer;" >
+                                            <i data-toggle="tooltip" title="Edit Jobcard" (click)=editJobcard(data,"1")  class="fa fa-pencil" aria-hidden="true" style="cursor: pointer; padding: 10px;"></i>
+                                            <i data-toggle="tooltip" title="Print, Download OR Share Invoice" (click)="openInvoice(data,"1")" class="fa fa-print" aria-hidden="true" style="cursor: pointer;"></i>
+                                        </td> 
+                                    </tr>
+                                        <tr *ngIf="data.jobcard_status!='2'" >
+                                            <td *ngIf="data.jobcard_status=='0'">
+                                                Open
+                                            </td>
+                                            <td *ngIf="data.jobcard_status=='1'">
+                                                Complete
+                                            </td>
+                                            <td *ngIf="data.jobcard_status=='2'">
+                                                Closed
+                                            </td>
+                                            <td data-toggle="tooltip" title="Edit Jobcard" (click)=editJobcard(data,"1") style="cursor: pointer;">
+                                                <span class="link-edit">{{data.jobcard_number}}</span>
+                                            </td>
+                                            <td>{{data.cutsomer_name}}</td>
+                                            <td>{{data.customer_mobile}}</td>
+                                            <td>{{data.vehicle_number}}</td>
+                                            <td *ngIf="data.vehicle_details.make!=undefined">{{data.vehicle_details.make}}&nbsp;{{data.vehicle_details.model}}&nbsp;{{data.vehicle_details.variant}}</td>
+                                            <td *ngIf="data.vehicle_details.make==undefined">{{data.vehicle_details.vehicle_make}}&nbsp;{{data.vehicle_details.vehicle_model}}&nbsp;{{data.vehicle_details.vehicle_variant}}</td>
+                                            <td *ngIf="data.vehicle_details==undefined"></td>
+                                            <td *ngIf="data.jobcard_mechanic_parsed!=[]">{{data.jobcard_mechanic_parsed}}</td>
+                                            <td *ngIf="data.jobcard_mechanic_parsed==[]"></td>
+                                            <td>{{data.balance_amount}}</td>
+                                            <td>{{data.total_amount}}</td>
+                                            <td>{{data.discount}}</td>
+                                            <td>{{ ConvertToInt(data.paid_amount) + ConvertToInt(data.advance)+ConvertToInt(data.balance_amount)}}</td>
+                                            <td style="color: #c30707;font-weight: bold; cursor: pointer;" >
+                                                <i data-toggle="tooltip" title="Edit Jobcard" (click)=editJobcard(data,"1")  class="fa fa-pencil" aria-hidden="true" style="cursor: pointer; padding: 10px;"></i>
+                                                <i data-toggle="tooltip" title="Print, Download OR Share Estimate" (click)="openEstimate(data,"1")" class="fa fa-print" aria-hidden="true" style="cursor: pointer;"></i>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                            </tbody>
+                            
+                        </table>
+                        <div class="col-lg-12 text-center" *ngIf="tabelData==undefined" style="padding: 22px 0px 0px 0px; font-size: 29px; color: black;">
+                            <span>
+                                No Records Found
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+    </div>
+  </div>
+</div>

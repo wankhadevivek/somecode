@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-sm-12">
+        <form novalidate class="form-horizontal" [formGroup]="OTPForm">
+            <div class="row" style="padding: 13px;">
+                <div class="col-sm-12">
+                    <div class="closepoup" style="float: right;  margin-right: 10px;">
+                        <label (click)="closePopup('falsee')" class="btn btn-white cir" style="padding: 1px 4px;
+                        background: none;
+                        border: none;"><i class="fa fa-times fa-2x" aria-hidden="true"></i></label>
+                    </div>
+                    <div class="text-center" style="    margin-left: 3px;
+                    font-size: 12px;
+                    font-weight: bold;">
+                        <span>{{'Want to add Description for' | translate}} {{name}} {{'where price is' | translate}} {{price}}</span>
+                    </div>
+                    <label class="control-label txt_lbl" style="color: #FF0000; font-size: 12px;margin-left: 59px; margin-top: 2px;">{{'Enter Description' | translate}}</label>
+                    <div class="newtest" style="margin-left: 68px; margin-top: 15px;">
+                        <textarea formControlName="otp" cols="60" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<button class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 2% 2px 2% 53px; float: left;" (click)="closePopup(true)">{{'Add Description' | translate}}</button>
+<button class="btn btn-primary cir cir_btn" style="background: linear-gradient(to bottom, #FF0000 0% , #563b3b 100%);border-color: #c30707;font-weight: bold;padding: 10px; margin: 2% 0px 2% 9px; float: left;" (click)="closePopup(false)">{{'Cancel' | translate}}</button>
+

@@ -1,0 +1,275 @@
+<app-spin></app-spin>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="checkdata" *ngIf="checkAccountDetails == 'false'">
+    <div class="row">
+      <div class="col-lg-12 col-sm-12 col-md-12">
+        <span style="font-size: 24px; font-weight: bold">
+          {{
+            "To get the payment Details please fill out your account details"
+              | translate
+          }}
+          <a
+            (click)="addlocal()"
+            routerLink="/membership/"
+            href="#"
+            style="color: #c30707; font-weight: bold; font-size: 24px"
+            >{{ "here" | translate }}</a
+          >
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="checkdata" *ngIf="checkAccountDetails == 'true'">
+    <div class="row">
+      <div class="col-lg-3 col-sm-3 col-md-3">
+        <h3 style="font-size: 20px">{{ "Payment Overview" | translate }}</h3>
+      </div>
+    </div>
+    <div class="row" style="padding: 20px 0px 20px">
+      <div
+        class="col-lg-3 col-sm-4 col-md-4"
+        data-toggle="tooltip"
+        title="No. Payment pending"
+        style="cursor: pointer"
+      >
+        <div class="totalandname totaldivvcollect">
+          <div class="namejobb">
+            <label
+              style="
+                color: #a6a7ab !important;
+                font-family: Open sans;
+                font-size: 13px;
+              "
+              >{{ "No. Payment pending" | translate }}</label
+            >
+          </div>
+          <div class="amountofjobb">
+            <label
+              class="control-label txt_lbl countt"
+              style="font-family: Open sans; font-size: 25px; font-weight: bold"
+              >{{ paymentPending }}</label
+            >
+          </div>
+          <div class="totaljobbb">
+            <button class="countbuttonnn">
+              <img
+                src="../../../assets/images/application.svg"
+                alt=""
+                style="width: 51px; margin-top: -47px; margin-right: 6px"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-lg-3 col-sm-4 col-md-4"
+        data-toggle="tooltip"
+        title="Payment Requested"
+        style="cursor: pointer"
+      >
+        <div class="totalandname totaldivvcollect">
+          <div class="namejobb">
+            <label
+              style="
+                color: #a6a7ab !important;
+                font-family: Open sans;
+                font-size: 13px;
+              "
+              >{{ "Payment Requested" | translate }}</label
+            >
+          </div>
+          <div class="amountofjobb">
+            <label
+              class="control-label txt_lbl countt"
+              style="font-family: Open sans; font-size: 25px; font-weight: bold"
+              >{{currency_symbol}} {{ requestedPayment }}</label
+            >
+          </div>
+          <div class="totaljobbb">
+            <button class="countbuttonnn">
+              <img
+                src="../../../assets/images/payment.svg"
+                alt=""
+                style="width: 51px; margin-top: -47px; margin-right: 6px"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-lg-3 col-sm-4 col-md-4"
+        data-toggle="tooltip"
+        title="Payment Received"
+        style="cursor: pointer"
+      >
+        <div class="totalandname totaldivvcollect">
+          <div class="namejobb">
+            <label
+              style="
+                color: #a6a7ab !important;
+                font-family: Open sans;
+                font-size: 13px;
+              "
+              >{{ "Payment Received" | translate }}</label
+            >
+          </div>
+          <div class="amountofjobb">
+            <label
+              class="control-label txt_lbl countt"
+              style="font-family: Open sans; font-size: 25px; font-weight: bold"
+              >{{currency_symbol}} {{ receivedPayment }}</label
+            >
+          </div>
+          <div class="totaljobbb">
+            <button class="countbuttonnn">
+              <img
+                src="../../../assets/images/india.svg"
+                alt=""
+                style="width: 51px; margin-top: -47px; margin-right: 6px"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-sm-12 col-md-12">
+        <div
+          class="mat-elevation-z8 table-responsive"
+          *ngIf="tabelData != undefined"
+          style="
+            box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+              0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+              0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+            border-radius: 8px;
+            overflow: scroll;
+          "
+        >
+          <table
+            mat-table
+            [dataSource]="dataSource"
+            matSort
+            class="mat-elevation-z12"
+            style="font-family: Open sans; width: 100%"
+          >
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <span class="mat-title-ctm"> {{ "Date" | translate }} </span>
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <span class="mobile-label">{{ "Date" | translate }}:</span>
+                {{ element.date | date: "MMM d,yy" }}
+              </td>
+            </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="jobcard_number">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <span class="mat-title-ctm">
+                  {{ "Jobcard Number" | translate }}
+                </span>
+              </th>
+              <td mat-cell *matCellDef="let element" style="cursor: pointer">
+                <span class="mobile-label">
+                  {{ "Jobcard Number" | translate }}:</span
+                >
+                <span
+                  class="link-edit"
+                  (click)="editJobcard(element.jobcard_number)"
+                >
+                  {{ element.jobcard_number }}
+                </span>
+              </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="customer_details">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <span class="mat-title-ctm">
+                  {{ "Customer Details" | translate }}
+                </span>
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <span class="mobile-label"
+                  >{{ "Customer Details" | translate }}:</span
+                >
+                {{ element.customer_details }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <span class="mat-title-ctm"> {{ "Amount" | translate }} </span>
+              </th>
+              <td mat-cell *matCellDef="let element" style="color: #c30707">
+                <span class="mobile-label">{{ "Amount" | translate }}:</span>
+                {{currency_symbol}} {{ element.amount }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="settel_amount">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <span class="mat-title-ctm">
+                  {{ "Settled Amount" | translate }}
+                </span>
+              </th>
+              <td mat-cell *matCellDef="let element" style="color: #33ee3c">
+                <span class="mobile-label"
+                  >{{ "Settled Amount" | translate }}:</span
+                >
+                {{currency_symbol}} {{ element.settel_amount | number: "1.0-0" }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                <span class="mat-title-ctm"> {{ "Status" | translate }} </span>
+              </th>
+              <td
+                mat-cell
+                *matCellDef="let element"
+                (click)="openTransDetails(element.jobcard_number)"
+                style="cursor: pointer"
+              >
+                <span class="mobile-label">{{ "Status" | translate }}:</span>
+                <i
+                  class="fa fa-info-circle"
+                  aria-hidden="true"
+                  style="font-size: 25px; color: #ce3636"
+                ></i>
+              </td>
+            </ng-container>
+            <tr
+              mat-header-row
+              *matHeaderRowDef="displayedColumns; sticky: true"
+            ></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+        </div>
+        <div
+          class="mat-elevation-z8"
+          *ngIf="tabelData == undefined"
+          style="
+            box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+              0px 0px 2px 2px rgba(0, 0, 0, 0.14),
+              0px 0px 4px 4px rgba(0, 0, 0, 0.12);
+            overflow-x: hidden;
+            border-radius: 8px;
+          "
+        >
+          <div
+            class="col-lg-12 col-sm-12 col-md-12 text-center"
+            *ngIf="tabelData == undefined"
+            style="
+              font-weight: bold;
+              padding: 10px 0px 10px 0px;
+              font-size: 29px;
+              color: black;
+            "
+          >
+            <span>
+              {{ "No Records Found" | translate }}
+            </span>
+          </div>
+          <!-- <mat-paginator [pageSizeOptions]="[15]"></mat-paginator> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
